@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FAQ — PRIME CT Official</title>
+<title>PRIME Tools — PRIME CT Official</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -28,7 +28,7 @@
       <div class="navlinks">
         <a href="index.html">Beranda</a>
         <a href="produk.html">Produk & Jasa</a>
-        <a href="faq.html" class="active">FAQ</a>
+        <a href="faq.html">FAQ</a>
         <a href="kontak.html">Kontak</a>
       </div>
       <div class="navcta">
@@ -55,7 +55,7 @@
     <a href="faq.html"><span class="ico">❓</span> FAQ</a>
     <a href="kontak.html"><span class="ico">📬</span> Kontak</a>
     <span class="divider">Alat & Layanan</span>
-    <a href="tools.html"><span class="ico">⚙️</span> PRIME Tools</a>
+    <a href="tools.html" class="active"><span class="ico">⚙️</span> PRIME Tools</a>
     <a href="convert.html"><span class="ico">🔄</span> PRIME Convert</a>
     <a href="ai.html"><span class="ico">🤖</span> PRIME AI</a>
     <span class="divider">Akun</span>
@@ -81,33 +81,29 @@
   </div>
 </div>
 
-
 <section class="section" style="padding-top:56px; border-bottom:none;">
-  <div class="wrap" style="max-width:760px;">
-    <span class="eyebrow">Pertanyaan Umum</span>
-    <h2 style="margin-top:10px; font-size:clamp(1.8rem,3vw,2.4rem);">FAQ</h2>
-    <p style="color:var(--muted); margin-top:10px; margin-bottom:36px;">Belum ketemu jawabannya? Langsung tanya admin lewat WhatsApp.</p>
+  <div class="wrap">
+    <span class="eyebrow">Alat Digital</span>
+    <h2 style="margin-top:10px; font-size:clamp(1.8rem,3vw,2.4rem);">PRIME Tools</h2>
+    <p style="color:var(--muted); max-width:56ch; margin-top:10px; margin-bottom:36px;">Kumpulan alat gratis yang bisa langsung dipakai dari browser, tanpa perlu install apa pun.</p>
 
-    <div class="faq-list">
-      <div class="faq-item open">
-        <div class="faq-q"><span>Bagaimana cara order di PRIME CT?</span><span class="plus">+</span></div>
-        <div class="faq-a">Pilih produk di halaman Produk & Jasa, klik tombol Order, lalu lanjutkan detail pesanan dan pembayaran lewat WhatsApp admin.</div>
+    <div class="card-grid" style="grid-template-columns:repeat(3,1fr);">
+      <div class="tool-card">
+        <h4>🔄 PRIME Convert</h4>
+        <p>Kompres & convert foto langsung dari browser.</p>
+        <a href="convert.html" class="btn small">Buka Alat</a>
       </div>
-      <div class="faq-item">
-        <div class="faq-q"><span>Metode pembayaran apa saja yang tersedia?</span><span class="plus">+</span></div>
-        <div class="faq-a">Saat ini tersedia QRIS, DANA, dan GoPay. Setelah transfer, kirim bukti pembayaran ke WhatsApp admin.</div>
+      <div class="tool-card">
+        <h4>🤖 PRIME AI</h4>
+        <p>Asisten digital untuk jawab pertanyaan seputar order & produk.</p>
+        <a href="ai.html" class="btn small">Buka Alat</a>
       </div>
-      <div class="faq-item">
-        <div class="faq-q"><span>Berapa lama proses pesanan selesai?</span><span class="plus">+</span></div>
-        <div class="faq-a">Untuk akun premium dan top up game biasanya instan hingga 24 jam. Untuk jasa editing dan bot, estimasi tertera di masing-masing produk.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q"><span>Apakah ada garansi jika produk bermasalah?</span><span class="plus">+</span></div>
-        <div class="faq-a">Ya, setiap produk memiliki garansi replace sesuai ketentuan yang diinformasikan admin saat order.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q"><span>Bisa custom jasa editing atau bot sesuai kebutuhan?</span><span class="plus">+</span></div>
-        <div class="faq-a">Bisa. Sampaikan detail kebutuhanmu ke admin agar bisa dibuatkan penawaran dan estimasi harga yang sesuai.</div>
+      <div class="tool-card">
+        <h4>📋 Copy Info Order</h4>
+        <p>Salin format order cepat untuk dikirim ke admin lewat WhatsApp.</p>
+        <button class="btn small" data-copy="Nama: 
+Produk: 
+Detail: ">Salin Format</button>
       </div>
     </div>
   </div>

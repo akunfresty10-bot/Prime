@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FAQ — PRIME CT Official</title>
+<title>Login / Daftar — PRIME CT Official</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -28,7 +28,7 @@
       <div class="navlinks">
         <a href="index.html">Beranda</a>
         <a href="produk.html">Produk & Jasa</a>
-        <a href="faq.html" class="active">FAQ</a>
+        <a href="faq.html">FAQ</a>
         <a href="kontak.html">Kontak</a>
       </div>
       <div class="navcta">
@@ -59,7 +59,7 @@
     <a href="convert.html"><span class="ico">🔄</span> PRIME Convert</a>
     <a href="ai.html"><span class="ico">🤖</span> PRIME AI</a>
     <span class="divider">Akun</span>
-    <a href="login.html"><span class="ico">👤</span> Login / Daftar</a>
+    <a href="login.html" class="active"><span class="ico">👤</span> Login / Daftar</a>
   </nav>
   <div class="sidebar-foot">
     <a href="https://wa.me/6281200000000">WhatsApp</a>
@@ -81,35 +81,49 @@
   </div>
 </div>
 
+<section class="section" style="padding-top:56px; border-bottom:none; min-height:70vh;">
+  <div class="wrap auth-wrap">
+    <span class="eyebrow" style="display:flex; justify-content:center; margin-bottom:14px;">Akun PRIME CT</span>
+    <h2 style="text-align:center; font-size:1.8rem; margin-bottom:28px;">Login / Daftar</h2>
 
-<section class="section" style="padding-top:56px; border-bottom:none;">
-  <div class="wrap" style="max-width:760px;">
-    <span class="eyebrow">Pertanyaan Umum</span>
-    <h2 style="margin-top:10px; font-size:clamp(1.8rem,3vw,2.4rem);">FAQ</h2>
-    <p style="color:var(--muted); margin-top:10px; margin-bottom:36px;">Belum ketemu jawabannya? Langsung tanya admin lewat WhatsApp.</p>
-
-    <div class="faq-list">
-      <div class="faq-item open">
-        <div class="faq-q"><span>Bagaimana cara order di PRIME CT?</span><span class="plus">+</span></div>
-        <div class="faq-a">Pilih produk di halaman Produk & Jasa, klik tombol Order, lalu lanjutkan detail pesanan dan pembayaran lewat WhatsApp admin.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q"><span>Metode pembayaran apa saja yang tersedia?</span><span class="plus">+</span></div>
-        <div class="faq-a">Saat ini tersedia QRIS, DANA, dan GoPay. Setelah transfer, kirim bukti pembayaran ke WhatsApp admin.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q"><span>Berapa lama proses pesanan selesai?</span><span class="plus">+</span></div>
-        <div class="faq-a">Untuk akun premium dan top up game biasanya instan hingga 24 jam. Untuk jasa editing dan bot, estimasi tertera di masing-masing produk.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q"><span>Apakah ada garansi jika produk bermasalah?</span><span class="plus">+</span></div>
-        <div class="faq-a">Ya, setiap produk memiliki garansi replace sesuai ketentuan yang diinformasikan admin saat order.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q"><span>Bisa custom jasa editing atau bot sesuai kebutuhan?</span><span class="plus">+</span></div>
-        <div class="faq-a">Bisa. Sampaikan detail kebutuhanmu ke admin agar bisa dibuatkan penawaran dan estimasi harga yang sesuai.</div>
-      </div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="panel-login">Login</button>
+      <button class="auth-tab" data-tab="panel-register">Daftar</button>
     </div>
+
+    <div class="auth-panel active" id="panel-login">
+      <form class="auth-form">
+        <div class="field" style="margin-bottom:16px;">
+          <label for="li-email">Email / No. HP</label>
+          <input type="text" id="li-email" placeholder="Masukkan email atau no. HP" required>
+        </div>
+        <div class="field" style="margin-bottom:20px;">
+          <label for="li-pass">Password</label>
+          <input type="password" id="li-pass" placeholder="Masukkan password" required>
+        </div>
+        <button type="submit" class="btn solid" style="width:100%; justify-content:center;">Masuk</button>
+      </form>
+    </div>
+
+    <div class="auth-panel" id="panel-register">
+      <form class="auth-form">
+        <div class="field" style="margin-bottom:16px;">
+          <label for="re-nama">Nama Lengkap</label>
+          <input type="text" id="re-nama" placeholder="Nama kamu" required>
+        </div>
+        <div class="field" style="margin-bottom:16px;">
+          <label for="re-email">Email / No. HP</label>
+          <input type="text" id="re-email" placeholder="Masukkan email atau no. HP" required>
+        </div>
+        <div class="field" style="margin-bottom:20px;">
+          <label for="re-pass">Buat Password</label>
+          <input type="password" id="re-pass" placeholder="Buat password" required>
+        </div>
+        <button type="submit" class="btn solid" style="width:100%; justify-content:center;">Daftar Sekarang</button>
+      </form>
+    </div>
+
+    <p class="auth-note">Sistem akun masih dalam pengembangan. Untuk order, hubungi langsung <a href="https://wa.me/6281200000000" style="color:var(--brass);">Admin WhatsApp</a>.</p>
   </div>
 </section>
 

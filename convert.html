@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FAQ — PRIME CT Official</title>
+<title>PRIME Convert — PRIME CT Official</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -28,7 +28,7 @@
       <div class="navlinks">
         <a href="index.html">Beranda</a>
         <a href="produk.html">Produk & Jasa</a>
-        <a href="faq.html" class="active">FAQ</a>
+        <a href="faq.html">FAQ</a>
         <a href="kontak.html">Kontak</a>
       </div>
       <div class="navcta">
@@ -56,7 +56,7 @@
     <a href="kontak.html"><span class="ico">📬</span> Kontak</a>
     <span class="divider">Alat & Layanan</span>
     <a href="tools.html"><span class="ico">⚙️</span> PRIME Tools</a>
-    <a href="convert.html"><span class="ico">🔄</span> PRIME Convert</a>
+    <a href="convert.html" class="active"><span class="ico">🔄</span> PRIME Convert</a>
     <a href="ai.html"><span class="ico">🤖</span> PRIME AI</a>
     <span class="divider">Akun</span>
     <a href="login.html"><span class="ico">👤</span> Login / Daftar</a>
@@ -81,35 +81,23 @@
   </div>
 </div>
 
-
 <section class="section" style="padding-top:56px; border-bottom:none;">
-  <div class="wrap" style="max-width:760px;">
-    <span class="eyebrow">Pertanyaan Umum</span>
-    <h2 style="margin-top:10px; font-size:clamp(1.8rem,3vw,2.4rem);">FAQ</h2>
-    <p style="color:var(--muted); margin-top:10px; margin-bottom:36px;">Belum ketemu jawabannya? Langsung tanya admin lewat WhatsApp.</p>
+  <div class="wrap" style="max-width:640px;">
+    <span class="eyebrow">Alat Konversi</span>
+    <h2 style="margin-top:10px; margin-bottom:8px; font-size:clamp(1.8rem,3vw,2.2rem);">PRIME Convert</h2>
+    <p style="color:var(--muted); margin-bottom:28px;">Kompres foto langsung dari browser kamu — tanpa upload ke server, semua proses berjalan di perangkat kamu sendiri.</p>
 
-    <div class="faq-list">
-      <div class="faq-item open">
-        <div class="faq-q"><span>Bagaimana cara order di PRIME CT?</span><span class="plus">+</span></div>
-        <div class="faq-a">Pilih produk di halaman Produk & Jasa, klik tombol Order, lalu lanjutkan detail pesanan dan pembayaran lewat WhatsApp admin.</div>
+    <div class="hud-panel">
+      <div class="drop-zone" id="drop-zone">
+        📁 Ketuk untuk pilih foto (JPG/PNG)
       </div>
-      <div class="faq-item">
-        <div class="faq-q"><span>Metode pembayaran apa saja yang tersedia?</span><span class="plus">+</span></div>
-        <div class="faq-a">Saat ini tersedia QRIS, DANA, dan GoPay. Setelah transfer, kirim bukti pembayaran ke WhatsApp admin.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q"><span>Berapa lama proses pesanan selesai?</span><span class="plus">+</span></div>
-        <div class="faq-a">Untuk akun premium dan top up game biasanya instan hingga 24 jam. Untuk jasa editing dan bot, estimasi tertera di masing-masing produk.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q"><span>Apakah ada garansi jika produk bermasalah?</span><span class="plus">+</span></div>
-        <div class="faq-a">Ya, setiap produk memiliki garansi replace sesuai ketentuan yang diinformasikan admin saat order.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q"><span>Bisa custom jasa editing atau bot sesuai kebutuhan?</span><span class="plus">+</span></div>
-        <div class="faq-a">Bisa. Sampaikan detail kebutuhanmu ke admin agar bisa dibuatkan penawaran dan estimasi harga yang sesuai.</div>
-      </div>
+      <input type="file" id="convert-file" accept="image/*" style="display:none;">
+      <div class="convert-preview" id="convert-preview"></div>
     </div>
+
+    <p style="color:var(--muted); font-size:0.8rem; margin-top:16px;">
+      Catatan: alat ini mengecilkan lebar gambar maksimal 800px dan mengompresnya ke format JPG untuk memperkecil ukuran file.
+    </p>
   </div>
 </section>
 
