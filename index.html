@@ -4,37 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title class="site-brand-name">PRIME CT STORE</title>
-
-  <!-- Google Fonts & FontAwesome -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
   <style>
     :root {
       --bg-body: #090b10;
-      --bg-card: rgba(22, 27, 38, 0.7);
-      --bg-card-solid: #141824;
       --border-color: rgba(255, 255, 255, 0.08);
-      --accent-blue: #2563eb;
-      --accent-purple: #8b5cf6;
       --text-main: #f0f6fc;
       --text-sub: #94a3b8;
       --wa-green: #25d366;
     }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
     body {
       background-color: var(--bg-body);
       background-image: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #090b10 70%);
       color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
     }
-
-    .highlight-bold { color: #ffffff !important; font-weight: 800 !important; }
-
-    /* ANIMASI RGB UNTUK TEKS HERO */
     @keyframes rgbGlowText {
       0% { color: #ff3366; filter: drop-shadow(0 0 10px rgba(255, 51, 102, 0.5)); }
       25% { color: #38bdf8; filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5)); }
@@ -42,79 +33,40 @@
       75% { color: #34d399; filter: drop-shadow(0 0 10px rgba(52, 211, 153, 0.5)); }
       100% { color: #ff3366; filter: drop-shadow(0 0 10px rgba(255, 51, 102, 0.5)); }
     }
-
-    /* HEADER & LOGO */
-    header {
-      background: rgba(13, 16, 24, 0.85);
-      backdrop-filter: blur(12px);
-      position: sticky; top: 0; z-index: 90;
-      border-bottom: 1px solid var(--border-color);
-    }
-    .nav-container { max-width: 800px; margin: 0 auto; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
-    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-main); }
-    .brand img { width: 38px; height: 38px; border-radius: 10px; object-fit: cover; border: 1px solid var(--border-color); }
-    .brand span { font-size: 1.15rem; font-weight: 800; background: linear-gradient(135deg, #c084fc, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .nav-btn-wa { background-color: var(--wa-green); color: #fff; padding: 8px 14px; border-radius: 20px; text-decoration: none; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; }
-
-    .announcement-bar { background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border-color); padding: 8px 16px; font-size: 0.82rem; color: var(--text-sub); }
-    .container { max-width: 800px; margin: 0 auto; padding: 20px 16px; }
-
-    /* HERO BANNER UTAMA DENGAN 4 TOMBOL */
-    .hero-banner {
+    .portal-card {
       background: linear-gradient(135deg, #2e1065 0%, #0f172a 100%);
       border: 1px solid var(--border-color);
       border-radius: 24px;
-      padding: 30px 20px;
-      margin-bottom: 25px;
+      padding: 35px 25px;
+      width: 100%;
+      max-width: 400px;
       text-align: center;
-      background-size: cover;
-      background-position: center;
-      position: relative;
-      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
     }
-    .hero-banner-overlay {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(9, 11, 16, 0.65);
-      z-index: 1;
-      display: none;
-    }
-    .hero-banner-content { position: relative; z-index: 2; }
-
-    .hero-avatar {
+    .portal-avatar {
       width: 85px; height: 85px;
       margin: 0 auto 15px auto;
       border-radius: 20px;
       border: 2px solid rgba(168, 85, 247, 0.5);
-      box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
       overflow: hidden;
       background: #1e1b2e;
     }
-    .hero-avatar img { width: 100%; height: 100%; object-fit: cover; }
-    
-    .hero-banner h1 { 
-      font-size: 1.6rem; 
-      font-weight: 800; 
-      margin-bottom: 6px; 
+    .portal-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 8px;
       text-transform: uppercase;
       animation: rgbGlowText 6s infinite linear;
       -webkit-text-fill-color: initial;
     }
-    .hero-banner p { font-size: 0.85rem; color: #cbd5e1; margin-bottom: 22px; line-height: 1.5; }
-
-    /* 4 TOMBOL UTAMA DI HERO */
-    .hero-action-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      max-width: 320px;
-      margin: 0 auto;
-    }
-    .hero-btn {
+    p { font-size: 0.85rem; color: #cbd5e1; margin-bottom: 25px; line-height: 1.5; }
+    .portal-buttons { display: flex; flex-direction: column; gap: 12px; }
+    .p-btn {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.12);
       color: #fff;
-      padding: 12px 20px;
+      padding: 13px 20px;
       border-radius: 25px;
       font-weight: 700;
       font-size: 0.9rem;
@@ -122,128 +74,35 @@
       transition: 0.2s;
       display: block;
       text-align: center;
-      backdrop-filter: blur(5px);
     }
-    .hero-btn.primary {
+    .p-btn.primary {
       background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
       border-color: rgba(167, 139, 250, 0.4);
       box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
     }
-    .hero-btn:hover { transform: scale(1.02); opacity: 0.95; }
+    .p-btn:hover { transform: scale(1.02); opacity: 0.95; }
 
-    /* SEARCH & TABS */
-    .search-box { position: relative; margin-bottom: 16px; }
-    .search-box input { width: 100%; padding: 12px 16px 12px 42px; background: var(--bg-card-solid); border: 1px solid var(--border-color); border-radius: 12px; color: #fff; font-size: 0.9rem; outline: none; }
-    .search-box i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-sub); }
-
-    .category-tabs { display: flex; gap: 8px; margin-bottom: 25px; overflow-x: auto; padding-bottom: 4px; }
-    .tab-btn { background: var(--bg-card-solid); border: 1px solid var(--border-color); color: var(--text-sub); padding: 8px 16px; border-radius: 10px; font-size: 0.85rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
-    .tab-btn.active { background: #7c3aed; color: #fff; border-color: #a78bfa; }
-
-    .section-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
-
-    /* GRID & CARDS */
-    .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-bottom: 30px; }
-    .store-card { background: var(--bg-card-solid); border: 1px solid var(--border-color); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; text-decoration: none; color: inherit; position: relative; cursor: pointer; transition: transform 0.2s, border-color 0.2s; }
-    .store-card:hover { transform: translateY(-3px); border-color: var(--accent-purple); }
-    .card-badge { position: absolute; top: 8px; right: 8px; background: rgba(124, 58, 237, 0.9); color: #fff; font-size: 0.65rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; }
-    .card-img { width: 100%; height: 110px; object-fit: cover; border-radius: 8px; margin-bottom: 8px; }
-    .card-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
-    .card-desc { font-size: 0.75rem; color: var(--text-sub); margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .card-price { font-size: 0.9rem; font-weight: 800; color: #38bdf8; margin-bottom: 8px; }
-    .card-btn { background: #2563eb; color: #fff; text-align: center; padding: 6px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; }
-    .state-msg { grid-column: 1 / -1; text-align: center; padding: 25px; color: var(--text-sub); background: var(--bg-card-solid); border-radius: 12px; border: 1px dashed var(--border-color); }
-
-    /* ABOUT & STATS */
-    .about-card-box { background: linear-gradient(135deg, rgba(30, 27, 75, 0.7) 0%, rgba(15, 23, 42, 0.95) 100%); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 28px 24px; margin-bottom: 25px; backdrop-filter: blur(12px); }
-    .about-card-box h3 { font-size: 1.35rem; font-weight: 800; color: #fff; margin-bottom: 18px; }
-    .about-card-box p { font-size: 0.88rem; color: #94a3b8; line-height: 1.7; margin-bottom: 16px; }
-    .about-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
-    .about-tag-pill { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); padding: 8px 18px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; color: #e2e8f0; }
-
-    .stats-card-box { background: linear-gradient(180deg, rgba(30, 27, 75, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 30px 20px 25px 20px; margin-bottom: 20px; text-align: center; }
-    .stats-number { font-size: 3.2rem; font-weight: 800; background: linear-gradient(135deg, #c084fc 0%, #38bdf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; margin-bottom: 6px; }
-    .stats-label { font-size: 1.15rem; font-weight: 800; color: #fff; margin-bottom: 14px; }
-    .stats-desc { font-size: 0.88rem; color: #94a3b8; line-height: 1.6; max-width: 600px; margin: 0 auto 26px auto; }
-
-    .feature-list { display: flex; flex-direction: column; gap: 12px; text-align: left; }
-    .feature-item { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 16px; padding: 16px 20px; }
-    .feature-item h4 { font-size: 0.98rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
-    .feature-item p { font-size: 0.83rem; color: #94a3b8; line-height: 1.5; }
-
-    .cta-banner { background: linear-gradient(180deg, rgba(58, 28, 113, 0.5) 0%, rgba(20, 18, 40, 0.8) 100%); border: 1px solid rgba(168, 85, 247, 0.25); border-radius: 24px; padding: 32px 20px; text-align: center; margin-bottom: 35px; }
-    .cta-title { font-size: 1.45rem; font-weight: 800; color: #fff; margin-bottom: 12px; }
-    .cta-desc { font-size: 0.88rem; color: #cbd5e1; line-height: 1.6; max-width: 500px; margin: 0 auto 22px auto; }
-    .cta-btn { display: inline-block; background: linear-gradient(135deg, #a855f7, #6366f1); color: #fff; padding: 12px 36px; border-radius: 12px; font-weight: 700; font-size: 0.9rem; text-decoration: none; }
-
-    /* FOOTER */
-    footer { border-top: 1px solid var(--border-color); padding: 30px 16px 20px 16px; background: #090b10; color: var(--text-sub); }
-    .footer-container { max-width: 800px; margin: 0 auto; }
-    .social-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
-    .social-pill { background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); color: #fff; padding: 10px 18px; border-radius: 12px; font-size: 0.85rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px; }
-    .footer-section-title { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 14px; }
-    .footer-contacts { font-size: 0.88rem; margin-bottom: 30px; line-height: 2; color: #cbd5e1; }
-    .footer-menu-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 35px; }
-    .footer-menu-list a { color: #94a3b8; text-decoration: none; font-size: 0.88rem; }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; font-size: 0.8rem; color: #64748b; line-height: 1.6; }
-
-    /* MODAL OVERLAYS */
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(8px); z-index: 999; display: flex; justify-content: center; align-items: center; padding: 20px; opacity: 0; visibility: hidden; transition: 0.3s ease; }
+    /* MODAL WA */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 999; display: flex; justify-content: center; align-items: center; padding: 20px; opacity: 0; visibility: hidden; transition: 0.3s; }
     .modal-overlay.active { opacity: 1; visibility: visible; }
-
-    .popup-close-circle { position: absolute; top: 18px; right: 18px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.12); color: #fff; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
-    .popup-close-circle:hover { background: rgba(255, 255, 255, 0.2); }
-
-    /* POPUP WA GROUP */
-    .popup-wa-card { background: linear-gradient(180deg, #180d2a 0%, #0c0d14 100%); border: 1px solid rgba(139, 92, 246, 0.25); border-radius: 28px; width: 100%; max-width: 380px; padding: 32px 24px 28px 24px; text-align: center; position: relative; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8); }
-    .popup-avatar-box { width: 85px; height: 85px; margin: 10px auto 20px auto; border-radius: 20px; overflow: hidden; border: 2px solid rgba(168, 85, 247, 0.5); background: #1e1b2e; display: flex; align-items: center; justify-content: center; }
+    .popup-wa-card { background: linear-gradient(180deg, #180d2a 0%, #0c0d14 100%); border: 1px solid rgba(139, 92, 246, 0.25); border-radius: 28px; width: 100%; max-width: 380px; padding: 32px 24px 28px 24px; text-align: center; position: relative; }
+    .popup-close-circle { position: absolute; top: 18px; right: 18px; background: rgba(255, 255, 255, 0.08); border: none; color: #fff; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; }
+    .popup-avatar-box { width: 85px; height: 85px; margin: 10px auto 20px auto; border-radius: 20px; overflow: hidden; border: 2px solid rgba(168, 85, 247, 0.5); }
     .popup-avatar-box img { width: 100%; height: 100%; object-fit: cover; }
-    .popup-title { font-size: 1.15rem; font-weight: 800; color: #ffffff; text-transform: uppercase; margin-bottom: 12px; }
-    .popup-desc { font-size: 0.85rem; color: #94a3b8; line-height: 1.6; margin-bottom: 24px; }
-    .popup-btn-join { display: block; width: 100%; background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); color: #fff; text-decoration: none; padding: 14px; border-radius: 14px; font-weight: 700; font-size: 0.92rem; margin-bottom: 10px; }
-    .popup-btn-later { width: 100%; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); color: #ffffff; padding: 13px; border-radius: 14px; font-weight: 700; font-size: 0.92rem; cursor: pointer; }
-
-    /* PAYMENT MODAL */
-    .payment-modal-box { background: #12151e; border: 1px solid var(--border-color); border-radius: 24px; width: 100%; max-width: 420px; max-height: 90vh; overflow-y: auto; padding: 24px; position: relative; text-align: left; }
-    .payment-modal-title { font-size: 1.15rem; font-weight: 800; color: #fff; margin-bottom: 4px; text-transform: uppercase; }
-    .payment-modal-sub { font-size: 0.8rem; color: var(--text-sub); margin-bottom: 20px; line-height: 1.5; }
-    
-    .pay-section-box { background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 16px; padding: 16px; margin-bottom: 16px; }
-    .pay-section-box h4 { font-size: 0.9rem; font-weight: 800; color: #fff; margin-bottom: 8px; }
-    .pay-section-box p { font-size: 0.78rem; color: var(--text-sub); margin-bottom: 12px; }
-    .qris-img-wrap { width: 100%; border-radius: 12px; overflow: hidden; background: #fff; padding: 8px; }
-    .qris-img-wrap img { width: 100%; display: block; border-radius: 8px; }
-
-    .pay-detail-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-    .pay-acc-number { font-size: 0.95rem; font-weight: 800; color: #38bdf8; }
-    .pay-acc-holder { font-size: 0.78rem; color: var(--text-sub); margin-top: 2px; }
-    .btn-copy { background: #7c3aed; color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
-    .btn-copy:hover { opacity: 0.9; }
-
-    .btn-confirm-pay { display: block; width: 100%; background: var(--wa-green); color: #fff; text-align: center; text-decoration: none; padding: 13px; border-radius: 12px; font-weight: 700; font-size: 0.9rem; margin-top: 10px; }
-
-    /* DETAIL PRODUCT MODAL */
-    .detail-modal-box { background: #12151e; border: 1px solid var(--border-color); border-radius: 20px; width: 100%; max-width: 480px; max-height: 88vh; overflow-y: auto; position: relative; display: flex; flex-direction: column; }
-    .detail-cover-img { width: 100%; max-height: 260px; object-fit: cover; border-top-left-radius: 20px; border-top-right-radius: 20px; }
-    .detail-body { padding: 20px; }
-    .detail-title { font-size: 1.25rem; font-weight: 800; color: #fff; margin-bottom: 12px; text-transform: uppercase; }
-    .detail-price-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--border-color); }
-    .detail-price { font-size: 1.25rem; font-weight: 800; color: #ef4444; }
-    .btn-wa-direct { background: var(--wa-green); color: #fff; text-decoration: none; padding: 10px 18px; border-radius: 10px; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 8px; }
-    .detail-desc-text { font-size: 0.85rem; color: #cbd5e1; line-height: 1.7; white-space: pre-wrap; }
+    .popup-title { font-size: 1.15rem; font-weight: 800; color: #fff; margin-bottom: 10px; text-transform: uppercase; }
+    .popup-desc { font-size: 0.85rem; color: #94a3b8; margin-bottom: 20px; line-height: 1.5; }
+    .popup-btn-join { display: block; width: 100%; background: linear-gradient(135deg, #a855f7, #6366f1); color: #fff; text-decoration: none; padding: 14px; border-radius: 14px; font-weight: 700; margin-bottom: 10px; }
+    .popup-btn-later { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); color: #fff; padding: 13px; border-radius: 14px; font-weight: 700; cursor: pointer; }
   </style>
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-  <!-- MODAL POPUP WA GROUP -->
+  <!-- MODAL POPUP WA -->
   <div id="wa-modal-overlay" class="modal-overlay">
     <div class="popup-wa-card">
       <button class="popup-close-circle" onclick="closeWaModal()"><i class="fa-solid fa-xmark"></i></button>
-      <div class="popup-avatar-box">
-        <img id="modal-banner-img" src="https://via.placeholder.com/150" alt="Avatar">
-      </div>
+      <div class="popup-avatar-box"><img id="modal-banner-img" src="https://via.placeholder.com/150" alt=""></div>
       <h3 id="modal-popup-title" class="popup-title">JOIN GRUP WHATSAPP</h3>
       <p id="modal-popup-desc" class="popup-desc">Masuk grup WhatsApp resmi untuk info promo & update produk.</p>
       <a id="modal-group-btn" href="#" target="_blank" class="popup-btn-join">Join Grup</a>
@@ -251,245 +110,29 @@
     </div>
   </div>
 
-  <!-- MODAL PAYMENT -->
-  <div id="payment-modal-overlay" class="modal-overlay">
-    <div class="payment-modal-box">
-      <button class="popup-close-circle" style="top:16px; right:16px;" onclick="closePaymentModal()"><i class="fa-solid fa-xmark"></i></button>
-      <h3 class="payment-modal-title">Payment <span class="site-brand-name">PRIME CT STORE</span></h3>
-      <p class="payment-modal-sub" id="pay-desc-header">Pilih pembayaran resmi. Setelah transfer, klik kirim bukti pembayaran untuk diarahkan ke WhatsApp owner.</p>
-      
-      <!-- QRIS -->
-      <div class="pay-section-box">
-        <h4>QRIS</h4>
-        <p>Scan QRIS resmi. Klik gambar untuk memperbesar.</p>
-        <div class="qris-img-wrap">
-          <img id="pay-qris-img" src="https://via.placeholder.com/300" alt="QRIS">
-        </div>
-      </div>
-
-      <!-- DANA -->
-      <div class="pay-section-box">
-        <h4>DANA</h4>
-        <div class="pay-detail-row">
-          <div>
-            <div id="pay-dana-no" class="pay-acc-number">083899782574</div>
-            <div id="pay-dana-name" class="pay-acc-holder">Atas nama: Tabayyuna Muharrama</div>
-          </div>
-          <button class="btn-copy" onclick="copyText('pay-dana-no', this)">Salin</button>
-        </div>
-      </div>
-
-      <!-- GOPAY -->
-      <div class="pay-section-box">
-        <h4>GoPay</h4>
-        <div class="pay-detail-row">
-          <div>
-            <div id="pay-gopay-no" class="pay-acc-number">083138675899</div>
-            <div id="pay-gopay-name" class="pay-acc-holder">Atas nama: Tabayyuna Muharrama</div>
-          </div>
-          <button class="btn-copy" onclick="copyText('pay-gopay-no', this)">Salin</button>
-        </div>
-      </div>
-
-      <a id="pay-confirm-btn" href="#" target="_blank" class="btn-confirm-pay"><i class="fa-brands fa-whatsapp fa-lg"></i> Kirim Bukti Pembayaran</a>
+  <div class="portal-card">
+    <div class="portal-avatar">
+      <img id="portal-logo" src="https://via.placeholder.com/150" alt="Logo">
+    </div>
+    <h1 id="portal-title">PRIME CT STORE</h1>
+    <p id="portal-desc">Platform digital terpercaya untuk kebutuhan akun premium, jasa editing, top up game, bot WhatsApp, dan layanan digital lainnya.</p>
+    
+    <div class="portal-buttons">
+      <!-- TOMBOL INI MENGARAH KE WEB PRODUK YANG BERBEDA FILE, MISAL: produk.html -->
+      <a href="produk.html" class="p-btn primary">Lihat Produk</a>
+      <a id="portal-owner-btn" href="#" target="_blank" class="p-btn">Hubungi Owner</a>
+      <a id="portal-tools-btn" href="#" target="_blank" class="p-btn">YNA TOOLS</a>
     </div>
   </div>
-
-  <!-- MODAL DETAIL PRODUK / JASA -->
-  <div id="detail-modal-overlay" class="modal-overlay">
-    <div class="detail-modal-box">
-      <button class="popup-close-circle" style="top:12px; right:12px;" onclick="closeDetailModal()"><i class="fa-solid fa-xmark"></i></button>
-      <img id="modal-detail-img" src="" alt="Cover" class="detail-cover-img">
-      <div class="detail-body">
-        <h2 id="modal-detail-title" class="detail-title">Nama Produk</h2>
-        <div class="detail-price-row">
-          <div id="modal-detail-price" class="detail-price">Rp 0</div>
-          <a id="modal-detail-wa-btn" href="#" target="_blank" class="btn-wa-direct">
-            <i class="fa-brands fa-whatsapp fa-lg"></i> Beli via WA
-          </a>
-        </div>
-        <div id="modal-detail-desc" class="detail-desc-text">Deskripsi lengkap...</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- HEADER -->
-  <header>
-    <div class="nav-container">
-      <a href="#" class="brand">
-        <img id="main-logo" src="https://via.placeholder.com/150" alt="Logo">
-        <span class="site-brand-name">PRIME CT STORE</span>
-      </a>
-      <a href="#" class="wa-link nav-btn-wa" target="_blank"><i class="fa-brands fa-whatsapp"></i> CS WhatsApp</a>
-    </div>
-  </header>
-
-  <!-- RUNNING TEXT -->
-  <div class="announcement-bar">
-    <marquee><i class="fa-solid fa-bullhorn" style="color:#f59e0b;"></i> Selamat Datang di <span class="highlight-bold">PRIME CT STORE</span> • Layanan Digital & Jasa Online Terpercaya Fast Response</marquee>
-  </div>
-
-  <div class="container">
-
-    <!-- HERO BANNER UTAMA DENGAN 4 TOMBOL -->
-    <div id="hero-banner-box" class="hero-banner">
-      <div id="hero-overlay" class="hero-banner-overlay"></div>
-      <div class="hero-banner-content">
-        <div class="hero-avatar">
-          <img id="hero-avatar-img" src="https://via.placeholder.com/150" alt="Avatar">
-        </div>
-        <h1 id="hero-title" class="site-brand-name">PRIME CT STORE</h1>
-        <p id="hero-desc">Platform digital terpercaya untuk kebutuhan akun premium, jasa editing, top up game, bot WhatsApp, script bot, panel, VPS, partner, dan layanan digital lainnya.</p>
-        
-        <div class="hero-action-buttons">
-          <a href="#product-section" class="hero-btn primary">Lihat Produk</a>
-          <a href="javascript:void(0)" onclick="openPaymentModal()" class="hero-btn">Payment</a>
-          <a id="hero-owner-btn" href="#" target="_blank" class="hero-btn">Hubungi Owner</a>
-          <a id="hero-tools-btn" href="#" target="_blank" class="hero-btn">YNA TOOLS</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- SEARCH & TABS -->
-    <div class="search-box">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" id="search-input" placeholder="Cari produk atau layanan..." onkeyup="filterItems()">
-    </div>
-
-    <div class="category-tabs">
-      <button class="tab-btn active" onclick="switchCategory('all', this)"><i class="fa-solid fa-border-all"></i> Semua</button>
-      <button class="tab-btn" onclick="switchCategory('products', this)"><i class="fa-solid fa-box"></i> Produk</button>
-      <button class="tab-btn" onclick="switchCategory('services', this)"><i class="fa-solid fa-headset"></i> Layanan / Jasa</button>
-    </div>
-
-    <!-- SEKSI PRODUK -->
-    <div id="product-section">
-      <h2 class="section-title"><i class="fa-solid fa-bolt" style="color: #f59e0b;"></i> Daftar Produk</h2>
-      <div id="products-container" class="grid-container">
-        <div class="state-msg">Memuat daftar produk...</div>
-      </div>
-    </div>
-
-    <!-- SEKSI LAYANAN & JASA -->
-    <div id="service-section">
-      <h2 class="section-title"><i class="fa-solid fa-shield-halved" style="color: #3b82f6;"></i> Layanan & Jasa</h2>
-      <div id="services-container" class="grid-container">
-        <div class="state-msg">Memuat daftar layanan...</div>
-      </div>
-    </div>
-
-    <!-- SEKSI TENTANG STORE -->
-    <div class="about-card-box">
-      <h3>Siapa itu <span class="site-brand-name">PRIME CT STORE</span>?</h3>
-      <p id="about-desc-p1">STORE adalah digital store yang dikembangkan dan dikelola oleh Tabayyuna Muharrama, atau yang akrab dikenal dengan nama panggilan Yuna. Yuna dikenal sebagai sosok serba bisa dengan banyak bidang keahlian, mulai dari owner, admin, developer, engineer, desainer, editor, konten kreator, hingga pengelola layanan digital.</p>
-      <div class="about-tags">
-        <span class="about-tag-pill">Owner</span>
-        <span class="about-tag-pill">Admin</span>
-        <span class="about-tag-pill">Developer</span>
-        <span class="about-tag-pill">Engineer</span>
-        <span class="about-tag-pill">Designer</span>
-        <span class="about-tag-pill">Editor</span>
-        <span class="about-tag-pill">Content Creator</span>
-      </div>
-    </div>
-
-    <!-- STATISTIK -->
-    <div class="stats-card-box">
-      <div id="stats-count-el" class="stats-number">8.929+</div>
-      <div class="stats-label">Total Pelanggan</div>
-      <p id="stats-desc-el" class="stats-desc">Dipercaya oleh ribuan pelanggan untuk kebutuhan digital.</p>
-      <div class="feature-list">
-        <div class="feature-item">
-          <h4>Fast Response</h4>
-          <p>Admin siap bantu proses order dan konfirmasi payment.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- CTA BANNER -->
-    <div class="cta-banner">
-      <h3 class="cta-title">Butuh order cepat?</h3>
-      <p class="cta-desc">Klik produk yang kamu mau, isi detail order, pilih pembayaran, lalu kirim bukti ke WhatsApp kami.</p>
-      <a href="#product-section" class="cta-btn">Mulai Order</a>
-    </div>
-
-  </div>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-container">
-      <div class="social-pills">
-        <a id="soc-wa-link" href="#" target="_blank" class="social-pill"><i class="fa-brands fa-whatsapp" style="color:#25d366;"></i> WhatsApp</a>
-        <a id="soc-ig-link" href="#" target="_blank" class="social-pill"><i class="fa-brands fa-instagram" style="color:#e1306c;"></i> Instagram</a>
-        <a id="soc-tg-link" href="#" target="_blank" class="social-pill"><i class="fa-brands fa-telegram" style="color:#229ed9;"></i> Telegram</a>
-      </div>
-      <div class="footer-section-title">Kontak Cepat</div>
-      <div class="footer-contacts">
-        <div>WhatsApp: <span id="cnt-wa-1">0831-7340-3262</span></div>
-        <div>WA Cadangan: <span id="cnt-wa-2">0831-3867-5899</span></div>
-        <div>Gmail: <span id="cnt-email">nadbrtpro@gmail.com</span></div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; <span id="year">2026</span> <span class="site-brand-name">PRIME CT STORE</span>. All Rights Reserved.</p>
-      </div>
-    </div>
-  </footer>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-
     const SUPABASE_URL = 'https://krxzhxxytjmqmvzndofw.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_BtMu9ACi_o-V29IdGZdIDA_th6tjNzi';
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    let activeWhatsappNumber = '';
-    let globalProducts = [];
-    let globalServices = [];
-
     function closeWaModal() { document.getElementById('wa-modal-overlay').classList.remove('active'); }
-    function openPaymentModal() { document.getElementById('payment-modal-overlay').classList.add('active'); }
-    function closePaymentModal() { document.getElementById('payment-modal-overlay').classList.remove('active'); }
-    function closeDetailModal() { document.getElementById('detail-modal-overlay').classList.remove('active'); }
 
-    function copyText(elementId, btn) {
-      const text = document.getElementById(elementId).textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        const originalText = btn.textContent;
-        btn.textContent = 'Berhasil!';
-        setTimeout(() => btn.textContent = originalText, 2000);
-      });
-    }
-
-    function openProductDetail(id) {
-      const prod = globalProducts.find(p => p.id === id);
-      if (!prod) return;
-      const priceFormatted = Number(prod.price).toLocaleString('id-ID');
-      const waText = encodeURIComponent(`Halo Admin, saya mau pesan produk: ${prod.name}`);
-      const waUrl = activeWhatsappNumber ? `https://wa.me/${activeWhatsappNumber}?text=${waText}` : '#';
-
-      document.getElementById('modal-detail-img').src = prod.image_url || 'https://via.placeholder.com/300';
-      document.getElementById('modal-detail-title').textContent = prod.name;
-      document.getElementById('modal-detail-price').textContent = `Rp ${priceFormatted}`;
-      document.getElementById('modal-detail-desc').textContent = prod.description || 'Tidak ada deskripsi.';
-      document.getElementById('modal-detail-wa-btn').href = waUrl;
-      document.getElementById('detail-modal-overlay').classList.add('active');
-    }
-
-    function openServiceDetail(id) {
-      const serv = globalServices.find(s => s.id === id);
-      if (!serv) return;
-      const waText = encodeURIComponent(`Halo Admin, saya mau pesan jasa: ${serv.title}`);
-      const waUrl = activeWhatsappNumber ? `https://wa.me/${activeWhatsappNumber}?text=${waText}` : '#';
-
-      document.getElementById('modal-detail-img').src = 'https://via.placeholder.com/300?text=Jasa+%26+Layanan';
-      document.getElementById('modal-detail-title').textContent = serv.title;
-      document.getElementById('modal-detail-price').textContent = 'Layanan / Jasa';
-      document.getElementById('modal-detail-desc').textContent = serv.description || 'Tidak ada deskripsi.';
-      document.getElementById('modal-detail-wa-btn').href = waUrl;
-      document.getElementById('detail-modal-overlay').classList.add('active');
-    }
-
-    async function loadWebsiteSettings() {
+    async function loadPortalSettings() {
       const { data } = await supabaseClient.from('site_settings').select('*');
       if (!data) return;
 
@@ -499,57 +142,23 @@
       data.forEach(item => {
         if (item.key === 'site_title' && item.value) {
           document.title = item.value;
-          document.querySelectorAll('.site-brand-name').forEach(el => {
-            if(el.id !== 'hero-title') el.textContent = item.value;
-          });
+          document.querySelectorAll('.site-brand-name').forEach(el => el.textContent = item.value);
         }
         if (item.key === 'logo_url' && item.value) {
-          const logoEl = document.getElementById('main-logo');
-          if (logoEl) logoEl.src = item.value;
-          const heroAvatar = document.getElementById('hero-avatar-img');
-          if (heroAvatar) heroAvatar.src = item.value;
+          document.getElementById('portal-logo').src = item.value;
         }
-
         if (item.key === 'hero_title' && item.value) {
-          const heroTitle = document.getElementById('hero-title');
-          if (heroTitle) heroTitle.textContent = item.value;
+          document.getElementById('portal-title').textContent = item.value;
         }
         if (item.key === 'hero_desc' && item.value) {
-          const heroDesc = document.getElementById('hero-desc');
-          if (heroDesc) heroDesc.textContent = item.value;
+          document.getElementById('portal-desc').textContent = item.value;
         }
-        if (item.key === 'banner_url' && item.value) {
-          const heroBox = document.getElementById('hero-banner-box');
-          const heroOverlay = document.getElementById('hero-overlay');
-          if (heroBox) {
-            heroBox.style.backgroundImage = `url('${item.value}')`;
-            if (heroOverlay) heroOverlay.style.display = 'block';
-          }
-        }
-
         if (item.key === 'whatsapp_number' && item.value) {
-          activeWhatsappNumber = item.value;
-          document.querySelectorAll('.wa-link').forEach(btn => btn.href = `https://wa.me/${item.value}`);
-          document.getElementById('soc-wa-link').href = `https://wa.me/${item.value}`;
-          document.getElementById('cnt-wa-1').textContent = item.value;
-          document.getElementById('hero-owner-btn').href = `https://wa.me/${item.value}?text=Halo%20Owner%20saya%20ingin%20menghubungi%20Anda`;
-          document.getElementById('pay-confirm-btn').href = `https://wa.me/${item.value}?text=Halo%20Admin,%20saya%20sudah%20melakukan%20pembayaran.%20Berikut%20bukti%20transfernya:`;
+          document.getElementById('portal-owner-btn').href = `https://wa.me/${item.value}`;
         }
-        if (item.key === 'contact_wa_2' && item.value) document.getElementById('cnt-wa-2').textContent = item.value;
-        if (item.key === 'contact_email' && item.value) document.getElementById('cnt-email').textContent = item.value;
-
-        if (item.key === 'social_ig' && item.value) document.getElementById('soc-ig-link').href = item.value;
-        if (item.key === 'social_tg' && item.value) document.getElementById('soc-tg-link').href = item.value;
-        if (item.key === 'ynatools_link' && item.value) document.getElementById('hero-tools-btn').href = item.value;
-
-        // Payment Settings
-        if (item.key === 'qris_image_url' && item.value) document.getElementById('pay-qris-img').src = item.value;
-        if (item.key === 'dana_number' && item.value) document.getElementById('pay-dana-no').textContent = item.value;
-        if (item.key === 'dana_name' && item.value) document.getElementById('pay-dana-name').textContent = `Atas nama: ${item.value}`;
-        if (item.key === 'gopay_number' && item.value) document.getElementById('pay-gopay-no').textContent = item.value;
-        if (item.key === 'gopay_name' && item.value) document.getElementById('pay-gopay-name').textContent = `Atas nama: ${item.value}`;
-
-        // Popup WA
+        if (item.key === 'ynatools_link' && item.value) {
+          document.getElementById('portal-tools-btn').href = item.value;
+        }
         if (item.key === 'popup_enabled') isPopupEnabled = (item.value === 'true');
         if (item.key === 'popup_title' && item.value) document.getElementById('modal-popup-title').textContent = item.value;
         if (item.key === 'popup_desc' && item.value) document.getElementById('modal-popup-desc').textContent = item.value;
@@ -567,78 +176,7 @@
       }
     }
 
-    async function loadPublicProducts() {
-      const container = document.getElementById('products-container');
-      const { data: products } = await supabaseClient.from('products').select('*').order('created_at', { ascending: false });
-      if (!products || products.length === 0) {
-        container.innerHTML = '<div class="state-msg">Belum ada produk.</div>';
-        globalProducts = [];
-      } else {
-        globalProducts = products;
-        renderProducts(products);
-      }
-    }
-
-    function renderProducts(products) {
-      const container = document.getElementById('products-container');
-      container.innerHTML = products.map(prod => `
-        <div onclick="openProductDetail('${prod.id}')" class="store-card">
-          <span class="card-badge">PROMO</span>
-          <img class="card-img" src="${prod.image_url || 'https://via.placeholder.com/150'}" alt="${prod.name}">
-          <div>
-            <div class="card-title">${prod.name}</div>
-            <div class="card-desc">${prod.description || ''}</div>
-            <div class="card-price">Rp ${Number(prod.price).toLocaleString('id-ID')}</div>
-          </div>
-          <div class="card-btn">Lihat Detail</div>
-        </div>
-      `).join('');
-    }
-
-    async function loadPublicServices() {
-      const container = document.getElementById('services-container');
-      const { data: services } = await supabaseClient.from('services').select('*').order('created_at', { ascending: false });
-      if (!services || services.length === 0) {
-        container.innerHTML = '<div class="state-msg">Belum ada layanan.</div>';
-        globalServices = [];
-      } else {
-        globalServices = services;
-        renderServices(services);
-      }
-    }
-
-    function renderServices(services) {
-      const container = document.getElementById('services-container');
-      container.innerHTML = services.map(serv => `
-        <div onclick="openServiceDetail('${serv.id}')" class="store-card">
-          <span class="card-badge" style="background:#059669;">JASA</span>
-          <div>
-            <div class="card-title" style="margin-top:8px;">${serv.title}</div>
-            <div class="card-desc">${serv.description || ''}</div>
-          </div>
-          <div class="card-btn" style="background:#059669;">Lihat Detail</div>
-        </div>
-      `).join('');
-    }
-
-    function filterItems() {
-      const query = document.getElementById('search-input').value.toLowerCase();
-      renderProducts(globalProducts.filter(p => p.name.toLowerCase().includes(query)));
-      renderServices(globalServices.filter(s => s.title.toLowerCase().includes(query)));
-    }
-
-    function switchCategory(cat, btn) {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('product-section').style.display = (cat === 'services') ? 'none' : 'block';
-      document.getElementById('service-section').style.display = (cat === 'products') ? 'none' : 'block';
-    }
-
-    document.addEventListener('DOMContentLoaded', async () => {
-      await loadWebsiteSettings();
-      loadPublicProducts();
-      loadPublicServices();
-    });
+    loadPortalSettings();
   </script>
 </body>
 </html>
