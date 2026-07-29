@@ -81,54 +81,80 @@
     .card-btn { background: #2563eb; color: #fff; text-align: center; padding: 6px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; }
     .state-msg { grid-column: 1 / -1; text-align: center; padding: 25px; color: var(--text-sub); background: var(--bg-card-solid); border-radius: 12px; border: 1px dashed var(--border-color); }
 
-    /* ======================================= */
-    /* 1. KARTU STATISTIK PELANGGAN (SCREENSHOT 1) */
-    /* ======================================= */
+
+    /* =================================================== */
+    /* 1. SEKSI "SIAPA ITU PRIME CT OFFICIAL"              */
+    /* =================================================== */
+    .about-card-box {
+      background: linear-gradient(180deg, rgba(30, 27, 75, 0.5) 0%, rgba(15, 23, 42, 0.8) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 24px 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+    .about-card-box h3 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 10px;
+      letter-spacing: 0.3px;
+    }
+    .about-card-box p {
+      font-size: 0.88rem;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+
+    /* =================================================== */
+    /* 2. KARTU STATISTIK "TOTAL PELANGGAN"                */
+    /* =================================================== */
     .stats-card-box {
       background: linear-gradient(180deg, rgba(30, 27, 75, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 24px;
-      padding: 35px 20px 25px 20px;
+      padding: 30px 20px 25px 20px;
       margin-bottom: 20px;
       text-align: center;
       backdrop-filter: blur(10px);
     }
     .stats-number {
-      font-size: 3rem;
+      font-size: 3.2rem;
       font-weight: 800;
       background: linear-gradient(135deg, #c084fc 0%, #38bdf8 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      line-height: 1.1;
+      line-height: 1;
       margin-bottom: 6px;
     }
-    .stats-label { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 16px; }
-    .stats-desc { font-size: 0.88rem; color: #94a3b8; line-height: 1.6; max-width: 600px; margin: 0 auto 30px auto; }
+    .stats-label { font-size: 1.15rem; font-weight: 800; color: #fff; margin-bottom: 14px; }
+    .stats-desc { font-size: 0.88rem; color: #94a3b8; line-height: 1.6; max-width: 600px; margin: 0 auto 26px auto; }
 
     /* FITUR KEUNGGULAN */
-    .feature-list { display: flex; flex-direction: column; gap: 14px; text-align: left; }
+    .feature-list { display: flex; flex-direction: column; gap: 12px; text-align: left; }
     .feature-item {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 16px;
-      padding: 18px 20px;
+      padding: 16px 20px;
     }
-    .feature-item h4 { font-size: 0.98rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .feature-item h4 { font-size: 0.98rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
     .feature-item p { font-size: 0.83rem; color: #94a3b8; line-height: 1.5; }
 
-    /* ======================================= */
-    /* 2. BANNER ORDER CEPAT (SCREENSHOT 2)    */
-    /* ======================================= */
+    /* =================================================== */
+    /* 3. BANNER "BUTUH ORDER CEPAT?"                     */
+    /* =================================================== */
     .cta-banner {
       background: linear-gradient(180deg, rgba(58, 28, 113, 0.5) 0%, rgba(20, 18, 40, 0.8) 100%);
       border: 1px solid rgba(168, 85, 247, 0.25);
       border-radius: 24px;
-      padding: 35px 20px;
+      padding: 32px 20px;
       text-align: center;
       margin-bottom: 35px;
     }
     .cta-title { font-size: 1.45rem; font-weight: 800; color: #fff; margin-bottom: 12px; }
-    .cta-desc { font-size: 0.88rem; color: #cbd5e1; line-height: 1.6; max-width: 500px; margin: 0 auto 24px auto; }
+    .cta-desc { font-size: 0.88rem; color: #cbd5e1; line-height: 1.6; max-width: 500px; margin: 0 auto 22px auto; }
     .cta-btn {
       display: inline-block;
       background: linear-gradient(135deg, #a855f7, #6366f1);
@@ -141,9 +167,7 @@
       box-shadow: 0 8px 20px rgba(168, 85, 247, 0.35);
     }
 
-    /* ======================================= */
-    /* 3. FOOTER BRAND & KONTAK (SCREENSHOT 2&3)*/
-    /* ======================================= */
+    /* FOOTER UTAMA */
     footer {
       border-top: 1px solid var(--border-color);
       padding: 30px 16px 20px 16px;
@@ -151,11 +175,7 @@
       color: var(--text-sub);
     }
     .footer-container { max-width: 800px; margin: 0 auto; }
-    
-    .footer-brand h3 { font-size: 1.2rem; font-weight: 800; color: #fff; margin-bottom: 8px; letter-spacing: 0.5px; }
-    .footer-brand p { font-size: 0.88rem; color: #94a3b8; line-height: 1.5; margin-bottom: 18px; }
 
-    /* TOMBOL SOSMED */
     .social-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
     .social-pill {
       background: rgba(255, 255, 255, 0.04);
@@ -172,10 +192,8 @@
     }
 
     .footer-section-title { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 14px; }
-    
     .footer-contacts { font-size: 0.88rem; margin-bottom: 30px; line-height: 2; color: #cbd5e1; }
 
-    /* MENU DINAMIS SINKRON DENGAN PRODUK */
     .footer-menu-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 35px; }
     .footer-menu-list a { color: #94a3b8; text-decoration: none; font-size: 0.88rem; transition: 0.2s; }
     .footer-menu-list a:hover { color: #38bdf8; }
@@ -258,7 +276,19 @@
       </div>
     </div>
 
-    <!-- 1. KARTU STATISTIK TOTAL PELANGGAN (Sesuai Screenshot 1) -->
+    <!-- ======================================= -->
+    <!-- 1. SEKSI SIAPA ITU PRIME CT OFFICIAL   -->
+    <!-- ======================================= -->
+    <div class="about-card-box">
+      <h3>Siapa itu PRIME CT OFFICIAL?</h3>
+      <p id="about-desc-el">
+        <span class="site-brand-name">PRIME CT STORE</span> adalah platform penyedia produk digital dan jasa online terpercaya yang hadir untuk memenuhi berbagai kebutuhan digital Anda secara praktis, cepat, dan terjamin aman.
+      </p>
+    </div>
+
+    <!-- ======================================= -->
+    <!-- 2. KARTU STATISTIK TOTAL PELANGGAN      -->
+    <!-- ======================================= -->
     <div class="stats-card-box">
       <div id="stats-count-el" class="stats-number">8.929+</div>
       <div class="stats-label">Total Pelanggan</div>
@@ -282,7 +312,9 @@
       </div>
     </div>
 
-    <!-- 2. BANNER BUTUH ORDER CEPAT? (Sesuai Screenshot 2) -->
+    <!-- ======================================= -->
+    <!-- 3. BANNER BUTUH ORDER CEPAT?           -->
+    <!-- ======================================= -->
     <div class="cta-banner">
       <h3 class="cta-title">Butuh order cepat?</h3>
       <p class="cta-desc">Klik produk yang kamu mau, isi detail order, pilih pembayaran, lalu kirim bukti ke WhatsApp kami.</p>
@@ -291,16 +323,10 @@
 
   </div>
 
-  <!-- 3. FOOTER BRAND, KONTAK, DAN MENU (Sesuai Screenshot 2 & 3) -->
+  <!-- FOOTER UTAMA -->
   <footer>
     <div class="footer-container">
       
-      <!-- NAMA BRAND & DESKRIPSI (Ganti YNA STORE -> PRIME CT STORE) -->
-      <div class="footer-brand">
-        <h3 class="site-brand-name">PRIME CT STORE</h3>
-        <p id="footer-bio-text">Platform digital terpercaya untuk kebutuhan layanan digital premium.</p>
-      </div>
-
       <!-- SOSMED PILLS -->
       <div class="social-pills">
         <a id="soc-wa-link" href="#" target="_blank" class="social-pill"><i class="fa-brands fa-whatsapp" style="color:#25d366;"></i> WhatsApp</a>
@@ -316,11 +342,10 @@
         <div>Gmail: <span id="cnt-email">nadbrtpro@gmail.com</span></div>
       </div>
 
-      <!-- MENU OTOMATIS SINKRON -->
+      <!-- MENU SINKRON DATABASE -->
       <div class="footer-section-title">Menu</div>
       <ul id="dynamic-footer-menu" class="footer-menu-list">
         <li><a href="#product-section">Produk & Jasa</a></li>
-        <!-- Item Produk & Jasa Otomatis Diisi dari Database -->
       </ul>
 
       <!-- COPYRIGHT -->
@@ -378,7 +403,8 @@
         if (item.key === 'social_ig' && item.value) document.getElementById('soc-ig-link').href = item.value;
         if (item.key === 'social_tg' && item.value) document.getElementById('soc-tg-link').href = item.value;
 
-        // Stats & Features
+        // About & Stats Text
+        if (item.key === 'about_desc' && item.value) document.getElementById('about-desc-el').textContent = item.value;
         if (item.key === 'stats_count' && item.value) document.getElementById('stats-count-el').textContent = item.value;
         if (item.key === 'stats_desc' && item.value) document.getElementById('stats-desc-el').textContent = item.value;
 
@@ -477,7 +503,6 @@
       }).join('');
     }
 
-    // MEMBUAT MENU FOOTER SINKRON OTOMATIS DENGAN DB PRODUK & JASA
     function syncFooterMenu() {
       const menuContainer = document.getElementById('dynamic-footer-menu');
       let menuHTML = `<li><a href="#product-section">Produk & Jasa</a></li>`;
