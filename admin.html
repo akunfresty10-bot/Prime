@@ -199,6 +199,21 @@
       🔐 Token aktif: <span id="tokenMask">—</span> &nbsp;·&nbsp; Tersimpan di browser, tidak di file
     </div>
 
+    <!-- LOGO -->
+    <div class="section-header">Logo Toko</div>
+    <div class="card">
+      <label class="field-label">URL Logo (gambar)</label>
+      <input type="text" class="field-input" id="f_logo" placeholder="https://.../logo.png" oninput="updateLogoPreview()">
+      <div class="hint" style="margin-bottom:0;">
+        Tempel link gambar logo (contoh: link Supabase Storage, Imgur, dsb — format PNG/JPG persegi paling pas).
+        Kosongkan lagi kalau mau kembali ke logo bawaan "CT".
+      </div>
+      <div id="logoPreviewWrap" style="display:none; align-items:center; gap:12px; margin-top:14px;">
+        <img id="logoPreview" src="" alt="Preview logo" style="width:44px; height:44px; object-fit:cover; border-radius:8px; border:1px solid var(--border);">
+        <span style="font-size:11px; color:var(--muted);">Preview logo</span>
+      </div>
+    </div>
+
     <!-- KONTAK -->
     <div class="section-header">Kontak & Sosial</div>
     <div class="card">
@@ -243,7 +258,12 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+const SUPABASE_URL = 'https://krxzhxxytjmqmvzndofw.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_BtMu9ACi_o-V29IdGZdIDA_th6tjNzi';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 const PASSWORD = 'MYHEARTITSYORI';
 let SESSION_TOKEN = '';
 
@@ -295,8 +315,18 @@ function addProduk() { produkData.push({ nama: '', harga: '' }); renderProduk();
 function delProduk(i) { produkData.splice(i, 1); renderProduk(); }
 
 // ── LOAD SAVED ──
+function updateLogoPreview() {
+  const url = document.getElementById('f_logo').value.trim();
+  const wrap = document.getElementById('logoPreviewWrap');
+  const img = document.getElementById('logoPreview');
+  if (url) { img.src = url; wrap.style.display = 'flex'; }
+  else { wrap.style.display = 'none'; img.src = ''; }
+}
+
 function loadSaved() {
   const s = JSON.parse(localStorage.getItem('pct_config') || '{}');
+  document.getElementById('f_logo').value    = s.logo    || '';
+  updateLogoPreview();
   document.getElementById('f_wa').value      = s.wa      || '6281325507265';
   document.getElementById('f_wagroup').value = s.wagroup || 'https://chat.whatsapp.com/Bznb7P7IaGNAIgumOjUPT5?s=cl&p=a&ilr=4';
   document.getElementById('f_email').value   = s.email   || 'primectoffc@gmail.com';
@@ -311,6 +341,7 @@ function loadSaved() {
 
 function getCfg() {
   return {
+    logo:    document.getElementById('f_logo').value.trim(),
     wa:      document.getElementById('f_wa').value.trim(),
     wagroup: document.getElementById('f_wagroup').value.trim(),
     email:   document.getElementById('f_email').value.trim(),
@@ -397,6 +428,20 @@ async function saveAll() {
   status.className = 'save-status'; status.textContent = '';
 
   log('⚡ Memulai update...', 'linfo');
+
+  // ── SIMPAN LOGO & NOMOR WA KE SUPABASE (langsung live, tanpa commit) ──
+  try {
+    log('🗄️  Menyimpan logo & nomor WA ke Supabase...', 'linfo');
+    const { error: sbError } = await supabaseClient
+      .from('settings')
+      .update({ logo_url: cfg.logo || null, whatsapp_number: cfg.wa })
+      .eq('id', 1);
+    if (sbError) throw sbError;
+    log('  ✓ Supabase tersimpan — logo & WA langsung tayang untuk semua pengunjung', 'lok');
+  } catch (e) {
+    log(`  ✗ Gagal simpan ke Supabase: ${e.message}`, 'lerr');
+  }
+
   log(`📦 ${cfg.ghuser}/${cfg.ghrepo} (${cfg.branch})`, 'linfo');
 
   let ok = 0, skip = 0, fail = 0;
