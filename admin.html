@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel - PRIME CT</title>
+  <title>Live Admin Panel - PRIME CT</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -18,226 +18,110 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
     body { background-color: var(--bg-body); color: var(--text-main); min-height: 100vh; }
 
-    .admin-layout { display: flex; min-height: 100vh; }
-    
-    /* SIDEBAR */
-    .sidebar { width: 260px; background: rgba(13, 16, 24, 0.95); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; position: fixed; height: 100vh; z-index: 100; transition: 0.3s; }
-    .sidebar-brand { padding: 24px 20px; font-size: 1.15rem; font-weight: 800; border-bottom: 1px solid var(--border-color); color: #fff; display: flex; align-items: center; gap: 10px; }
-    .sidebar-brand i { color: var(--accent-purple); }
-    .sidebar-menu { padding: 20px 12px; display: flex; flex-direction: column; gap: 6px; flex-grow: 1; overflow-y: auto; }
-    .menu-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: var(--text-sub); text-decoration: none; border-radius: 12px; font-weight: 600; font-size: 0.9rem; transition: 0.2s; cursor: pointer; }
-    .menu-item:hover, .menu-item.active { background: rgba(139, 92, 246, 0.15); color: #fff; }
-    .menu-item i { width: 20px; text-align: center; }
-    .sidebar-footer { padding: 16px 20px; border-top: 1px solid var(--border-color); }
-    .logout-btn { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); width: 100%; padding: 10px; border-radius: 10px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    /* FLOATING ADMIN BAR */
+    .admin-floating-bar {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(20, 24, 36, 0.95);
+      border: 1px solid var(--accent-purple);
+      padding: 12px 20px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      z-index: 9999;
+      box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+      backdrop-filter: blur(10px);
+    }
+    .admin-floating-bar span { font-size: 0.85rem; font-weight: 700; color: #fff; }
+    .btn-save-live {
+      background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-save-live:hover { opacity: 0.9; }
 
-    /* MAIN CONTENT */
-    .main-content { margin-left: 260px; flex-grow: 1; padding: 30px; }
-    .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; background: var(--bg-card); border: 1px solid var(--border-color); padding: 16px 24px; border-radius: 16px; }
-    .page-title { font-size: 1.25rem; font-weight: 800; color: #fff; }
-
-    .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 24px; margin-bottom: 24px; }
-    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-    .card-title { font-size: 1.05rem; font-weight: 700; color: #fff; }
+    /* EDITABLE HIGHLIGHT MODE */
+    [contenteditable="true"] {
+      outline: 2px dashed rgba(139, 92, 246, 0.5);
+      outline-offset: 4px;
+      border-radius: 4px;
+      background: rgba(139, 92, 246, 0.05);
+      transition: 0.2s;
+    }
+    [contenteditable="true"]:focus {
+      outline: 2px solid var(--accent-purple);
+      background: rgba(139, 92, 246, 0.1);
+    }
 
     /* AUTH SCREEN */
-    #auth-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 999; display: flex; justify-content: center; align-items: center; padding: 20px; }
+    #auth-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 10000; display: flex; justify-content: center; align-items: center; padding: 20px; }
     .auth-box { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 24px; width: 100%; max-width: 400px; padding: 32px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
     .auth-title { font-size: 1.35rem; font-weight: 800; color: #fff; margin-bottom: 6px; text-align: center; }
     .auth-subtitle { font-size: 0.85rem; color: var(--text-sub); text-align: center; margin-bottom: 24px; }
-    
     .form-group { margin-bottom: 16px; }
     .form-label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-sub); margin-bottom: 6px; }
     .form-input { width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 12px; color: #fff; font-size: 0.9rem; outline: none; }
     .form-input:focus { border-color: var(--accent-purple); }
-    
-    .btn-primary { background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); color: #fff; border: none; width: 100%; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.2s; }
-    .btn-primary:hover { opacity: 0.9; }
+    .btn-primary { background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); color: #fff; border: none; width: 100%; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; }
 
-    /* TABLE */
-    .table-responsive { width: 100%; overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem; }
-    th { padding: 12px 16px; color: var(--text-sub); border-bottom: 1px solid var(--border-color); font-weight: 700; background: rgba(255,255,255,0.02); }
-    td { padding: 14px 16px; border-bottom: 1px solid var(--border-color); color: #fff; }
-    
-    .action-btns { display: flex; gap: 8px; }
-    .btn-action { padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; border: none; cursor: pointer; }
-    .btn-edit { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
-    .btn-delete { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
-
-    .section-tab-content { display: none; }
-    .section-tab-content.active { display: block; }
-
-    .grid-settings { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+    /* LAYOUT UTAMA WEBSITE PUBLIK (CONTOH) */
+    header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; border-bottom: 1px solid var(--border-color); }
+    .logo { font-size: 1.25rem; font-weight: 800; color: #fff; }
+    .hero { text-align: center; padding: 100px 20px; }
+    .hero h1 { font-size: 3rem; font-weight: 800; margin-bottom: 20px; color: #fff; }
+    .hero p { font-size: 1.1rem; color: var(--text-sub); max-width: 600px; margin: 0 auto; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-  <!-- LOGIN / REGISTER AUTH SCREEN -->
+  <!-- LOGIN SCREEN KHUSUS ADMIN -->
   <div id="auth-screen">
     <div class="auth-box">
-      <h2 class="auth-title">PRIME CT Admin</h2>
-      <p class="auth-subtitle">Masuk atau Daftar akun admin pengelola.</p>
-      
+      <h2 class="auth-title">PRIME CT Live Editor</h2>
+      <p class="auth-subtitle">Login untuk mulai mengedit web secara langsung.</p>
       <div class="form-group">
         <label class="form-label">Email</label>
-        <input type="email5" id="auth-email" class="form-input" placeholder="admin@primect.com">
+        <input type="email" id="auth-email" class="form-input" placeholder="admin@primect.com">
       </div>
       <div class="form-group">
         <label class="form-label">Password</label>
         <input type="password" id="auth-password" class="form-input" placeholder="••••••••">
       </div>
-      
-      <div style="display: flex; gap: 10px; margin-top: 20px;">
-        <button class="btn-primary" onclick="handleLogin()">Login</button>
-        <button class="btn-primary" style="background: rgba(255,255,255,0.1); border: 1px solid var(--border-color);" onclick="handleRegister()">Daftar</button>
-      </div>
+      <button class="btn-primary" onclick="handleLogin()">Masuk ke Mode Edit</button>
       <div id="auth-msg" style="margin-top: 15px; font-size: 0.8rem; text-align: center; color: #ef4444;"></div>
     </div>
   </div>
 
-  <!-- DASHBOARD LAYOUT -->
-  <div class="admin-layout">
-    <div class="sidebar">
-      <div class="sidebar-brand">
-        <i class="fa-solid fa-shield-halved"></i> PRIME CT Admin
-      </div>
-      <div class="sidebar-menu">
-        <a class="menu-item active" onclick="switchTab('tab-settings', this)"><i class="fa-solid fa-gear"></i> Pengaturan Situs</a>
-        <a class="menu-item" onclick="switchTab('tab-products', this)"><i class="fa-solid fa-box"></i> Kelola Produk</a>
-        <a class="menu-item" onclick="switchTab('tab-services', this)"><i class="fa-solid fa-headset"></i> Kelola Layanan</a>
-      </div>
-      <div class="sidebar-footer">
-        <button class="logout-btn" onclick="handleLogout()"><i class="fa-solid fa-right-from-bracket"></i> Keluar</button>
-      </div>
-    </div>
-
-    <div class="main-content">
-      <div class="top-header">
-        <div id="active-page-title" class="page-title">Pengaturan Situs</div>
-        <div style="font-size: 0.85rem; color: var(--text-sub);">Administrator</div>
-      </div>
-
-      <!-- TAB 1: PENGATURAN SITUS -->
-      <div id="tab-settings" class="section-tab-content active">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Konfigurasi Umum & Media & Pembayaran</h3>
-            <button class="btn-primary" style="width: auto; padding: 10px 20px;" onclick="saveAllSettings()">Simpan Perubahan</button>
-          </div>
-          
-          <div class="grid-settings">
-            <div class="form-group"><label class="form-label">Nama Situs</label><input type="text" id="set-site_title" class="form-input"></div>
-            <div class="form-group"><label class="form-label">URL Logo Gambar</label><input type="text" id="set-logo_url" class="form-input"></div>
-            <div class="form-group"><label class="form-label">Teks Hero Utama</label><input type="text" id="set-hero_title" class="form-input"></div>
-            <div class="form-group"><label class="form-label">Deskripsi Hero</label><input type="text" id="set-hero_desc" class="form-input"></div>
-            <div class="form-group"><label class="form-label">Nomor WhatsApp Utama</label><input type="text" id="set-whatsapp_number" class="form-input" placeholder="628xxxxxxxxxx"></div>
-            <div class="form-group"><label class="form-label">Nomor WA Cadangan</label><input type="text" id="set-whatsapp_backup" class="form-input"></div>
-            <div class="form-group"><label class="form-label">Email Kontak</label><input type="text" id="set-email_contact" class="form-input"></div>
-            <div class="form-group"><label class="form-label">Link Instagram</label><input type="text" id="set-instagram_link" class="form-input"></div>
-            <div class="form-group"><label class="form-label">Link Telegram</label><input type="text" id="set-telegram_link" class="form-input"></div>
-            
-            <!-- Link Menu Tambahan -->
-            <div class="form-group"><label class="form-label">Link PRIME Tools</label><input type="text" id="set-ynatools_link" class="form-input"></div>
-            <div class="form-group"><label class="form-label">Link PRIME Cpanel</label><input type="text" id="set-ynacpanel_link" class="form-input"></div>
-            <div class="form-group"><label class="form-label">Link PRIME Convert</label><input type="text" id="set-ynaconvert_link" class="form-input"></div>
-            <div class="form-group"><label class="form-label">Link PRIME AI</label><input type="text" id="set-ynaai_link" class="form-input"></div>
-
-            <!-- Background Media -->
-            <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">URL Latar Belakang (Video MP4 / Gambar URL)</label><input type="text" id="set-bg_media_url" class="form-input"></div>
-
-            <!-- Payment -->
-            <div class="form-group"><label class="form-label">URL Gambar QRIS</label><input type="text" id="set-qris_image_url" class="form-input"></div>
-            <div class="form-group"><label class="form-label">Nomor DANA</label><input type="text" id="set-dana_number" class="form-input"></div>
-            <div class="form-group"><label class="form-label">Nama Pemilik DANA</label><input type="text" id="set-dana_name" class="form-input"></div>
-            <div class="form-group"><label class="form-label">Nomor GOPAY</label><input type="text" id="set-gopay_number" class="form-input"></div>
-            <div class="form-group"><label class="form-label">Nama Pemilik GOPAY</label><input type="text" id="set-gopay_name" class="form-input"></div>
-
-            <!-- Popup WA -->
-            <div class="form-group"><label class="form-label">Aktifkan Popup WA (true / false)</label><input type="text" id="set-popup_enabled" class="form-input"></div>
-            <div class="form-group"><label class="form-label">Judul Popup WA</label><input type="text" id="set-popup_title" class="form-input"></div>
-            <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">Deskripsi Popup WA</label><input type="text" id="set-popup_desc" class="form-input"></div>
-            <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">Link Grup WA Popup</label><input type="text" id="set-wa_group_link" class="form-input"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB 2: KELOLA PRODUK -->
-      <div id="tab-products" class="section-tab-content">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Tambah / Edit Produk</h3>
-          </div>
-          <input type="hidden" id="prod-id">
-          <div class="grid-settings" style="margin-bottom: 16px;">
-            <div class="form-group"><label class="form-label">Nama Produk</label><input type="text" id="prod-name" class="form-input"></div>
-            <div class="form-group"><label class="form-label">Harga (Angka Saja)</label><input type="number" id="prod-price" class="form-input"></div>
-            <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">URL Gambar Produk</label><input type="text" id="prod-image" class="form-input"></div>
-            <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">Deskripsi Produk</label><textarea id="prod-desc" class="form-input" rows="3"></textarea></div>
-          </div>
-          <button class="btn-primary" onclick="saveProduct()">Simpan Produk</button>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title" style="margin-bottom: 16px;">Daftar Produk Tersedia</h3>
-          <div class="table-responsive">
-            <table>
-              <thead><tr><th>Nama</th><th>Harga</th><th>Aksi</th></tr></thead>
-              <tbody id="admin-products-table"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB 3: KELOLA LAYANAN -->
-      <div id="tab-services" class="section-tab-content">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Tambah / Edit Layanan & Jasa</h3>
-          </div>
-          <input type="hidden" id="serv-id">
-          <div class="grid-settings" style="margin-bottom: 16px;">
-            <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">Judul Layanan</label><input type="text" id="serv-title" class="form-input"></div>
-            <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">Deskripsi Layanan</label><textarea id="serv-desc" class="form-input" rows="3"></textarea></div>
-          </div>
-          <button class="btn-primary" onclick="saveService()">Simpan Layanan</button>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title" style="margin-bottom: 16px;">Daftar Layanan Tersedia</h3>
-          <div class="table-responsive">
-            <table>
-              <thead><tr><th>Judul</th><th>Deskripsi</th><th>Aksi</th></tr></thead>
-              <tbody id="admin-services-table"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-    </div>
+  <!-- FLOATING BAR UNTUK SAVE -->
+  <div class="admin-floating-bar">
+    <span><i class="fa-solid fa-pen-to-square" style="color: var(--accent-purple);"></i> Mode Edit Aktif</span>
+    <button class="btn-save-live" onclick="saveLiveChanges()">Simpan Perubahan</button>
   </div>
+
+  <!-- TAMPILAN WEB PUBLIK YANG BISA DI-KLIK & DI-KETIK LANGSUNG -->
+  <header>
+    <div class="logo" id="editable-site_title" contenteditable="true">PRIME CT</div>
+    <div style="font-size: 0.9rem; color: var(--text-sub);">Klik teks bergaris putus-putus untuk mengubahnya.</div>
+  </header>
+
+  <section class="hero">
+    <h1 id="editable-hero_title" contenteditable="true">Solusi Digital & Teknologi Terpadu</h1>
+    <p id="editable-hero_desc" contenteditable="true">Platform layanan profesional terbaik untuk kebutuhan teknologi dan bisnis Anda.</p>
+  </section>
 
   <script>
     const SUPABASE_URL = 'https://krxzhxxytjmqmvzndofw.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_BtMu9ACi_o-V29IdGZdIDA_th6tjNzi';
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    function switchTab(tabId, el) {
-      document.querySelectorAll('.section-tab-content').forEach(c => c.classList.remove('active'));
-      document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
-      document.getElementById(tabId).classList.add('active');
-      el.classList.add('active');
-      document.getElementById('active-page-title').textContent = el.textContent.trim();
-    }
-
-    async function checkAuth() {
-      const { data: { session } } = await supabaseClient.auth.getSession();
-      if (session) {
-        document.getElementById('auth-screen').style.display = 'none';
-        loadAllAdminData();
-      }
-    }
 
     async function handleLogin() {
       const email = document.getElementById('auth-email').value;
@@ -247,185 +131,41 @@
         document.getElementById('auth-msg').textContent = error.message;
       } else {
         document.getElementById('auth-screen').style.display = 'none';
-        loadAllAdminData();
+        loadLiveData();
       }
     }
 
-    async function handleRegister() {
-      const email = document.getElementById('auth-email').value;
-      const password = document.getElementById('auth-password').value;
-      const { error } = await supabaseClient.auth.signUp({ email, password });
-      if (error) {
-        document.getElementById('auth-msg').textContent = error.message;
-      } else {
-        alert('Pendaftaran berhasil! Silakan login.');
-      }
-    }
-
-    async function handleLogout() {
-      await supabaseClient.auth.signOut();
-      location.reload();
-    }
-
-    async function loadAllAdminData() {
-      loadSettingsForm();
-      loadAdminProducts();
-      loadAdminServices();
-    }
-
-    async function loadSettingsForm() {
+    async function loadLiveData() {
       const { data } = await supabaseClient.from('site_settings').select('*');
       if (!data) return;
       data.forEach(item => {
-        const input = document.getElementById(`set-${item.key}`);
-        if (input) input.value = item.value || '';
+        const el = document.getElementById(`editable-${item.key}`);
+        if (el) el.textContent = item.value || '';
       });
     }
 
-    async function saveAllSettings() {
-      const keys = [
-        'site_title', 'logo_url', 'hero_title', 'hero_desc', 'whatsapp_number', 
-        'whatsapp_backup', 'email_contact', 'instagram_link', 'telegram_link', 
-        'ynatools_link', 'ynacpanel_link', 'ynaconvert_link', 'ynaai_link', 
-        'bg_media_url', 'qris_image_url', 'dana_number', 'dana_name', 
-        'gopay_number', 'gopay_name', 'popup_enabled', 'popup_title', 
-        'popup_desc', 'wa_group_link'
-      ];
-
+    async function saveLiveChanges() {
+      const keys = ['site_title', 'hero_title', 'hero_desc'];
+      
       for (let key of keys) {
-        const val = document.getElementById(`set-${key}`).value;
-        await supabaseClient.from('site_settings').upsert({ key, value: val }, { onConflict: 'key' });
+        const el = document.getElementById(`editable-${key}`);
+        if (el) {
+          const val = el.textContent.trim();
+          await supabaseClient.from('site_settings').upsert({ key, value: val }, { onConflict: 'key' });
+        }
       }
-      alert('Pengaturan berhasil disimpan!');
+      alert('Perubahan berhasil disimpan! Tampilan publik sekarang sudah diperbarui.');
     }
 
-    async function loadAdminProducts() {
-      const { data } = await supabaseClient.from('products').select('*').order('created_at', { ascending: false });
-      const tbody = document.getElementById('admin-products-table');
-      if (!data || data.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;">Belum ada produk</td></tr>';
-        return;
-      }
-      tbody.innerHTML = data.map(p => `
-        <tr>
-          <td>${p.name}</td>
-          <td>Rp ${Number(p.price).toLocaleString('id-ID')}</td>
-          <td>
-            <div class="action-btns">
-              <button class="btn-action btn-edit" onclick="editProduct('${p.id}', '${escapeHtml(p.name)}', ${p.price}, '${escapeHtml(p.description || '')}', '${escapeHtml(p.image_url || '')}')">Edit</button>
-              <button class="btn-action btn-delete" onclick="deleteProduct('${p.id}')">Hapus</button>
-            </div>
-          </td>
-        </tr>
-      `).join('');
-    }
-
-    function escapeHtml(str) {
-      return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-    }
-
-    function editProduct(id, name, price, desc, img) {
-      document.getElementById('prod-id').value = id;
-      document.getElementById('prod-name').value = name;
-      document.getElementById('prod-price').value = price;
-      document.getElementById('prod-desc').value = desc;
-      document.getElementById('prod-image').value = img;
-    }
-
-    async function saveProduct() {
-      const id = document.getElementById('prod-id').value;
-      const name = document.getElementById('prod-name').value;
-      const price = document.getElementById('prod-price').value;
-      const description = document.getElementById('prod-desc').value;
-      const image_url = document.getElementById('prod-image').value;
-
-      if (!name || !price) {
-        alert('Nama dan Harga wajib diisi!');
-        return;
-      }
-
-      const payload = { name, price: Number(price), description, image_url };
-      if (id) {
-        await supabaseClient.from('products').update(payload).eq('id', id);
-      } else {
-        await supabaseClient.from('products').insert([payload]);
-      }
-
-      document.getElementById('prod-id').value = '';
-      document.getElementById('prod-name').value = '';
-      document.getElementById('prod-price').value = '';
-      document.getElementById('prod-desc').value = '';
-      document.getElementById('prod-image').value = '';
-      loadAdminProducts();
-      alert('Produk berhasil disimpan!');
-    }
-
-    async function deleteProduct(id) {
-      if (confirm('Yakin ingin menghapus produk ini?')) {
-        await supabaseClient.from('products').delete().eq('id', id);
-        loadAdminProducts();
+    // Cek sesi saat halaman dimuat
+    async function checkAuthSession() {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (session) {
+        document.getElementById('auth-screen').style.display = 'none';
+        loadLiveData();
       }
     }
-
-    async function loadAdminServices() {
-      const { data } = await supabaseClient.from('services').select('*').order('created_at', { ascending: false });
-      const tbody = document.getElementById('admin-services-table');
-      if (!data || data.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;">Belum ada layanan</td></tr>';
-        return;
-      }
-      tbody.innerHTML = data.map(s => `
-        <tr>
-          <td>${s.title}</td>
-          <td>${s.description || '-'}</td>
-          <td>
-            <div class="action-btns">
-              <button class="btn-action btn-edit" onclick="editService('${s.id}', '${escapeHtml(s.title)}', '${escapeHtml(s.description || '')}')">Edit</button>
-              <button class="btn-action btn-delete" onclick="deleteService('${s.id}')">Hapus</button>
-            </div>
-          </td>
-        </tr>
-      `).join('');
-    }
-
-    function editService(id, title, desc) {
-      document.getElementById('serv-id').value = id;
-      document.getElementById('serv-title').value = title;
-      document.getElementById('serv-desc').value = desc;
-    }
-
-    async function saveService() {
-      const id = document.getElementById('serv-id').value;
-      const title = document.getElementById('serv-title').value;
-      const description = document.getElementById('serv-desc').value;
-
-      if (!title) {
-        alert('Judul layanan wajib diisi!');
-        return;
-      }
-
-      const payload = { title, description };
-      if (id) {
-        await supabaseClient.from('services').update(payload).eq('id', id);
-      } else {
-        await supabaseClient.from('services').insert([payload]);
-      }
-
-      document.getElementById('serv-id').value = '';
-      document.getElementById('serv-title').value = '';
-      document.getElementById('serv-desc').value = '';
-      loadAdminServices();
-      alert('Layanan berhasil disimpan!');
-    }
-
-    async function deleteService(id) {
-      if (confirm('Yakin ingin menghapus layanan ini?')) {
-        await supabaseClient.from('services').delete().eq('id', id);
-        loadAdminServices();
-      }
-    }
-
-    checkAuth();
+    checkAuthSession();
   </script>
 </body>
 </html>
