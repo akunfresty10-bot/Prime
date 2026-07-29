@@ -34,6 +34,13 @@
       padding-bottom: 0px;
     }
 
+    /* KATA KUNCI PUTIH TEBAL */
+    .highlight-bold {
+      color: #ffffff !important;
+      font-weight: 800 !important;
+      -webkit-text-fill-color: #ffffff !important;
+    }
+
     /* HEADER */
     header {
       background: rgba(13, 16, 24, 0.85);
@@ -81,9 +88,7 @@
     .card-btn { background: #2563eb; color: #fff; text-align: center; padding: 6px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; }
     .state-msg { grid-column: 1 / -1; text-align: center; padding: 25px; color: var(--text-sub); background: var(--bg-card-solid); border-radius: 12px; border: 1px dashed var(--border-color); }
 
-    /* =================================================== */
-    /* SEKSI "SIAPA ITU PRIME CT STORE?" (DESAIN DARI GAMBAR) */
-    /* =================================================== */
+    /* SEKSI "SIAPA ITU PRIME CT STORE?" */
     .about-card-box {
       background: linear-gradient(135deg, rgba(30, 27, 75, 0.7) 0%, rgba(15, 23, 42, 0.95) 100%);
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -102,13 +107,9 @@
     }
     .about-card-box p {
       font-size: 0.88rem;
-      color: #cbd5e1;
+      color: #94a3b8;
       line-height: 1.7;
       margin-bottom: 16px;
-    }
-    .about-card-box p strong {
-      color: #fff;
-      font-weight: 700;
     }
     .about-tags {
       display: flex;
@@ -252,7 +253,7 @@
   <!-- RUNNING TEXT -->
   <div class="announcement-bar">
     <i class="fa-solid fa-bullhorn"></i>
-    <marquee>Selamat Datang di <span class="site-brand-name">PRIME CT STORE</span> • Layanan Digital & Jasa Online Terpercaya Fast Response • Operasional 24 Jam</marquee>
+    <marquee>Selamat Datang di <span class="highlight-bold">PRIME CT STORE</span> • Layanan Digital & Jasa Online Terpercaya Fast Response • Operasional 24 Jam</marquee>
   </div>
 
   <div class="container">
@@ -292,17 +293,17 @@
     </div>
 
     <!-- =================================================== -->
-    <!-- SEKSI "SIAPA ITU PRIME CT STORE?" (SESUAI DESAIN GAMBAR) -->
+    <!-- SEKSI "SIAPA ITU PRIME CT STORE?" (KATA PUTIH TEBAL) -->
     <!-- =================================================== -->
     <div class="about-card-box">
-      <h3>Siapa itu <span class="site-brand-name">PRIME CT STORE</span>?</h3>
+      <h3>Siapa itu <span class="highlight-bold">PRIME CT STORE</span>?</h3>
       
       <p id="about-desc-p1">
-        <strong class="site-brand-name">PRIME CT STORE</strong> adalah digital store terpercaya yang dikembangkan dan dikelola secara profesional untuk menyediakan solusi kebutuhan teknologi modern Anda.
+        <span class="highlight-bold">PRIME CT STORE</span> adalah digital store yang dikembangkan dan dikelola oleh <span class="highlight-bold">GWN</span>, atau yang akrab dikenal dengan nama panggilan <span class="highlight-bold">PRIME</span>. <span class="highlight-bold">PRIME</span> dikenal sebagai sosok serba bisa dengan banyak bidang keahlian, mulai dari owner, admin, developer, engineer, desainer, editor, konten kreator, hingga pengelola layanan digital yang terus berkembang mengikuti era teknologi modern.
       </p>
 
       <p id="about-desc-p2">
-        <strong class="site-brand-name">PRIME CT STORE</strong> hadir sebagai tempat layanan digital yang praktis, cepat, dan terpercaya untuk membantu kebutuhan pelanggan di dunia online. Fokus utama kami adalah memberikan pengalaman order yang mudah, tampilan website yang modern, layanan yang responsif, serta katalog produk dan jasa yang terus diperbarui mengikuti kebutuhan dunia digital.
+        <span class="highlight-bold">PRIME CT STORE</span> hadir sebagai tempat layanan digital yang praktis, cepat, dan terpercaya untuk membantu kebutuhan pelanggan di dunia online. Fokus utama <span class="highlight-bold">PRIME CT STORE</span> adalah memberikan pengalaman order yang mudah, tampilan website yang modern, layanan yang responsif, serta katalog produk dan jasa yang terus diperbarui mengikuti kebutuhan dunia digital.
       </p>
 
       <div class="about-tags">
@@ -324,7 +325,7 @@
       <div id="stats-count-el" class="stats-number">8.929+</div>
       <div class="stats-label">Total Pelanggan</div>
       <p id="stats-desc-el" class="stats-desc">
-        <span class="site-brand-name">PRIME CT STORE</span> dipercaya oleh ribuan pelanggan untuk kebutuhan produk digital, jasa online, layanan editing, bot, akun premium, dan kebutuhan digital lainnya.
+        <span class="highlight-bold">PRIME CT STORE</span> dipercaya oleh ribuan pelanggan untuk kebutuhan produk digital, jasa online, layanan editing, bot, akun premium, dan kebutuhan digital lainnya.
       </p>
 
       <div class="feature-list">
@@ -381,7 +382,7 @@
 
       <!-- COPYRIGHT -->
       <div class="footer-bottom">
-        <p>&copy; <span id="year">2026</span> <span class="site-brand-name">PRIME CT STORE</span></p>
+        <p>&copy; <span id="year">2026</span> <span class="highlight-bold">PRIME CT STORE</span></p>
         <p>All Right Reserved Prime Developer 2026</p>
       </div>
 
@@ -434,10 +435,7 @@
         if (item.key === 'social_ig' && item.value) document.getElementById('soc-ig-link').href = item.value;
         if (item.key === 'social_tg' && item.value) document.getElementById('soc-tg-link').href = item.value;
 
-        // About & Stats Text
-        if (item.key === 'about_desc' && item.value) {
-          document.getElementById('about-desc-p1').innerHTML = item.value;
-        }
+        // About & Stats Text (Hanya timpa jika diubah via Admin)
         if (item.key === 'stats_count' && item.value) document.getElementById('stats-count-el').textContent = item.value;
         if (item.key === 'stats_desc' && item.value) document.getElementById('stats-desc-el').textContent = item.value;
 
