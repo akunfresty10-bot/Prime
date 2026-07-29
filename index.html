@@ -72,7 +72,17 @@
       display: none;
     }
     .hero-banner-content { position: relative; z-index: 2; }
-    .hero-banner h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 6px; text-shadow: 0 2px 10px rgba(0,0,0,0.7); }
+    
+    /* WARNA TULISAN HERO DISAMAKAN DENGAN LOGO ATAS */
+    .hero-banner h1 { 
+      font-size: 1.6rem; 
+      font-weight: 800; 
+      margin-bottom: 6px; 
+      background: linear-gradient(135deg, #c084fc, #38bdf8); 
+      -webkit-background-clip: text; 
+      -webkit-text-fill-color: transparent; 
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.7));
+    }
     .hero-banner p { font-size: 0.9rem; color: #e2e8f0; text-shadow: 0 1px 5px rgba(0,0,0,0.7); }
 
     /* SEARCH & TABS */
@@ -138,7 +148,7 @@
     .modal-close { position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.15); border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; z-index: 10; display: flex; align-items: center; justify-content: center; }
     .btn-join-group { background: var(--wa-green); color: #fff; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border-radius: 12px; font-weight: 700; margin-top: 15px; }
 
-    /* DETAIL PRODUCT MODAL (SEPERTI GAMBAR CONTOH) */
+    /* DETAIL PRODUCT MODAL */
     .detail-modal-box {
       background: #12151e;
       border: 1px solid var(--border-color);
@@ -156,7 +166,6 @@
     .detail-body { padding: 20px; text-align: left; }
     .detail-title { font-size: 1.35rem; font-weight: 800; color: #fff; margin-bottom: 12px; text-transform: uppercase; line-height: 1.3; }
     
-    /* BARIS HARGA & TOMBOL WA (TOMBOL DI SEBELAH KANAN HARGA) */
     .detail-price-row {
       display: flex;
       justify-content: space-between;
@@ -187,7 +196,7 @@
       font-size: 0.88rem;
       color: #cbd5e1;
       line-height: 1.7;
-      white-space: pre-wrap; /* Agar paragraf dan enter pesan tetap rapi seperti di gambar */
+      white-space: pre-wrap;
       word-break: break-word;
     }
   </style>
@@ -215,7 +224,6 @@
       <div class="detail-body">
         <h2 id="modal-detail-title" class="detail-title">Nama Produk</h2>
         
-        <!-- BARIS HARGA & TOMBOL WA (DI SEBELAH KANAN HARGA) -->
         <div class="detail-price-row">
           <div id="modal-detail-price" class="detail-price">Rp 0</div>
           <a id="modal-detail-wa-btn" href="#" target="_blank" class="btn-wa-direct">
@@ -223,7 +231,6 @@
           </a>
         </div>
 
-        <!-- DESKRIPSI LENGKAP -->
         <div id="modal-detail-desc" class="detail-desc-text">Deskripsi lengkap produk...</div>
       </div>
     </div>
@@ -233,7 +240,6 @@
   <header>
     <div class="nav-container">
       <a href="#" class="brand">
-        <!-- LOGO UTAMA -->
         <img id="main-logo" src="https://via.placeholder.com/150" alt="Logo">
         <span class="site-brand-name">PRIME CT STORE</span>
       </a>
@@ -390,7 +396,6 @@
       document.getElementById('detail-modal-overlay').classList.remove('active');
     }
 
-    // FUNGSI MEMBUKA MODAL DETAIL
     function openProductDetail(id) {
       const prod = globalProducts.find(p => p.id === id);
       if (!prod) return;
@@ -432,7 +437,6 @@
       let groupUrl = '#';
 
       data.forEach(item => {
-        // 1. JUDUL & LOGO KIRI ATAS
         if (item.key === 'site_title' && item.value) {
           document.title = item.value;
           document.querySelectorAll('.site-brand-name').forEach(el => el.textContent = item.value);
@@ -442,7 +446,6 @@
           if (logoEl) logoEl.src = item.value;
         }
 
-        // 2. HERO BANNER TENGAH
         if (item.key === 'hero_title' && item.value) {
           const heroTitle = document.getElementById('hero-title');
           if (heroTitle) heroTitle.textContent = item.value;
@@ -460,7 +463,6 @@
           }
         }
 
-        // 3. WHATSAPP & KONTAK
         if (item.key === 'whatsapp_number' && item.value) {
           activeWhatsappNumber = item.value;
           document.querySelectorAll('.wa-link').forEach(btn => btn.href = `https://wa.me/${item.value}`);
@@ -470,13 +472,11 @@
         if (item.key === 'contact_wa_2' && item.value) document.getElementById('cnt-wa-2').textContent = item.value;
         if (item.key === 'contact_email' && item.value) document.getElementById('cnt-email').textContent = item.value;
 
-        // 4. SOSIAL MEDIA & STATS
         if (item.key === 'social_ig' && item.value) document.getElementById('soc-ig-link').href = item.value;
         if (item.key === 'social_tg' && item.value) document.getElementById('soc-tg-link').href = item.value;
         if (item.key === 'stats_count' && item.value) document.getElementById('stats-count-el').textContent = item.value;
         if (item.key === 'stats_desc' && item.value) document.getElementById('stats-desc-el').textContent = item.value;
 
-        // 5. POPUP WA
         if (item.key === 'popup_enabled') isPopupEnabled = (item.value === 'true');
         if (item.key === 'wa_group_link' && item.value) {
           groupUrl = item.value;
