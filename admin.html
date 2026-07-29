@@ -6,24 +6,25 @@
   <title>Admin Panel - Control Center</title>
   <style>
     * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: #f4f6f9; margin: 0; padding: 20px; color: #333; }
-    .container { max-width: 1000px; margin: 0 auto; }
-    .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
-    h2, h3 { color: #2c3e50; margin-top: 0; }
+    body { background-color: #121212; color: #e0e0e0; margin: 0; padding: 20px; }
+    .container { max-width: 900px; margin: 0 auto; }
+    .card { background: #1e1e1e; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); margin-bottom: 25px; border: 1px solid #333; }
+    h2, h3, h4 { color: #ffffff; margin-top: 0; }
     .form-group { margin-bottom: 15px; }
-    label { display: block; font-weight: bold; margin-bottom: 5px; }
-    input[type="text"], input[type="number"], input[type="email"], input[type="password"], textarea {
-      width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;
+    label { display: block; font-weight: bold; margin-bottom: 6px; color: #bbb; }
+    input[type="text"], input[type="number"], input[type="email"], input[type="password"], textarea, input[type="file"] {
+      width: 100%; padding: 12px; border: 1px solid #444; border-radius: 6px; background-color: #2a2a2a; color: #fff; box-sizing: border-box;
     }
-    button { background: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    input:focus, textarea:focus { border-color: #007bff; outline: none; }
+    button { background: #007bff; color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; font-size: 15px; transition: 0.2s; }
     button:hover { background: #0056b3; }
-    button.btn-danger { background: #dc3545; }
+    button.btn-danger { background: #dc3545; width: auto; padding: 8px 12px; }
     button.btn-danger:hover { background: #bd2130; }
-    table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-    th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
-    th { background-color: #f8f9fa; }
-    img.preview { max-width: 80px; max-height: 80px; object-fit: cover; border-radius: 4px; }
-    .header-admin { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e9ecef; padding-bottom: 15px; margin-bottom: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; background: #252525; border-radius: 8px; overflow: hidden; }
+    th, td { border-bottom: 1px solid #383838; padding: 12px; text-align: left; }
+    th { background-color: #2e2e2e; color: #fff; }
+    img.preview { max-width: 70px; max-height: 70px; object-fit: cover; border-radius: 6px; }
+    .header-admin { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 25px; }
   </style>
 
   <!-- CDN Supabase JS v2 -->
@@ -36,47 +37,47 @@
     <!-- ========================================== -->
     <!-- 1. FORM LOGIN ADMIN                        -->
     <!-- ========================================== -->
-    <div id="login-section" class="card" style="max-width: 400px; margin: 80px auto;">
-      <h2>Login Admin</h2>
+    <div id="login-section" class="card" style="max-width: 400px; margin: 60px auto;">
+      <h2 style="text-align: center;">Login Admin</h2>
       <form id="login-form">
         <div class="form-group">
           <label>Email Admin</label>
-          <input type="email" id="email" required>
+          <input type="email" id="email" placeholder="admin@email.com" required>
         </div>
         <div class="form-group">
           <label>Password</label>
-          <input type="password" id="password" required>
+          <input type="password" id="password" placeholder="••••••••" required>
         </div>
-        <button type="submit" style="width: 100%;">Masuk Panel Admin</button>
+        <button type="submit">Masuk Panel Admin</button>
       </form>
-      <p id="auth-error" style="color: red; margin-top: 10px; text-align: center;"></p>
+      <p id="auth-error" style="color: #ff6b6b; margin-top: 15px; text-align: center; font-weight: bold;"></p>
     </div>
 
 
     <!-- ========================================== -->
-    <!-- 2. DASHBOARD ADMIN (Tampil jika sudah login)-->
+    <!-- 2. DASHBOARD ADMIN                         -->
     <!-- ========================================== -->
     <div id="admin-dashboard" style="display: none;">
       
-      <!-- Header Admin -->
+      <!-- Header -->
       <div class="card header-admin">
         <div>
-          <h2 style="margin:0;">Dashboard Admin</h2>
-          <small id="user-email" style="color: #6c757d;"></small>
+          <h2 style="margin:0;">Dashboard Control Panel</h2>
+          <small id="user-email" style="color: #0088ff;"></small>
         </div>
         <button id="logout-btn" class="btn-danger">Logout</button>
       </div>
 
-      <!-- SECTION A: PENGATURAN UMUM WEBSITE -->
+      <!-- SECTION A: PENGATURAN UMUM -->
       <div class="card">
-        <h3>1. Pengaturan Umum Website</h3>
+        <h3>1. Pengaturan Utama Website</h3>
         <form id="settings-form">
           <div class="form-group">
             <label>Judul Website / Nama Toko</label>
             <input type="text" id="site_title" placeholder="Contoh: Toko Berkah Mandiri">
           </div>
           <div class="form-group">
-            <label>Nomor WhatsApp (Gunakan Format 62, contoh: 6281234567890)</label>
+            <label>Nomor WhatsApp (Gunakan Format 62, Contoh: 6281234567890)</label>
             <input type="text" id="whatsapp_number" placeholder="6281234567890">
           </div>
           <div class="form-group">
@@ -91,7 +92,7 @@
       <!-- SECTION B: KELOLA PRODUK -->
       <div class="card">
         <h3>2. Kelola Produk</h3>
-        <form id="product-form" style="background: #f8f9fa; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+        <form id="product-form" style="background: #282828; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #3d3d3d;">
           <h4>Tambah Produk Baru</h4>
           <div class="form-group">
             <label>Nama Produk</label>
@@ -131,7 +132,7 @@
       <!-- SECTION C: KELOLA JASA / LAYANAN -->
       <div class="card">
         <h3>3. Kelola Jasa / Layanan</h3>
-        <form id="service-form" style="background: #f8f9fa; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+        <form id="service-form" style="background: #282828; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #3d3d3d;">
           <h4>Tambah Jasa Baru</h4>
           <div class="form-group">
             <label>Nama Jasa / Layanan</label>
@@ -167,27 +168,26 @@
   <!-- 3. LOGIKA JAVASCRIPT & SUPABASE INTEGRATION -->
   <!-- ========================================== -->
   <script>
-    // --- KONFIGURASI SUPABASE ---
-    // (Ganti string di bawah ini dengan URL dan ANON KEY milik Anda dari Dashboard Supabase)
+    // --- SUPABASE CONFIGURATION (SUDAH DIISI KUNCI ANDA) ---
     const SUPABASE_URL = 'https://krxzhxxytjmqmvzndofw.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_BtMu9ACi_o-V29IdGZdIDA_th6tjNzi';
     
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // Inisialisasi Supabase Client
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     const BUCKET_NAME = 'website-assets';
 
-    // Elements DOM
+    // DOM Elements
     const loginSection = document.getElementById('login-section');
     const adminDashboard = document.getElementById('admin-dashboard');
 
     // --- 1. OTENTIKASI & CEK LOGIN ---
     async function checkAuth() {
-      const { data: { session } } = await supabase.auth.getSession();
+      const { data: { session } } = await supabaseClient.auth.getSession();
       if (session) {
         loginSection.style.display = 'none';
         adminDashboard.style.display = 'block';
-        document.getElementById('user-email').textContent = `Login sebagai: ${session.user.email}`;
+        document.getElementById('user-email').textContent = `Status: Login (${session.user.email})`;
         
-        // Load data admin saat berhasil login
         loadSettings();
         loadProducts();
         loadServices();
@@ -199,24 +199,27 @@
 
     checkAuth();
 
-    // Login Event
+    // Event Submit Form Login
     document.getElementById('login-form').addEventListener('submit', async (e) => {
       e.preventDefault();
+      document.getElementById('auth-error').textContent = 'Memproses...';
+      
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
       
       if (error) {
-        document.getElementById('auth-error').textContent = error.message;
+        document.getElementById('auth-error').textContent = 'Gagal Login: ' + error.message;
       } else {
         document.getElementById('auth-error').textContent = '';
         checkAuth();
       }
     });
 
-    // Logout Event
+    // Event Logout
     document.getElementById('logout-btn').addEventListener('click', async () => {
-      await supabase.auth.signOut();
+      await supabaseClient.auth.signOut();
       checkAuth();
     });
 
@@ -226,25 +229,25 @@
       const ext = file.name.split('.').pop();
       const fileName = `${Date.now()}.${ext}`;
       
-      const { data, error } = await supabase.storage.from(BUCKET_NAME).upload(fileName, file);
+      const { data, error } = await supabaseClient.storage.from(BUCKET_NAME).upload(fileName, file);
       if (error) {
-        alert('Gagal mengunggah gambar: ' + error.message);
+        alert('Gagal upload gambar! Pastikan Bucket "website-assets" sudah dibuat di Supabase. Error: ' + error.message);
         return null;
       }
       
-      const { data: publicUrlData } = supabase.storage.from(BUCKET_NAME).getPublicUrl(fileName);
+      const { data: publicUrlData } = supabaseClient.storage.from(BUCKET_NAME).getPublicUrl(fileName);
       return publicUrlData.publicUrl;
     }
 
     // --- 2. LOGIKA PENGATURAN UMUM ---
     async function loadSettings() {
-      const { data } = await supabase.from('site_settings').select('*');
+      const { data } = await supabaseClient.from('site_settings').select('*');
       if (data) {
         data.forEach(item => {
           if (item.key === 'site_title') document.getElementById('site_title').value = item.value;
           if (item.key === 'whatsapp_number') document.getElementById('whatsapp_number').value = item.value;
           if (item.key === 'logo_url' && item.value) {
-            document.getElementById('current-logo-container').innerHTML = `<p>Logo Saat Ini:</p><img src="${item.value}" class="preview">`;
+            document.getElementById('current-logo-container').innerHTML = `<p style="margin:5px 0;"><small>Logo Saat Ini:</small></p><img src="${item.value}" class="preview">`;
           }
         });
       }
@@ -256,15 +259,13 @@
       const wa = document.getElementById('whatsapp_number').value;
       const logoFile = document.getElementById('logo_file').files[0];
 
-      // Update teks settings
-      await supabase.from('site_settings').upsert({ key: 'site_title', value: title });
-      await supabase.from('site_settings').upsert({ key: 'whatsapp_number', value: wa });
+      await supabaseClient.from('site_settings').upsert({ key: 'site_title', value: title });
+      await supabaseClient.from('site_settings').upsert({ key: 'whatsapp_number', value: wa });
 
-      // If upload new logo
       if (logoFile) {
         const logoUrl = await uploadFileToStorage(logoFile);
         if (logoUrl) {
-          await supabase.from('site_settings').upsert({ key: 'logo_url', value: logoUrl });
+          await supabaseClient.from('site_settings').upsert({ key: 'logo_url', value: logoUrl });
         }
       }
 
@@ -274,7 +275,7 @@
 
     // --- 3. LOGIKA KELOLA PRODUK ---
     async function loadProducts() {
-      const { data, error } = await supabase.from('products').select('*').order('created_at', { ascending: false });
+      const { data } = await supabaseClient.from('products').select('*').order('created_at', { ascending: false });
       const tbody = document.getElementById('product-list-body');
       tbody.innerHTML = '';
 
@@ -282,8 +283,8 @@
         data.forEach(prod => {
           tbody.innerHTML += `
             <tr>
-              <td><img src="${prod.image_url || 'https://via.placeholder.com/80'}" class="preview"></td>
-              <td><strong>${prod.name}</strong><br><small>${prod.description || ''}</small></td>
+              <td><img src="${prod.image_url || 'https://via.placeholder.com/70'}" class="preview"></td>
+              <td><strong>${prod.name}</strong><br><small style="color:#aaa;">${prod.description || ''}</small></td>
               <td>Rp ${Number(prod.price).toLocaleString('id-ID')}</td>
               <td>
                 <button class="btn-danger" onclick="deleteProduct('${prod.id}')">Hapus</button>
@@ -306,7 +307,7 @@
       const imageUrl = await uploadFileToStorage(file);
       if (!imageUrl) return;
 
-      const { error } = await supabase.from('products').insert([{ name, price, description, image_url: imageUrl }]);
+      const { error } = await supabaseClient.from('products').insert([{ name, price, description, image_url: imageUrl }]);
       
       if (error) {
         alert('Gagal menambah produk: ' + error.message);
@@ -319,14 +320,14 @@
 
     async function deleteProduct(id) {
       if (confirm('Yakin ingin menghapus produk ini?')) {
-        await supabase.from('products').delete().eq('id', id);
+        await supabaseClient.from('products').delete().eq('id', id);
         loadProducts();
       }
     }
 
     // --- 4. LOGIKA KELOLA JASA ---
     async function loadServices() {
-      const { data } = await supabase.from('services').select('*').order('created_at', { ascending: false });
+      const { data } = await supabaseClient.from('services').select('*').order('created_at', { ascending: false });
       const tbody = document.getElementById('service-list-body');
       tbody.innerHTML = '';
 
@@ -352,7 +353,7 @@
       const title = document.getElementById('serv_title').value;
       const description = document.getElementById('serv_desc').value;
 
-      const { error } = await supabase.from('services').insert([{ title, description }]);
+      const { error } = await supabaseClient.from('services').insert([{ title, description }]);
       
       if (error) {
         alert('Gagal menambah jasa: ' + error.message);
@@ -365,7 +366,7 @@
 
     async function deleteService(id) {
       if (confirm('Yakin ingin menghapus jasa ini?')) {
-        await supabase.from('services').delete().eq('id', id);
+        await supabaseClient.from('services').delete().eq('id', id);
         loadServices();
       }
     }
