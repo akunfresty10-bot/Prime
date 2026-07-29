@@ -3,12 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="siteTitle">PRIME CT STORE - Digital Platform</title>
+    <title id="siteTitle">PRIME CT STORE – Digital Store</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
+    <!-- Fixed Header Top -->
+    <header class="top-nav">
+        <div class="nav-content">
+            <img id="navLogo" src="https://via.placeholder.com/80/8b5cf6/ffffff?text=PRIME" alt="Logo" class="nav-avatar">
+            <span id="navStoreName" class="nav-title">PRIME CT STORE</span>
+        </div>
+    </header>
+
+    <!-- Modal Pop-Up Join Group -->
     <div id="popupModal" class="modal-overlay">
         <div class="modal-card">
             <button class="close-btn" onclick="closePopup()">&times;</button>
@@ -17,11 +26,12 @@
             </div>
             <h3>JOIN GRUP WHATSAPP <br><span id="popupStoreName">PRIME CT STORE</span></h3>
             <p>Masuk grup whatsapp resmi untuk info promo, update produk, dan pengumuman dari PRIME CT STORE.</p>
-            <a id="popupWaBtn" href="#" target="_blank" class="btn btn-primary">Join Grup</a>
-            <button onclick="closePopup()" class="btn btn-secondary">Nanti</button>
+            <a id="popupWaBtn" href="#" target="_blank" class="btn btn-purple">Join Grup</a>
+            <button onclick="closePopup()" class="btn btn-dark">Nanti</button>
         </div>
     </div>
 
+    <!-- Background Layer (Video / Image) -->
     <div class="bg-overlay"></div>
     <video autoplay muted loop id="bgVideo" class="bg-media">
         <source src="https://assets.mixkit.co/videos/preview/mixkit-cyberpunk-city-street-at-night-41584-large.mp4" type="video/mp4">
@@ -29,9 +39,10 @@
 
     <main class="container">
         
+        <!-- Hero Section -->
         <section class="hero">
-            <div class="profile-img-wrapper">
-                <img id="storeLogo" src="https://via.placeholder.com/120/8b5cf6/ffffff?text=PRIME" alt="Logo Prime CT">
+            <div class="profile-avatar-wrapper">
+                <img id="storeLogo" src="https://via.placeholder.com/120/8b5cf6/ffffff?text=PRIME" alt="Logo PRIME CT">
             </div>
             <p class="welcome-text">SELAMAT DATANG DI</p>
             <h1 id="heroStoreName" class="brand-title">PRIME CT STORE</h1>
@@ -39,56 +50,111 @@
                 Platform digital terpercaya untuk kebutuhan akun premium, jasa editing, top up game, bot WhatsApp, script bot, panel, VPS, partner, dan layanan digital lainnya.
             </p>
 
-            <div class="action-buttons">
-                <a href="#produk" class="btn btn-primary"><i class="fa-solid fa-bag-shopping"></i> Lihat Produk</a>
-                <a href="#payment" class="btn btn-glass"><i class="fa-solid fa-credit-card"></i> Payment</a>
-                <a id="ownerWaBtn" href="#" target="_blank" class="btn btn-glass"><i class="fa-brands fa-whatsapp"></i> Hubungi Owner</a>
-                <a href="#" class="btn btn-glass"><i class="fa-solid fa-wrench"></i> PRIME TOOLS</a>
+            <div class="action-stack">
+                <a href="#produk" class="btn btn-purple">Lihat Produk</a>
+                <a href="#payment" class="btn btn-glass">Payment</a>
+                <a id="ownerWaBtn" href="#" target="_blank" class="btn btn-glass">Hubungi Owner</a>
+                <a href="#" class="btn btn-glass">PRIME TOOLS</a>
             </div>
         </section>
 
+        <!-- Section Kategori Produk & Jasa -->
         <section id="produk" class="section">
             <div class="section-header">
-                <span class="sub-title">KATEGORI POPULER</span>
+                <div class="sub-badge"><i class="fa-solid fa-minus"></i> KATEGORI POPULER</div>
                 <h2>Produk & Jasa PRIME CT</h2>
+                <a href="#" class="link-see-all">Lihat Semua</a>
             </div>
 
             <div id="productGrid" class="grid-container">
-                </div>
+                <!-- Diisi Dinamis oleh script.js -->
+            </div>
         </section>
 
-        <section class="section about-card">
+        <!-- Section Profile / Tentang PRIME CT STORE -->
+        <section class="section card-purple">
             <h2>Siapa itu <span id="aboutStoreName">PRIME CT STORE</span>?</h2>
-            <p id="aboutText">
-                PRIME CT STORE adalah digital store terpercaya yang dikembangkan untuk membantu kebutuhan digital Anda. Kami menyediakan layanan instan, berkualitas, dan respon cepat 24 jam.
+            <p id="aboutText" class="about-desc">
+                <strong>PRIME CT STORE</strong> adalah digital store yang dikembangkan dan dikelola oleh <strong>Owner PRIME CT</strong>. Kami hadir sebagai tempat layanan digital yang praktis, cepat, dan terpercaya untuk membantu kebutuhan pelanggan di dunia online.
             </p>
             
-            <div class="tags-container">
+            <div class="tags-flex">
                 <span class="tag">Owner</span>
                 <span class="tag">Admin</span>
                 <span class="tag">Developer</span>
                 <span class="tag">Engineer</span>
+                <span class="tag">Designer</span>
+                <span class="tag">Editor</span>
+                <span class="tag">Content Creator</span>
                 <span class="tag">Digital Service</span>
             </div>
 
-            <div class="counter-box">
-                <h3 id="totalCustomers">1.000+</h3>
-                <p>Total Pelanggan</p>
+            <div class="counter-container">
+                <span id="counterNum" class="counter-number">0</span>
+                <p class="counter-label">Total Pelanggan</p>
+                <p class="counter-subdesc">PRIME CT STORE dipercaya oleh ribuan pelanggan untuk kebutuhan produk digital, jasa online, layanan editing, bot, akun premium, dan kebutuhan digital lainnya.</p>
             </div>
         </section>
 
+        <!-- Section Keunggulan Fitur -->
+        <section class="features-stack">
+            <div class="card-purple">
+                <h3>Fast Response</h3>
+                <p>Admin siap bantu proses order dan konfirmasi payment kapan saja.</p>
+            </div>
+            <div class="card-purple">
+                <h3>Aman & Terpercaya</h3>
+                <p>Payment resmi dan order diarahkan langsung ke kontak owner.</p>
+            </div>
+            <div class="card-purple">
+                <h3>Produk Lengkap</h3>
+                <p>Katalog produk dan jasa dibuat untuk banyak kebutuhan digital.</p>
+            </div>
+        </section>
+
+        <!-- Card Order Cepat -->
+        <section class="card-cta">
+            <h3>Butuh order cepat?</h3>
+            <p>Klik produk yang kamu mau, isi detail order, pilih pembayaran, lalu kirim bukti ke WhatsApp PRIME CT.</p>
+            <a id="ctaOrderBtn" href="#produk" class="btn btn-purple">Mulai Order</a>
+        </section>
+
+        <!-- Footer -->
         <footer>
             <h3 id="footerStoreName">PRIME CT STORE</h3>
             <p id="footerDesc">Platform digital terpercaya untuk kebutuhan layanan digital premium.</p>
             
-            <div class="social-links">
+            <div class="social-pills">
                 <a id="footerWa" href="#" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
                 <a id="footerIg" href="#" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a>
-                <a id="footerTg" href="#" target="_blank"><i class="fa-brands fa-telegram"></i> Telegram</a>
+                <a id="footerTg" href="#" target="_blank"><i class="fa-paper-plane"></i> Telegram</a>
             </div>
 
-            <div class="footer-bottom">
-                <p>&copy; 2026 <span id="copyrightName">PRIME CT STORE</span>. All rights reserved.</p>
+            <div class="footer-contact">
+                <h4>Kontak Cepat</h4>
+                <p>WhatsApp: <span id="waMain">0831-7340-3262</span></p>
+                <p>WA Cadangan: <span id="waBackup">0831-3867-5899</span></p>
+                <p>Gmail: <span id="emailText">primectstore@gmail.com</span></p>
+            </div>
+
+            <div class="footer-menu">
+                <h4>Menu</h4>
+                <ul>
+                    <li><a href="#produk">Produk & Jasa</a></li>
+                    <li><a href="#">Partner Resmi</a></li>
+                    <li><a href="#">PRIME Tools</a></li>
+                    <li><a href="#">PRIME CPANEL</a></li>
+                    <li><a href="#">PRIME Convert</a></li>
+                    <li><a href="#">PRIME AI</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Kontak</a></li>
+                    <li><a href="admin.html">Login / Admin Panel</a></li>
+                </ul>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2026 PRIME CT STORE</p>
+                <p class="dev-tag">All Right PRIME CT Developer 2026</p>
             </div>
         </footer>
 
