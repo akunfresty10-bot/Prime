@@ -35,6 +35,15 @@
 
     .highlight-bold { color: #ffffff !important; font-weight: 800 !important; }
 
+    /* ANIMASI RGB UNTUK TEKS HERO */
+    @keyframes rgbGlowText {
+      0% { color: #ff3366; filter: drop-shadow(0 0 10px rgba(255, 51, 102, 0.5)); }
+      25% { color: #38bdf8; filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5)); }
+      50% { color: #a855f7; filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.5)); }
+      75% { color: #34d399; filter: drop-shadow(0 0 10px rgba(52, 211, 153, 0.5)); }
+      100% { color: #ff3366; filter: drop-shadow(0 0 10px rgba(255, 51, 102, 0.5)); }
+    }
+
     /* HEADER & LOGO */
     header {
       background: rgba(13, 16, 24, 0.85);
@@ -74,13 +83,12 @@
     .hero-banner-content { position: relative; z-index: 2; }
     
     .hero-banner h1 { 
-      font-size: 1.6rem; 
+      font-size: 1.7rem; 
       font-weight: 800; 
       margin-bottom: 6px; 
-      background: linear-gradient(135deg, #c084fc, #38bdf8); 
-      -webkit-background-clip: text; 
-      -webkit-text-fill-color: transparent; 
-      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.7));
+      text-transform: uppercase;
+      animation: rgbGlowText 6s infinite linear;
+      -webkit-text-fill-color: initial; /* Pastikan animasi warna RGB aktif murni */
     }
     .hero-banner p { font-size: 0.9rem; color: #e2e8f0; text-shadow: 0 1px 5px rgba(0,0,0,0.7); }
 
@@ -144,7 +152,7 @@
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(8px); z-index: 999; display: flex; justify-content: center; align-items: center; padding: 20px; opacity: 0; visibility: hidden; transition: 0.3s ease; }
     .modal-overlay.active { opacity: 1; visibility: visible; }
 
-    /* POPUP WA GROUP BARU (PERSIS DENGAN DESAIN GAMBAR) */
+    /* POPUP WA GROUP */
     .popup-wa-card {
       background: linear-gradient(180deg, #180d2a 0%, #0c0d14 100%);
       border: 1px solid rgba(139, 92, 246, 0.25);
@@ -296,7 +304,7 @@
 </head>
 <body>
 
-  <!-- MODAL POPUP WA GROUP PERSIS DENGAN GAMBAR -->
+  <!-- MODAL POPUP WA GROUP -->
   <div id="wa-modal-overlay" class="modal-overlay">
     <div class="popup-wa-card">
       <button class="popup-close-circle" onclick="closeWaModal()"><i class="fa-solid fa-xmark"></i></button>
@@ -352,7 +360,7 @@
 
   <div class="container">
 
-    <!-- HERO BANNER UTAMA -->
+    <!-- HERO BANNER UTAMA (DENGAN ANIMASI RGB PADA JUDUL) -->
     <div id="hero-banner-box" class="hero-banner">
       <div id="hero-overlay" class="hero-banner-overlay"></div>
       <div class="hero-banner-content">
@@ -389,7 +397,7 @@
       </div>
     </div>
 
-    <!-- SEKSI SIAPA ITU PRIME CT STORE -->
+    <!-- SEKSI TENTANG STORE -->
     <div class="about-card-box">
       <h3>Siapa itu <span class="highlight-bold">PRIME CT STORE</span>?</h3>
       
@@ -536,7 +544,10 @@
       data.forEach(item => {
         if (item.key === 'site_title' && item.value) {
           document.title = item.value;
-          document.querySelectorAll('.site-brand-name').forEach(el => el.textContent = item.value);
+          document.querySelectorAll('.site-brand-name').forEach(el => {
+            // Biarkan judul hero tetap pakai animasi RGB, brand lain ikuti teks database
+            if(el.id !== 'hero-title') el.textContent = item.value;
+          });
         }
         if (item.key === 'logo_url' && item.value) {
           const logoEl = document.getElementById('main-logo');
@@ -574,7 +585,6 @@
         if (item.key === 'stats_count' && item.value) document.getElementById('stats-count-el').textContent = item.value;
         if (item.key === 'stats_desc' && item.value) document.getElementById('stats-desc-el').textContent = item.value;
 
-        /* CUSTOM SETTINGS POPUP */
         if (item.key === 'popup_enabled') isPopupEnabled = (item.value === 'true');
         if (item.key === 'popup_title' && item.value) document.getElementById('modal-popup-title').textContent = item.value;
         if (item.key === 'popup_desc' && item.value) document.getElementById('modal-popup-desc').textContent = item.value;
