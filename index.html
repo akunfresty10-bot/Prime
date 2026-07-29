@@ -1,261 +1,415 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PRIME CT Official — Digital Store</title>
-<meta name="description" content="PRIME CT Official — toko digital untuk akun premium, top up game, jasa editing, dan bot WhatsApp. Order cepat, aman, dan terpercaya.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title class="site-brand-name">PRIME CT STORE</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --accent-color: #2563eb;
+      --accent-hover: #1d4ed8;
+      --wa-color: #25d366;
+      --wa-hover: #1da851;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* HEADER & NAVBAR */
+    header {
+      background: rgba(30, 41, 59, 0.85);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .brand img {
+      width: 45px;
+      height: 45px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 1px solid var(--card-border);
+    }
+
+    .brand span {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .btn-wa-nav {
+      background-color: var(--wa-color);
+      color: #fff;
+      padding: 8px 18px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-wa-nav:hover {
+      background-color: var(--wa-hover);
+      transform: translateY(-2px);
+    }
+
+    /* CONTAINER UTAMA */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      text-align: center;
+      padding: 30px 20px 50px;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 15px;
+      background: linear-gradient(to right, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto 25px;
+    }
+
+    /* SECTION TITLE */
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 5px;
+      height: 24px;
+      background: var(--accent-color);
+      border-radius: 4px;
+    }
+
+    /* GRID DISPLAY */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 25px;
+      margin-bottom: 60px;
+    }
+
+    /* PRODUCT CARD */
+    .product-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+
+    .product-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background-color: #0f172a;
+    }
+
+    .product-info {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .product-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .product-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+      flex-grow: 1;
+    }
+
+    .product-price {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #38bdf8;
+      margin-bottom: 15px;
+    }
+
+    .btn-buy {
+      background: var(--accent-color);
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: background 0.2s;
+    }
+
+    .btn-buy:hover {
+      background: var(--accent-hover);
+    }
+
+    /* SERVICE CARD */
+    .service-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 25px;
+      transition: transform 0.2s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .service-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #f1f5f9;
+    }
+
+    .service-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* LOADING & EMPTY STATE */
+    .state-msg {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 40px;
+      color: var(--text-muted);
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px dashed var(--card-border);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 30px 20px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+  </style>
+
+  <!-- CDN Supabase JS v2 -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-<div class="bg-video" aria-hidden="true">
-  <video autoplay muted loop playsinline poster="video/poster.jpg">
-    <source src="video/bg.mp4" type="video/mp4">
-  </video>
-  <div class="bg-video-overlay"></div>
-</div>
-
-<div class="statusbar">
-  <div class="wrap">
-    <span><span class="dot">●</span> STATUS: ONLINE — ADMIN SIAP PROSES ORDER</span>
-    <span id="clock">--:--:-- WIB</span>
-  </div>
-</div>
-
-<header class="site">
-  <div class="wrap">
-    <nav class="main">
-      <button class="sidebar-toggle" aria-label="Buka menu">☰</button>
-      <a href="index.html" class="brand">
-        <span class="mark">CT</span>
-        <span>PRIME CT<small>DIGITAL STORE OFFICIAL</small></span>
+  <!-- NAVBAR -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="brand">
+        <img id="main-logo" src="https://via.placeholder.com/150" alt="Logo">
+        <span class="site-brand-name">PRIME CT STORE</span>
       </a>
-      <div class="navlinks">
-        <a href="index.html" class="active">Beranda</a>
-        <a href="produk.html">Produk & Jasa</a>
-        <a href="faq.html">FAQ</a>
-        <a href="kontak.html">Kontak</a>
-      </div>
-      <div class="navcta">
-        <a href="https://wa.me/6281325507265" class="btn wa small">💬 WhatsApp</a>
-      </div>
-    </nav>
-  </div>
-</header>
+      <a href="#" class="wa-link btn-wa-nav" target="_blank">
+        WhatsApp Admin
+      </a>
+    </div>
+  </header>
 
-<div class="sidebar-overlay"></div>
-<div class="sidebar">
-  <div class="sidebar-head">
-    <div class="brand" style="font-size:1.02rem;">
-      <span class="mark">CT</span>
-      <span>PRIME CT<small>DIGITAL STORE</small></span>
-    </div>
-    <button class="sidebar-close" aria-label="Tutup menu">✕</button>
-  </div>
-  <nav class="sidebar-nav">
-    <span class="divider">Menu Utama</span>
-    <a href="index.html"><span class="ico">🏠</span> Beranda</a>
-    <a href="produk.html"><span class="ico">🛍️</span> Produk & Jasa</a>
-    <a href="partner.html"><span class="ico">🤝</span> Partner</a>
-    <a href="faq.html"><span class="ico">❓</span> FAQ</a>
-    <a href="kontak.html"><span class="ico">📬</span> Kontak</a>
-    <span class="divider">Alat & Layanan</span>
-    <a href="tools.html"><span class="ico">⚙️</span> PRIME Tools</a>
-    <a href="convert.html"><span class="ico">🔄</span> PRIME Convert</a>
-    <a href="ai.html"><span class="ico">🤖</span> PRIME AI</a>
-    <span class="divider">Akun</span>
-    <a href="login.html"><span class="ico">👤</span> Login / Daftar</a>
-  </nav>
-  <div class="sidebar-foot">
-    <a href="https://wa.me/6281325507265">WhatsApp</a>
-    <a href="#">Instagram</a>
-    <a href="#">Telegram</a>
-  </div>
-</div>
+  <!-- MAIN CONTAINER -->
+  <div class="container">
 
-<div class="modal-overlay" id="wa-popup">
-  <div class="modal-box">
-    <button class="modal-close" data-close-popup>✕</button>
-    <div class="modal-icon">💬</div>
-    <h3>Join Grup WhatsApp PRIME CT</h3>
-    <p>Masuk grup resmi untuk info promo, update produk, dan pengumuman terbaru dari PRIME CT Official.</p>
-    <div class="modal-actions">
-      <a href="https://chat.whatsapp.com/Bznb7P7IaGNAIgumOjUPT5?s=cl&p=a&ilr=4" target="_blank" class="btn solid" data-close-popup>Join Grup</a>
-      <button class="btn small" data-close-popup>Nanti</button>
+    <!-- HERO SECTION -->
+    <div class="hero">
+      <h1 class="site-brand-name">PRIME CT STORE</h1>
+      <p>Penyedia Produk & Layanan Terbaik dan Terpercaya. Pilih produk pilihan Anda dan pesan langsung secara praktis melalui WhatsApp!</p>
     </div>
+
+    <!-- PRODUCT SECTION -->
+    <h2 class="section-title">Daftar Produk</h2>
+    <div id="products-container" class="grid-container">
+      <div class="state-msg">Memuat daftar produk...</div>
+    </div>
+
+    <!-- SERVICES SECTION -->
+    <h2 class="section-title">Layanan & Jasa</h2>
+    <div id="services-container" class="grid-container">
+      <div class="state-msg">Memuat daftar layanan...</div>
+    </div>
+
   </div>
-</div>
 
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; <span id="year"></span> <span class="site-brand-name">PRIME CT STORE</span>. All rights reserved.</p>
+  </footer>
 
-<section class="hero">
-  <div class="wrap grid">
-    <div>
-      <span class="eyebrow">Digital Store — Fast &amp; Verified</span>
-      <h1>Semua kebutuhan <span class="accent">digital</span>,<br>satu titik order.</h1>
-      <p class="lead">PRIME CT Official melayani akun premium, top up game, jasa editing, hingga bot WhatsApp. Order jelas, konfirmasi cepat, tanpa ribet.</p>
-      <div class="ctas">
-        <a href="produk.html" class="btn solid">Lihat Produk & Jasa</a>
-        <a href="https://wa.me/6281325507265" class="btn wa">Hubungi Admin</a>
-      </div>
-    </div>
-    <div class="hud-panel">
-      <div class="readout"><span>Kategori tersedia</span><b>4 layanan</b></div>
-      <div class="readout"><span>Rata-rata respon admin</span><b class="ok">&lt; 15 menit</b></div>
-      <div class="readout"><span>Metode pembayaran</span><b>QRIS · DANA · GoPay</b></div>
-      <div class="readout"><span>Jam operasional</span><b>09.00 – 23.00 WIB</b></div>
-      <div class="readout"><span>Status server</span><b class="ok">AKTIF</b></div>
-    </div>
-  </div>
-</section>
+  <!-- SUPABASE INTEGRATION SCRIPT -->
+  <script>
+    // Set Tahun di Footer
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-<section class="section">
-  <div class="wrap">
-    <div class="section-head">
-      <div>
-        <span class="eyebrow">Kategori Populer</span>
-        <h2>Produk & Jasa PRIME CT</h2>
-      </div>
-      <a href="produk.html" class="btn small">Lihat Semua →</a>
-    </div>
-    <div class="card-grid">
-      <div class="card">
-        <span class="tag">Kategori 01</span>
-        <div class="icon">👑</div>
-        <h3>Akun Premium</h3>
-        <p>Netflix, Spotify, Canva, ChatGPT, YouTube Premium, dan lainnya.</p>
-      </div>
-      <div class="card">
-        <span class="tag">Kategori 02</span>
-        <div class="icon">🎮</div>
-        <h3>Top Up Game</h3>
-        <p>Diamond, UC, voucher game populer — proses cepat dan aman.</p>
-      </div>
-      <div class="card">
-        <span class="tag">Kategori 03</span>
-        <div class="icon">🎨</div>
-        <h3>Jasa Editing</h3>
-        <p>Edit foto & video, desain grafis, CapCut, Lightroom, dan Remini.</p>
-      </div>
-      <div class="card">
-        <span class="tag">Kategori 04</span>
-        <div class="icon">🤖</div>
-        <h3>Bot WhatsApp</h3>
-        <p>Script bot, sewa bot, jasa setting bot, dan fitur custom lainnya.</p>
-      </div>
-    </div>
-  </div>
-</section>
+    // Configuration Supabase
+    const SUPABASE_URL = 'https://krxzhxxytjmqmvzndofw.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_BtMu9ACi_o-V29IdGZdIDA_th6tjNzi';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-<section class="section">
-  <div class="wrap">
-    <div class="section-head">
-      <div>
-        <span class="eyebrow">Cara Order</span>
-        <h2>Tiga langkah, selesai.</h2>
-      </div>
-    </div>
-    <div class="steps">
-      <div class="step">
-        <span class="num">01</span>
-        <h4>Pilih produk</h4>
-        <p>Buka katalog, pilih produk atau jasa yang kamu butuhkan.</p>
-      </div>
-      <div class="step">
-        <span class="num">02</span>
-        <h4>Kirim detail order</h4>
-        <p>Isi detail pesanan lalu kirim ke WhatsApp admin PRIME CT.</p>
-      </div>
-      <div class="step">
-        <span class="num">03</span>
-        <h4>Bayar & terima</h4>
-        <p>Bayar via QRIS/DANA/GoPay, kirim bukti, pesanan langsung diproses.</p>
-      </div>
-    </div>
-  </div>
-</section>
+    let activeWhatsappNumber = '';
 
-<section class="section">
-  <div class="wrap about-grid">
-    <div>
-      <span class="eyebrow">Tentang Kami</span>
-      <h2>Kenapa PRIME CT?</h2>
-      <p style="color:var(--muted); margin-top:16px;">
-        PRIME CT Official dibangun untuk jadi titik order digital yang praktis: katalog jelas,
-        admin responsif, dan pembayaran yang gampang diverifikasi. Cocok buat kamu yang butuh
-        akun premium, top up game, atau jasa digital lain tanpa proses berbelit.
-      </p>
-      <div class="stat-row">
-        <div class="stat"><b>4+</b><span>Kategori Layanan</span></div>
-        <div class="stat"><b>&lt;15m</b><span>Respon Admin</span></div>
-        <div class="stat"><b>3</b><span>Metode Bayar</span></div>
-      </div>
-    </div>
-    <div class="hud-panel">
-      <div class="readout"><span>Fast Response</span><b class="ok">✓</b></div>
-      <div class="readout"><span>Order jelas & transparan</span><b class="ok">✓</b></div>
-      <div class="readout"><span>Bukti bayar dikonfirmasi manual</span><b class="ok">✓</b></div>
-      <div class="readout"><span>Garansi replace produk gagal</span><b class="ok">✓</b></div>
-    </div>
-  </div>
-</section>
+    // 1. Load Website Settings (Judul, Logo, WA)
+    async function loadWebsiteSettings() {
+      const { data, error } = await supabaseClient.from('site_settings').select('*');
+      if (error || !data) return;
 
-<section class="section" style="border-bottom:none;">
-  <div class="wrap">
-    <div class="pay-strip">
-      <span class="eyebrow" style="margin-right:8px;">Payment</span>
-      <span class="pay-chip">QRIS</span>
-      <span class="pay-chip">DANA</span>
-      <span class="pay-chip">GoPay</span>
-      <span style="color:var(--muted); font-size:0.86rem;">— lihat detail lengkap di halaman produk saat checkout.</span>
-    </div>
-  </div>
-</section>
+      data.forEach(item => {
+        // Nama Toko / Judul
+        if (item.key === 'site_title' && item.value) {
+          document.title = item.value;
+          document.querySelectorAll('.site-brand-name').forEach(el => el.textContent = item.value);
+        }
 
-<footer class="site">
-  <div class="wrap">
-    <div class="footer-grid">
-      <div>
-        <div class="brand" style="margin-bottom:12px;">
-          <span class="mark">CT</span>
-          <span>PRIME CT<small>DIGITAL STORE OFFICIAL</small></span>
+        // Logo
+        if (item.key === 'logo_url' && item.value) {
+          const logoEl = document.getElementById('main-logo');
+          if (logoEl) logoEl.src = item.value;
+        }
+
+        // WhatsApp
+        if (item.key === 'whatsapp_number' && item.value) {
+          activeWhatsappNumber = item.value;
+          document.querySelectorAll('.wa-link').forEach(btn => {
+            btn.href = `https://wa.me/${item.value}?text=Halo%20Admin,%20saya%20ingin%20bertanya`;
+          });
+        }
+      });
+    }
+
+    // 2. Load Products
+    async function loadPublicProducts() {
+      const container = document.getElementById('products-container');
+      const { data: products, error } = await supabaseClient
+        .from('products')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error || !products || products.length === 0) {
+        container.innerHTML = '<div class="state-msg">Belum ada produk yang tersedia saat ini.</div>';
+        return;
+      }
+
+      container.innerHTML = products.map(prod => {
+        const priceFormatted = Number(prod.price).toLocaleString('id-ID');
+        const waText = encodeURIComponent(`Halo, saya tertarik untuk membeli produk: ${prod.name}`);
+        const waUrl = activeWhatsappNumber 
+          ? `https://wa.me/${activeWhatsappNumber}?text=${waText}`
+          : '#';
+
+        return `
+          <div class="product-card">
+            <img class="product-img" src="${prod.image_url || 'https://via.placeholder.com/300'}" alt="${prod.name}">
+            <div class="product-info">
+              <h3 class="product-title">${prod.name}</h3>
+              <p class="product-desc">${prod.description || 'Tidak ada deskripsi.'}</p>
+              <div class="product-price">Rp ${priceFormatted}</div>
+              <a href="${waUrl}" class="btn-buy" target="_blank">Beli Sekarang</a>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 3. Load Services
+    async function loadPublicServices() {
+      const container = document.getElementById('services-container');
+      const { data: services, error } = await supabaseClient
+        .from('services')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error || !services || services.length === 0) {
+        container.innerHTML = '<div class="state-msg">Belum ada layanan yang ditawarkan saat ini.</div>';
+        return;
+      }
+
+      container.innerHTML = services.map(serv => `
+        <div class="service-card">
+          <h3 class="service-title">${serv.title}</h3>
+          <p class="service-desc">${serv.description || 'Tidak ada deskripsi.'}</p>
         </div>
-        <p style="color:var(--muted); font-size:0.88rem; max-width:32ch;">
-          Toko digital terpercaya untuk akun premium, top up game, jasa editing, dan bot WhatsApp.
-        </p>
-      </div>
-      <div>
-        <h5>Menu</h5>
-        <ul>
-          <li><a href="produk.html">Produk & Jasa</a></li>
-          <li><a href="faq.html">FAQ</a></li>
-          <li><a href="kontak.html">Kontak</a></li>
-        </ul>
-      </div>
-      <div>
-        <h5>Kontak Cepat</h5>
-        <ul>
-          <li><a href="https://wa.me/6281325507265">WhatsApp Admin</a></li>
-          <li><a href="mailto:primectoffc@gmail.com">primectoffc@gmail.com</a></li>
-        </ul>
-      </div>
-      <div>
-        <h5>Sosial Media</h5>
-        <ul>
-          <li><a href="#">Instagram</a></li>
-          <li><a href="#">Telegram</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 PRIME CT Official. All rights reserved.</span>
-      <span>Dibuat untuk kebutuhan digital kamu.</span>
-    </div>
-  </div>
-</footer>
+      `).join('');
+    }
 
-<script src="script.js"></script>
+    // Jalankan semua pengambilan data
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadWebsiteSettings();
+      loadPublicProducts();
+      loadPublicServices();
+    });
+  </script>
 </body>
 </html>
