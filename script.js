@@ -5,7 +5,7 @@ const SUPABASE_URL = 'https://krxzhxxytjmqmvzndofw.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_BtMu9ACi_o-V29IdGZdIDA_th6tjNzi';
 const supabaseClient = window.supabase?.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-let liveWaNumber = '6281200000000'; // fallback, ditimpa setelah data Supabase masuk
+let liveWaNumber = '6281325507265'; // fallback, ditimpa setelah data Supabase masuk
 
 async function applyLiveSettings() {
   if (!supabaseClient) return;
