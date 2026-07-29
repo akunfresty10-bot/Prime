@@ -81,35 +81,52 @@
     .card-btn { background: #2563eb; color: #fff; text-align: center; padding: 6px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; }
     .state-msg { grid-column: 1 / -1; text-align: center; padding: 25px; color: var(--text-sub); background: var(--bg-card-solid); border-radius: 12px; border: 1px dashed var(--border-color); }
 
-
     /* =================================================== */
-    /* 1. SEKSI "SIAPA ITU PRIME CT OFFICIAL"              */
+    /* SEKSI "SIAPA ITU PRIME CT STORE?" (DESAIN DARI GAMBAR) */
     /* =================================================== */
     .about-card-box {
-      background: linear-gradient(180deg, rgba(30, 27, 75, 0.5) 0%, rgba(15, 23, 42, 0.8) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
-      padding: 24px 20px;
-      margin-bottom: 20px;
-      text-align: center;
-      backdrop-filter: blur(10px);
+      background: linear-gradient(135deg, rgba(30, 27, 75, 0.7) 0%, rgba(15, 23, 42, 0.95) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 28px 24px;
+      margin-bottom: 25px;
+      text-align: left;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
     .about-card-box h3 {
-      font-size: 1.25rem;
+      font-size: 1.35rem;
       font-weight: 800;
       color: #fff;
-      margin-bottom: 10px;
-      letter-spacing: 0.3px;
+      margin-bottom: 18px;
     }
     .about-card-box p {
       font-size: 0.88rem;
-      color: #94a3b8;
-      line-height: 1.6;
+      color: #cbd5e1;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .about-card-box p strong {
+      color: #fff;
+      font-weight: 700;
+    }
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+    .about-tag-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #e2e8f0;
     }
 
-    /* =================================================== */
-    /* 2. KARTU STATISTIK "TOTAL PELANGGAN"                */
-    /* =================================================== */
+    /* KARTU STATISTIK "TOTAL PELANGGAN" */
     .stats-card-box {
       background: linear-gradient(180deg, rgba(30, 27, 75, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -142,9 +159,7 @@
     .feature-item h4 { font-size: 0.98rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
     .feature-item p { font-size: 0.83rem; color: #94a3b8; line-height: 1.5; }
 
-    /* =================================================== */
-    /* 3. BANNER "BUTUH ORDER CEPAT?"                     */
-    /* =================================================== */
+    /* BANNER "BUTUH ORDER CEPAT?" */
     .cta-banner {
       background: linear-gradient(180deg, rgba(58, 28, 113, 0.5) 0%, rgba(20, 18, 40, 0.8) 100%);
       border: 1px solid rgba(168, 85, 247, 0.25);
@@ -276,18 +291,34 @@
       </div>
     </div>
 
-    <!-- ======================================= -->
-    <!-- 1. SEKSI SIAPA ITU PRIME CT OFFICIAL   -->
-    <!-- ======================================= -->
+    <!-- =================================================== -->
+    <!-- SEKSI "SIAPA ITU PRIME CT STORE?" (SESUAI DESAIN GAMBAR) -->
+    <!-- =================================================== -->
     <div class="about-card-box">
-      <h3>Siapa itu PRIME CT OFFICIAL?</h3>
-      <p id="about-desc-el">
-        <span class="site-brand-name">PRIME CT STORE</span> adalah platform penyedia produk digital dan jasa online terpercaya yang hadir untuk memenuhi berbagai kebutuhan digital Anda secara praktis, cepat, dan terjamin aman.
+      <h3>Siapa itu <span class="site-brand-name">PRIME CT STORE</span>?</h3>
+      
+      <p id="about-desc-p1">
+        <strong class="site-brand-name">PRIME CT STORE</strong> adalah digital store terpercaya yang dikembangkan dan dikelola secara profesional untuk menyediakan solusi kebutuhan teknologi modern Anda.
       </p>
+
+      <p id="about-desc-p2">
+        <strong class="site-brand-name">PRIME CT STORE</strong> hadir sebagai tempat layanan digital yang praktis, cepat, dan terpercaya untuk membantu kebutuhan pelanggan di dunia online. Fokus utama kami adalah memberikan pengalaman order yang mudah, tampilan website yang modern, layanan yang responsif, serta katalog produk dan jasa yang terus diperbarui mengikuti kebutuhan dunia digital.
+      </p>
+
+      <div class="about-tags">
+        <span class="about-tag-pill">Owner</span>
+        <span class="about-tag-pill">Admin</span>
+        <span class="about-tag-pill">Developer</span>
+        <span class="about-tag-pill">Engineer</span>
+        <span class="about-tag-pill">Designer</span>
+        <span class="about-tag-pill">Editor</span>
+        <span class="about-tag-pill">Content Creator</span>
+        <span class="about-tag-pill">Digital Service</span>
+      </div>
     </div>
 
     <!-- ======================================= -->
-    <!-- 2. KARTU STATISTIK TOTAL PELANGGAN      -->
+    <!-- KARTU STATISTIK TOTAL PELANGGAN        -->
     <!-- ======================================= -->
     <div class="stats-card-box">
       <div id="stats-count-el" class="stats-number">8.929+</div>
@@ -313,7 +344,7 @@
     </div>
 
     <!-- ======================================= -->
-    <!-- 3. BANNER BUTUH ORDER CEPAT?           -->
+    <!-- BANNER BUTUH ORDER CEPAT?             -->
     <!-- ======================================= -->
     <div class="cta-banner">
       <h3 class="cta-title">Butuh order cepat?</h3>
@@ -404,7 +435,9 @@
         if (item.key === 'social_tg' && item.value) document.getElementById('soc-tg-link').href = item.value;
 
         // About & Stats Text
-        if (item.key === 'about_desc' && item.value) document.getElementById('about-desc-el').textContent = item.value;
+        if (item.key === 'about_desc' && item.value) {
+          document.getElementById('about-desc-p1').innerHTML = item.value;
+        }
         if (item.key === 'stats_count' && item.value) document.getElementById('stats-count-el').textContent = item.value;
         if (item.key === 'stats_desc' && item.value) document.getElementById('stats-desc-el').textContent = item.value;
 
