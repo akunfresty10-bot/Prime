@@ -15,6 +15,9 @@
     input[type="text"], input[type="number"], input[type="email"], input[type="password"], textarea, input[type="file"], select {
       width: 100%; padding: 12px; border: 1px solid #444; border-radius: 6px; background-color: #2a2a2a; color: #fff; box-sizing: border-box;
     }
+    input[type="color"] {
+      width: 100%; height: 45px; border: 1px solid #444; border-radius: 6px; background-color: #2a2a2a; cursor: pointer; padding: 4px;
+    }
     input:focus, textarea:focus, select:focus { border-color: #007bff; outline: none; }
     button { background: #007bff; color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; font-size: 15px; transition: 0.2s; }
     button:hover { background: #0056b3; }
@@ -23,9 +26,10 @@
     table { width: 100%; border-collapse: collapse; margin-top: 15px; background: #252525; border-radius: 8px; overflow: hidden; }
     th, td { border-bottom: 1px solid #383838; padding: 12px; text-align: left; }
     th { background-color: #2e2e2e; color: #fff; }
-    img.preview { max-width: 100px; max-height: 100px; object-fit: cover; border-radius: 6px; margin-top: 5px; }
+    img.preview { max-width: 120px; max-height: 120px; object-fit: cover; border-radius: 6px; margin-top: 5px; }
     .header-admin { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 25px; }
-    .section-divider { border-top: 1px dashed #444; margin: 20px 0; padding-top: 15px; }
+    .section-divider { border-top: 1px dashed #444; margin: 25px 0 15px; padding-top: 15px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
   </style>
 
   <!-- CDN Supabase JS v2 -->
@@ -65,26 +69,69 @@
         <button id="logout-btn" class="btn-danger">Logout</button>
       </div>
 
-      <!-- SECTION A: PENGATURAN UMUM & POPUP -->
+      <!-- SECTION A: PENGATURAN UMUM & BANNER HERO -->
       <div class="card">
-        <h3>1. Pengaturan Utama Website</h3>
+        <h3>1. Pengaturan Utama & Tampilan Website</h3>
         <form id="settings-form">
+          
           <div class="form-group">
             <label>Judul Website / Nama Toko</label>
             <input type="text" id="site_title" placeholder="Contoh: PRIME CT STORE">
           </div>
+
           <div class="form-group">
             <label>Nomor WhatsApp Customer Service (Format 62)</label>
             <input type="text" id="whatsapp_number" placeholder="6281325507265">
           </div>
+
           <div class="form-group">
-            <label>Upload Logo Utama (Opsional)</label>
+            <label>Jenis Font Website</label>
+            <select id="site_font">
+              <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans (Default Modern)</option>
+              <option value="'Poppins', sans-serif">Poppins (Bulat & Bersih)</option>
+              <option value="'Inter', sans-serif">Inter (Minimalis)</option>
+              <option value="'Montserrat', sans-serif">Montserrat (Tegas & Bold)</option>
+              <option value="'Roboto', sans-serif">Roboto (Klassik)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Upload Logo Utama Toko (Opsional)</label>
             <input type="file" id="logo_file" accept="image/*">
             <div id="current-logo-container"></div>
           </div>
 
+          <!-- SUB-SECTION: HERO BANNER DESIGN -->
           <div class="section-divider">
-            <h4 style="color: #60a5fa;">Pengaturan Popup Iklan Join Group WA</h4>
+            <h4 style="color: #60a5fa;"><i class="fa-solid fa-palette"></i> Kustomisasi Kotak Banner (Hero Section)</h4>
+          </div>
+
+          <div class="form-group">
+            <label>Teks Subtitle Banner Hero</label>
+            <input type="text" id="hero_subtitle" placeholder="Pusat Layanan Top Up, Produk Digital & Jasa Terbaik">
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Warna Latar Kotak Hero</label>
+              <input type="color" id="hero_bg_color" value="#1e3a8a">
+            </div>
+            <div class="form-group">
+              <label>Warna Teks Kotak Hero</label>
+              <input type="color" id="hero_text_color" value="#ffffff">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Upload Gambar Latar / Background Kotak Hero (Opsional)</label>
+            <input type="file" id="hero_bg_file" accept="image/*">
+            <small style="color: #aaa;">Jika diupload, gambar ini akan menjadi latar belakang kotak PRIME CT STORE.</small>
+            <div id="current-hero-bg-container"></div>
+          </div>
+
+          <!-- SUB-SECTION: POPUP IKLAN WA -->
+          <div class="section-divider">
+            <h4 style="color: #34d399;">Pengaturan Popup Iklan Join Group WA</h4>
           </div>
 
           <div class="form-group">
@@ -96,7 +143,7 @@
           </div>
 
           <div class="form-group">
-            <label>Link Group WhatsApp (Contoh: https://chat.whatsapp.com/...)</label>
+            <label>Link Group WhatsApp</label>
             <input type="text" id="wa_group_link" placeholder="https://chat.whatsapp.com/KodeGroupAnda">
           </div>
 
@@ -255,11 +302,20 @@
         data.forEach(item => {
           if (item.key === 'site_title') document.getElementById('site_title').value = item.value;
           if (item.key === 'whatsapp_number') document.getElementById('whatsapp_number').value = item.value;
+          if (item.key === 'site_font') document.getElementById('site_font').value = item.value;
+          
+          if (item.key === 'hero_subtitle') document.getElementById('hero_subtitle').value = item.value;
+          if (item.key === 'hero_bg_color') document.getElementById('hero_bg_color').value = item.value;
+          if (item.key === 'hero_text_color') document.getElementById('hero_text_color').value = item.value;
+
           if (item.key === 'wa_group_link') document.getElementById('wa_group_link').value = item.value;
           if (item.key === 'popup_enabled') document.getElementById('popup_enabled').value = item.value;
           
           if (item.key === 'logo_url' && item.value) {
             document.getElementById('current-logo-container').innerHTML = `<p style="margin:5px 0;"><small>Logo Saat Ini:</small></p><img src="${item.value}" class="preview">`;
+          }
+          if (item.key === 'hero_bg_url' && item.value) {
+            document.getElementById('current-hero-bg-container').innerHTML = `<p style="margin:5px 0;"><small>Gambar Hero Saat Ini:</small></p><img src="${item.value}" class="preview">`;
           }
           if (item.key === 'popup_banner_url' && item.value) {
             document.getElementById('current-banner-container').innerHTML = `<p style="margin:5px 0;"><small>Banner Popup Saat Ini:</small></p><img src="${item.value}" class="preview">`;
@@ -271,22 +327,43 @@
     // SAVE SETTINGS
     document.getElementById('settings-form').addEventListener('submit', async (e) => {
       e.preventDefault();
+      
       const title = document.getElementById('site_title').value;
       const wa = document.getElementById('whatsapp_number').value;
+      const font = document.getElementById('site_font').value;
+      
+      const heroSubtitle = document.getElementById('hero_subtitle').value;
+      const heroBgColor = document.getElementById('hero_bg_color').value;
+      const heroTextColor = document.getElementById('hero_text_color').value;
+
       const waGroup = document.getElementById('wa_group_link').value;
       const popupEnabled = document.getElementById('popup_enabled').value;
       
       const logoFile = document.getElementById('logo_file').files[0];
+      const heroBgFile = document.getElementById('hero_bg_file').files[0];
       const bannerFile = document.getElementById('popup_banner_file').files[0];
 
+      // Upsert Text Data
       await supabaseClient.from('site_settings').upsert({ key: 'site_title', value: title });
       await supabaseClient.from('site_settings').upsert({ key: 'whatsapp_number', value: wa });
+      await supabaseClient.from('site_settings').upsert({ key: 'site_font', value: font });
+
+      await supabaseClient.from('site_settings').upsert({ key: 'hero_subtitle', value: heroSubtitle });
+      await supabaseClient.from('site_settings').upsert({ key: 'hero_bg_color', value: heroBgColor });
+      await supabaseClient.from('site_settings').upsert({ key: 'hero_text_color', value: heroTextColor });
+
       await supabaseClient.from('site_settings').upsert({ key: 'wa_group_link', value: waGroup });
       await supabaseClient.from('site_settings').upsert({ key: 'popup_enabled', value: popupEnabled });
 
+      // Upsert Image Files
       if (logoFile) {
         const logoUrl = await uploadFileToStorage(logoFile);
         if (logoUrl) await supabaseClient.from('site_settings').upsert({ key: 'logo_url', value: logoUrl });
+      }
+
+      if (heroBgFile) {
+        const heroBgUrl = await uploadFileToStorage(heroBgFile);
+        if (heroBgUrl) await supabaseClient.from('site_settings').upsert({ key: 'hero_bg_url', value: heroBgUrl });
       }
 
       if (bannerFile) {
@@ -294,7 +371,7 @@
         if (bannerUrl) await supabaseClient.from('site_settings').upsert({ key: 'popup_banner_url', value: bannerUrl });
       }
 
-      alert('Pengaturan berhasil disimpan!');
+      alert('Pengaturan tampilan berhasil disimpan!');
       loadSettings();
     });
 

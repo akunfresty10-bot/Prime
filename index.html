@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title class="site-brand-name">PRIME CT STORE</title>
 
-  <!-- Google Fonts & FontAwesome Icons -->
+  <!-- Google Fonts Lengkap (Plus Jakarta Sans, Poppins, Inter, Montserrat, Roboto) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Montserrat:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;600;700;800&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
@@ -95,9 +95,7 @@
       transition: 0.2s;
     }
 
-    .nav-btn-wa:hover {
-      transform: scale(1.03);
-    }
+    .nav-btn-wa:hover { transform: scale(1.03); }
 
     /* RUNNING TEXT */
     .announcement-bar {
@@ -121,19 +119,48 @@
       padding: 20px 16px;
     }
 
-    /* HERO BANNER */
+    /* HERO BANNER DENGAN KUSTOMISASI KOTAK */
     .hero-banner {
       background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+      background-size: cover;
+      background-position: center;
       border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 25px 20px;
-      margin-bottom: 20px;
+      border-radius: 18px;
+      padding: 35px 20px;
+      margin-bottom: 25px;
       text-align: center;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
     }
 
-    .hero-banner h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; }
-    .hero-banner p { color: #93c5fd; font-size: 0.9rem; }
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.35); /* Dark Overlay jika gambar terang */
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-banner h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-banner p {
+      font-size: 0.95rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
 
     /* SEARCH BAR */
     .search-box { position: relative; margin-bottom: 20px; }
@@ -219,9 +246,7 @@
     /* FOOTER */
     footer { border-top: 1px solid var(--border-color); padding: 25px 16px; text-align: center; color: var(--text-sub); font-size: 0.85rem; background: var(--bg-card); }
 
-    /* ========================================= */
-    /* POPUP MODAL STYLES (YNASTORE STYLE)       */
-    /* ========================================= */
+    /* POPUP MODAL STYLES */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -236,12 +261,7 @@
       visibility: hidden;
       transition: opacity 0.3s ease, visibility 0.3s ease;
     }
-
-    .modal-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
+    .modal-overlay.active { opacity: 1; visibility: visible; }
     .modal-box {
       background: #161b22;
       border: 1px solid var(--border-color);
@@ -255,72 +275,24 @@
       transform: scale(0.8);
       transition: transform 0.3s ease;
     }
-
-    .modal-overlay.active .modal-box {
-      transform: scale(1);
-    }
-
+    .modal-overlay.active .modal-box { transform: scale(1); }
     .modal-close {
-      position: absolute;
-      top: 12px; right: 12px;
-      background: rgba(255, 255, 255, 0.1);
-      border: none;
-      color: var(--text-sub);
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      font-size: 1.2rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: 0.2s;
+      position: absolute; top: 12px; right: 12px;
+      background: rgba(255, 255, 255, 0.1); border: none; color: var(--text-sub);
+      width: 32px; height: 32px; border-radius: 50%; font-size: 1.2rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: 0.2s;
     }
-
     .modal-close:hover { background: #ef4444; color: #fff; }
-
-    .modal-banner-img {
-      width: 100%;
-      max-height: 200px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 16px;
-      border: 1px solid var(--border-color);
-    }
-
-    .modal-title {
-      font-size: 1.25rem;
-      font-weight: 800;
-      margin-bottom: 8px;
-      color: #fff;
-    }
-
-    .modal-desc {
-      font-size: 0.88rem;
-      color: var(--text-sub);
-      margin-bottom: 20px;
-      line-height: 1.5;
-    }
-
+    .modal-banner-img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 16px; border: 1px solid var(--border-color); }
+    .modal-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 8px; color: #fff; }
+    .modal-desc { font-size: 0.88rem; color: var(--text-sub); margin-bottom: 20px; line-height: 1.5; }
     .btn-join-group {
-      background: var(--wa-green);
-      color: #fff;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 12px 20px;
-      border-radius: 12px;
-      font-weight: 800;
-      font-size: 0.95rem;
-      transition: all 0.2s;
-      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+      background: var(--wa-green); color: #fff; text-decoration: none;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 12px 20px; border-radius: 12px; font-weight: 800; font-size: 0.95rem;
+      transition: all 0.2s; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
     }
-
-    .btn-join-group:hover {
-      background: var(--wa-hover);
-      transform: translateY(-2px);
-    }
+    .btn-join-group:hover { background: var(--wa-hover); transform: translateY(-2px); }
   </style>
 
   <!-- CDN Supabase JS v2 -->
@@ -363,10 +335,12 @@
   <!-- CONTAINER -->
   <div class="container">
 
-    <!-- HERO BANNER -->
-    <div class="hero-banner">
-      <h1 class="site-brand-name">PRIME CT STORE</h1>
-      <p>Pusat Layanan Top Up, Produk Digital & Jasa Terbaik</p>
+    <!-- HERO BANNER KOTAK DYNAMIC -->
+    <div id="hero-banner-box" class="hero-banner">
+      <div class="hero-content">
+        <h1 id="hero-title" class="site-brand-name">PRIME CT STORE</h1>
+        <p id="hero-desc">Pusat Layanan Top Up, Produk Digital & Jasa Terbaik</p>
+      </div>
     </div>
 
     <!-- SEARCH BAR -->
@@ -417,12 +391,11 @@
     let globalProducts = [];
     let globalServices = [];
 
-    // Fungsi Tutup Modal
     function closeWaModal() {
       document.getElementById('wa-modal-overlay').classList.remove('active');
     }
 
-    // 1. Fetch Pengaturan Website
+    // 1. Fetch & Apply Website Settings
     async function loadWebsiteSettings() {
       const { data, error } = await supabaseClient.from('site_settings').select('*');
       if (error || !data) return;
@@ -430,15 +403,28 @@
       let isPopupEnabled = false;
       let groupUrl = '#';
 
+      const heroBox = document.getElementById('hero-banner-box');
+      const heroDesc = document.getElementById('hero-desc');
+
       data.forEach(item => {
+        // Font Website
+        if (item.key === 'site_font' && item.value) {
+          document.body.style.fontFamily = item.value;
+        }
+
+        // Judul Toko
         if (item.key === 'site_title' && item.value) {
           document.title = item.value;
           document.querySelectorAll('.site-brand-name').forEach(el => el.textContent = item.value);
         }
+
+        // Logo Toko
         if (item.key === 'logo_url' && item.value) {
           const logoEl = document.getElementById('main-logo');
           if (logoEl) logoEl.src = item.value;
         }
+
+        // Customer Service WhatsApp
         if (item.key === 'whatsapp_number' && item.value) {
           activeWhatsappNumber = item.value;
           document.querySelectorAll('.wa-link').forEach(btn => {
@@ -446,7 +432,21 @@
           });
         }
 
-        // Pengaturan Popup
+        // --- KUSTOMISASI HERO BANNER ---
+        if (item.key === 'hero_subtitle' && item.value) {
+          heroDesc.textContent = item.value;
+        }
+        if (item.key === 'hero_bg_color' && item.value) {
+          heroBox.style.backgroundColor = item.value;
+        }
+        if (item.key === 'hero_text_color' && item.value) {
+          heroBox.style.color = item.value;
+        }
+        if (item.key === 'hero_bg_url' && item.value) {
+          heroBox.style.backgroundImage = `url('${item.value}')`;
+        }
+
+        // --- POPUP SETTINGS ---
         if (item.key === 'popup_enabled') {
           isPopupEnabled = item.value === 'true';
         }
@@ -461,15 +461,15 @@
         }
       });
 
-      // Tampilkan Modal Jika Diaktifkan dari Admin
+      // Tampilkan Popup Jika Aktif
       if (isPopupEnabled && groupUrl !== '#') {
         setTimeout(() => {
           document.getElementById('wa-modal-overlay').classList.add('active');
-        }, 500); // Tampil setelah 0.5 detik
+        }, 500);
       }
     }
 
-    // 2. Fetch Produk
+    // 2. Fetch Products
     async function loadPublicProducts() {
       const container = document.getElementById('products-container');
       const { data: products, error } = await supabaseClient
@@ -516,7 +516,7 @@
       }).join('');
     }
 
-    // 3. Fetch Jasa
+    // 3. Fetch Services
     async function loadPublicServices() {
       const container = document.getElementById('services-container');
       const { data: services, error } = await supabaseClient
