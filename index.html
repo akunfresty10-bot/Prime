@@ -19,7 +19,6 @@
       --border-color: rgba(255, 255, 255, 0.08);
       --accent-blue: #2563eb;
       --accent-purple: #8b5cf6;
-      --accent-glow: #3b82f6;
       --text-main: #f0f6fc;
       --text-sub: #94a3b8;
       --wa-green: #25d366;
@@ -34,14 +33,9 @@
       padding-bottom: 0px;
     }
 
-    /* KATA KUNCI PUTIH TEBAL */
-    .highlight-bold {
-      color: #ffffff !important;
-      font-weight: 800 !important;
-      -webkit-text-fill-color: #ffffff !important;
-    }
+    .highlight-bold { color: #ffffff !important; font-weight: 800 !important; }
 
-    /* HEADER */
+    /* HEADER & LOGO */
     header {
       background: rgba(13, 16, 24, 0.85);
       backdrop-filter: blur(12px);
@@ -54,17 +48,32 @@
     .brand span { font-size: 1.15rem; font-weight: 800; background: linear-gradient(135deg, #c084fc, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .nav-btn-wa { background-color: var(--wa-green); color: #fff; padding: 8px 14px; border-radius: 20px; text-decoration: none; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; }
 
-    /* RUNNING TEXT */
     .announcement-bar { background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border-color); padding: 8px 16px; font-size: 0.82rem; color: var(--text-sub); display: flex; align-items: center; gap: 10px; }
-    .announcement-bar i { color: #f59e0b; }
-
-    /* CONTAINER */
     .container { max-width: 800px; margin: 0 auto; padding: 20px 16px; }
 
-    /* HERO BANNER */
-    .hero-banner { background: linear-gradient(135deg, #2e1065 0%, #0f172a 100%); border: 1px solid var(--border-color); border-radius: 20px; padding: 30px 20px; margin-bottom: 20px; text-align: center; }
-    .hero-banner h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 6px; }
-    .hero-banner p { font-size: 0.9rem; color: var(--text-sub); }
+    /* HERO BANNER STYLING */
+    .hero-banner {
+      background: linear-gradient(135deg, #2e1065 0%, #0f172a 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 30px 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-banner-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(9, 11, 16, 0.55);
+      z-index: 1;
+      display: none;
+    }
+    .hero-banner-content { position: relative; z-index: 2; }
+    .hero-banner h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 6px; text-shadow: 0 2px 10px rgba(0,0,0,0.7); }
+    .hero-banner p { font-size: 0.9rem; color: #e2e8f0; text-shadow: 0 1px 5px rgba(0,0,0,0.7); }
 
     /* SEARCH & TABS */
     .search-box { position: relative; margin-bottom: 16px; }
@@ -77,7 +86,7 @@
 
     .section-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
 
-    /* GRID PRODUCTS & SERVICES */
+    /* GRID & CARDS */
     .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-bottom: 30px; }
     .store-card { background: var(--bg-card-solid); border: 1px solid var(--border-color); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; text-decoration: none; color: inherit; position: relative; }
     .card-badge { position: absolute; top: 8px; right: 8px; background: rgba(124, 58, 237, 0.9); color: #fff; font-size: 0.65rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; }
@@ -88,132 +97,37 @@
     .card-btn { background: #2563eb; color: #fff; text-align: center; padding: 6px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; }
     .state-msg { grid-column: 1 / -1; text-align: center; padding: 25px; color: var(--text-sub); background: var(--bg-card-solid); border-radius: 12px; border: 1px dashed var(--border-color); }
 
-    /* SEKSI "SIAPA ITU PRIME CT STORE?" */
-    .about-card-box {
-      background: linear-gradient(135deg, rgba(30, 27, 75, 0.7) 0%, rgba(15, 23, 42, 0.95) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 24px;
-      padding: 28px 24px;
-      margin-bottom: 25px;
-      text-align: left;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    }
-    .about-card-box h3 {
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 18px;
-    }
-    .about-card-box p {
-      font-size: 0.88rem;
-      color: #94a3b8;
-      line-height: 1.7;
-      margin-bottom: 16px;
-    }
-    .about-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 22px;
-    }
-    .about-tag-pill {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 8px 18px;
-      border-radius: 20px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: #e2e8f0;
-    }
+    /* ABOUT & STATS */
+    .about-card-box { background: linear-gradient(135deg, rgba(30, 27, 75, 0.7) 0%, rgba(15, 23, 42, 0.95) 100%); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 28px 24px; margin-bottom: 25px; backdrop-filter: blur(12px); }
+    .about-card-box h3 { font-size: 1.35rem; font-weight: 800; color: #fff; margin-bottom: 18px; }
+    .about-card-box p { font-size: 0.88rem; color: #94a3b8; line-height: 1.7; margin-bottom: 16px; }
+    .about-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+    .about-tag-pill { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); padding: 8px 18px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; color: #e2e8f0; }
 
-    /* KARTU STATISTIK "TOTAL PELANGGAN" */
-    .stats-card-box {
-      background: linear-gradient(180deg, rgba(30, 27, 75, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 24px;
-      padding: 30px 20px 25px 20px;
-      margin-bottom: 20px;
-      text-align: center;
-      backdrop-filter: blur(10px);
-    }
-    .stats-number {
-      font-size: 3.2rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #c084fc 0%, #38bdf8 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      line-height: 1;
-      margin-bottom: 6px;
-    }
+    .stats-card-box { background: linear-gradient(180deg, rgba(30, 27, 75, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 30px 20px 25px 20px; margin-bottom: 20px; text-align: center; }
+    .stats-number { font-size: 3.2rem; font-weight: 800; background: linear-gradient(135deg, #c084fc 0%, #38bdf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; margin-bottom: 6px; }
     .stats-label { font-size: 1.15rem; font-weight: 800; color: #fff; margin-bottom: 14px; }
     .stats-desc { font-size: 0.88rem; color: #94a3b8; line-height: 1.6; max-width: 600px; margin: 0 auto 26px auto; }
 
-    /* FITUR KEUNGGULAN */
     .feature-list { display: flex; flex-direction: column; gap: 12px; text-align: left; }
-    .feature-item {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 16px;
-      padding: 16px 20px;
-    }
+    .feature-item { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 16px; padding: 16px 20px; }
     .feature-item h4 { font-size: 0.98rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
     .feature-item p { font-size: 0.83rem; color: #94a3b8; line-height: 1.5; }
 
-    /* BANNER "BUTUH ORDER CEPAT?" */
-    .cta-banner {
-      background: linear-gradient(180deg, rgba(58, 28, 113, 0.5) 0%, rgba(20, 18, 40, 0.8) 100%);
-      border: 1px solid rgba(168, 85, 247, 0.25);
-      border-radius: 24px;
-      padding: 32px 20px;
-      text-align: center;
-      margin-bottom: 35px;
-    }
+    .cta-banner { background: linear-gradient(180deg, rgba(58, 28, 113, 0.5) 0%, rgba(20, 18, 40, 0.8) 100%); border: 1px solid rgba(168, 85, 247, 0.25); border-radius: 24px; padding: 32px 20px; text-align: center; margin-bottom: 35px; }
     .cta-title { font-size: 1.45rem; font-weight: 800; color: #fff; margin-bottom: 12px; }
     .cta-desc { font-size: 0.88rem; color: #cbd5e1; line-height: 1.6; max-width: 500px; margin: 0 auto 22px auto; }
-    .cta-btn {
-      display: inline-block;
-      background: linear-gradient(135deg, #a855f7, #6366f1);
-      color: #fff;
-      padding: 12px 36px;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      text-decoration: none;
-      box-shadow: 0 8px 20px rgba(168, 85, 247, 0.35);
-    }
+    .cta-btn { display: inline-block; background: linear-gradient(135deg, #a855f7, #6366f1); color: #fff; padding: 12px 36px; border-radius: 12px; font-weight: 700; font-size: 0.9rem; text-decoration: none; }
 
-    /* FOOTER UTAMA */
-    footer {
-      border-top: 1px solid var(--border-color);
-      padding: 30px 16px 20px 16px;
-      background: #090b10;
-      color: var(--text-sub);
-    }
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border-color); padding: 30px 16px 20px 16px; background: #090b10; color: var(--text-sub); }
     .footer-container { max-width: 800px; margin: 0 auto; }
-
     .social-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
-    .social-pill {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border-color);
-      color: #fff;
-      padding: 10px 18px;
-      border-radius: 12px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
+    .social-pill { background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); color: #fff; padding: 10px 18px; border-radius: 12px; font-size: 0.85rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px; }
     .footer-section-title { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 14px; }
     .footer-contacts { font-size: 0.88rem; margin-bottom: 30px; line-height: 2; color: #cbd5e1; }
-
     .footer-menu-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 35px; }
-    .footer-menu-list a { color: #94a3b8; text-decoration: none; font-size: 0.88rem; transition: 0.2s; }
-    .footer-menu-list a:hover { color: #38bdf8; }
-
+    .footer-menu-list a { color: #94a3b8; text-decoration: none; font-size: 0.88rem; }
     .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; font-size: 0.8rem; color: #64748b; line-height: 1.6; }
 
     /* MODAL POPUP */
@@ -228,13 +142,13 @@
 </head>
 <body>
 
-  <!-- MODAL POPUP IKUT GROUP -->
+  <!-- MODAL POPUP -->
   <div id="wa-modal-overlay" class="modal-overlay">
     <div class="modal-box">
       <button class="modal-close" onclick="closeWaModal()">&times;</button>
       <img id="modal-banner-img" src="" alt="Banner" style="width:100%; max-height:180px; object-fit:cover; border-radius:10px; margin-bottom:12px; display:none;">
       <h3 style="color:#fff; margin-bottom:6px;"><i class="fa-brands fa-whatsapp" style="color:#25d366;"></i> Join Group WA</h3>
-      <p style="font-size:0.83rem; color:var(--text-sub);">Dapatkan update promo dan stok produk terbaru langsung di WhatsApp!</p>
+      <p style="font-size:0.83rem; color:var(--text-sub);">Dapatkan update promo dan produk terbaru!</p>
       <a id="modal-group-btn" href="#" target="_blank" class="btn-join-group"><i class="fa-brands fa-whatsapp fa-lg"></i> Gabung Group Sekarang</a>
     </div>
   </div>
@@ -243,6 +157,7 @@
   <header>
     <div class="nav-container">
       <a href="#" class="brand">
+        <!-- LOGO UTAMA -->
         <img id="main-logo" src="https://via.placeholder.com/150" alt="Logo">
         <span class="site-brand-name">PRIME CT STORE</span>
       </a>
@@ -252,19 +167,22 @@
 
   <!-- RUNNING TEXT -->
   <div class="announcement-bar">
-    <i class="fa-solid fa-bullhorn"></i>
+    <i class="fa-solid fa-bullhorn" style="color:#f59e0b;"></i>
     <marquee>Selamat Datang di <span class="highlight-bold">PRIME CT STORE</span> • Layanan Digital & Jasa Online Terpercaya Fast Response • Operasional 24 Jam</marquee>
   </div>
 
   <div class="container">
 
-    <!-- HERO BANNER -->
+    <!-- HERO BANNER UTAMA -->
     <div id="hero-banner-box" class="hero-banner">
-      <h1 id="hero-title" class="site-brand-name">PRIME CT STORE</h1>
-      <p id="hero-desc">Platform Digital & Jasa Online Terpercaya</p>
+      <div id="hero-overlay" class="hero-banner-overlay"></div>
+      <div class="hero-banner-content">
+        <h1 id="hero-title" class="site-brand-name">PRIME CT STORE</h1>
+        <p id="hero-desc">Platform Digital & Jasa Online Terpercaya</p>
+      </div>
     </div>
 
-    <!-- SEARCH BAR & TABS -->
+    <!-- SEARCH & TABS -->
     <div class="search-box">
       <i class="fa-solid fa-magnifying-glass"></i>
       <input type="text" id="search-input" placeholder="Cari produk atau layanan..." onkeyup="filterItems()">
@@ -292,9 +210,7 @@
       </div>
     </div>
 
-    <!-- =================================================== -->
-    <!-- SEKSI "SIAPA ITU PRIME CT STORE?" (KATA PUTIH TEBAL) -->
-    <!-- =================================================== -->
+    <!-- SEKSI SIAPA ITU PRIME CT STORE -->
     <div class="about-card-box">
       <h3>Siapa itu <span class="highlight-bold">PRIME CT STORE</span>?</h3>
       
@@ -303,7 +219,7 @@
       </p>
 
       <p id="about-desc-p2">
-        <span class="highlight-bold">PRIME CT STORE</span> hadir sebagai tempat layanan digital yang praktis, cepat, dan terpercaya untuk membantu kebutuhan pelanggan di dunia online. Fokus utama <span class="highlight-bold">PRIME CT STORE</span> adalah memberikan pengalaman order yang mudah, tampilan website yang modern, layanan yang responsif, serta katalog produk dan jasa yang terus diperbarui mengikuti kebutuhan dunia digital.
+        <span class="highlight-bold">PRIME CT STORE</span> hadir sebagai tempat layanan digital yang praktis, cepat, dan terpercaya untuk membantu kebutuhan pelanggan di dunia online.
       </p>
 
       <div class="about-tags">
@@ -318,35 +234,31 @@
       </div>
     </div>
 
-    <!-- ======================================= -->
-    <!-- KARTU STATISTIK TOTAL PELANGGAN        -->
-    <!-- ======================================= -->
+    <!-- STATISTIK -->
     <div class="stats-card-box">
       <div id="stats-count-el" class="stats-number">8.929+</div>
       <div class="stats-label">Total Pelanggan</div>
       <p id="stats-desc-el" class="stats-desc">
-        <span class="highlight-bold">PRIME CT STORE</span> dipercaya oleh ribuan pelanggan untuk kebutuhan produk digital, jasa online, layanan editing, bot, akun premium, dan kebutuhan digital lainnya.
+        <span class="highlight-bold">PRIME CT STORE</span> dipercaya oleh ribuan pelanggan untuk kebutuhan produk digital dan jasa online.
       </p>
 
       <div class="feature-list">
         <div class="feature-item">
           <h4>Fast Response</h4>
-          <p id="feat-fast-desc">Admin siap bantu proses order dan konfirmasi payment kapan saja.</p>
+          <p>Admin siap bantu proses order dan konfirmasi payment kapan saja.</p>
         </div>
         <div class="feature-item">
           <h4>Aman & Terpercaya</h4>
-          <p id="feat-safe-desc">Payment resmi dan order diarahkan langsung ke kontak owner.</p>
+          <p>Payment resmi dan order diarahkan langsung ke kontak owner.</p>
         </div>
         <div class="feature-item">
           <h4>Produk Lengkap</h4>
-          <p id="feat-complete-desc">Katalog produk dan jasa dibuat untuk banyak kebutuhan digital.</p>
+          <p>Katalog produk dan jasa dibuat untuk banyak kebutuhan digital.</p>
         </div>
       </div>
     </div>
 
-    <!-- ======================================= -->
-    <!-- BANNER BUTUH ORDER CEPAT?             -->
-    <!-- ======================================= -->
+    <!-- CTA BANNER -->
     <div class="cta-banner">
       <h3 class="cta-title">Butuh order cepat?</h3>
       <p class="cta-desc">Klik produk yang kamu mau, isi detail order, pilih pembayaran, lalu kirim bukti ke WhatsApp kami.</p>
@@ -355,18 +267,15 @@
 
   </div>
 
-  <!-- FOOTER UTAMA -->
+  <!-- FOOTER -->
   <footer>
     <div class="footer-container">
-      
-      <!-- SOSMED PILLS -->
       <div class="social-pills">
         <a id="soc-wa-link" href="#" target="_blank" class="social-pill"><i class="fa-brands fa-whatsapp" style="color:#25d366;"></i> WhatsApp</a>
         <a id="soc-ig-link" href="#" target="_blank" class="social-pill"><i class="fa-brands fa-instagram" style="color:#e1306c;"></i> Instagram</a>
         <a id="soc-tg-link" href="#" target="_blank" class="social-pill"><i class="fa-brands fa-telegram" style="color:#229ed9;"></i> Telegram</a>
       </div>
 
-      <!-- KONTAK CEPAT -->
       <div class="footer-section-title">Kontak Cepat</div>
       <div class="footer-contacts">
         <div>WhatsApp: <span id="cnt-wa-1">0831-7340-3262</span></div>
@@ -374,18 +283,15 @@
         <div>Gmail: <span id="cnt-email">nadbrtpro@gmail.com</span></div>
       </div>
 
-      <!-- MENU SINKRON DATABASE -->
       <div class="footer-section-title">Menu</div>
       <ul id="dynamic-footer-menu" class="footer-menu-list">
         <li><a href="#product-section">Produk & Jasa</a></li>
       </ul>
 
-      <!-- COPYRIGHT -->
       <div class="footer-bottom">
         <p>&copy; <span id="year">2026</span> <span class="highlight-bold">PRIME CT STORE</span></p>
         <p>All Right Reserved Prime Developer 2026</p>
       </div>
-
     </div>
   </footer>
 
@@ -412,6 +318,7 @@
       let groupUrl = '#';
 
       data.forEach(item => {
+        // 1. JUDUL & LOGO KIRI ATAS
         if (item.key === 'site_title' && item.value) {
           document.title = item.value;
           document.querySelectorAll('.site-brand-name').forEach(el => el.textContent = item.value);
@@ -421,7 +328,25 @@
           if (logoEl) logoEl.src = item.value;
         }
 
-        // WhatsApp & Kontak
+        // 2. HERO BANNER TENGAH
+        if (item.key === 'hero_title' && item.value) {
+          const heroTitle = document.getElementById('hero-title');
+          if (heroTitle) heroTitle.textContent = item.value;
+        }
+        if (item.key === 'hero_desc' && item.value) {
+          const heroDesc = document.getElementById('hero-desc');
+          if (heroDesc) heroDesc.textContent = item.value;
+        }
+        if (item.key === 'banner_url' && item.value) {
+          const heroBox = document.getElementById('hero-banner-box');
+          const heroOverlay = document.getElementById('hero-overlay');
+          if (heroBox) {
+            heroBox.style.backgroundImage = `url('${item.value}')`;
+            if (heroOverlay) heroOverlay.style.display = 'block';
+          }
+        }
+
+        // 3. WHATSAPP & KONTAK
         if (item.key === 'whatsapp_number' && item.value) {
           activeWhatsappNumber = item.value;
           document.querySelectorAll('.wa-link').forEach(btn => btn.href = `https://wa.me/${item.value}`);
@@ -431,15 +356,13 @@
         if (item.key === 'contact_wa_2' && item.value) document.getElementById('cnt-wa-2').textContent = item.value;
         if (item.key === 'contact_email' && item.value) document.getElementById('cnt-email').textContent = item.value;
 
-        // Sosmed
+        // 4. SOSIAL MEDIA & STATS
         if (item.key === 'social_ig' && item.value) document.getElementById('soc-ig-link').href = item.value;
         if (item.key === 'social_tg' && item.value) document.getElementById('soc-tg-link').href = item.value;
-
-        // About & Stats Text (Hanya timpa jika diubah via Admin)
         if (item.key === 'stats_count' && item.value) document.getElementById('stats-count-el').textContent = item.value;
         if (item.key === 'stats_desc' && item.value) document.getElementById('stats-desc-el').textContent = item.value;
 
-        // Popup
+        // 5. POPUP WA
         if (item.key === 'popup_enabled') isPopupEnabled = (item.value === 'true');
         if (item.key === 'wa_group_link' && item.value) {
           groupUrl = item.value;
