@@ -206,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <img src="${ev.target.result}">
             </div>
             <div>
-              <p style="font-family:var(--font-mono); font-size:0.7rem; color:var(--brass); margin-bottom:6px;">Sesudah (JPG, dikompres)</p>
+              <p style="font-family:var(--font-mono); font-size:0.7rem; color:var(--accent); margin-bottom:6px;">Sesudah (JPG, dikompres)</p>
               <img src="${compressed}">
             </div>
             <a href="${compressed}" download="convert-primect.jpg" class="btn small">Download Hasil</a>
