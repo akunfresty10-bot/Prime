@@ -44,6 +44,31 @@ button{ font-family:inherit; cursor:pointer; }
 
 .wrap{ max-width:1120px; margin:0 auto; padding:0 24px; }
 
+/* -------- video background (site-wide, ala ynastore.my.id) -------- */
+.bg-video{
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  overflow:hidden;
+  background:var(--bg);
+}
+.bg-video video{
+  position:absolute;
+  top:50%; left:50%;
+  width:100%; height:100%;
+  min-width:100%; min-height:100%;
+  object-fit:cover;
+  transform:translate(-50%,-50%);
+}
+.bg-video .bg-video-overlay{
+  position:absolute; inset:0;
+  background:
+    linear-gradient(180deg, rgba(18,21,28,0.72) 0%, rgba(18,21,28,0.82) 45%, rgba(18,21,28,0.94) 100%);
+  backdrop-filter:blur(1px);
+}
+/* biar section2 solid (statusbar, panel, footer dll) tetap kebaca di atas video */
+.statusbar, header.site, footer.site{ position:relative; z-index:1; }
+
 /* -------- eyebrow / mono labels -------- */
 .eyebrow{
   font-family:var(--font-mono);
@@ -251,24 +276,53 @@ nav.main{
 }
 .filter:hover, .filter.active{ border-color:var(--brass); color:var(--brass); }
 
-.product-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.product-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
 .product{
-  background:var(--panel); border:1px solid var(--line); display:flex; flex-direction:column;
+  background:#F7F5F0;
+  border:1px solid rgba(0,0,0,0.05);
+  border-radius:18px;
+  overflow:hidden;
+  display:flex; flex-direction:column;
+  box-shadow:0 2px 8px rgba(0,0,0,0.28), 0 1px 2px rgba(0,0,0,0.12);
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.product:hover{
+  transform:translateY(-6px);
+  box-shadow:0 18px 34px rgba(0,0,0,0.38), 0 2px 6px rgba(0,0,0,0.14);
 }
 .product .thumb{
-  height:120px; display:flex; align-items:center; justify-content:center;
-  font-size:2.2rem; background:var(--panel-2); border-bottom:1px solid var(--line);
+  position:relative;
+  height:150px; display:flex; align-items:center; justify-content:center;
+  font-size:2.6rem;
+  background:
+    radial-gradient(120% 120% at 50% 0%, rgba(232,185,46,0.16), transparent 60%),
+    linear-gradient(160deg, #EFEBE0 0%, #E4DFD0 100%);
 }
-.product .body{ padding:20px; display:flex; flex-direction:column; gap:10px; flex:1; }
-.product .cat{ font-family:var(--font-mono); font-size:0.64rem; color:var(--steel); letter-spacing:0.08em; text-transform:uppercase; }
-.product h4{ font-size:1.02rem; color:#fff; }
-.product p{ color:var(--muted); font-size:0.84rem; flex:1; }
+.product .body{ padding:16px 18px 18px; display:flex; flex-direction:column; gap:8px; flex:1; }
+.product .cat{
+  align-self:flex-start;
+  font-family:var(--font-mono); font-size:0.6rem; font-weight:600; color:#12151C;
+  letter-spacing:0.06em; text-transform:uppercase;
+  background:rgba(232,185,46,0.35);
+  padding:4px 10px; border-radius:100px;
+}
+.product h4{ font-size:1.02rem; color:#12151C; }
+.product p{ color:#5C5A50; font-size:0.84rem; flex:1; }
 .product .price-row{
   display:flex; justify-content:space-between; align-items:center;
-  padding-top:12px; border-top:1px dashed var(--line);
+  padding-top:12px; border-top:1px dashed rgba(0,0,0,0.12);
 }
-.product .price{ font-family:var(--font-mono); font-weight:700; color:var(--brass); font-size:1rem; }
-.product .stock{ font-family:var(--font-mono); font-size:0.68rem; color:var(--wa); }
+.product .price{ font-family:var(--font-mono); font-weight:700; color:#B8860B; font-size:1.08rem; }
+.product .stock{
+  font-family:var(--font-mono); font-size:0.62rem; font-weight:600; color:var(--wa);
+  background:rgba(79,163,122,0.15); padding:4px 9px; border-radius:100px;
+}
+.product .btn{
+  width:100%; justify-content:center;
+  border-radius:100px;
+  background:var(--brass); color:#12151C; border-color:var(--brass);
+}
+.product .btn:hover{ background:#12151C; color:var(--brass); border-color:#12151C; }
 
 /* -------- steps (real sequence => numbered) -------- */
 .steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }

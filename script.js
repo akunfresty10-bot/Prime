@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const produk = form.querySelector('#f-produk')?.value || '-';
       const detail = form.querySelector('#f-detail')?.value || '-';
       const msg = `Halo PRIME CT, saya mau order.%0ANama: ${encodeURIComponent(nama)}%0AProduk: ${encodeURIComponent(produk)}%0ADetail: ${encodeURIComponent(detail)}`;
-      window.open(`https://wa.me/6281325507265?text=${msg}`, '_blank');
+      window.open(`https://wa.me/6281200000000?text=${msg}`, '_blank');
     });
   }
 
