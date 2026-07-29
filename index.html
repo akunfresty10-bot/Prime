@@ -162,61 +162,6 @@
       margin: 0 auto;
     }
 
-    /* ========================================= */
-    /* ABOUT US CARD (GRADIENT YNA STORE STYLE) */
-    /* ========================================= */
-    .about-card {
-      background: linear-gradient(160deg, rgba(32, 17, 56, 0.95) 0%, rgba(13, 38, 57, 0.95) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 24px;
-      padding: 30px 22px;
-      margin-bottom: 30px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-      backdrop-filter: blur(10px);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .about-title {
-      font-size: 1.45rem;
-      font-weight: 800;
-      color: #ffffff;
-      margin-bottom: 18px;
-      line-height: 1.3;
-    }
-
-    .about-text {
-      color: #94a3b8;
-      font-size: 0.93rem;
-      line-height: 1.75;
-      margin-bottom: 25px;
-      white-space: pre-line; /* Mempertahankan spasi & paragraf */
-    }
-
-    .about-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .tag-pill {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #cbd5e1;
-      padding: 9px 18px;
-      border-radius: 20px;
-      font-size: 0.83rem;
-      font-weight: 600;
-      letter-spacing: 0.2px;
-      transition: 0.2s;
-    }
-
-    .tag-pill:hover {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(255, 255, 255, 0.25);
-      color: #fff;
-    }
-
     /* SEARCH BAR */
     .search-box { position: relative; margin-bottom: 20px; }
     .search-box input {
@@ -297,6 +242,62 @@
     .card-btn { background: var(--accent-blue); color: #fff; text-align: center; padding: 8px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 6px; }
 
     .state-msg { grid-column: 1 / -1; text-align: center; padding: 30px; color: var(--text-sub); background: var(--bg-card); border-radius: 12px; border: 1px dashed var(--border-color); font-size: 0.9rem; }
+
+    /* ================================================= */
+    /* ABOUT US CARD (DI PALING BAWAH - GRADIENT STYLE) */
+    /* ================================================= */
+    .about-card {
+      background: linear-gradient(160deg, rgba(32, 17, 56, 0.95) 0%, rgba(13, 38, 57, 0.95) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      padding: 30px 22px;
+      margin-top: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 18px;
+      line-height: 1.3;
+    }
+
+    .about-text {
+      color: #94a3b8;
+      font-size: 0.93rem;
+      line-height: 1.75;
+      margin-bottom: 25px;
+      white-space: pre-line;
+    }
+
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag-pill {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #cbd5e1;
+      padding: 9px 18px;
+      border-radius: 20px;
+      font-size: 0.83rem;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      transition: 0.2s;
+    }
+
+    .tag-pill:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+      color: #fff;
+    }
 
     /* FOOTER */
     footer { border-top: 1px solid var(--border-color); padding: 25px 16px; text-align: center; color: var(--text-sub); font-size: 0.85rem; background: var(--bg-card); }
@@ -398,13 +399,6 @@
       </div>
     </div>
 
-    <!-- SECTION TENTANG KAMI (PROFIL STORE / OWNER) -->
-    <div id="about-section" class="about-card" style="display: none;">
-      <h2 id="about-title-el" class="about-title">Siapa itu PRIME CT STORE?</h2>
-      <div id="about-text-el" class="about-text">Deskripsi profil toko...</div>
-      <div id="about-tags-el" class="about-tags"></div>
-    </div>
-
     <!-- SEARCH BAR -->
     <div class="search-box">
       <i class="fa-solid fa-magnifying-glass"></i>
@@ -432,6 +426,13 @@
       <div id="services-container" class="grid-container">
         <div class="state-msg">Memuat daftar layanan...</div>
       </div>
+    </div>
+
+    <!-- SECTION TENTANG KAMI (PROFIL STORE / OWNER) - DIPINDAHKAN KE PALING BAWAH -->
+    <div id="about-section" class="about-card" style="display: none;">
+      <h2 id="about-title-el" class="about-title">Siapa itu PRIME CT STORE?</h2>
+      <div id="about-text-el" class="about-text">Deskripsi profil toko...</div>
+      <div id="about-tags-el" class="about-tags"></div>
     </div>
 
   </div>
@@ -534,7 +535,7 @@
         }
       });
 
-      // Render Section Tentang Kami
+      // Render Section Tentang Kami (Di Paling Bawah)
       if (isAboutEnabled && (aboutTitle || aboutDesc)) {
         const aboutSec = document.getElementById('about-section');
         if (aboutTitle) document.getElementById('about-title-el').textContent = aboutTitle;
