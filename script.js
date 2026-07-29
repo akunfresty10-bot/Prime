@@ -1,43 +1,5 @@
 // PRIME CT OFFICIAL — shared behavior
 
-// ---------- Supabase: live settings (logo & nomor WhatsApp) ----------
-const SUPABASE_URL = 'https://krxzhxxytjmqmvzndofw.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_BtMu9ACi_o-V29IdGZdIDA_th6tjNzi';
-const supabaseClient = window.supabase?.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-let liveWaNumber = '6281200000000'; // fallback, ditimpa setelah data Supabase masuk
-
-async function applyLiveSettings() {
-  if (!supabaseClient) return;
-  try {
-    const { data, error } = await supabaseClient
-      .from('settings')
-      .select('logo_url, whatsapp_number, store_name')
-      .eq('id', 1)
-      .single();
-    if (error || !data) return;
-
-    if (data.logo_url) {
-      document.querySelectorAll('.mark').forEach(el => {
-        el.innerHTML = `<img src="${data.logo_url}" alt="PRIME CT" class="mark-logo-img">`;
-      });
-      document.querySelectorAll('.modal-icon').forEach(el => {
-        el.innerHTML = `<img src="${data.logo_url}" alt="PRIME CT" class="modal-logo-img">`;
-      });
-    }
-
-    if (data.whatsapp_number) {
-      liveWaNumber = data.whatsapp_number;
-      document.querySelectorAll('a[href*="wa.me/"]').forEach(a => {
-        a.href = a.href.replace(/wa\.me\/\d+/, `wa.me/${data.whatsapp_number}`);
-      });
-    }
-  } catch (e) {
-    console.error('Gagal memuat setting live dari Supabase', e);
-  }
-}
-document.addEventListener('DOMContentLoaded', applyLiveSettings);
-
 // live clock in status bar
 function tickClock(){
   const el = document.getElementById('clock');
@@ -117,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const produk = form.querySelector('#f-produk')?.value || '-';
       const detail = form.querySelector('#f-detail')?.value || '-';
       const msg = `Halo PRIME CT, saya mau order.%0ANama: ${encodeURIComponent(nama)}%0AProduk: ${encodeURIComponent(produk)}%0ADetail: ${encodeURIComponent(detail)}`;
-      window.open(`https://wa.me/${liveWaNumber}?text=${msg}`, '_blank');
+      window.open(`https://wa.me/6281200000000?text=${msg}`, '_blank');
     });
   }
 
