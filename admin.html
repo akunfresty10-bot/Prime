@@ -48,8 +48,8 @@
     
     .form-group { margin-bottom: 16px; }
     .form-label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-sub); margin-bottom: 6px; }
-    .form-input { width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 12px; color: #fff; font-size: 0.9rem; outline: none; }
-    .form-input:focus { border-color: var(--accent-purple); }
+    .form-input, .form-textarea { width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 12px; color: #fff; font-size: 0.9rem; outline: none; }
+    .form-input:focus, .form-textarea:focus { border-color: var(--accent-purple); }
     
     .btn-primary { background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); color: #fff; border: none; width: 100%; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.2s; }
     .btn-primary:hover { opacity: 0.9; }
@@ -69,6 +69,7 @@
     .section-tab-content.active { display: block; }
 
     .grid-settings { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+    .section-divider { grid-column: 1 / -1; font-size: 1rem; font-weight: 800; color: var(--accent-purple); margin-top: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -113,48 +114,66 @@
     <div class="main-content">
       <div class="top-header">
         <div id="active-page-title" class="page-title">Pengaturan Situs</div>
-        <div style="font-size: 0.85rem; color: var(--text-sub);">Administrator</div>
+        <button class="btn-primary" style="width: auto; padding: 10px 20px;" onclick="saveAllSettings()">Simpan Perubahan</button>
       </div>
 
-      <!-- TAB 1: PENGATURAN SITUS -->
+      <!-- TAB 1: PENGATURAN SITUS LENGKAP -->
       <div id="tab-settings" class="section-tab-content active">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Konfigurasi Umum, Teks, Media & Pembayaran</h3>
-            <button class="btn-primary" style="width: auto; padding: 10px 20px;" onclick="saveAllSettings()">Simpan Perubahan</button>
+            <h3 class="card-title">Konfigurasi Seluruh Konten & Teks Website</h3>
           </div>
           
           <div class="grid-settings">
+            <!-- 1. UMUM & BRANDING -->
+            <div class="section-divider">1. Identitas & Branding Situs</div>
             <div class="form-group"><label class="form-label">Nama Situs</label><input type="text" id="set-site_title" class="form-input"></div>
             <div class="form-group"><label class="form-label">URL Logo Gambar</label><input type="text" id="set-logo_url" class="form-input"></div>
-            <div class="form-group"><label class="form-label">Teks Hero Utama</label><input type="text" id="set-hero_title" class="form-input"></div>
-            <div class="form-group"><label class="form-label">Deskripsi Hero</label><input type="text" id="set-hero_desc" class="form-input"></div>
-            <div class="form-group"><label class="form-label">Nomor WhatsApp Utama</label><input type="text" id="set-whatsapp_number" class="form-input" placeholder="628xxxxxxxxxx"></div>
-            <div class="form-group"><label class="form-label">Nomor WA Cadangan</label><input type="text" id="set-whatsapp_backup" class="form-input"></div>
-            <div class="form-group"><label class="form-label">Email Kontak</label><input type="text" id="set-email_contact" class="form-input"></div>
-            <div class="form-group"><label class="form-label">Link Instagram</label><input type="text" id="set-instagram_link" class="form-input"></div>
-            <div class="form-group"><label class="form-label">Link Telegram</label><input type="text" id="set-telegram_link" class="form-input"></div>
-            
-            <!-- Link Menu Tambahan -->
+            <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">URL Latar Belakang (Video MP4 / Gambar URL)</label><input type="text" id="set-bg_media_url" class="form-input"></div>
+
+            <!-- 2. HERO SECTION -->
+            <div class="section-divider">2. Bagian Utama (Hero Section)</div>
+            <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">Teks Hero Utama (Judul Besar)</label><input type="text" id="set-hero_title" class="form-input"></div>
+            <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">Deskripsi Hero</label><textarea id="set-hero_desc" class="form-textarea" rows="2"></textarea></div>
+            <div class="form-group"><label class="form-label">Teks Tombol Aksi 1 (Primary Button)</label><input type="text" id="set-hero_btn_primary_text" class="form-input"></div>
+            <div class="form-group"><label class="form-label">Link Tombol Aksi 1</label><input type="text" id="set-hero_btn_primary_link" class="form-input"></div>
+            <div class="form-group"><label class="form-label">Teks Tombol Aksi 2 (Secondary Button)</label><input type="text" id="set-hero_btn_secondary_text" class="form-input"></div>
+            <div class="form-group"><label class="form-label">Link Tombol Aksi 2</label><input type="text" id="set-hero_btn_secondary_link" class="form-input"></div>
+
+            <!-- 3. SECTION JUDUL LAINNYA -->
+            <div class="section-divider">3. Judul Section & Label Halaman</div>
+            <div class="form-group"><label class="form-label">Judul Section Produk</label><input type="text" id="set-section_products_title" class="form-input"></div>
+            <div class="form-group"><label class="form-label">Judul Section Layanan</label><input type="text" id="set-section_services_title" class="form-input"></div>
+            <div class="form-group"><label class="form-label">Teks Footer / Hak Cipta</label><input type="text" id="set-footer_text" class="form-input"></div>
+
+            <!-- 4. MENU NAVIGASI / LINK EKSTERNAL -->
+            <div class="section-divider">4. Tautan Menu Navigasi Eksternal</div>
             <div class="form-group"><label class="form-label">Link PRIME Tools</label><input type="text" id="set-ynatools_link" class="form-input"></div>
             <div class="form-group"><label class="form-label">Link PRIME Cpanel</label><input type="text" id="set-ynacpanel_link" class="form-input"></div>
             <div class="form-group"><label class="form-label">Link PRIME Convert</label><input type="text" id="set-ynaconvert_link" class="form-input"></div>
             <div class="form-group"><label class="form-label">Link PRIME AI</label><input type="text" id="set-ynaai_link" class="form-input"></div>
 
-            <!-- Background Media -->
-            <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">URL Latar Belakang (Video MP4 / Gambar URL)</label><input type="text" id="set-bg_media_url" class="form-input"></div>
+            <!-- 5. KONTAK & SOSIAL MEDIA -->
+            <div class="section-divider">5. Kontak & Sosial Media</div>
+            <div class="form-group"><label class="form-label">Nomor WhatsApp Utama</label><input type="text" id="set-whatsapp_number" class="form-input"></div>
+            <div class="form-group"><label class="form-label">Nomor WA Cadangan</label><input type="text" id="set-whatsapp_backup" class="form-input"></div>
+            <div class="form-group"><label class="form-label">Email Kontak</label><input type="text" id="set-email_contact" class="form-input"></div>
+            <div class="form-group"><label class="form-label">Link Instagram</label><input type="text" id="set-instagram_link" class="form-input"></div>
+            <div class="form-group"><label class="form-label">Link Telegram</label><input type="text" id="set-telegram_link" class="form-input"></div>
 
-            <!-- Payment -->
-            <div class="form-group"><label class="form-label">URL Gambar QRIS</label><input type="text" id="set-qris_image_url" class="form-input"></div>
+            <!-- 6. PEMBAYARAN & E-WALLET -->
+            <div class="section-divider">6. Metode Pembayaran & QRIS</div>
+            <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">URL Gambar QRIS</label><input type="text" id="set-qris_image_url" class="form-input"></div>
             <div class="form-group"><label class="form-label">Nomor DANA</label><input type="text" id="set-dana_number" class="form-input"></div>
             <div class="form-group"><label class="form-label">Nama Pemilik DANA</label><input type="text" id="set-dana_name" class="form-input"></div>
             <div class="form-group"><label class="form-label">Nomor GOPAY</label><input type="text" id="set-gopay_number" class="form-input"></div>
             <div class="form-group"><label class="form-label">Nama Pemilik GOPAY</label><input type="text" id="set-gopay_name" class="form-input"></div>
 
-            <!-- Popup WA -->
+            <!-- 7. POPUP WHATSAPP -->
+            <div class="section-divider">7. Pengaturan Popup WhatsApp</div>
             <div class="form-group"><label class="form-label">Aktifkan Popup WA (true / false)</label><input type="text" id="set-popup_enabled" class="form-input"></div>
             <div class="form-group"><label class="form-label">Judul Popup WA</label><input type="text" id="set-popup_title" class="form-input"></div>
-            <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">Deskripsi Popup WA</label><input type="text" id="set-popup_desc" class="form-input"></div>
+            <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">Deskripsi Popup WA</label><textarea id="set-popup_desc" class="form-textarea" rows="2"></textarea></div>
             <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">Link Grup WA Popup</label><input type="text" id="set-wa_group_link" class="form-input"></div>
           </div>
         </div>
@@ -169,7 +188,7 @@
             <div class="form-group"><label class="form-label">Nama Produk</label><input type="text" id="prod-name" class="form-input"></div>
             <div class="form-group"><label class="form-label">Harga (Angka Saja)</label><input type="number" id="prod-price" class="form-input"></div>
             <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">URL Gambar Produk</label><input type="text" id="prod-image" class="form-input"></div>
-            <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">Deskripsi Produk</label><textarea id="prod-desc" class="form-input" rows="3"></textarea></div>
+            <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">Deskripsi Produk</label><textarea id="prod-desc" class="form-textarea" rows="3"></textarea></div>
           </div>
           <button class="btn-primary" onclick="saveProduct()">Simpan Produk</button>
         </div>
@@ -192,7 +211,7 @@
           <input type="hidden" id="serv-id">
           <div class="grid-settings" style="margin-bottom: 16px;">
             <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">Judul Layanan</label><input type="text" id="serv-title" class="form-input"></div>
-            <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">Deskripsi Layanan</label><textarea id="serv-desc" class="form-input" rows="3"></textarea></div>
+            <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">Deskripsi Layanan</label><textarea id="serv-desc" class="form-textarea" rows="3"></textarea></div>
           </div>
           <button class="btn-primary" onclick="saveService()">Simpan Layanan</button>
         </div>
@@ -266,12 +285,14 @@
 
     async function saveAllSettings() {
       const keys = [
-        'site_title', 'logo_url', 'hero_title', 'hero_desc', 'whatsapp_number', 
-        'whatsapp_backup', 'email_contact', 'instagram_link', 'telegram_link', 
-        'ynatools_link', 'ynacpanel_link', 'ynaconvert_link', 'ynaai_link', 
-        'bg_media_url', 'qris_image_url', 'dana_number', 'dana_name', 
-        'gopay_number', 'gopay_name', 'popup_enabled', 'popup_title', 
-        'popup_desc', 'wa_group_link'
+        'site_title', 'logo_url', 'bg_media_url',
+        'hero_title', 'hero_desc', 'hero_btn_primary_text', 'hero_btn_primary_link',
+        'hero_btn_secondary_text', 'hero_btn_secondary_link',
+        'section_products_title', 'section_services_title', 'footer_text',
+        'ynatools_link', 'ynacpanel_link', 'ynaconvert_link', 'ynaai_link',
+        'whatsapp_number', 'whatsapp_backup', 'email_contact', 'instagram_link', 'telegram_link',
+        'qris_image_url', 'dana_number', 'dana_name', 'gopay_number', 'gopay_name',
+        'popup_enabled', 'popup_title', 'popup_desc', 'wa_group_link'
       ];
 
       for (let key of keys) {
@@ -280,7 +301,7 @@
           await supabaseClient.from('site_settings').upsert({ key, value: input.value }, { onConflict: 'key' });
         }
       }
-      alert('Pengaturan berhasil disimpan!');
+      alert('Semua pengaturan situs berhasil disimpan!');
     }
 
     async function loadAdminProducts() {
