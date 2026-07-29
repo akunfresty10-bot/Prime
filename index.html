@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title class="site-brand-name">PRIME CT STORE</title>
 
-  <!-- Google Fonts Lengkap (Plus Jakarta Sans, Poppins, Inter, Montserrat, Roboto) -->
+  <!-- Google Fonts Lengkap -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Montserrat:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;600;700;800&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
 
   <style>
     :root {
-      --bg-body: #0d1117;
+      --bg-body: #090c10;
       --bg-card: #161b22;
       --bg-card-hover: #1f242d;
       --border-color: #30363d;
@@ -119,7 +119,7 @@
       padding: 20px 16px;
     }
 
-    /* HERO BANNER DENGAN KUSTOMISASI KOTAK */
+    /* HERO BANNER KOTAK */
     .hero-banner {
       background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
       background-size: cover;
@@ -139,7 +139,7 @@
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.35); /* Dark Overlay jika gambar terang */
+      background: rgba(0,0,0,0.35);
       z-index: 1;
     }
 
@@ -160,6 +160,61 @@
       opacity: 0.9;
       max-width: 600px;
       margin: 0 auto;
+    }
+
+    /* ========================================= */
+    /* ABOUT US CARD (GRADIENT YNA STORE STYLE) */
+    /* ========================================= */
+    .about-card {
+      background: linear-gradient(160deg, rgba(32, 17, 56, 0.95) 0%, rgba(13, 38, 57, 0.95) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      padding: 30px 22px;
+      margin-bottom: 30px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 18px;
+      line-height: 1.3;
+    }
+
+    .about-text {
+      color: #94a3b8;
+      font-size: 0.93rem;
+      line-height: 1.75;
+      margin-bottom: 25px;
+      white-space: pre-line; /* Mempertahankan spasi & paragraf */
+    }
+
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag-pill {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #cbd5e1;
+      padding: 9px 18px;
+      border-radius: 20px;
+      font-size: 0.83rem;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      transition: 0.2s;
+    }
+
+    .tag-pill:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+      color: #fff;
     }
 
     /* SEARCH BAR */
@@ -343,6 +398,13 @@
       </div>
     </div>
 
+    <!-- SECTION TENTANG KAMI (PROFIL STORE / OWNER) -->
+    <div id="about-section" class="about-card" style="display: none;">
+      <h2 id="about-title-el" class="about-title">Siapa itu PRIME CT STORE?</h2>
+      <div id="about-text-el" class="about-text">Deskripsi profil toko...</div>
+      <div id="about-tags-el" class="about-tags"></div>
+    </div>
+
     <!-- SEARCH BAR -->
     <div class="search-box">
       <i class="fa-solid fa-magnifying-glass"></i>
@@ -403,6 +465,11 @@
       let isPopupEnabled = false;
       let groupUrl = '#';
 
+      let isAboutEnabled = false;
+      let aboutTitle = '';
+      let aboutDesc = '';
+      let aboutTagsStr = '';
+
       const heroBox = document.getElementById('hero-banner-box');
       const heroDesc = document.getElementById('hero-desc');
 
@@ -424,7 +491,7 @@
           if (logoEl) logoEl.src = item.value;
         }
 
-        // Customer Service WhatsApp
+        // CS WhatsApp
         if (item.key === 'whatsapp_number' && item.value) {
           activeWhatsappNumber = item.value;
           document.querySelectorAll('.wa-link').forEach(btn => {
@@ -432,7 +499,7 @@
           });
         }
 
-        // --- KUSTOMISASI HERO BANNER ---
+        // Hero Banner
         if (item.key === 'hero_subtitle' && item.value) {
           heroDesc.textContent = item.value;
         }
@@ -446,9 +513,15 @@
           heroBox.style.backgroundImage = `url('${item.value}')`;
         }
 
-        // --- POPUP SETTINGS ---
+        // Section Tentang Kami
+        if (item.key === 'about_enabled') isAboutEnabled = (item.value === 'true');
+        if (item.key === 'about_title') aboutTitle = item.value;
+        if (item.key === 'about_description') aboutDesc = item.value;
+        if (item.key === 'about_tags') aboutTagsStr = item.value;
+
+        // Popup Settings
         if (item.key === 'popup_enabled') {
-          isPopupEnabled = item.value === 'true';
+          isPopupEnabled = (item.value === 'true');
         }
         if (item.key === 'wa_group_link' && item.value) {
           groupUrl = item.value;
@@ -460,6 +533,25 @@
           bannerImg.style.display = 'block';
         }
       });
+
+      // Render Section Tentang Kami
+      if (isAboutEnabled && (aboutTitle || aboutDesc)) {
+        const aboutSec = document.getElementById('about-section');
+        if (aboutTitle) document.getElementById('about-title-el').textContent = aboutTitle;
+        if (aboutDesc) document.getElementById('about-text-el').textContent = aboutDesc;
+
+        // Render Tag Badges
+        const tagsContainer = document.getElementById('about-tags-el');
+        tagsContainer.innerHTML = '';
+        if (aboutTagsStr) {
+          const tagsArr = aboutTagsStr.split(',').map(t => t.trim()).filter(t => t !== '');
+          tagsArr.forEach(tag => {
+            tagsContainer.innerHTML += `<span class="tag-pill">${tag}</span>`;
+          });
+        }
+
+        aboutSec.style.display = 'block';
+      }
 
       // Tampilkan Popup Jika Aktif
       if (isPopupEnabled && groupUrl !== '#') {

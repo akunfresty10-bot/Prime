@@ -103,7 +103,7 @@
 
           <!-- SUB-SECTION: HERO BANNER DESIGN -->
           <div class="section-divider">
-            <h4 style="color: #60a5fa;"><i class="fa-solid fa-palette"></i> Kustomisasi Kotak Banner (Hero Section)</h4>
+            <h4 style="color: #60a5fa;">Kustomisasi Kotak Banner (Hero Section)</h4>
           </div>
 
           <div class="form-group">
@@ -125,8 +125,35 @@
           <div class="form-group">
             <label>Upload Gambar Latar / Background Kotak Hero (Opsional)</label>
             <input type="file" id="hero_bg_file" accept="image/*">
-            <small style="color: #aaa;">Jika diupload, gambar ini akan menjadi latar belakang kotak PRIME CT STORE.</small>
             <div id="current-hero-bg-container"></div>
+          </div>
+
+          <!-- SUB-SECTION: ABOUT US / SECTION TENTANG KAMI -->
+          <div class="section-divider">
+            <h4 style="color: #a78bfa;">Pengaturan Section "Tentang Kami / Profil Toko"</h4>
+          </div>
+
+          <div class="form-group">
+            <label>Status Section Tentang Kami</label>
+            <select id="about_enabled">
+              <option value="true">Aktif (Tampilkan)</option>
+              <option value="false">Nonaktif (Sembunyikan)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Judul Section</label>
+            <input type="text" id="about_title" placeholder="Contoh: Siapa itu PRIME CT STORE?">
+          </div>
+
+          <div class="form-group">
+            <label>Deskripsi / Profil Lengkap (Bisa Beberapa Paragraf)</label>
+            <textarea id="about_description" rows="6" placeholder="Ketik deskripsi profil toko atau owner di sini..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Tag / Badges Keahlian & Peran (Pisahkan dengan koma)</label>
+            <input type="text" id="about_tags" placeholder="Contoh: Owner, Admin, Developer, Engineer, Designer, Editor, Content Creator, Digital Service">
           </div>
 
           <!-- SUB-SECTION: POPUP IKLAN WA -->
@@ -308,6 +335,11 @@
           if (item.key === 'hero_bg_color') document.getElementById('hero_bg_color').value = item.value;
           if (item.key === 'hero_text_color') document.getElementById('hero_text_color').value = item.value;
 
+          if (item.key === 'about_enabled') document.getElementById('about_enabled').value = item.value;
+          if (item.key === 'about_title') document.getElementById('about_title').value = item.value;
+          if (item.key === 'about_description') document.getElementById('about_description').value = item.value;
+          if (item.key === 'about_tags') document.getElementById('about_tags').value = item.value;
+
           if (item.key === 'wa_group_link') document.getElementById('wa_group_link').value = item.value;
           if (item.key === 'popup_enabled') document.getElementById('popup_enabled').value = item.value;
           
@@ -336,6 +368,11 @@
       const heroBgColor = document.getElementById('hero_bg_color').value;
       const heroTextColor = document.getElementById('hero_text_color').value;
 
+      const aboutEnabled = document.getElementById('about_enabled').value;
+      const aboutTitle = document.getElementById('about_title').value;
+      const aboutDesc = document.getElementById('about_description').value;
+      const aboutTags = document.getElementById('about_tags').value;
+
       const waGroup = document.getElementById('wa_group_link').value;
       const popupEnabled = document.getElementById('popup_enabled').value;
       
@@ -351,6 +388,11 @@
       await supabaseClient.from('site_settings').upsert({ key: 'hero_subtitle', value: heroSubtitle });
       await supabaseClient.from('site_settings').upsert({ key: 'hero_bg_color', value: heroBgColor });
       await supabaseClient.from('site_settings').upsert({ key: 'hero_text_color', value: heroTextColor });
+
+      await supabaseClient.from('site_settings').upsert({ key: 'about_enabled', value: aboutEnabled });
+      await supabaseClient.from('site_settings').upsert({ key: 'about_title', value: aboutTitle });
+      await supabaseClient.from('site_settings').upsert({ key: 'about_description', value: aboutDesc });
+      await supabaseClient.from('site_settings').upsert({ key: 'about_tags', value: aboutTags });
 
       await supabaseClient.from('site_settings').upsert({ key: 'wa_group_link', value: waGroup });
       await supabaseClient.from('site_settings').upsert({ key: 'popup_enabled', value: popupEnabled });
@@ -371,7 +413,7 @@
         if (bannerUrl) await supabaseClient.from('site_settings').upsert({ key: 'popup_banner_url', value: bannerUrl });
       }
 
-      alert('Pengaturan tampilan berhasil disimpan!');
+      alert('Pengaturan berhasil disimpan!');
       loadSettings();
     });
 
