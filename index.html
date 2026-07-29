@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title class="site-brand-name">PRIME CT STORE</title>
 
-  <!-- Google Fonts Lengkap -->
+  <!-- Google Fonts & FontAwesome -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Montserrat:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;600;700;800&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
@@ -18,6 +18,7 @@
       --bg-card-hover: #1f242d;
       --border-color: #30363d;
       --accent-blue: #2563eb;
+      --accent-purple: #8b5cf6;
       --accent-glow: #3b82f6;
       --text-main: #f0f6fc;
       --text-sub: #8b949e;
@@ -25,347 +26,198 @@
       --wa-hover: #1da851;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
 
-    body {
-      background-color: var(--bg-body);
-      color: var(--text-main);
-      padding-bottom: 80px;
-    }
+    body { background-color: var(--bg-body); color: var(--text-main); padding-bottom: 20px; }
 
-    /* HEADER / NAVBAR */
+    /* HEADER */
     header {
       background: rgba(22, 27, 34, 0.9);
       backdrop-filter: blur(10px);
-      position: sticky;
-      top: 0;
-      z-index: 90;
+      position: sticky; top: 0; z-index: 90;
       border-bottom: 1px solid var(--border-color);
     }
-
-    .nav-container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 12px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--text-main);
-    }
-
-    .brand img {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      object-fit: cover;
-      border: 1px solid var(--border-color);
-    }
-
-    .brand span {
-      font-size: 1.15rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #60a5fa, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .nav-btn-wa {
-      background-color: var(--wa-green);
-      color: #fff;
-      padding: 8px 14px;
-      border-radius: 20px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: 0.2s;
-    }
-
+    .nav-container { max-width: 1000px; margin: 0 auto; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-main); }
+    .brand img { width: 40px; height: 40px; border-radius: 10px; object-fit: cover; border: 1px solid var(--border-color); }
+    .brand span { font-size: 1.15rem; font-weight: 800; background: linear-gradient(135deg, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .nav-btn-wa { background-color: var(--wa-green); color: #fff; padding: 8px 14px; border-radius: 20px; text-decoration: none; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; transition: 0.2s; }
     .nav-btn-wa:hover { transform: scale(1.03); }
 
     /* RUNNING TEXT */
-    .announcement-bar {
-      background: #1f2937;
-      border-bottom: 1px solid var(--border-color);
-      padding: 8px 16px;
-      font-size: 0.85rem;
-      color: var(--text-sub);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
+    .announcement-bar { background: #1f2937; border-bottom: 1px solid var(--border-color); padding: 8px 16px; font-size: 0.85rem; color: var(--text-sub); display: flex; align-items: center; gap: 10px; }
     .announcement-bar i { color: #f59e0b; }
     marquee { color: var(--text-main); font-weight: 500; }
 
     /* CONTAINER */
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 20px 16px;
-    }
+    .container { max-width: 1000px; margin: 0 auto; padding: 20px 16px; }
 
-    /* HERO BANNER KOTAK */
-    .hero-banner {
-      background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
-      background-size: cover;
-      background-position: center;
-      border: 1px solid var(--border-color);
-      border-radius: 18px;
-      padding: 35px 20px;
-      margin-bottom: 25px;
-      text-align: center;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
+    /* HERO BANNER */
+    .hero-banner { background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%); background-size: cover; background-position: center; border: 1px solid var(--border-color); border-radius: 18px; padding: 35px 20px; margin-bottom: 25px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.4); position: relative; overflow: hidden; }
+    .hero-banner::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.35); z-index: 1; }
+    .hero-content { position: relative; z-index: 2; }
+    .hero-banner h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 8px; }
+    .hero-banner p { font-size: 0.95rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
 
-    .hero-banner::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.35);
-      z-index: 1;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-banner h1 {
-      font-size: 1.8rem;
-      font-weight: 800;
-      margin-bottom: 8px;
-      letter-spacing: -0.5px;
-    }
-
-    .hero-banner p {
-      font-size: 0.95rem;
-      opacity: 0.9;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    /* SEARCH BAR */
+    /* SEARCH BAR & TABS */
     .search-box { position: relative; margin-bottom: 20px; }
-    .search-box input {
-      width: 100%;
-      padding: 14px 16px 14px 45px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      color: var(--text-main);
-      font-size: 0.95rem;
-      outline: none;
-      transition: 0.2s;
-    }
-    .search-box input:focus {
-      border-color: var(--accent-glow);
-      box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
-    }
-    .search-box i {
-      position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-sub);
-    }
+    .search-box input { width: 100%; padding: 14px 16px 14px 45px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; color: var(--text-main); font-size: 0.95rem; outline: none; }
+    .search-box input:focus { border-color: var(--accent-glow); }
+    .search-box i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-sub); }
 
-    /* CATEGORY TABS */
     .category-tabs { display: flex; gap: 10px; margin-bottom: 25px; overflow-x: auto; padding-bottom: 5px; }
-    .tab-btn {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      color: var(--text-sub);
-      padding: 10px 18px;
-      border-radius: 10px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    .tab-btn { background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-sub); padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; font-weight: 600; cursor: pointer; white-space: nowrap; transition: 0.2s; display: flex; align-items: center; gap: 8px; }
     .tab-btn.active, .tab-btn:hover { background: var(--accent-blue); color: #fff; border-color: var(--accent-glow); }
 
     .section-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
 
-    /* GRID CARDS */
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 14px;
-      margin-bottom: 35px;
-    }
-    @media (min-width: 640px) {
-      .grid-container { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 18px; }
-    }
+    /* GRID PRODUCTS & SERVICES */
+    .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; margin-bottom: 35px; }
+    @media (min-width: 640px) { .grid-container { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 18px; } }
 
-    .store-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 14px;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.2s, border-color 0.2s, background 0.2s;
-      text-decoration: none;
-      color: inherit;
-      position: relative;
-      overflow: hidden;
-    }
+    .store-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; transition: 0.2s; text-decoration: none; color: inherit; position: relative; }
     .store-card:hover { transform: translateY(-4px); border-color: var(--accent-glow); background: var(--bg-card-hover); }
-
-    .card-badge {
-      position: absolute; top: 8px; right: 8px; background: rgba(37, 99, 235, 0.85); color: #fff;
-      font-size: 0.65rem; font-weight: 700; padding: 3px 7px; border-radius: 6px; backdrop-filter: blur(4px);
-    }
+    .card-badge { position: absolute; top: 8px; right: 8px; background: rgba(37, 99, 235, 0.85); color: #fff; font-size: 0.65rem; font-weight: 700; padding: 3px 7px; border-radius: 6px; }
     .card-img { width: 100%; height: 120px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; background-color: #0d1117; }
-    .card-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .card-desc { font-size: 0.75rem; color: var(--text-sub); margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .card-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+    .card-desc { font-size: 0.75rem; color: var(--text-sub); margin-bottom: 10px; }
     .card-price { font-size: 0.95rem; font-weight: 800; color: #60a5fa; margin-bottom: 10px; }
     .card-btn { background: var(--accent-blue); color: #fff; text-align: center; padding: 8px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .state-msg { grid-column: 1 / -1; text-align: center; padding: 30px; color: var(--text-sub); background: var(--bg-card); border-radius: 12px; border: 1px dashed var(--border-color); }
 
-    .state-msg { grid-column: 1 / -1; text-align: center; padding: 30px; color: var(--text-sub); background: var(--bg-card); border-radius: 12px; border: 1px dashed var(--border-color); font-size: 0.9rem; }
-
-    /* ================================================= */
-    /* ABOUT US CARD (DI PALING BAWAH - GRADIENT STYLE) */
-    /* ================================================= */
-    .about-card {
-      background: linear-gradient(160deg, rgba(32, 17, 56, 0.95) 0%, rgba(13, 38, 57, 0.95) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+    /* =================================== */
+    /* STATS & FEATURE HIGHLIGHT SECTION   */
+    /* =================================== */
+    .stats-card-box {
+      background: linear-gradient(165deg, rgba(30, 20, 60, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 24px;
-      padding: 30px 22px;
-      margin-top: 20px;
-      margin-bottom: 30px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-      backdrop-filter: blur(10px);
-      position: relative;
-      overflow: hidden;
+      padding: 30px 20px;
+      margin: 35px 0 25px 0;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
     }
-
-    .about-title {
-      font-size: 1.45rem;
+    .stats-number {
+      font-size: 2.8rem;
       font-weight: 800;
-      color: #ffffff;
-      margin-bottom: 18px;
-      line-height: 1.3;
+      background: linear-gradient(135deg, #a78bfa, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 2px;
     }
+    .stats-label { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 15px; }
+    .stats-desc { font-size: 0.9rem; color: var(--text-sub); line-height: 1.6; max-width: 650px; margin: 0 auto 25px auto; }
 
-    .about-text {
-      color: #94a3b8;
-      font-size: 0.93rem;
-      line-height: 1.75;
-      margin-bottom: 25px;
-      white-space: pre-line;
+    .feature-list { display: flex; flex-direction: column; gap: 14px; text-align: left; }
+    .feature-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 16px;
+      padding: 18px;
     }
+    .feature-item h4 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .feature-item p { font-size: 0.85rem; color: var(--text-sub); line-height: 1.5; }
 
-    .about-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+    /* =================================== */
+    /* ORDER CTA BANNER SECTION            */
+    /* =================================== */
+    .cta-banner {
+      background: linear-gradient(135deg, rgba(88, 28, 135, 0.8) 0%, rgba(30, 27, 75, 0.9) 100%);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      border-radius: 24px;
+      padding: 35px 22px;
+      text-align: center;
+      margin-bottom: 30px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.4);
     }
-
-    .tag-pill {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #cbd5e1;
-      padding: 9px 18px;
-      border-radius: 20px;
-      font-size: 0.83rem;
-      font-weight: 600;
-      letter-spacing: 0.2px;
+    .cta-title { font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 12px; }
+    .cta-desc { font-size: 0.9rem; color: #cbd5e1; line-height: 1.6; max-width: 550px; margin: 0 auto 22px auto; }
+    .cta-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #9333ea, #6366f1);
+      color: #fff;
+      padding: 12px 32px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(147, 51, 234, 0.4);
       transition: 0.2s;
     }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(147, 51, 234, 0.6); }
 
-    .tag-pill:hover {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(255, 255, 255, 0.25);
-      color: #fff;
+    /* ABOUT US CARD */
+    .about-card { background: linear-gradient(160deg, rgba(32, 17, 56, 0.95) 0%, rgba(13, 38, 57, 0.95) 100%); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 30px 22px; margin-bottom: 35px; }
+    .about-title { font-size: 1.4rem; font-weight: 800; color: #fff; margin-bottom: 15px; }
+    .about-text { color: #94a3b8; font-size: 0.9rem; line-height: 1.7; margin-bottom: 20px; white-space: pre-line; }
+    .about-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag-pill { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); color: #cbd5e1; padding: 8px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+
+    /* =================================== */
+    /* EXTENDED FOOTER & CONTACT & MENU    */
+    /* =================================== */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 35px 16px 25px 16px;
+      background: #0d1117;
+      color: var(--text-sub);
     }
+    .footer-container { max-width: 1000px; margin: 0 auto; }
+    .footer-brand { margin-bottom: 20px; }
+    .footer-brand h3 { font-size: 1.2rem; font-weight: 800; color: #fff; margin-bottom: 6px; }
+    .footer-brand p { font-size: 0.88rem; color: var(--text-sub); line-height: 1.5; }
 
-    /* FOOTER */
-    footer { border-top: 1px solid var(--border-color); padding: 25px 16px; text-align: center; color: var(--text-sub); font-size: 0.85rem; background: var(--bg-card); }
-
-    /* POPUP MODAL STYLES */
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(5px);
-      z-index: 999;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 16px;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-    .modal-overlay.active { opacity: 1; visibility: visible; }
-    .modal-box {
-      background: #161b22;
+    /* SOCIAL PILLS */
+    .social-pills { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 25px 0; }
+    .social-pill {
+      background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--border-color);
-      border-radius: 20px;
-      width: 100%;
-      max-width: 400px;
-      padding: 24px;
-      text-align: center;
-      position: relative;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-      transform: scale(0.8);
-      transition: transform 0.3s ease;
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.2s;
     }
-    .modal-overlay.active .modal-box { transform: scale(1); }
-    .modal-close {
-      position: absolute; top: 12px; right: 12px;
-      background: rgba(255, 255, 255, 0.1); border: none; color: var(--text-sub);
-      width: 32px; height: 32px; border-radius: 50%; font-size: 1.2rem; cursor: pointer;
-      display: flex; align-items: center; justify-content: center; transition: 0.2s;
-    }
-    .modal-close:hover { background: #ef4444; color: #fff; }
-    .modal-banner-img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 16px; border: 1px solid var(--border-color); }
-    .modal-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 8px; color: #fff; }
-    .modal-desc { font-size: 0.88rem; color: var(--text-sub); margin-bottom: 20px; line-height: 1.5; }
-    .btn-join-group {
-      background: var(--wa-green); color: #fff; text-decoration: none;
-      display: flex; align-items: center; justify-content: center; gap: 10px;
-      padding: 12px 20px; border-radius: 12px; font-weight: 800; font-size: 0.95rem;
-      transition: all 0.2s; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-    }
-    .btn-join-group:hover { background: var(--wa-hover); transform: translateY(-2px); }
+    .social-pill:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--accent-glow); }
+
+    .footer-section-title { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 12px; }
+    
+    .footer-contacts { font-size: 0.88rem; margin-bottom: 25px; line-height: 2; }
+    .footer-contacts div { display: flex; align-items: center; gap: 8px; }
+
+    /* DYNAMIC FOOTER MENU */
+    .footer-menu-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; }
+    .footer-menu-list a { color: var(--text-sub); text-decoration: none; font-size: 0.88rem; transition: 0.2s; display: inline-block; }
+    .footer-menu-list a:hover { color: #60a5fa; transform: translateX(4px); }
+
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 20px; text-align: left; font-size: 0.8rem; color: #6e7681; line-height: 1.6; }
+
+    /* MODAL */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(5px); z-index: 999; display: flex; justify-content: center; align-items: center; padding: 16px; opacity: 0; visibility: hidden; transition: 0.3s; }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .modal-box { background: #161b22; border: 1px solid var(--border-color); border-radius: 20px; width: 100%; max-width: 400px; padding: 24px; text-align: center; position: relative; }
+    .modal-close { position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.1); border: none; color: var(--text-sub); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; }
+    .modal-banner-img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 16px; }
+    .btn-join-group { background: var(--wa-green); color: #fff; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px; border-radius: 12px; font-weight: 800; margin-top: 15px; }
   </style>
 
-  <!-- CDN Supabase JS v2 -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-  <!-- POPUP MODAL IKLAN -->
+  <!-- MODAL IKLAN -->
   <div id="wa-modal-overlay" class="modal-overlay">
     <div class="modal-box">
       <button class="modal-close" onclick="closeWaModal()">&times;</button>
-      <img id="modal-banner-img" class="modal-banner-img" src="" alt="Banner Iklan" style="display: none;">
-      <h3 class="modal-title"><i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> Join Group WA</h3>
-      <p class="modal-desc">Bergabunglah ke Group WhatsApp resmi kami untuk mendapatkan update info promo, stok produk, dan event diskon harian!</p>
-      <a id="modal-group-btn" href="#" target="_blank" class="btn-join-group">
-        <i class="fa-brands fa-whatsapp fa-lg"></i> Gabung Group Sekarang
-      </a>
+      <img id="modal-banner-img" class="modal-banner-img" src="" alt="Banner" style="display: none;">
+      <h3 style="color:#fff; margin-bottom:8px;"><i class="fa-brands fa-whatsapp" style="color:#25d366;"></i> Join Group WA</h3>
+      <p style="font-size:0.85rem; color:var(--text-sub);">Dapatkan update info promo, stok produk, dan event diskon harian di group resmi kami!</p>
+      <a id="modal-group-btn" href="#" target="_blank" class="btn-join-group"><i class="fa-brands fa-whatsapp fa-lg"></i> Gabung Group Sekarang</a>
     </div>
   </div>
 
@@ -376,9 +228,7 @@
         <img id="main-logo" src="https://via.placeholder.com/150" alt="Logo">
         <span class="site-brand-name">PRIME CT STORE</span>
       </a>
-      <a href="#" class="wa-link nav-btn-wa" target="_blank">
-        <i class="fa-brands fa-whatsapp"></i> CS WhatsApp
-      </a>
+      <a href="#" class="wa-link nav-btn-wa" target="_blank"><i class="fa-brands fa-whatsapp"></i> CS WhatsApp</a>
     </div>
   </header>
 
@@ -388,10 +238,9 @@
     <marquee>Selamat Datang di <span class="site-brand-name">PRIME CT STORE</span> • Layanan Produk & Jasa Terpercaya Fast Process • Jam Operasional: 24 Jam Nonstop</marquee>
   </div>
 
-  <!-- CONTAINER -->
   <div class="container">
 
-    <!-- HERO BANNER KOTAK DYNAMIC -->
+    <!-- HERO BANNER -->
     <div id="hero-banner-box" class="hero-banner">
       <div class="hero-content">
         <h1 id="hero-title" class="site-brand-name">PRIME CT STORE</h1>
@@ -399,20 +248,19 @@
       </div>
     </div>
 
-    <!-- SEARCH BAR -->
+    <!-- SEARCH & TABS -->
     <div class="search-box">
       <i class="fa-solid fa-magnifying-glass"></i>
       <input type="text" id="search-input" placeholder="Cari produk atau layanan..." onkeyup="filterItems()">
     </div>
 
-    <!-- CATEGORY TABS -->
     <div class="category-tabs">
       <button class="tab-btn active" onclick="switchCategory('all', this)"><i class="fa-solid fa-border-all"></i> Semua</button>
       <button class="tab-btn" onclick="switchCategory('products', this)"><i class="fa-solid fa-box"></i> Produk</button>
       <button class="tab-btn" onclick="switchCategory('services', this)"><i class="fa-solid fa-headset"></i> Layanan / Jasa</button>
     </div>
 
-    <!-- PRODUCT SECTION -->
+    <!-- PRODUCTS SECTION -->
     <div id="product-section">
       <h2 class="section-title"><i class="fa-solid fa-bolt" style="color: #f59e0b;"></i> Daftar Produk</h2>
       <div id="products-container" class="grid-container">
@@ -428,7 +276,38 @@
       </div>
     </div>
 
-    <!-- SECTION TENTANG KAMI (PROFIL STORE / OWNER) - DIPINDAHKAN KE PALING BAWAH -->
+    <!-- STATS & FEATURES CARD -->
+    <div class="stats-card-box">
+      <div id="stats-count-el" class="stats-number">8.929+</div>
+      <div class="stats-label">Total Pelanggan</div>
+      <p id="stats-desc-el" class="stats-desc">
+        <span class="site-brand-name">PRIME CT STORE</span> dipercaya oleh ribuan pelanggan untuk kebutuhan produk digital, jasa online, layanan editing, bot, akun premium, dan kebutuhan digital lainnya.
+      </p>
+
+      <div class="feature-list">
+        <div class="feature-item">
+          <h4>Fast Response</h4>
+          <p id="feat-fast-desc">Admin siap bantu proses order dan konfirmasi payment kapan saja.</p>
+        </div>
+        <div class="feature-item">
+          <h4>Aman & Terpercaya</h4>
+          <p id="feat-safe-desc">Payment resmi dan order diarahkan langsung ke kontak owner.</p>
+        </div>
+        <div class="feature-item">
+          <h4>Produk Lengkap</h4>
+          <p id="feat-complete-desc">Katalog produk dan jasa dibuat untuk banyak kebutuhan digital.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORDER CTA BANNER -->
+    <div class="cta-banner">
+      <h3 class="cta-title">Butuh order cepat?</h3>
+      <p class="cta-desc">Klik produk yang kamu mau, isi detail order, pilih pembayaran, lalu kirim bukti ke WhatsApp kami.</p>
+      <a href="#product-section" class="cta-btn">Mulai Order</a>
+    </div>
+
+    <!-- SECTION TENTANG KAMI -->
     <div id="about-section" class="about-card" style="display: none;">
       <h2 id="about-title-el" class="about-title">Siapa itu PRIME CT STORE?</h2>
       <div id="about-text-el" class="about-text">Deskripsi profil toko...</div>
@@ -437,12 +316,47 @@
 
   </div>
 
-  <!-- FOOTER -->
+  <!-- EXTENDED FOOTER -->
   <footer>
-    <p>&copy; <span id="year"></span> <span class="site-brand-name">PRIME CT STORE</span>. All rights reserved.</p>
+    <div class="footer-container">
+      
+      <!-- BRAND BIO -->
+      <div class="footer-brand">
+        <h3 class="site-brand-name">PRIME CT STORE</h3>
+        <p id="footer-bio-text">Platform digital terpercaya untuk kebutuhan layanan digital premium.</p>
+      </div>
+
+      <!-- SOCIAL MEDIA BUTTONS -->
+      <div class="social-pills">
+        <a id="soc-wa-link" href="#" target="_blank" class="social-pill"><i class="fa-brands fa-whatsapp" style="color:#25d366;"></i> WhatsApp</a>
+        <a id="soc-ig-link" href="#" target="_blank" class="social-pill"><i class="fa-brands fa-instagram" style="color:#e1306c;"></i> Instagram</a>
+        <a id="soc-tg-link" href="#" target="_blank" class="social-pill"><i class="fa-brands fa-telegram" style="color:#229ed9;"></i> Telegram</a>
+      </div>
+
+      <!-- KONTAK CEPAT -->
+      <div class="footer-section-title">Kontak Cepat</div>
+      <div class="footer-contacts">
+        <div>WhatsApp: <span id="cnt-wa-1">-</span></div>
+        <div>WA Cadangan: <span id="cnt-wa-2">-</span></div>
+        <div>Gmail: <span id="cnt-email">-</span></div>
+      </div>
+
+      <!-- SINKRONISASI MENU DENGAN PRODUK & JASA -->
+      <div class="footer-section-title">Menu</div>
+      <ul id="dynamic-footer-menu" class="footer-menu-list">
+        <li><a href="#product-section">Produk & Jasa</a></li>
+        <!-- Item Produk & Jasa Otomatis Muncul Di Sini -->
+      </ul>
+
+      <!-- COPYRIGHT -->
+      <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> <span class="site-brand-name">PRIME CT STORE</span></p>
+        <p>All Right Reserved <span id="footer-dev-year">2026</span></p>
+      </div>
+
+    </div>
   </footer>
 
-  <!-- SUPABASE INTEGRATION -->
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -458,7 +372,6 @@
       document.getElementById('wa-modal-overlay').classList.remove('active');
     }
 
-    // 1. Fetch & Apply Website Settings
     async function loadWebsiteSettings() {
       const { data, error } = await supabaseClient.from('site_settings').select('*');
       if (error || !data) return;
@@ -467,63 +380,56 @@
       let groupUrl = '#';
 
       let isAboutEnabled = false;
-      let aboutTitle = '';
-      let aboutDesc = '';
-      let aboutTagsStr = '';
+      let aboutTitle = '', aboutDesc = '', aboutTagsStr = '';
 
       const heroBox = document.getElementById('hero-banner-box');
       const heroDesc = document.getElementById('hero-desc');
 
       data.forEach(item => {
-        // Font Website
-        if (item.key === 'site_font' && item.value) {
-          document.body.style.fontFamily = item.value;
-        }
-
-        // Judul Toko
+        if (item.key === 'site_font' && item.value) document.body.style.fontFamily = item.value;
         if (item.key === 'site_title' && item.value) {
           document.title = item.value;
           document.querySelectorAll('.site-brand-name').forEach(el => el.textContent = item.value);
         }
-
-        // Logo Toko
         if (item.key === 'logo_url' && item.value) {
           const logoEl = document.getElementById('main-logo');
           if (logoEl) logoEl.src = item.value;
         }
 
-        // CS WhatsApp
+        // WhatsApp & Kontak
         if (item.key === 'whatsapp_number' && item.value) {
           activeWhatsappNumber = item.value;
-          document.querySelectorAll('.wa-link').forEach(btn => {
-            btn.href = `https://wa.me/${item.value}?text=Halo%20Admin,%20saya%20ingin%20bertanya`;
-          });
+          document.querySelectorAll('.wa-link').forEach(btn => btn.href = `https://wa.me/${item.value}`);
+          document.getElementById('soc-wa-link').href = `https://wa.me/${item.value}`;
+          document.getElementById('cnt-wa-1').textContent = item.value;
         }
+        if (item.key === 'contact_wa_2' && item.value) document.getElementById('cnt-wa-2').textContent = item.value;
+        if (item.key === 'contact_email' && item.value) document.getElementById('cnt-email').textContent = item.value;
 
-        // Hero Banner
-        if (item.key === 'hero_subtitle' && item.value) {
-          heroDesc.textContent = item.value;
-        }
-        if (item.key === 'hero_bg_color' && item.value) {
-          heroBox.style.backgroundColor = item.value;
-        }
-        if (item.key === 'hero_text_color' && item.value) {
-          heroBox.style.color = item.value;
-        }
-        if (item.key === 'hero_bg_url' && item.value) {
-          heroBox.style.backgroundImage = `url('${item.value}')`;
-        }
+        // Sosmed Links
+        if (item.key === 'social_ig' && item.value) document.getElementById('soc-ig-link').href = item.value;
+        if (item.key === 'social_tg' && item.value) document.getElementById('soc-tg-link').href = item.value;
 
-        // Section Tentang Kami
+        // Stats & Features Setting
+        if (item.key === 'stats_count' && item.value) document.getElementById('stats-count-el').textContent = item.value;
+        if (item.key === 'stats_desc' && item.value) document.getElementById('stats-desc-el').textContent = item.value;
+        if (item.key === 'feat_fast_desc' && item.value) document.getElementById('feat-fast-desc').textContent = item.value;
+        if (item.key === 'feat_safe_desc' && item.value) document.getElementById('feat-safe-desc').textContent = item.value;
+        if (item.key === 'feat_complete_desc' && item.value) document.getElementById('feat-complete-desc').textContent = item.value;
+
+        // Hero
+        if (item.key === 'hero_subtitle' && item.value) heroDesc.textContent = item.value;
+        if (item.key === 'hero_bg_color' && item.value) heroBox.style.backgroundColor = item.value;
+        if (item.key === 'hero_bg_url' && item.value) heroBox.style.backgroundImage = `url('${item.value}')`;
+
+        // About Us
         if (item.key === 'about_enabled') isAboutEnabled = (item.value === 'true');
         if (item.key === 'about_title') aboutTitle = item.value;
         if (item.key === 'about_description') aboutDesc = item.value;
         if (item.key === 'about_tags') aboutTagsStr = item.value;
 
-        // Popup Settings
-        if (item.key === 'popup_enabled') {
-          isPopupEnabled = (item.value === 'true');
-        }
+        // Popup
+        if (item.key === 'popup_enabled') isPopupEnabled = (item.value === 'true');
         if (item.key === 'wa_group_link' && item.value) {
           groupUrl = item.value;
           document.getElementById('modal-group-btn').href = item.value;
@@ -535,49 +441,40 @@
         }
       });
 
-      // Render Section Tentang Kami (Di Paling Bawah)
+      // Render About Us Section
       if (isAboutEnabled && (aboutTitle || aboutDesc)) {
         const aboutSec = document.getElementById('about-section');
         if (aboutTitle) document.getElementById('about-title-el').textContent = aboutTitle;
         if (aboutDesc) document.getElementById('about-text-el').textContent = aboutDesc;
-
-        // Render Tag Badges
         const tagsContainer = document.getElementById('about-tags-el');
         tagsContainer.innerHTML = '';
         if (aboutTagsStr) {
-          const tagsArr = aboutTagsStr.split(',').map(t => t.trim()).filter(t => t !== '');
-          tagsArr.forEach(tag => {
+          aboutTagsStr.split(',').map(t => t.trim()).filter(t => t !== '').forEach(tag => {
             tagsContainer.innerHTML += `<span class="tag-pill">${tag}</span>`;
           });
         }
-
         aboutSec.style.display = 'block';
       }
 
-      // Tampilkan Popup Jika Aktif
+      // Show Popup Modal
       if (isPopupEnabled && groupUrl !== '#') {
-        setTimeout(() => {
-          document.getElementById('wa-modal-overlay').classList.add('active');
-        }, 500);
+        setTimeout(() => document.getElementById('wa-modal-overlay').classList.add('active'), 500);
       }
     }
 
-    // 2. Fetch Products
+    // Fetch Products
     async function loadPublicProducts() {
       const container = document.getElementById('products-container');
-      const { data: products, error } = await supabaseClient
-        .from('products')
-        .select('*')
-        .order('created_at', { ascending: false });
+      const { data: products } = await supabaseClient.from('products').select('*').order('created_at', { ascending: false });
 
-      if (error || !products || products.length === 0) {
+      if (!products || products.length === 0) {
         container.innerHTML = '<div class="state-msg">Belum ada produk yang tersedia.</div>';
         globalProducts = [];
-        return;
+      } else {
+        globalProducts = products;
+        renderProducts(products);
       }
-
-      globalProducts = products;
-      renderProducts(products);
+      syncFooterMenu();
     }
 
     function renderProducts(products) {
@@ -586,7 +483,6 @@
         container.innerHTML = '<div class="state-msg">Produk tidak ditemukan.</div>';
         return;
       }
-
       container.innerHTML = products.map(prod => {
         const priceFormatted = Number(prod.price).toLocaleString('id-ID');
         const waText = encodeURIComponent(`Halo Admin, saya mau pesan produk: ${prod.name}`);
@@ -601,30 +497,25 @@
               <div class="card-desc">${prod.description || 'Proses Cepat & Aman'}</div>
               <div class="card-price">Rp ${priceFormatted}</div>
             </div>
-            <div class="card-btn">
-              <i class="fa-solid fa-cart-shopping"></i> Beli
-            </div>
+            <div class="card-btn"><i class="fa-solid fa-cart-shopping"></i> Beli</div>
           </a>
         `;
       }).join('');
     }
 
-    // 3. Fetch Services
+    // Fetch Services
     async function loadPublicServices() {
       const container = document.getElementById('services-container');
-      const { data: services, error } = await supabaseClient
-        .from('services')
-        .select('*')
-        .order('created_at', { ascending: false });
+      const { data: services } = await supabaseClient.from('services').select('*').order('created_at', { ascending: false });
 
-      if (error || !services || services.length === 0) {
+      if (!services || services.length === 0) {
         container.innerHTML = '<div class="state-msg">Belum ada layanan yang ditawarkan.</div>';
         globalServices = [];
-        return;
+      } else {
+        globalServices = services;
+        renderServices(services);
       }
-
-      globalServices = services;
-      renderServices(services);
+      syncFooterMenu();
     }
 
     function renderServices(services) {
@@ -633,7 +524,6 @@
         container.innerHTML = '<div class="state-msg">Layanan tidak ditemukan.</div>';
         return;
       }
-
       container.innerHTML = services.map(serv => {
         const waText = encodeURIComponent(`Halo Admin, saya mau pesan layanan/jasa: ${serv.title}`);
         const waUrl = activeWhatsappNumber ? `https://wa.me/${activeWhatsappNumber}?text=${waText}` : '#';
@@ -645,50 +535,50 @@
               <div class="card-title" style="margin-top:10px;">${serv.title}</div>
               <div class="card-desc">${serv.description || 'Konsultasikan kebutuhan Anda'}</div>
             </div>
-            <div class="card-btn" style="background:#059669;">
-              <i class="fa-brands fa-whatsapp"></i> Pesan Jasa
-            </div>
+            <div class="card-btn" style="background:#059669;"><i class="fa-brands fa-whatsapp"></i> Pesan Jasa</div>
           </a>
         `;
       }).join('');
     }
 
-    // 4. Live Search Filter
-    function filterItems() {
-      const query = document.getElementById('search-input').value.toLowerCase();
-      
-      const filteredProds = globalProducts.filter(p => 
-        p.name.toLowerCase().includes(query) || (p.description && p.description.toLowerCase().includes(query))
-      );
-      const filteredServs = globalServices.filter(s => 
-        s.title.toLowerCase().includes(query) || (s.description && s.description.toLowerCase().includes(query))
-      );
+    // SINKRONISASI OTOMATIS MENU FOOTER DENGAN ITEM PRODUK/LAYANAN SITES
+    function syncFooterMenu() {
+      const menuContainer = document.getElementById('dynamic-footer-menu');
+      let menuHTML = `<li><a href="#product-section">Produk & Jasa</a></li>`;
 
-      renderProducts(filteredProds);
-      renderServices(filteredServs);
+      // Otomatis masukkan daftar produk
+      globalProducts.forEach(prod => {
+        const waText = encodeURIComponent(`Halo Admin, saya mau pesan ${prod.name}`);
+        menuHTML += `<li><a href="https://wa.me/${activeWhatsappNumber}?text=${waText}" target="_blank">${prod.name}</a></li>`;
+      });
+
+      // Otomatis masukkan daftar jasa
+      globalServices.forEach(serv => {
+        const waText = encodeURIComponent(`Halo Admin, saya mau pesan ${serv.title}`);
+        menuHTML += `<li><a href="https://wa.me/${activeWhatsappNumber}?text=${waText}" target="_blank">${serv.title}</a></li>`;
+      });
+
+      menuHTML += `
+        <li><a href="#about-section">Tentang Kami</a></li>
+        <li><a href="https://wa.me/${activeWhatsappNumber}" target="_blank">Kontak Admin</a></li>
+      `;
+
+      menuContainer.innerHTML = menuHTML;
     }
 
-    // 5. Category Switcher Tab
+    function filterItems() {
+      const query = document.getElementById('search-input').value.toLowerCase();
+      renderProducts(globalProducts.filter(p => p.name.toLowerCase().includes(query) || (p.description && p.description.toLowerCase().includes(query))));
+      renderServices(globalServices.filter(s => s.title.toLowerCase().includes(query) || (s.description && s.description.toLowerCase().includes(query))));
+    }
+
     function switchCategory(cat, btn) {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-
-      const prodSec = document.getElementById('product-section');
-      const servSec = document.getElementById('service-section');
-
-      if (cat === 'all') {
-        prodSec.style.display = 'block';
-        servSec.style.display = 'block';
-      } else if (cat === 'products') {
-        prodSec.style.display = 'block';
-        servSec.style.display = 'none';
-      } else if (cat === 'services') {
-        prodSec.style.display = 'none';
-        servSec.style.display = 'block';
-      }
+      document.getElementById('product-section').style.display = (cat === 'services') ? 'none' : 'block';
+      document.getElementById('service-section').style.display = (cat === 'products') ? 'none' : 'block';
     }
 
-    // Init
     document.addEventListener('DOMContentLoaded', async () => {
       await loadWebsiteSettings();
       loadPublicProducts();
