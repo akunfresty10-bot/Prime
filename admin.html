@@ -1,436 +1,374 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PRIME CT — Panel Admin</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Inter:wght@400;500;600&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - Control Center</title>
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background-color: #f4f6f9; margin: 0; padding: 20px; color: #333; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    h2, h3 { color: #2c3e50; margin-top: 0; }
+    .form-group { margin-bottom: 15px; }
+    label { display: block; font-weight: bold; margin-bottom: 5px; }
+    input[type="text"], input[type="number"], input[type="email"], input[type="password"], textarea {
+      width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;
+    }
+    button { background: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    button:hover { background: #0056b3; }
+    button.btn-danger { background: #dc3545; }
+    button.btn-danger:hover { background: #bd2130; }
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+    th { background-color: #f8f9fa; }
+    img.preview { max-width: 80px; max-height: 80px; object-fit: cover; border-radius: 4px; }
+    .header-admin { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e9ecef; padding-bottom: 15px; margin-bottom: 20px; }
+  </style>
 
-  :root {
-    --bg: #0d0d0f;
-    --surface: #141418;
-    --surface2: #1c1c22;
-    --border: #2a2a35;
-    --yellow: #f5c800;
-    --yellow-dim: rgba(245,200,0,0.12);
-    --text: #e8e8f0;
-    --muted: #6b6b80;
-    --success: #22c55e;
-    --error: #ef4444;
-    --radius: 6px;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
-
-  /* LOGIN */
-  #loginScreen {
-    display: flex; align-items: center; justify-content: center;
-    min-height: 100vh;
-    background: radial-gradient(ellipse at 50% 0%, rgba(245,200,0,0.07) 0%, transparent 70%);
-  }
-  .login-box {
-    width: 100%; max-width: 380px; padding: 40px 32px;
-    background: var(--surface); border: 1px solid var(--border);
-    border-top: 2px solid var(--yellow); border-radius: var(--radius);
-  }
-  .login-logo { font-family: 'Rajdhani',sans-serif; font-size: 22px; font-weight: 700; color: var(--yellow); letter-spacing: 3px; text-align: center; margin-bottom: 4px; }
-  .login-sub  { font-family: 'Share Tech Mono',monospace; font-size: 10px; color: var(--muted); text-align: center; letter-spacing: 2px; margin-bottom: 28px; }
-
-  .step-label { font-family: 'Share Tech Mono',monospace; font-size: 10px; color: var(--yellow); letter-spacing: 2px; margin-bottom: 16px; }
-  .field-label { font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 7px; display: block; }
-  .field-input {
-    width: 100%; background: var(--surface2); border: 1px solid var(--border);
-    border-radius: var(--radius); color: var(--text);
-    font-family: 'Share Tech Mono',monospace; font-size: 14px;
-    padding: 11px 13px; outline: none; transition: border-color .2s; margin-bottom: 16px;
-  }
-  .field-input:focus { border-color: var(--yellow); box-shadow: 0 0 0 3px rgba(245,200,0,.1); }
-
-  .hint {
-    background: rgba(245,200,0,.07); border: 1px solid rgba(245,200,0,.2);
-    border-radius: var(--radius); padding: 10px 13px;
-    font-size: 11px; color: var(--muted); line-height: 1.6; margin-bottom: 16px;
-  }
-  .hint a { color: var(--yellow); }
-
-  .btn-primary {
-    width: 100%; background: var(--yellow); color: #0d0d0f;
-    border: none; border-radius: var(--radius);
-    font-family: 'Rajdhani',sans-serif; font-size: 15px; font-weight: 700;
-    letter-spacing: 2px; padding: 13px; cursor: pointer; transition: opacity .2s;
-  }
-  .btn-primary:hover { opacity: .9; }
-  .login-error { color: var(--error); font-size: 12px; text-align: center; margin-top: 10px; display: none; font-family: 'Share Tech Mono',monospace; }
-
-  /* PANEL */
-  #adminPanel { display: none; }
-  .topbar {
-    background: var(--surface); border-bottom: 1px solid var(--border);
-    padding: 13px 20px; display: flex; align-items: center; justify-content: space-between;
-    position: sticky; top: 0; z-index: 100;
-  }
-  .topbar-logo { font-family: 'Rajdhani',sans-serif; font-weight: 700; font-size: 16px; color: var(--yellow); letter-spacing: 2px; }
-  .topbar-badge { font-family: 'Share Tech Mono',monospace; font-size: 10px; color: var(--muted); letter-spacing: 1px; }
-  .btn-logout {
-    background: transparent; border: 1px solid var(--border); color: var(--muted);
-    border-radius: var(--radius); font-size: 11px; padding: 6px 12px;
-    cursor: pointer; font-family: 'Inter',sans-serif; transition: border-color .2s, color .2s;
-  }
-  .btn-logout:hover { border-color: var(--error); color: var(--error); }
-
-  .panel-body { max-width: 700px; margin: 0 auto; padding: 24px 16px 80px; }
-
-  .section-header {
-    font-family: 'Share Tech Mono',monospace; font-size: 10px; color: var(--yellow);
-    letter-spacing: 3px; text-transform: uppercase; margin-bottom: 13px;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .section-header::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 22px; }
-  .card .field-input { margin-bottom: 13px; }
-  .card .field-input:last-of-type { margin-bottom: 0; }
-
-  /* Produk */
-  .produk-item { display: grid; grid-template-columns: 1fr 130px 38px; gap: 8px; margin-bottom: 8px; align-items: center; }
-  .produk-item input {
-    background: var(--surface2); border: 1px solid var(--border);
-    border-radius: var(--radius); color: var(--text);
-    font-family: 'Inter',sans-serif; font-size: 13px;
-    padding: 9px 11px; outline: none; width: 100%; transition: border-color .2s;
-  }
-  .produk-item input:focus { border-color: var(--yellow); }
-  .btn-del {
-    background: transparent; border: 1px solid var(--border); color: var(--muted);
-    border-radius: var(--radius); width: 36px; height: 36px; cursor: pointer;
-    font-size: 18px; display: flex; align-items: center; justify-content: center;
-    transition: border-color .2s, color .2s;
-  }
-  .btn-del:hover { border-color: var(--error); color: var(--error); }
-  .btn-add {
-    background: rgba(245,200,0,.08); border: 1px dashed rgba(245,200,0,.35);
-    color: var(--yellow); border-radius: var(--radius);
-    font-size: 12px; font-family: 'Inter',sans-serif; font-weight: 600;
-    padding: 9px 16px; cursor: pointer; width: 100%; margin-top: 4px; transition: background .2s;
-  }
-  .btn-add:hover { background: rgba(245,200,0,.16); }
-
-  /* Token banner */
-  .token-banner {
-    background: rgba(245,200,0,.07); border: 1px solid rgba(245,200,0,.25);
-    border-radius: var(--radius); padding: 12px 15px; margin-bottom: 22px;
-    font-size: 12px; color: var(--muted); line-height: 1.7;
-    font-family: 'Share Tech Mono',monospace;
-  }
-  .token-banner span { color: var(--yellow); }
-
-  /* Save bar */
-  .save-bar {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    background: var(--surface); border-top: 1px solid var(--border);
-    padding: 13px 20px; display: flex; gap: 12px; align-items: center; z-index: 200;
-  }
-  .btn-save {
-    flex: 1; background: var(--yellow); color: #0d0d0f; border: none;
-    border-radius: var(--radius); font-family: 'Rajdhani',sans-serif;
-    font-size: 15px; font-weight: 700; letter-spacing: 2px; padding: 13px;
-    cursor: pointer; transition: opacity .2s;
-  }
-  .btn-save:hover { opacity: .9; }
-  .btn-save:disabled { opacity: .45; cursor: not-allowed; }
-  .save-status { font-family: 'Share Tech Mono',monospace; font-size: 11px; color: var(--muted); min-width: 110px; text-align: right; }
-  .save-status.ok  { color: var(--success); }
-  .save-status.err { color: var(--error); }
-
-  /* Log */
-  #progressLog {
-    display: none; background: var(--surface2); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 14px; margin-bottom: 22px;
-    font-family: 'Share Tech Mono',monospace; font-size: 11px; color: var(--muted);
-    line-height: 1.9; max-height: 220px; overflow-y: auto;
-  }
-  .lok { color: var(--success); }
-  .lerr { color: var(--error); }
-  .linfo { color: var(--yellow); }
-</style>
+  <!-- CDN Supabase JS v2 -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-<!-- ══ LOGIN ══ -->
-<div id="loginScreen">
-  <div class="login-box">
-    <div class="login-logo">PRIME CT</div>
-    <div class="login-sub">ADMIN PANEL // SECURE ACCESS</div>
+  <div class="container">
 
-    <div class="step-label">STEP 1 — PASSWORD</div>
-    <label class="field-label">Password Panel</label>
-    <input type="password" class="field-input" id="pwdInput" placeholder="••••••••••••" onkeydown="if(event.key==='Enter')nextStep()">
-
-    <div class="step-label">STEP 2 — GITHUB TOKEN</div>
-    <div class="hint">
-      Token disimpan di browser kamu saja, <span style="color:var(--yellow)">tidak ikut ke GitHub</span>.<br>
-      Buat token baru: <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a><br>
-      → Generate new token (classic) → centang <b>repo</b> → Generate → Copy
+    <!-- ========================================== -->
+    <!-- 1. FORM LOGIN ADMIN                        -->
+    <!-- ========================================== -->
+    <div id="login-section" class="card" style="max-width: 400px; margin: 80px auto;">
+      <h2>Login Admin</h2>
+      <form id="login-form">
+        <div class="form-group">
+          <label>Email Admin</label>
+          <input type="email" id="email" required>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="password" required>
+        </div>
+        <button type="submit" style="width: 100%;">Masuk Panel Admin</button>
+      </form>
+      <p id="auth-error" style="color: red; margin-top: 10px; text-align: center;"></p>
     </div>
-    <label class="field-label">GitHub Personal Access Token</label>
-    <input type="password" class="field-input" id="tokenInput" placeholder="ghp_..." onkeydown="if(event.key==='Enter')doLogin()">
 
-    <button class="btn-primary" onclick="doLogin()">MASUK</button>
-    <div class="login-error" id="loginError">❌ Password salah</div>
+
+    <!-- ========================================== -->
+    <!-- 2. DASHBOARD ADMIN (Tampil jika sudah login)-->
+    <!-- ========================================== -->
+    <div id="admin-dashboard" style="display: none;">
+      
+      <!-- Header Admin -->
+      <div class="card header-admin">
+        <div>
+          <h2 style="margin:0;">Dashboard Admin</h2>
+          <small id="user-email" style="color: #6c757d;"></small>
+        </div>
+        <button id="logout-btn" class="btn-danger">Logout</button>
+      </div>
+
+      <!-- SECTION A: PENGATURAN UMUM WEBSITE -->
+      <div class="card">
+        <h3>1. Pengaturan Umum Website</h3>
+        <form id="settings-form">
+          <div class="form-group">
+            <label>Judul Website / Nama Toko</label>
+            <input type="text" id="site_title" placeholder="Contoh: Toko Berkah Mandiri">
+          </div>
+          <div class="form-group">
+            <label>Nomor WhatsApp (Gunakan Format 62, contoh: 6281234567890)</label>
+            <input type="text" id="whatsapp_number" placeholder="6281234567890">
+          </div>
+          <div class="form-group">
+            <label>Upload Logo Baru (Opsional)</label>
+            <input type="file" id="logo_file" accept="image/*">
+            <div id="current-logo-container" style="margin-top: 10px;"></div>
+          </div>
+          <button type="submit">Simpan Pengaturan</button>
+        </form>
+      </div>
+
+      <!-- SECTION B: KELOLA PRODUK -->
+      <div class="card">
+        <h3>2. Kelola Produk</h3>
+        <form id="product-form" style="background: #f8f9fa; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+          <h4>Tambah Produk Baru</h4>
+          <div class="form-group">
+            <label>Nama Produk</label>
+            <input type="text" id="prod_name" required>
+          </div>
+          <div class="form-group">
+            <label>Harga (Rp)</label>
+            <input type="number" id="prod_price" required>
+          </div>
+          <div class="form-group">
+            <label>Deskripsi Produk</label>
+            <textarea id="prod_desc" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Foto Produk</label>
+            <input type="file" id="prod_file" accept="image/*" required>
+          </div>
+          <button type="submit">Tambah Produk</button>
+        </form>
+
+        <h4>Daftar Produk</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Gambar</th>
+              <th>Nama Produk</th>
+              <th>Harga</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="product-list-body">
+            <tr><td colspan="4" style="text-align: center;">Memuat produk...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- SECTION C: KELOLA JASA / LAYANAN -->
+      <div class="card">
+        <h3>3. Kelola Jasa / Layanan</h3>
+        <form id="service-form" style="background: #f8f9fa; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+          <h4>Tambah Jasa Baru</h4>
+          <div class="form-group">
+            <label>Nama Jasa / Layanan</label>
+            <input type="text" id="serv_title" required>
+          </div>
+          <div class="form-group">
+            <label>Deskripsi Layanan</label>
+            <textarea id="serv_desc" rows="3"></textarea>
+          </div>
+          <button type="submit">Tambah Jasa</button>
+        </form>
+
+        <h4>Daftar Jasa</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Nama Jasa</th>
+              <th>Deskripsi</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="service-list-body">
+            <tr><td colspan="3" style="text-align: center;">Memuat jasa...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
   </div>
-</div>
 
-<!-- ══ PANEL ══ -->
-<div id="adminPanel">
-  <div class="topbar">
-    <div>
-      <div class="topbar-logo">PRIME CT</div>
-      <div class="topbar-badge">ADMIN PANEL</div>
-    </div>
-    <button class="btn-logout" onclick="doLogout()">KELUAR</button>
-  </div>
+  <!-- ========================================== -->
+  <!-- 3. LOGIKA JAVASCRIPT & SUPABASE INTEGRATION -->
+  <!-- ========================================== -->
+  <script>
+    // --- KONFIGURASI SUPABASE ---
+    // (Ganti string di bawah ini dengan URL dan ANON KEY milik Anda dari Dashboard Supabase)
+    const SUPABASE_URL = 'https://krxzhxxytjmqmvzndofw.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_BtMu9ACi_o-V29IdGZdIDA_th6tjNzi';
+    
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const BUCKET_NAME = 'website-assets';
 
-  <div class="panel-body">
-    <div id="progressLog"></div>
+    // Elements DOM
+    const loginSection = document.getElementById('login-section');
+    const adminDashboard = document.getElementById('admin-dashboard');
 
-    <div class="token-banner">
-      🔐 Token aktif: <span id="tokenMask">—</span> &nbsp;·&nbsp; Tersimpan di browser, tidak di file
-    </div>
-
-    <!-- KONTAK -->
-    <div class="section-header">Kontak & Sosial</div>
-    <div class="card">
-      <label class="field-label">Nomor WhatsApp (628xxx)</label>
-      <input type="text" class="field-input" id="f_wa" placeholder="628xxxxxxxxxx">
-
-      <label class="field-label">Link Grup WhatsApp</label>
-      <input type="text" class="field-input" id="f_wagroup" placeholder="https://chat.whatsapp.com/...">
-
-      <label class="field-label">Email Admin</label>
-      <input type="text" class="field-input" id="f_email" placeholder="primectoffc@gmail.com">
-
-      <label class="field-label">Instagram (tanpa @)</label>
-      <input type="text" class="field-input" id="f_ig" placeholder="primectofficial">
-
-      <label class="field-label">Telegram (tanpa @)</label>
-      <input type="text" class="field-input" id="f_tg" placeholder="PrimeCTofficial">
-    </div>
-
-    <!-- PRODUK -->
-    <div class="section-header">Daftar Produk</div>
-    <div class="card">
-      <div class="produk-list" id="produkList"></div>
-      <button class="btn-add" onclick="addProduk()">+ Tambah Produk</button>
-    </div>
-
-    <!-- GITHUB CONFIG -->
-    <div class="section-header">GitHub Config</div>
-    <div class="card">
-      <label class="field-label">Username GitHub</label>
-      <input type="text" class="field-input" id="f_ghuser" placeholder="akunfresty10-bot">
-      <label class="field-label">Nama Repo</label>
-      <input type="text" class="field-input" id="f_ghrepo" placeholder="Prime">
-      <label class="field-label">Branch</label>
-      <input type="text" class="field-input" id="f_branch" placeholder="main">
-    </div>
-  </div>
-
-  <div class="save-bar">
-    <button class="btn-save" id="btnSave" onclick="saveAll()">SIMPAN & UPDATE SITUS</button>
-    <div class="save-status" id="saveStatus"></div>
-  </div>
-</div>
-
-<script>
-const PASSWORD = 'MYHEARTITSYORI';
-let SESSION_TOKEN = '';
-
-function doLogin() {
-  const pwd = document.getElementById('pwdInput').value;
-  const tok = document.getElementById('tokenInput').value.trim();
-  if (pwd !== PASSWORD) {
-    document.getElementById('loginError').style.display = 'block';
-    return;
-  }
-  if (!tok) { alert('Isi GitHub Token dulu!'); return; }
-  SESSION_TOKEN = tok;
-  // Simpan token di sessionStorage (hilang saat browser ditutup)
-  sessionStorage.setItem('pct_token', tok);
-  document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('adminPanel').style.display = 'block';
-  // Tampilkan mask token
-  document.getElementById('tokenMask').textContent = tok.slice(0,8) + '••••••••••••••••••••';
-  loadSaved();
-}
-
-function doLogout() {
-  SESSION_TOKEN = '';
-  sessionStorage.removeItem('pct_token');
-  document.getElementById('loginScreen').style.display = 'flex';
-  document.getElementById('adminPanel').style.display = 'none';
-  document.getElementById('pwdInput').value = '';
-  document.getElementById('tokenInput').value = '';
-}
-
-// ── PRODUK ──
-let produkData = [{ nama: 'Sewa Bot WA', harga: '70.000' }];
-
-function renderProduk() {
-  const list = document.getElementById('produkList');
-  list.innerHTML = '';
-  produkData.forEach((p, i) => {
-    const row = document.createElement('div');
-    row.className = 'produk-item';
-    row.innerHTML = `
-      <input type="text" value="${p.nama}" placeholder="Nama produk" oninput="produkData[${i}].nama=this.value">
-      <input type="text" value="${p.harga}" placeholder="70.000" oninput="produkData[${i}].harga=this.value">
-      <button class="btn-del" onclick="delProduk(${i})">×</button>`;
-    list.appendChild(row);
-  });
-}
-
-function addProduk() { produkData.push({ nama: '', harga: '' }); renderProduk(); }
-function delProduk(i) { produkData.splice(i, 1); renderProduk(); }
-
-// ── LOAD SAVED ──
-function loadSaved() {
-  const s = JSON.parse(localStorage.getItem('pct_config') || '{}');
-  document.getElementById('f_wa').value      = s.wa      || '6281325507265';
-  document.getElementById('f_wagroup').value = s.wagroup || 'https://chat.whatsapp.com/Bznb7P7IaGNAIgumOjUPT5?s=cl&p=a&ilr=4';
-  document.getElementById('f_email').value   = s.email   || 'primectoffc@gmail.com';
-  document.getElementById('f_ig').value      = s.ig      || 'primectofficial';
-  document.getElementById('f_tg').value      = s.tg      || 'PrimeCTofficial';
-  document.getElementById('f_ghuser').value  = s.ghuser  || 'akunfresty10-bot';
-  document.getElementById('f_ghrepo').value  = s.ghrepo  || 'Prime';
-  document.getElementById('f_branch').value  = s.branch  || 'main';
-  if (s.produk) produkData = s.produk;
-  renderProduk();
-}
-
-function getCfg() {
-  return {
-    wa:      document.getElementById('f_wa').value.trim(),
-    wagroup: document.getElementById('f_wagroup').value.trim(),
-    email:   document.getElementById('f_email').value.trim(),
-    ig:      document.getElementById('f_ig').value.trim(),
-    tg:      document.getElementById('f_tg').value.trim(),
-    ghuser:  document.getElementById('f_ghuser').value.trim(),
-    ghrepo:  document.getElementById('f_ghrepo').value.trim(),
-    branch:  document.getElementById('f_branch').value.trim(),
-    produk:  produkData,
-  };
-}
-
-// ── LOG ──
-function log(msg, cls='') {
-  const el = document.getElementById('progressLog');
-  el.style.display = 'block';
-  el.innerHTML += `<div class="${cls}">${msg}</div>`;
-  el.scrollTop = el.scrollHeight;
-}
-function clearLog() {
-  const el = document.getElementById('progressLog');
-  el.style.display = 'none'; el.innerHTML = '';
-}
-
-// ── GITHUB API ──
-async function ghGet(user, repo, branch, path) {
-  const r = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${path}?ref=${branch}`, {
-    headers: { Authorization: `token ${SESSION_TOKEN}`, Accept: 'application/vnd.github.v3+json' }
-  });
-  if (!r.ok) throw new Error(`GET ${path} → ${r.status}`);
-  return r.json();
-}
-
-async function ghPut(user, repo, branch, path, content, sha) {
-  const r = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${path}`, {
-    method: 'PUT',
-    headers: { Authorization: `token ${SESSION_TOKEN}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      message: `[Panel Admin] Update ${path}`,
-      content: btoa(unescape(encodeURIComponent(content))),
-      sha, branch
-    })
-  });
-  if (!r.ok) { const e = await r.json(); throw new Error(`${r.status}: ${e.message}`); }
-  return r.json();
-}
-
-// ── REPLACE ──
-function esc(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
-
-function applyReplace(content, cfg, filename) {
-  let c = content;
-  c = c.replace(/6281200000000/g, cfg.wa);
-  c = c.replace(/https:\/\/chat\.whatsapp\.com\/xxxxxxxxxxxxxxxx/gi, cfg.wagroup);
-  c = c.replace(/admin@primect\.id/g, cfg.email);
-  c = c.replace(/@primectofficial/gi, `@${cfg.ig}`);
-  c = c.replace(/instagram\.com\/primectofficial/gi, `instagram.com/${cfg.ig}`);
-  c = c.replace(/@PrimeCTofficial/gi, `@${cfg.tg}`);
-  c = c.replace(/t\.me\/PrimeCTofficial/gi, `t.me/${cfg.tg}`);
-
-  if (filename === 'produk.html' && cfg.produk.length) {
-    cfg.produk.forEach(p => {
-      if (!p.nama) return;
-      c = c.replace(
-        new RegExp(`(${esc(p.nama)}[\\s\\S]{0,300}?)(Rp\\s*[\\d.,]+|[\\d]+\\s*[kK])`, 'i'),
-        (m, before) => `${before}Rp ${p.harga}`
-      );
-    });
-  }
-  return c;
-}
-
-// ── SAVE ALL ──
-const FILES = ['index.html','produk.html','faq.html','kontak.html','login.html','partner.html','ai.html','tools.html','convert.html','script.js'];
-
-async function saveAll() {
-  clearLog();
-  const cfg = getCfg();
-  localStorage.setItem('pct_config', JSON.stringify(cfg));
-
-  const btn = document.getElementById('btnSave');
-  const status = document.getElementById('saveStatus');
-  btn.disabled = true; btn.textContent = 'MEMPROSES...';
-  status.className = 'save-status'; status.textContent = '';
-
-  log('⚡ Memulai update...', 'linfo');
-  log(`📦 ${cfg.ghuser}/${cfg.ghrepo} (${cfg.branch})`, 'linfo');
-
-  let ok = 0, skip = 0, fail = 0;
-
-  for (const file of FILES) {
-    try {
-      log(`→ ${file}`);
-      const data = await ghGet(cfg.ghuser, cfg.ghrepo, cfg.branch, file);
-      const original = decodeURIComponent(escape(atob(data.content.replace(/\n/g,''))));
-      const updated  = applyReplace(original, cfg, file);
-
-      if (original === updated) {
-        log(`  ⟳ tidak ada perubahan`); skip++; ok++; continue;
+    // --- 1. OTENTIKASI & CEK LOGIN ---
+    async function checkAuth() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        loginSection.style.display = 'none';
+        adminDashboard.style.display = 'block';
+        document.getElementById('user-email').textContent = `Login sebagai: ${session.user.email}`;
+        
+        // Load data admin saat berhasil login
+        loadSettings();
+        loadProducts();
+        loadServices();
+      } else {
+        loginSection.style.display = 'block';
+        adminDashboard.style.display = 'none';
       }
-      await ghPut(cfg.ghuser, cfg.ghrepo, cfg.branch, file, updated, data.sha);
-      log(`  ✓ berhasil diperbarui`, 'lok'); ok++;
-    } catch(e) {
-      log(`  ✗ ${e.message}`, 'lerr'); fail++;
     }
-  }
 
-  log('');
-  if (fail === 0) {
-    log(`✅ Selesai! ${ok} file diproses. Vercel sedang deploy (~30 detik)...`, 'lok');
-    status.textContent = `✓ ${ok} file ok`; status.className = 'save-status ok';
-  } else {
-    log(`⚠️ ${ok} ok, ${fail} gagal`, 'lerr');
-    status.textContent = `⚠ ${fail} gagal`; status.className = 'save-status err';
-  }
+    checkAuth();
 
-  btn.disabled = false; btn.textContent = 'SIMPAN & UPDATE SITUS';
-}
+    // Login Event
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      
+      if (error) {
+        document.getElementById('auth-error').textContent = error.message;
+      } else {
+        document.getElementById('auth-error').textContent = '';
+        checkAuth();
+      }
+    });
 
-renderProduk();
-</script>
+    // Logout Event
+    document.getElementById('logout-btn').addEventListener('click', async () => {
+      await supabase.auth.signOut();
+      checkAuth();
+    });
+
+    // --- HELPER: UPLOAD FILE KE STORAGE ---
+    async function uploadFileToStorage(file) {
+      if (!file) return null;
+      const ext = file.name.split('.').pop();
+      const fileName = `${Date.now()}.${ext}`;
+      
+      const { data, error } = await supabase.storage.from(BUCKET_NAME).upload(fileName, file);
+      if (error) {
+        alert('Gagal mengunggah gambar: ' + error.message);
+        return null;
+      }
+      
+      const { data: publicUrlData } = supabase.storage.from(BUCKET_NAME).getPublicUrl(fileName);
+      return publicUrlData.publicUrl;
+    }
+
+    // --- 2. LOGIKA PENGATURAN UMUM ---
+    async function loadSettings() {
+      const { data } = await supabase.from('site_settings').select('*');
+      if (data) {
+        data.forEach(item => {
+          if (item.key === 'site_title') document.getElementById('site_title').value = item.value;
+          if (item.key === 'whatsapp_number') document.getElementById('whatsapp_number').value = item.value;
+          if (item.key === 'logo_url' && item.value) {
+            document.getElementById('current-logo-container').innerHTML = `<p>Logo Saat Ini:</p><img src="${item.value}" class="preview">`;
+          }
+        });
+      }
+    }
+
+    document.getElementById('settings-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const title = document.getElementById('site_title').value;
+      const wa = document.getElementById('whatsapp_number').value;
+      const logoFile = document.getElementById('logo_file').files[0];
+
+      // Update teks settings
+      await supabase.from('site_settings').upsert({ key: 'site_title', value: title });
+      await supabase.from('site_settings').upsert({ key: 'whatsapp_number', value: wa });
+
+      // If upload new logo
+      if (logoFile) {
+        const logoUrl = await uploadFileToStorage(logoFile);
+        if (logoUrl) {
+          await supabase.from('site_settings').upsert({ key: 'logo_url', value: logoUrl });
+        }
+      }
+
+      alert('Pengaturan berhasil disimpan!');
+      loadSettings();
+    });
+
+    // --- 3. LOGIKA KELOLA PRODUK ---
+    async function loadProducts() {
+      const { data, error } = await supabase.from('products').select('*').order('created_at', { ascending: false });
+      const tbody = document.getElementById('product-list-body');
+      tbody.innerHTML = '';
+
+      if (data && data.length > 0) {
+        data.forEach(prod => {
+          tbody.innerHTML += `
+            <tr>
+              <td><img src="${prod.image_url || 'https://via.placeholder.com/80'}" class="preview"></td>
+              <td><strong>${prod.name}</strong><br><small>${prod.description || ''}</small></td>
+              <td>Rp ${Number(prod.price).toLocaleString('id-ID')}</td>
+              <td>
+                <button class="btn-danger" onclick="deleteProduct('${prod.id}')">Hapus</button>
+              </td>
+            </tr>
+          `;
+        });
+      } else {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Belum ada produk.</td></tr>';
+      }
+    }
+
+    document.getElementById('product-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('prod_name').value;
+      const price = document.getElementById('prod_price').value;
+      const description = document.getElementById('prod_desc').value;
+      const file = document.getElementById('prod_file').files[0];
+
+      const imageUrl = await uploadFileToStorage(file);
+      if (!imageUrl) return;
+
+      const { error } = await supabase.from('products').insert([{ name, price, description, image_url: imageUrl }]);
+      
+      if (error) {
+        alert('Gagal menambah produk: ' + error.message);
+      } else {
+        alert('Produk berhasil ditambahkan!');
+        document.getElementById('product-form').reset();
+        loadProducts();
+      }
+    });
+
+    async function deleteProduct(id) {
+      if (confirm('Yakin ingin menghapus produk ini?')) {
+        await supabase.from('products').delete().eq('id', id);
+        loadProducts();
+      }
+    }
+
+    // --- 4. LOGIKA KELOLA JASA ---
+    async function loadServices() {
+      const { data } = await supabase.from('services').select('*').order('created_at', { ascending: false });
+      const tbody = document.getElementById('service-list-body');
+      tbody.innerHTML = '';
+
+      if (data && data.length > 0) {
+        data.forEach(serv => {
+          tbody.innerHTML += `
+            <tr>
+              <td><strong>${serv.title}</strong></td>
+              <td>${serv.description || '-'}</td>
+              <td>
+                <button class="btn-danger" onclick="deleteService('${serv.id}')">Hapus</button>
+              </td>
+            </tr>
+          `;
+        });
+      } else {
+        tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;">Belum ada jasa.</td></tr>';
+      }
+    }
+
+    document.getElementById('service-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const title = document.getElementById('serv_title').value;
+      const description = document.getElementById('serv_desc').value;
+
+      const { error } = await supabase.from('services').insert([{ title, description }]);
+      
+      if (error) {
+        alert('Gagal menambah jasa: ' + error.message);
+      } else {
+        alert('Jasa berhasil ditambahkan!');
+        document.getElementById('service-form').reset();
+        loadServices();
+      }
+    });
+
+    async function deleteService(id) {
+      if (confirm('Yakin ingin menghapus jasa ini?')) {
+        await supabase.from('services').delete().eq('id', id);
+        loadServices();
+      }
+    }
+  </script>
 </body>
 </html>
