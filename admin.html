@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard - Store Management</title>
+  <title>Admin Dashboard - PRIME CT STORE</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,6 +16,7 @@
       --bg-card: #161b22;
       --border-color: #30363d;
       --accent-blue: #2563eb;
+      --accent-purple: #8b5cf6;
       --accent-green: #10b981;
       --accent-red: #ef4444;
       --text-main: #f0f6fc;
@@ -25,7 +26,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
     body { background-color: var(--bg-body); color: var(--text-main); padding: 20px 12px; }
 
-    .admin-container { max-width: 900px; margin: 0 auto; display: none; } /* Hidden until auth success */
+    .admin-container { max-width: 900px; margin: 0 auto; display: none; }
 
     /* HEADER DASHBOARD */
     .admin-header {
@@ -39,7 +40,7 @@
       align-items: center;
     }
     .admin-header h1 { font-size: 1.3rem; font-weight: 800; color: #fff; }
-    .btn-logout { background: #ef4444; color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+    .btn-logout { background: var(--accent-red); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; }
 
     /* CARD BOX */
     .card {
@@ -66,6 +67,7 @@
     }
     .form-control:focus { border-color: var(--accent-blue); }
     textarea.form-control { resize: vertical; min-height: 80px; }
+    select.form-control { cursor: pointer; }
 
     .btn {
       background: var(--accent-blue);
@@ -81,6 +83,16 @@
       gap: 8px;
     }
     .btn-success { background: var(--accent-green); }
+    .btn-danger { background: var(--accent-red); padding: 6px 12px; font-size: 0.8rem; border-radius: 6px; }
+
+    /* LIST TABLE */
+    .item-list { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+    .item-row {
+      background: #0d1117; border: 1px solid var(--border-color);
+      padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center;
+    }
+    .item-info { display: flex; align-items: center; gap: 12px; }
+    .item-info img { width: 45px; height: 45px; border-radius: 8px; object-fit: cover; }
 
     /* LOGIN OVERLAY */
     .login-overlay {
@@ -98,14 +110,14 @@
 </head>
 <body>
 
-  <!-- LOGIN MODAL (SUPABASE AUTH) -->
+  <!-- LOGIN MODAL -->
   <div id="login-modal" class="login-overlay">
     <div class="login-box">
       <h2 style="margin-bottom: 15px; font-weight:800;">Admin Panel Login</h2>
       
       <div class="form-group">
         <label>Email Admin</label>
-        <input type="email" id="admin-email-input" class="form-control" placeholder="Masukkan Email">
+        <input type="email" id="admin-email-input" class="form-control" placeholder="Masukkan Email Admin">
       </div>
 
       <div class="form-group">
@@ -124,27 +136,112 @@
       <button onclick="logoutAdmin()" class="btn-logout"><i class="fa-solid fa-right-from-bracket"></i> Keluar</button>
     </div>
 
-    <!-- PENGATURAN TOKO UTAMA -->
+    <!-- 1. IDENTITAS WEBSITE & BANNER DEPAN -->
     <div class="card">
-      <div class="card-title"><i class="fa-solid fa-store" style="color: #3b82f6;"></i> Identitas Website</div>
+      <div class="card-title"><i class="fa-solid fa-store" style="color: #3b82f6;"></i> Identitas & Banner Utama</div>
       <div class="form-group">
         <label>Nama Toko / Brand</label>
         <input type="text" id="set-site-title" class="form-control" placeholder="Contoh: PRIME CT STORE">
       </div>
       <div class="form-group">
-        <label>URL Logo Toko</label>
+        <label>URL Logo Toko Header</label>
         <input type="text" id="set-logo-url" class="form-control" placeholder="https://link-gambar-logo.png">
+      </div>
+      <div class="form-group">
+        <label>Judul Banner Depan (Hero Title)</label>
+        <input type="text" id="set-hero-title" class="form-control" placeholder="PRIME CT STORE">
+      </div>
+      <div class="form-group">
+        <label>Deskripsi Banner Depan (Hero Subtitle)</label>
+        <input type="text" id="set-hero-desc" class="form-control" placeholder="Platform Digital & Jasa Online Terpercaya">
       </div>
       <div class="form-group">
         <label>Nomor Utama WhatsApp CS (Gunakan Format 628...)</label>
         <input type="text" id="set-wa-num" class="form-control" placeholder="6283173403262">
       </div>
-      <button onclick="saveMainSettings()" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Simpan Identitas</button>
+      <button onclick="saveMainSettings()" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Simpan Identitas & Banner</button>
     </div>
 
-    <!-- PENGATURAN STATISTIK & KONTAK FOOTER -->
+    <!-- 2. PENGATURAN "SIAPA ITU PRIME CT OFFICIAL" -->
     <div class="card">
-      <div class="card-title"><i class="fa-solid fa-chart-line" style="color: #a78bfa;"></i> Statistik & Kontak Footer</div>
+      <div class="card-title"><i class="fa-solid fa-circle-info" style="color: #f59e0b;"></i> Tentang "Siapa itu PRIME CT OFFICIAL"</div>
+      <div class="form-group">
+        <label>Teks Penjelasan Brand / Toko</label>
+        <textarea id="set-about-desc" class="form-control" rows="4" placeholder="PRIME CT STORE adalah platform penyedia produk digital..."></textarea>
+      </div>
+      <button onclick="saveAboutSettings()" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Simpan Penjelasan Brand</button>
+    </div>
+
+    <!-- 3. PENGATURAN POP-UP GROUP WHATSAPP -->
+    <div class="card">
+      <div class="card-title"><i class="fa-brands fa-whatsapp" style="color: #10b981;"></i> Pengaturan Pop-up Group WA</div>
+      <div class="form-group">
+        <label>Status Pop-up</label>
+        <select id="set-popup-enabled" class="form-control">
+          <option value="true">Aktif (Tampilkan Pop-up)</option>
+          <option value="false">Nonaktifkan Pop-up</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Link Group WhatsApp</label>
+        <input type="text" id="set-wa-group-link" class="form-control" placeholder="https://chat.whatsapp.com/...">
+      </div>
+      <div class="form-group">
+        <label>URL Gambar Banner Pop-up (Opsional)</label>
+        <input type="text" id="set-popup-banner-url" class="form-control" placeholder="https://link-gambar-banner.jpg">
+      </div>
+      <button onclick="savePopupSettings()" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Simpan Pengaturan Pop-up</button>
+    </div>
+
+    <!-- 4. KELOLA PRODUK -->
+    <div class="card">
+      <div class="card-title"><i class="fa-solid fa-box" style="color: #ec4899;"></i> Kelola Daftar Produk</div>
+      <div style="background: #0d1117; padding: 16px; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 20px;">
+        <h4 style="margin-bottom: 12px; font-size: 0.95rem;">Tambah Produk Baru</h4>
+        <div class="form-group">
+          <input type="text" id="prod-name" class="form-control" placeholder="Nama Produk">
+        </div>
+        <div class="form-group">
+          <input type="number" id="prod-price" class="form-control" placeholder="Harga (misal: 50000)">
+        </div>
+        <div class="form-group">
+          <input type="text" id="prod-img" class="form-control" placeholder="URL Gambar Produk">
+        </div>
+        <div class="form-group">
+          <input type="text" id="prod-desc" class="form-control" placeholder="Deskripsi Singkat">
+        </div>
+        <button onclick="addProduct()" class="btn"><i class="fa-solid fa-plus"></i> Tambah Produk</button>
+      </div>
+
+      <h4 style="font-size: 0.95rem; color: var(--text-sub);">Daftar Produk Aktif:</h4>
+      <div id="admin-products-list" class="item-list">
+        <!-- Item Produk dimuat via JS -->
+      </div>
+    </div>
+
+    <!-- 5. KELOLA LAYANAN & JASA -->
+    <div class="card">
+      <div class="card-title"><i class="fa-solid fa-headset" style="color: #06b6d4;"></i> Kelola Layanan & Jasa</div>
+      <div style="background: #0d1117; padding: 16px; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 20px;">
+        <h4 style="margin-bottom: 12px; font-size: 0.95rem;">Tambah Jasa Baru</h4>
+        <div class="form-group">
+          <input type="text" id="serv-title" class="form-control" placeholder="Judul Layanan / Jasa">
+        </div>
+        <div class="form-group">
+          <input type="text" id="serv-desc" class="form-control" placeholder="Deskripsi Layanan">
+        </div>
+        <button onclick="addService()" class="btn"><i class="fa-solid fa-plus"></i> Tambah Jasa</button>
+      </div>
+
+      <h4 style="font-size: 0.95rem; color: var(--text-sub);">Daftar Jasa Aktif:</h4>
+      <div id="admin-services-list" class="item-list">
+        <!-- Item Jasa dimuat via JS -->
+      </div>
+    </div>
+
+    <!-- 6. STATISTIK & KONTAK FOOTER -->
+    <div class="card">
+      <div class="card-title"><i class="fa-solid fa-chart-line" style="color: #a78bfa;"></i> Statistik Pelanggan & Footer</div>
       
       <div class="form-group">
         <label>Total Pelanggan (Text/Angka)</label>
@@ -183,7 +280,7 @@
     const SUPABASE_ANON_KEY = 'sb_publishable_BtMu9ACi_o-V29IdGZdIDA_th6tjNzi';
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // DENGAN SUPABASE AUTH ASLI
+    // LOGIN SUPABASE AUTH
     async function loginWithSupabase() {
       const email = document.getElementById('admin-email-input').value.trim();
       const password = document.getElementById('admin-pass-input').value;
@@ -196,10 +293,7 @@
 
       btn.textContent = 'Memeriksa...';
 
-      const { data, error } = await supabaseClient.auth.signInWithPassword({
-        email: email,
-        password: password
-      });
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
 
       if (error) {
         alert('Login Gagal: ' + error.message);
@@ -207,7 +301,7 @@
       } else {
         document.getElementById('login-modal').style.display = 'none';
         document.getElementById('admin-content').style.display = 'block';
-        loadSettingsToForm();
+        loadAllAdminData();
       }
     }
 
@@ -216,21 +310,31 @@
       location.reload();
     }
 
-    // Upsert / Save Setting ke Supabase
+    // UTILITY SAVE SETTINGS
     async function saveSetting(key, value) {
       await supabaseClient.from('site_settings').upsert({ key: key, value: value }, { onConflict: 'key' });
     }
 
+    // SAVE FUNCTIONS
     async function saveMainSettings() {
-      const title = document.getElementById('set-site-title').value;
-      const logo = document.getElementById('set-logo-url').value;
-      const wa = document.getElementById('set-wa-num').value;
+      await saveSetting('site_title', document.getElementById('set-site-title').value);
+      await saveSetting('logo_url', document.getElementById('set-logo-url').value);
+      await saveSetting('hero_title', document.getElementById('set-hero-title').value);
+      await saveSetting('hero_desc', document.getElementById('set-hero-desc').value);
+      await saveSetting('whatsapp_number', document.getElementById('set-wa-num').value);
+      alert('Identitas & Banner Berhasil Disimpan!');
+    }
 
-      await saveSetting('site_title', title);
-      await saveSetting('logo_url', logo);
-      await saveSetting('whatsapp_number', wa);
+    async function saveAboutSettings() {
+      await saveSetting('about_desc', document.getElementById('set-about-desc').value);
+      alert('Penjelasan Brand Berhasil Disimpan!');
+    }
 
-      alert('Identitas Toko Berhasil Disimpan!');
+    async function savePopupSettings() {
+      await saveSetting('popup_enabled', document.getElementById('set-popup-enabled').value);
+      await saveSetting('wa_group_link', document.getElementById('set-wa-group-link').value);
+      await saveSetting('popup_banner_url', document.getElementById('set-popup-banner-url').value);
+      alert('Pengaturan Pop-up Berhasil Disimpan!');
     }
 
     async function saveFooterStatsSettings() {
@@ -240,34 +344,136 @@
       await saveSetting('contact_email', document.getElementById('set-email').value);
       await saveSetting('social_ig', document.getElementById('set-ig-link').value);
       await saveSetting('social_tg', document.getElementById('set-tg-link').value);
-
-      alert('Statistik & Kontak Footer Berhasil Disimpan!');
+      alert('Statistik & Footer Berhasil Disimpan!');
     }
 
-    async function loadSettingsToForm() {
-      const { data } = await supabaseClient.from('site_settings').select('*');
-      if (!data) return;
+    // PRODUK CRUD
+    async function addProduct() {
+      const name = document.getElementById('prod-name').value;
+      const price = document.getElementById('prod-price').value;
+      const image_url = document.getElementById('prod-img').value;
+      const description = document.getElementById('prod-desc').value;
 
-      data.forEach(item => {
-        if (item.key === 'site_title') document.getElementById('set-site-title').value = item.value;
-        if (item.key === 'logo_url') document.getElementById('set-logo-url').value = item.value;
-        if (item.key === 'whatsapp_number') document.getElementById('set-wa-num').value = item.value;
-        if (item.key === 'stats_count') document.getElementById('set-stats-count').value = item.value;
-        if (item.key === 'stats_desc') document.getElementById('set-stats-desc').value = item.value;
-        if (item.key === 'contact_wa_2') document.getElementById('set-wa-2').value = item.value;
-        if (item.key === 'contact_email') document.getElementById('set-email').value = item.value;
-        if (item.key === 'social_ig') document.getElementById('set-ig-link').value = item.value;
-        if (item.key === 'social_tg') document.getElementById('set-tg-link').value = item.value;
-      });
+      if (!name || !price) {
+        alert('Nama dan Harga produk wajib diisi!');
+        return;
+      }
+
+      await supabaseClient.from('products').insert([{ name, price: Number(price), image_url, description }]);
+      document.getElementById('prod-name').value = '';
+      document.getElementById('prod-price').value = '';
+      document.getElementById('prod-img').value = '';
+      document.getElementById('prod-desc').value = '';
+      loadProductsList();
+    }
+
+    async function deleteProduct(id) {
+      if (confirm('Yakin ingin menghapus produk ini?')) {
+        await supabaseClient.from('products').delete().eq('id', id);
+        loadProductsList();
+      }
+    }
+
+    async function loadProductsList() {
+      const container = document.getElementById('admin-products-list');
+      const { data } = await supabaseClient.from('products').select('*').order('created_at', { ascending: false });
+
+      if (!data || data.length === 0) {
+        container.innerHTML = '<div style="color:var(--text-sub); font-size:0.85rem;">Belum ada produk.</div>';
+        return;
+      }
+
+      container.innerHTML = data.map(p => `
+        <div class="item-row">
+          <div class="item-info">
+            <img src="${p.image_url || 'https://via.placeholder.com/50'}" alt="${p.name}">
+            <div>
+              <div style="font-weight:700; font-size:0.9rem;">${p.name}</div>
+              <div style="color:#38bdf8; font-size:0.8rem; font-weight:700;">Rp ${Number(p.price).toLocaleString('id-ID')}</div>
+            </div>
+          </div>
+          <button onclick="deleteProduct('${p.id}')" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      `).join('');
+    }
+
+    // JASA / LAYANAN CRUD
+    async function addService() {
+      const title = document.getElementById('serv-title').value;
+      const description = document.getElementById('serv-desc').value;
+
+      if (!title) {
+        alert('Judul Layanan wajib diisi!');
+        return;
+      }
+
+      await supabaseClient.from('services').insert([{ title, description }]);
+      document.getElementById('serv-title').value = '';
+      document.getElementById('serv-desc').value = '';
+      loadServicesList();
+    }
+
+    async function deleteService(id) {
+      if (confirm('Yakin ingin menghapus layanan ini?')) {
+        await supabaseClient.from('services').delete().eq('id', id);
+        loadServicesList();
+      }
+    }
+
+    async function loadServicesList() {
+      const container = document.getElementById('admin-services-list');
+      const { data } = await supabaseClient.from('services').select('*').order('created_at', { ascending: false });
+
+      if (!data || data.length === 0) {
+        container.innerHTML = '<div style="color:var(--text-sub); font-size:0.85rem;">Belum ada layanan.</div>';
+        return;
+      }
+
+      container.innerHTML = data.map(s => `
+        <div class="item-row">
+          <div>
+            <div style="font-weight:700; font-size:0.9rem;">${s.title}</div>
+            <div style="color:var(--text-sub); font-size:0.8rem;">${s.description || '-'}</div>
+          </div>
+          <button onclick="deleteService('${s.id}')" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      `).join('');
+    }
+
+    // LOAD ALL DATA INTO FORM
+    async function loadAllAdminData() {
+      // Settings
+      const { data } = await supabaseClient.from('site_settings').select('*');
+      if (data) {
+        data.forEach(item => {
+          if (item.key === 'site_title') document.getElementById('set-site-title').value = item.value;
+          if (item.key === 'logo_url') document.getElementById('set-logo-url').value = item.value;
+          if (item.key === 'hero_title') document.getElementById('set-hero-title').value = item.value;
+          if (item.key === 'hero_desc') document.getElementById('set-hero-desc').value = item.value;
+          if (item.key === 'whatsapp_number') document.getElementById('set-wa-num').value = item.value;
+          if (item.key === 'about_desc') document.getElementById('set-about-desc').value = item.value;
+          if (item.key === 'popup_enabled') document.getElementById('set-popup-enabled').value = item.value;
+          if (item.key === 'wa_group_link') document.getElementById('set-wa-group-link').value = item.value;
+          if (item.key === 'popup_banner_url') document.getElementById('set-popup-banner-url').value = item.value;
+          if (item.key === 'stats_count') document.getElementById('set-stats-count').value = item.value;
+          if (item.key === 'stats_desc') document.getElementById('set-stats-desc').value = item.value;
+          if (item.key === 'contact_wa_2') document.getElementById('set-wa-2').value = item.value;
+          if (item.key === 'contact_email') document.getElementById('set-email').value = item.value;
+          if (item.key === 'social_ig') document.getElementById('set-ig-link').value = item.value;
+          if (item.key === 'social_tg') document.getElementById('set-tg-link').value = item.value;
+        });
+      }
+
+      loadProductsList();
+      loadServicesList();
     }
 
     document.addEventListener('DOMContentLoaded', async () => {
-      // Cek apakah session login Supabase masih aktif
       const { data: { session } } = await supabaseClient.auth.getSession();
       if (session) {
         document.getElementById('login-modal').style.display = 'none';
         document.getElementById('admin-content').style.display = 'block';
-        loadSettingsToForm();
+        loadAllAdminData();
       }
     });
   </script>
