@@ -16,7 +16,7 @@
       --text-sub: #94a3b8;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body { background-color: var(--bg-body); color: var(--text-main); min-height: 100vh; }
+    body { background-color: var(--bg-body); color: var(--text-main); min-height: 100vh; overflow-x: hidden; }
 
     /* FLOATING ADMIN BAR */
     .admin-floating-bar {
@@ -72,12 +72,20 @@
     .form-input:focus { border-color: var(--accent-purple); }
     .btn-primary { background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); color: #fff; border: none; width: 100%; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; }
 
-    /* LAYOUT UTAMA WEBSITE PUBLIK (CONTOH) */
-    header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; border-bottom: 1px solid var(--border-color); }
+    /* STRUKTUR TAMPILAN PUBLIK */
+    header { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; border-bottom: 1px solid var(--border-color); background: var(--bg-card); }
     .logo { font-size: 1.25rem; font-weight: 800; color: #fff; }
-    .hero { text-align: center; padding: 100px 20px; }
-    .hero h1 { font-size: 3rem; font-weight: 800; margin-bottom: 20px; color: #fff; }
-    .hero p { font-size: 1.1rem; color: var(--text-sub); max-width: 600px; margin: 0 auto; }
+    .hero { text-align: center; padding: 80px 20px; background: radial-gradient(circle at center, rgba(139,92,246,0.15) 0%, transparent 70%); }
+    .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 15px; color: #fff; }
+    .hero p { font-size: 1rem; color: var(--text-sub); max-width: 600px; margin: 0 auto; }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+    .section-title { font-size: 1.2rem; font-weight: 700; color: #fff; margin-bottom: 20px; border-left: 4px solid var(--accent-purple); padding-left: 10px; }
+    
+    .card-box { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; margin-bottom: 20px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    
+    .label-hint { font-size: 0.75rem; color: var(--text-sub); display: block; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -107,16 +115,65 @@
     <button class="btn-save-live" onclick="saveLiveChanges()">Simpan Perubahan</button>
   </div>
 
-  <!-- TAMPILAN WEB PUBLIK YANG BISA DI-KLIK & DI-KETIK LANGSUNG -->
+  <!-- HEADER / NAVIGASI -->
   <header>
-    <div class="logo" id="editable-site_title" contenteditable="true">PRIME CT</div>
-    <div style="font-size: 0.9rem; color: var(--text-sub);">Klik teks bergaris putus-putus untuk mengubahnya.</div>
+    <div>
+      <span class="label-hint">Nama Situs</span>
+      <div class="logo" id="editable-site_title" contenteditable="true">PRIME CT</div>
+    </div>
+    <div style="font-size: 0.85rem; color: var(--text-sub);">Klik teks putus-putus untuk mengubah langsung</div>
   </header>
 
+  <!-- HERO SECTION -->
   <section class="hero">
+    <span class="label-hint">Judul Utama (Hero Title)</span>
     <h1 id="editable-hero_title" contenteditable="true">Solusi Digital & Teknologi Terpadu</h1>
+    <span class="label-hint" style="margin-top: 15px;">Deskripsi Utama (Hero Desc)</span>
     <p id="editable-hero_desc" contenteditable="true">Platform layanan profesional terbaik untuk kebutuhan teknologi dan bisnis Anda.</p>
   </section>
+
+  <!-- KONTEN PENGATURAN LAINNYA (KONTAK & PEMBAYARAN) -->
+  <div class="container">
+    <div class="section-title">Pengaturan Kontak & Media Sosial</div>
+    <div class="card-box grid-2">
+      <div>
+        <span class="label-hint">Nomor WhatsApp Utama</span>
+        <div id="editable-whatsapp_number" contenteditable="true" style="color:#fff; font-weight:600;">628xxxxxxxxxx</div>
+      </div>
+      <div>
+        <span class="label-hint">Email Kontak</span>
+        <div id="editable-email_contact" contenteditable="true" style="color:#fff; font-weight:600;">admin@primect.com</div>
+      </div>
+      <div>
+        <span class="label-hint">Link Instagram</span>
+        <div id="editable-instagram_link" contenteditable="true" style="color:#fff; font-weight:600;">https://instagram.com/...</div>
+      </div>
+      <div>
+        <span class="label-hint">Link Telegram</span>
+        <div id="editable-telegram_link" contenteditable="true" style="color:#fff; font-weight:600;">https://t.me/...</div>
+      </div>
+    </div>
+
+    <div class="section-title">Pengaturan Pembayaran & E-Wallet</div>
+    <div class="card-box grid-2">
+      <div>
+        <span class="label-hint">Nomor DANA</span>
+        <div id="editable-dana_number" contenteditable="true" style="color:#fff; font-weight:600;">08xxxxxxxxxx</div>
+      </div>
+      <div>
+        <span class="label-hint">Nama Pemilik DANA</span>
+        <div id="editable-dana_name" contenteditable="true" style="color:#fff; font-weight:600;">Nama Pemilik</div>
+      </div>
+      <div>
+        <span class="label-hint">Nomor GOPAY</span>
+        <div id="editable-gopay_number" contenteditable="true" style="color:#fff; font-weight:600;">08xxxxxxxxxx</div>
+      </div>
+      <div>
+        <span class="label-hint">Nama Pemilik GOPAY</span>
+        <div id="editable-gopay_name" contenteditable="true" style="color:#fff; font-weight:600;">Nama Pemilik</div>
+      </div>
+    </div>
+  </div>
 
   <script>
     const SUPABASE_URL = 'https://krxzhxxytjmqmvzndofw.supabase.co';
@@ -145,7 +202,11 @@
     }
 
     async function saveLiveChanges() {
-      const keys = ['site_title', 'hero_title', 'hero_desc'];
+      const keys = [
+        'site_title', 'hero_title', 'hero_desc', 
+        'whatsapp_number', 'email_contact', 'instagram_link', 'telegram_link',
+        'dana_number', 'dana_name', 'gopay_number', 'gopay_name'
+      ];
       
       for (let key of keys) {
         const el = document.getElementById(`editable-${key}`);
@@ -157,7 +218,6 @@
       alert('Perubahan berhasil disimpan! Tampilan publik sekarang sudah diperbarui.');
     }
 
-    // Cek sesi saat halaman dimuat
     async function checkAuthSession() {
       const { data: { session } } = await supabaseClient.auth.getSession();
       if (session) {
