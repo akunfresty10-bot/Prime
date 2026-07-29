@@ -22,6 +22,7 @@
       --text-main: #f0f6fc;
       --text-sub: #8b949e;
       --wa-green: #25d366;
+      --wa-hover: #1da851;
     }
 
     * {
@@ -43,7 +44,7 @@
       backdrop-filter: blur(10px);
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 90;
       border-bottom: 1px solid var(--border-color);
     }
 
@@ -98,7 +99,7 @@
       transform: scale(1.03);
     }
 
-    /* RUNNING TEXT / MARQUEE */
+    /* RUNNING TEXT */
     .announcement-bar {
       background: #1f2937;
       border-bottom: 1px solid var(--border-color);
@@ -110,23 +111,17 @@
       gap: 10px;
     }
 
-    .announcement-bar i {
-      color: #f59e0b;
-    }
+    .announcement-bar i { color: #f59e0b; }
+    marquee { color: var(--text-main); font-weight: 500; }
 
-    marquee {
-      color: var(--text-main);
-      font-weight: 500;
-    }
-
-    /* MAIN CONTAINER */
+    /* CONTAINER */
     .container {
       max-width: 1000px;
       margin: 0 auto;
       padding: 20px 16px;
     }
 
-    /* BANNER / HERO CARD */
+    /* HERO BANNER */
     .hero-banner {
       background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
       border: 1px solid var(--border-color);
@@ -137,23 +132,11 @@
       box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     }
 
-    .hero-banner h1 {
-      font-size: 1.6rem;
-      font-weight: 800;
-      margin-bottom: 8px;
-    }
-
-    .hero-banner p {
-      color: #93c5fd;
-      font-size: 0.9rem;
-    }
+    .hero-banner h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; }
+    .hero-banner p { color: #93c5fd; font-size: 0.9rem; }
 
     /* SEARCH BAR */
-    .search-box {
-      position: relative;
-      margin-bottom: 20px;
-    }
-
+    .search-box { position: relative; margin-bottom: 20px; }
     .search-box input {
       width: 100%;
       padding: 14px 16px 14px 45px;
@@ -165,29 +148,16 @@
       outline: none;
       transition: 0.2s;
     }
-
     .search-box input:focus {
       border-color: var(--accent-glow);
       box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
     }
-
     .search-box i {
-      position: absolute;
-      left: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-sub);
+      position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-sub);
     }
 
-    /* CATEGORY FILTER TABS */
-    .category-tabs {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 25px;
-      overflow-x: auto;
-      padding-bottom: 5px;
-    }
-
+    /* CATEGORY TABS */
+    .category-tabs { display: flex; gap: 10px; margin-bottom: 25px; overflow-x: auto; padding-bottom: 5px; }
     .tab-btn {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
@@ -203,36 +173,19 @@
       align-items: center;
       gap: 8px;
     }
+    .tab-btn.active, .tab-btn:hover { background: var(--accent-blue); color: #fff; border-color: var(--accent-glow); }
 
-    .tab-btn.active, .tab-btn:hover {
-      background: var(--accent-blue);
-      color: #fff;
-      border-color: var(--accent-glow);
-    }
+    .section-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
 
-    /* SECTION TITLE */
-    .section-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    /* PRODUCT GRID (YNASTORE STYLE) */
+    /* GRID CARDS */
     .grid-container {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       gap: 14px;
       margin-bottom: 35px;
     }
-
     @media (min-width: 640px) {
-      .grid-container {
-        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-        gap: 18px;
-      }
+      .grid-container { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 18px; }
     }
 
     .store-card {
@@ -249,97 +202,124 @@
       position: relative;
       overflow: hidden;
     }
-
-    .store-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--accent-glow);
-      background: var(--bg-card-hover);
-    }
+    .store-card:hover { transform: translateY(-4px); border-color: var(--accent-glow); background: var(--bg-card-hover); }
 
     .card-badge {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: rgba(37, 99, 235, 0.85);
-      color: #fff;
-      font-size: 0.65rem;
-      font-weight: 700;
-      padding: 3px 7px;
-      border-radius: 6px;
-      backdrop-filter: blur(4px);
+      position: absolute; top: 8px; right: 8px; background: rgba(37, 99, 235, 0.85); color: #fff;
+      font-size: 0.65rem; font-weight: 700; padding: 3px 7px; border-radius: 6px; backdrop-filter: blur(4px);
+    }
+    .card-img { width: 100%; height: 120px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; background-color: #0d1117; }
+    .card-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .card-desc { font-size: 0.75rem; color: var(--text-sub); margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .card-price { font-size: 0.95rem; font-weight: 800; color: #60a5fa; margin-bottom: 10px; }
+    .card-btn { background: var(--accent-blue); color: #fff; text-align: center; padding: 8px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 6px; }
+
+    .state-msg { grid-column: 1 / -1; text-align: center; padding: 30px; color: var(--text-sub); background: var(--bg-card); border-radius: 12px; border: 1px dashed var(--border-color); font-size: 0.9rem; }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border-color); padding: 25px 16px; text-align: center; color: var(--text-sub); font-size: 0.85rem; background: var(--bg-card); }
+
+    /* ========================================= */
+    /* POPUP MODAL STYLES (YNASTORE STYLE)       */
+    /* ========================================= */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(5px);
+      z-index: 999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
-    .card-img {
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-box {
+      background: #161b22;
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
       width: 100%;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      background-color: #0d1117;
-    }
-
-    .card-title {
-      font-size: 0.95rem;
-      font-weight: 700;
-      margin-bottom: 4px;
-      line-height: 1.3;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .card-desc {
-      font-size: 0.75rem;
-      color: var(--text-sub);
-      margin-bottom: 10px;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .card-price {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: #60a5fa;
-      margin-bottom: 10px;
-    }
-
-    .card-btn {
-      background: var(--accent-blue);
-      color: #fff;
+      max-width: 400px;
+      padding: 24px;
       text-align: center;
-      padding: 8px;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      font-weight: 700;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      transform: scale(0.8);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.active .modal-box {
+      transform: scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 12px; right: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: var(--text-sub);
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      transition: 0.2s;
     }
 
-    /* EMPTY / LOADING STATE */
-    .state-msg {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 30px;
-      color: var(--text-sub);
-      background: var(--bg-card);
+    .modal-close:hover { background: #ef4444; color: #fff; }
+
+    .modal-banner-img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
       border-radius: 12px;
-      border: 1px dashed var(--border-color);
-      font-size: 0.9rem;
+      margin-bottom: 16px;
+      border: 1px solid var(--border-color);
     }
 
-    /* FOOTER */
-    footer {
-      border-top: 1px solid var(--border-color);
-      padding: 25px 16px;
-      text-align: center;
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .modal-desc {
+      font-size: 0.88rem;
       color: var(--text-sub);
-      font-size: 0.85rem;
-      background: var(--bg-card);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .btn-join-group {
+      background: var(--wa-green);
+      color: #fff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    }
+
+    .btn-join-group:hover {
+      background: var(--wa-hover);
+      transform: translateY(-2px);
     }
   </style>
 
@@ -347,6 +327,19 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
+
+  <!-- POPUP MODAL IKLAN -->
+  <div id="wa-modal-overlay" class="modal-overlay">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeWaModal()">&times;</button>
+      <img id="modal-banner-img" class="modal-banner-img" src="" alt="Banner Iklan" style="display: none;">
+      <h3 class="modal-title"><i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> Join Group WA</h3>
+      <p class="modal-desc">Bergabunglah ke Group WhatsApp resmi kami untuk mendapatkan update info promo, stok produk, dan event diskon harian!</p>
+      <a id="modal-group-btn" href="#" target="_blank" class="btn-join-group">
+        <i class="fa-brands fa-whatsapp fa-lg"></i> Gabung Group Sekarang
+      </a>
+    </div>
+  </div>
 
   <!-- HEADER -->
   <header>
@@ -416,7 +409,6 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Configuration Supabase
     const SUPABASE_URL = 'https://krxzhxxytjmqmvzndofw.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_BtMu9ACi_o-V29IdGZdIDA_th6tjNzi';
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -425,10 +417,18 @@
     let globalProducts = [];
     let globalServices = [];
 
+    // Fungsi Tutup Modal
+    function closeWaModal() {
+      document.getElementById('wa-modal-overlay').classList.remove('active');
+    }
+
     // 1. Fetch Pengaturan Website
     async function loadWebsiteSettings() {
       const { data, error } = await supabaseClient.from('site_settings').select('*');
       if (error || !data) return;
+
+      let isPopupEnabled = false;
+      let groupUrl = '#';
 
       data.forEach(item => {
         if (item.key === 'site_title' && item.value) {
@@ -445,7 +445,28 @@
             btn.href = `https://wa.me/${item.value}?text=Halo%20Admin,%20saya%20ingin%20bertanya`;
           });
         }
+
+        // Pengaturan Popup
+        if (item.key === 'popup_enabled') {
+          isPopupEnabled = item.value === 'true';
+        }
+        if (item.key === 'wa_group_link' && item.value) {
+          groupUrl = item.value;
+          document.getElementById('modal-group-btn').href = item.value;
+        }
+        if (item.key === 'popup_banner_url' && item.value) {
+          const bannerImg = document.getElementById('modal-banner-img');
+          bannerImg.src = item.value;
+          bannerImg.style.display = 'block';
+        }
       });
+
+      // Tampilkan Modal Jika Diaktifkan dari Admin
+      if (isPopupEnabled && groupUrl !== '#') {
+        setTimeout(() => {
+          document.getElementById('wa-modal-overlay').classList.add('active');
+        }, 500); // Tampil setelah 0.5 detik
+      }
     }
 
     // 2. Fetch Produk

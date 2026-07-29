@@ -12,10 +12,10 @@
     h2, h3, h4 { color: #ffffff; margin-top: 0; }
     .form-group { margin-bottom: 15px; }
     label { display: block; font-weight: bold; margin-bottom: 6px; color: #bbb; }
-    input[type="text"], input[type="number"], input[type="email"], input[type="password"], textarea, input[type="file"] {
+    input[type="text"], input[type="number"], input[type="email"], input[type="password"], textarea, input[type="file"], select {
       width: 100%; padding: 12px; border: 1px solid #444; border-radius: 6px; background-color: #2a2a2a; color: #fff; box-sizing: border-box;
     }
-    input:focus, textarea:focus { border-color: #007bff; outline: none; }
+    input:focus, textarea:focus, select:focus { border-color: #007bff; outline: none; }
     button { background: #007bff; color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; font-size: 15px; transition: 0.2s; }
     button:hover { background: #0056b3; }
     button.btn-danger { background: #dc3545; width: auto; padding: 8px 12px; }
@@ -23,8 +23,9 @@
     table { width: 100%; border-collapse: collapse; margin-top: 15px; background: #252525; border-radius: 8px; overflow: hidden; }
     th, td { border-bottom: 1px solid #383838; padding: 12px; text-align: left; }
     th { background-color: #2e2e2e; color: #fff; }
-    img.preview { max-width: 70px; max-height: 70px; object-fit: cover; border-radius: 6px; }
+    img.preview { max-width: 100px; max-height: 100px; object-fit: cover; border-radius: 6px; margin-top: 5px; }
     .header-admin { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 25px; }
+    .section-divider { border-top: 1px dashed #444; margin: 20px 0; padding-top: 15px; }
   </style>
 
   <!-- CDN Supabase JS v2 -->
@@ -34,9 +35,7 @@
 
   <div class="container">
 
-    <!-- ========================================== -->
-    <!-- 1. FORM LOGIN ADMIN                        -->
-    <!-- ========================================== -->
+    <!-- 1. FORM LOGIN ADMIN -->
     <div id="login-section" class="card" style="max-width: 400px; margin: 60px auto;">
       <h2 style="text-align: center;">Login Admin</h2>
       <form id="login-form">
@@ -54,9 +53,7 @@
     </div>
 
 
-    <!-- ========================================== -->
-    <!-- 2. DASHBOARD ADMIN                         -->
-    <!-- ========================================== -->
+    <!-- 2. DASHBOARD ADMIN -->
     <div id="admin-dashboard" style="display: none;">
       
       <!-- Header -->
@@ -68,24 +65,48 @@
         <button id="logout-btn" class="btn-danger">Logout</button>
       </div>
 
-      <!-- SECTION A: PENGATURAN UMUM -->
+      <!-- SECTION A: PENGATURAN UMUM & POPUP -->
       <div class="card">
         <h3>1. Pengaturan Utama Website</h3>
         <form id="settings-form">
           <div class="form-group">
             <label>Judul Website / Nama Toko</label>
-            <input type="text" id="site_title" placeholder="Contoh: Toko Berkah Mandiri">
+            <input type="text" id="site_title" placeholder="Contoh: PRIME CT STORE">
           </div>
           <div class="form-group">
-            <label>Nomor WhatsApp (Gunakan Format 62, Contoh: 6281234567890)</label>
-            <input type="text" id="whatsapp_number" placeholder="6281234567890">
+            <label>Nomor WhatsApp Customer Service (Format 62)</label>
+            <input type="text" id="whatsapp_number" placeholder="6281325507265">
           </div>
           <div class="form-group">
-            <label>Upload Logo Baru (Opsional)</label>
+            <label>Upload Logo Utama (Opsional)</label>
             <input type="file" id="logo_file" accept="image/*">
-            <div id="current-logo-container" style="margin-top: 10px;"></div>
+            <div id="current-logo-container"></div>
           </div>
-          <button type="submit">Simpan Pengaturan</button>
+
+          <div class="section-divider">
+            <h4 style="color: #60a5fa;">Pengaturan Popup Iklan Join Group WA</h4>
+          </div>
+
+          <div class="form-group">
+            <label>Status Popup Iklan</label>
+            <select id="popup_enabled">
+              <option value="true">Aktif (Tampilkan Popup Saat Pengunjung Masuk)</option>
+              <option value="false">Nonaktif (Sembunyikan Popup)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Link Group WhatsApp (Contoh: https://chat.whatsapp.com/...)</label>
+            <input type="text" id="wa_group_link" placeholder="https://chat.whatsapp.com/KodeGroupAnda">
+          </div>
+
+          <div class="form-group">
+            <label>Upload Banner Gambar Popup Iklan (Opsional)</label>
+            <input type="file" id="popup_banner_file" accept="image/*">
+            <div id="current-banner-container"></div>
+          </div>
+
+          <button type="submit" style="margin-top: 15px;">Simpan Semua Pengaturan</button>
         </form>
       </div>
 
@@ -164,23 +185,16 @@
 
   </div>
 
-  <!-- ========================================== -->
-  <!-- 3. LOGIKA JAVASCRIPT & SUPABASE INTEGRATION -->
-  <!-- ========================================== -->
+  <!-- JAVASCRIPT LOGIC -->
   <script>
-    // --- SUPABASE CONFIGURATION (SUDAH DIISI KUNCI ANDA) ---
     const SUPABASE_URL = 'https://krxzhxxytjmqmvzndofw.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_BtMu9ACi_o-V29IdGZdIDA_th6tjNzi';
-    
-    // Inisialisasi Supabase Client
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     const BUCKET_NAME = 'website-assets';
 
-    // DOM Elements
     const loginSection = document.getElementById('login-section');
     const adminDashboard = document.getElementById('admin-dashboard');
 
-    // --- 1. OTENTIKASI & CEK LOGIN ---
     async function checkAuth() {
       const { data: { session } } = await supabaseClient.auth.getSession();
       if (session) {
@@ -199,16 +213,13 @@
 
     checkAuth();
 
-    // Event Submit Form Login
     document.getElementById('login-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       document.getElementById('auth-error').textContent = 'Memproses...';
-      
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
       
       const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-      
       if (error) {
         document.getElementById('auth-error').textContent = 'Gagal Login: ' + error.message;
       } else {
@@ -217,13 +228,11 @@
       }
     });
 
-    // Event Logout
     document.getElementById('logout-btn').addEventListener('click', async () => {
       await supabaseClient.auth.signOut();
       checkAuth();
     });
 
-    // --- HELPER: UPLOAD FILE KE STORAGE ---
     async function uploadFileToStorage(file) {
       if (!file) return null;
       const ext = file.name.split('.').pop();
@@ -231,7 +240,7 @@
       
       const { data, error } = await supabaseClient.storage.from(BUCKET_NAME).upload(fileName, file);
       if (error) {
-        alert('Gagal upload gambar! Pastikan Bucket "website-assets" sudah dibuat di Supabase. Error: ' + error.message);
+        alert('Gagal upload gambar! Error: ' + error.message);
         return null;
       }
       
@@ -239,41 +248,57 @@
       return publicUrlData.publicUrl;
     }
 
-    // --- 2. LOGIKA PENGATURAN UMUM ---
+    // LOAD SETTINGS
     async function loadSettings() {
       const { data } = await supabaseClient.from('site_settings').select('*');
       if (data) {
         data.forEach(item => {
           if (item.key === 'site_title') document.getElementById('site_title').value = item.value;
           if (item.key === 'whatsapp_number') document.getElementById('whatsapp_number').value = item.value;
+          if (item.key === 'wa_group_link') document.getElementById('wa_group_link').value = item.value;
+          if (item.key === 'popup_enabled') document.getElementById('popup_enabled').value = item.value;
+          
           if (item.key === 'logo_url' && item.value) {
             document.getElementById('current-logo-container').innerHTML = `<p style="margin:5px 0;"><small>Logo Saat Ini:</small></p><img src="${item.value}" class="preview">`;
+          }
+          if (item.key === 'popup_banner_url' && item.value) {
+            document.getElementById('current-banner-container').innerHTML = `<p style="margin:5px 0;"><small>Banner Popup Saat Ini:</small></p><img src="${item.value}" class="preview">`;
           }
         });
       }
     }
 
+    // SAVE SETTINGS
     document.getElementById('settings-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const title = document.getElementById('site_title').value;
       const wa = document.getElementById('whatsapp_number').value;
+      const waGroup = document.getElementById('wa_group_link').value;
+      const popupEnabled = document.getElementById('popup_enabled').value;
+      
       const logoFile = document.getElementById('logo_file').files[0];
+      const bannerFile = document.getElementById('popup_banner_file').files[0];
 
       await supabaseClient.from('site_settings').upsert({ key: 'site_title', value: title });
       await supabaseClient.from('site_settings').upsert({ key: 'whatsapp_number', value: wa });
+      await supabaseClient.from('site_settings').upsert({ key: 'wa_group_link', value: waGroup });
+      await supabaseClient.from('site_settings').upsert({ key: 'popup_enabled', value: popupEnabled });
 
       if (logoFile) {
         const logoUrl = await uploadFileToStorage(logoFile);
-        if (logoUrl) {
-          await supabaseClient.from('site_settings').upsert({ key: 'logo_url', value: logoUrl });
-        }
+        if (logoUrl) await supabaseClient.from('site_settings').upsert({ key: 'logo_url', value: logoUrl });
+      }
+
+      if (bannerFile) {
+        const bannerUrl = await uploadFileToStorage(bannerFile);
+        if (bannerUrl) await supabaseClient.from('site_settings').upsert({ key: 'popup_banner_url', value: bannerUrl });
       }
 
       alert('Pengaturan berhasil disimpan!');
       loadSettings();
     });
 
-    // --- 3. LOGIKA KELOLA PRODUK ---
+    // PRODUCTS LOGIC
     async function loadProducts() {
       const { data } = await supabaseClient.from('products').select('*').order('created_at', { ascending: false });
       const tbody = document.getElementById('product-list-body');
@@ -286,14 +311,12 @@
               <td><img src="${prod.image_url || 'https://via.placeholder.com/70'}" class="preview"></td>
               <td><strong>${prod.name}</strong><br><small style="color:#aaa;">${prod.description || ''}</small></td>
               <td>Rp ${Number(prod.price).toLocaleString('id-ID')}</td>
-              <td>
-                <button class="btn-danger" onclick="deleteProduct('${prod.id}')">Hapus</button>
-              </td>
+              <td><button class="btn-danger" onclick="deleteProduct('${prod.id}')">Hapus</button></td>
             </tr>
           `;
         });
       } else {
-        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Belum ada produk.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Belum ada produk.</td></tr>';
       }
     }
 
@@ -308,7 +331,6 @@
       if (!imageUrl) return;
 
       const { error } = await supabaseClient.from('products').insert([{ name, price, description, image_url: imageUrl }]);
-      
       if (error) {
         alert('Gagal menambah produk: ' + error.message);
       } else {
@@ -325,7 +347,7 @@
       }
     }
 
-    // --- 4. LOGIKA KELOLA JASA ---
+    // SERVICES LOGIC
     async function loadServices() {
       const { data } = await supabaseClient.from('services').select('*').order('created_at', { ascending: false });
       const tbody = document.getElementById('service-list-body');
@@ -337,9 +359,7 @@
             <tr>
               <td><strong>${serv.title}</strong></td>
               <td>${serv.description || '-'}</td>
-              <td>
-                <button class="btn-danger" onclick="deleteService('${serv.id}')">Hapus</button>
-              </td>
+              <td><button class="btn-danger" onclick="deleteService('${serv.id}')">Hapus</button></td>
             </tr>
           `;
         });
@@ -354,7 +374,6 @@
       const description = document.getElementById('serv_desc').value;
 
       const { error } = await supabaseClient.from('services').insert([{ title, description }]);
-      
       if (error) {
         alert('Gagal menambah jasa: ' + error.message);
       } else {
