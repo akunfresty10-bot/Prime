@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRIME CT — Panel Admin</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Inter:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #0d0d0f;
+    --surface: #141418;
+    --surface2: #1c1c22;
+    --border: #2a2a35;
+    --yellow: #f5c800;
+    --yellow-dim: rgba(245,200,0,0.12);
+    --text: #e8e8f0;
+    --muted: #6b6b80;
+    --success: #22c55e;
+    --error: #ef4444;
+    --radius: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
+
+  /* LOGIN */
+  #loginScreen {
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 50% 0%, rgba(245,200,0,0.07) 0%, transparent 70%);
+  }
+  .login-box {
+    width: 100%; max-width: 380px; padding: 40px 32px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-top: 2px solid var(--yellow); border-radius: var(--radius);
+  }
+  .login-logo { font-family: 'Rajdhani',sans-serif; font-size: 22px; font-weight: 700; color: var(--yellow); letter-spacing: 3px; text-align: center; margin-bottom: 4px; }
+  .login-sub  { font-family: 'Share Tech Mono',monospace; font-size: 10px; color: var(--muted); text-align: center; letter-spacing: 2px; margin-bottom: 28px; }
+
+  .step-label { font-family: 'Share Tech Mono',monospace; font-size: 10px; color: var(--yellow); letter-spacing: 2px; margin-bottom: 16px; }
+  .field-label { font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 7px; display: block; }
+  .field-input {
+    width: 100%; background: var(--surface2); border: 1px solid var(--border);
+    border-radius: var(--radius); color: var(--text);
+    font-family: 'Share Tech Mono',monospace; font-size: 14px;
+    padding: 11px 13px; outline: none; transition: border-color .2s; margin-bottom: 16px;
+  }
+  .field-input:focus { border-color: var(--yellow); box-shadow: 0 0 0 3px rgba(245,200,0,.1); }
+
+  .hint {
+    background: rgba(245,200,0,.07); border: 1px solid rgba(245,200,0,.2);
+    border-radius: var(--radius); padding: 10px 13px;
+    font-size: 11px; color: var(--muted); line-height: 1.6; margin-bottom: 16px;
+  }
+  .hint a { color: var(--yellow); }
+
+  .btn-primary {
+    width: 100%; background: var(--yellow); color: #0d0d0f;
+    border: none; border-radius: var(--radius);
+    font-family: 'Rajdhani',sans-serif; font-size: 15px; font-weight: 700;
+    letter-spacing: 2px; padding: 13px; cursor: pointer; transition: opacity .2s;
+  }
+  .btn-primary:hover { opacity: .9; }
+  .login-error { color: var(--error); font-size: 12px; text-align: center; margin-top: 10px; display: none; font-family: 'Share Tech Mono',monospace; }
+
+  /* PANEL */
+  #adminPanel { display: none; }
+  .topbar {
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    padding: 13px 20px; display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .topbar-logo { font-family: 'Rajdhani',sans-serif; font-weight: 700; font-size: 16px; color: var(--yellow); letter-spacing: 2px; }
+  .topbar-badge { font-family: 'Share Tech Mono',monospace; font-size: 10px; color: var(--muted); letter-spacing: 1px; }
+  .btn-logout {
+    background: transparent; border: 1px solid var(--border); color: var(--muted);
+    border-radius: var(--radius); font-size: 11px; padding: 6px 12px;
+    cursor: pointer; font-family: 'Inter',sans-serif; transition: border-color .2s, color .2s;
+  }
+  .btn-logout:hover { border-color: var(--error); color: var(--error); }
+
+  .panel-body { max-width: 700px; margin: 0 auto; padding: 24px 16px 80px; }
+
+  .section-header {
+    font-family: 'Share Tech Mono',monospace; font-size: 10px; color: var(--yellow);
+    letter-spacing: 3px; text-transform: uppercase; margin-bottom: 13px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-header::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 22px; }
+  .card .field-input { margin-bottom: 13px; }
+  .card .field-input:last-of-type { margin-bottom: 0; }
+
+  /* Produk */
+  .produk-item { display: grid; grid-template-columns: 1fr 130px 38px; gap: 8px; margin-bottom: 8px; align-items: center; }
+  .produk-item input {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: var(--radius); color: var(--text);
+    font-family: 'Inter',sans-serif; font-size: 13px;
+    padding: 9px 11px; outline: none; width: 100%; transition: border-color .2s;
+  }
+  .produk-item input:focus { border-color: var(--yellow); }
+  .btn-del {
+    background: transparent; border: 1px solid var(--border); color: var(--muted);
+    border-radius: var(--radius); width: 36px; height: 36px; cursor: pointer;
+    font-size: 18px; display: flex; align-items: center; justify-content: center;
+    transition: border-color .2s, color .2s;
+  }
+  .btn-del:hover { border-color: var(--error); color: var(--error); }
+  .btn-add {
+    background: rgba(245,200,0,.08); border: 1px dashed rgba(245,200,0,.35);
+    color: var(--yellow); border-radius: var(--radius);
+    font-size: 12px; font-family: 'Inter',sans-serif; font-weight: 600;
+    padding: 9px 16px; cursor: pointer; width: 100%; margin-top: 4px; transition: background .2s;
+  }
+  .btn-add:hover { background: rgba(245,200,0,.16); }
+
+  /* Token banner */
+  .token-banner {
+    background: rgba(245,200,0,.07); border: 1px solid rgba(245,200,0,.25);
+    border-radius: var(--radius); padding: 12px 15px; margin-bottom: 22px;
+    font-size: 12px; color: var(--muted); line-height: 1.7;
+    font-family: 'Share Tech Mono',monospace;
+  }
+  .token-banner span { color: var(--yellow); }
+
+  /* Save bar */
+  .save-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--surface); border-top: 1px solid var(--border);
+    padding: 13px 20px; display: flex; gap: 12px; align-items: center; z-index: 200;
+  }
+  .btn-save {
+    flex: 1; background: var(--yellow); color: #0d0d0f; border: none;
+    border-radius: var(--radius); font-family: 'Rajdhani',sans-serif;
+    font-size: 15px; font-weight: 700; letter-spacing: 2px; padding: 13px;
+    cursor: pointer; transition: opacity .2s;
+  }
+  .btn-save:hover { opacity: .9; }
+  .btn-save:disabled { opacity: .45; cursor: not-allowed; }
+  .save-status { font-family: 'Share Tech Mono',monospace; font-size: 11px; color: var(--muted); min-width: 110px; text-align: right; }
+  .save-status.ok  { color: var(--success); }
+  .save-status.err { color: var(--error); }
+
+  /* Log */
+  #progressLog {
+    display: none; background: var(--surface2); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 14px; margin-bottom: 22px;
+    font-family: 'Share Tech Mono',monospace; font-size: 11px; color: var(--muted);
+    line-height: 1.9; max-height: 220px; overflow-y: auto;
+  }
+  .lok { color: var(--success); }
+  .lerr { color: var(--error); }
+  .linfo { color: var(--yellow); }
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN ══ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">PRIME CT</div>
+    <div class="login-sub">ADMIN PANEL // SECURE ACCESS</div>
+
+    <div class="step-label">STEP 1 — PASSWORD</div>
+    <label class="field-label">Password Panel</label>
+    <input type="password" class="field-input" id="pwdInput" placeholder="••••••••••••" onkeydown="if(event.key==='Enter')nextStep()">
+
+    <div class="step-label">STEP 2 — GITHUB TOKEN</div>
+    <div class="hint">
+      Token disimpan di browser kamu saja, <span style="color:var(--yellow)">tidak ikut ke GitHub</span>.<br>
+      Buat token baru: <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a><br>
+      → Generate new token (classic) → centang <b>repo</b> → Generate → Copy
+    </div>
+    <label class="field-label">GitHub Personal Access Token</label>
+    <input type="password" class="field-input" id="tokenInput" placeholder="ghp_..." onkeydown="if(event.key==='Enter')doLogin()">
+
+    <button class="btn-primary" onclick="doLogin()">MASUK</button>
+    <div class="login-error" id="loginError">❌ Password salah</div>
+  </div>
+</div>
+
+<!-- ══ PANEL ══ -->
+<div id="adminPanel">
+  <div class="topbar">
+    <div>
+      <div class="topbar-logo">PRIME CT</div>
+      <div class="topbar-badge">ADMIN PANEL</div>
+    </div>
+    <button class="btn-logout" onclick="doLogout()">KELUAR</button>
+  </div>
+
+  <div class="panel-body">
+    <div id="progressLog"></div>
+
+    <div class="token-banner">
+      🔐 Token aktif: <span id="tokenMask">—</span> &nbsp;·&nbsp; Tersimpan di browser, tidak di file
+    </div>
+
+    <!-- KONTAK -->
+    <div class="section-header">Kontak & Sosial</div>
+    <div class="card">
+      <label class="field-label">Nomor WhatsApp (628xxx)</label>
+      <input type="text" class="field-input" id="f_wa" placeholder="628xxxxxxxxxx">
+
+      <label class="field-label">Link Grup WhatsApp</label>
+      <input type="text" class="field-input" id="f_wagroup" placeholder="https://chat.whatsapp.com/...">
+
+      <label class="field-label">Email Admin</label>
+      <input type="text" class="field-input" id="f_email" placeholder="primectoffc@gmail.com">
+
+      <label class="field-label">Instagram (tanpa @)</label>
+      <input type="text" class="field-input" id="f_ig" placeholder="primectofficial">
+
+      <label class="field-label">Telegram (tanpa @)</label>
+      <input type="text" class="field-input" id="f_tg" placeholder="PrimeCTofficial">
+    </div>
+
+    <!-- PRODUK -->
+    <div class="section-header">Daftar Produk</div>
+    <div class="card">
+      <div class="produk-list" id="produkList"></div>
+      <button class="btn-add" onclick="addProduk()">+ Tambah Produk</button>
+    </div>
+
+    <!-- GITHUB CONFIG -->
+    <div class="section-header">GitHub Config</div>
+    <div class="card">
+      <label class="field-label">Username GitHub</label>
+      <input type="text" class="field-input" id="f_ghuser" placeholder="akunfresty10-bot">
+      <label class="field-label">Nama Repo</label>
+      <input type="text" class="field-input" id="f_ghrepo" placeholder="Prime">
+      <label class="field-label">Branch</label>
+      <input type="text" class="field-input" id="f_branch" placeholder="main">
+    </div>
+  </div>
+
+  <div class="save-bar">
+    <button class="btn-save" id="btnSave" onclick="saveAll()">SIMPAN & UPDATE SITUS</button>
+    <div class="save-status" id="saveStatus"></div>
+  </div>
+</div>
+
+<script>
+const PASSWORD = 'MYHEARTITSYORI';
+let SESSION_TOKEN = '';
+
+function doLogin() {
+  const pwd = document.getElementById('pwdInput').value;
+  const tok = document.getElementById('tokenInput').value.trim();
+  if (pwd !== PASSWORD) {
+    document.getElementById('loginError').style.display = 'block';
+    return;
+  }
+  if (!tok) { alert('Isi GitHub Token dulu!'); return; }
+  SESSION_TOKEN = tok;
+  // Simpan token di sessionStorage (hilang saat browser ditutup)
+  sessionStorage.setItem('pct_token', tok);
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('adminPanel').style.display = 'block';
+  // Tampilkan mask token
+  document.getElementById('tokenMask').textContent = tok.slice(0,8) + '••••••••••••••••••••';
+  loadSaved();
+}
+
+function doLogout() {
+  SESSION_TOKEN = '';
+  sessionStorage.removeItem('pct_token');
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('adminPanel').style.display = 'none';
+  document.getElementById('pwdInput').value = '';
+  document.getElementById('tokenInput').value = '';
+}
+
+// ── PRODUK ──
+let produkData = [{ nama: 'Sewa Bot WA', harga: '70.000' }];
+
+function renderProduk() {
+  const list = document.getElementById('produkList');
+  list.innerHTML = '';
+  produkData.forEach((p, i) => {
+    const row = document.createElement('div');
+    row.className = 'produk-item';
+    row.innerHTML = `
+      <input type="text" value="${p.nama}" placeholder="Nama produk" oninput="produkData[${i}].nama=this.value">
+      <input type="text" value="${p.harga}" placeholder="70.000" oninput="produkData[${i}].harga=this.value">
+      <button class="btn-del" onclick="delProduk(${i})">×</button>`;
+    list.appendChild(row);
+  });
+}
+
+function addProduk() { produkData.push({ nama: '', harga: '' }); renderProduk(); }
+function delProduk(i) { produkData.splice(i, 1); renderProduk(); }
+
+// ── LOAD SAVED ──
+function loadSaved() {
+  const s = JSON.parse(localStorage.getItem('pct_config') || '{}');
+  document.getElementById('f_wa').value      = s.wa      || '6281325507265';
+  document.getElementById('f_wagroup').value = s.wagroup || 'https://chat.whatsapp.com/Bznb7P7IaGNAIgumOjUPT5?s=cl&p=a&ilr=4';
+  document.getElementById('f_email').value   = s.email   || 'primectoffc@gmail.com';
+  document.getElementById('f_ig').value      = s.ig      || 'primectofficial';
+  document.getElementById('f_tg').value      = s.tg      || 'PrimeCTofficial';
+  document.getElementById('f_ghuser').value  = s.ghuser  || 'akunfresty10-bot';
+  document.getElementById('f_ghrepo').value  = s.ghrepo  || 'Prime';
+  document.getElementById('f_branch').value  = s.branch  || 'main';
+  if (s.produk) produkData = s.produk;
+  renderProduk();
+}
+
+function getCfg() {
+  return {
+    wa:      document.getElementById('f_wa').value.trim(),
+    wagroup: document.getElementById('f_wagroup').value.trim(),
+    email:   document.getElementById('f_email').value.trim(),
+    ig:      document.getElementById('f_ig').value.trim(),
+    tg:      document.getElementById('f_tg').value.trim(),
+    ghuser:  document.getElementById('f_ghuser').value.trim(),
+    ghrepo:  document.getElementById('f_ghrepo').value.trim(),
+    branch:  document.getElementById('f_branch').value.trim(),
+    produk:  produkData,
+  };
+}
+
+// ── LOG ──
+function log(msg, cls='') {
+  const el = document.getElementById('progressLog');
+  el.style.display = 'block';
+  el.innerHTML += `<div class="${cls}">${msg}</div>`;
+  el.scrollTop = el.scrollHeight;
+}
+function clearLog() {
+  const el = document.getElementById('progressLog');
+  el.style.display = 'none'; el.innerHTML = '';
+}
+
+// ── GITHUB API ──
+async function ghGet(user, repo, branch, path) {
+  const r = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${path}?ref=${branch}`, {
+    headers: { Authorization: `token ${SESSION_TOKEN}`, Accept: 'application/vnd.github.v3+json' }
+  });
+  if (!r.ok) throw new Error(`GET ${path} → ${r.status}`);
+  return r.json();
+}
+
+async function ghPut(user, repo, branch, path, content, sha) {
+  const r = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${path}`, {
+    method: 'PUT',
+    headers: { Authorization: `token ${SESSION_TOKEN}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      message: `[Panel Admin] Update ${path}`,
+      content: btoa(unescape(encodeURIComponent(content))),
+      sha, branch
+    })
+  });
+  if (!r.ok) { const e = await r.json(); throw new Error(`${r.status}: ${e.message}`); }
+  return r.json();
+}
+
+// ── REPLACE ──
+function esc(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+function applyReplace(content, cfg, filename) {
+  let c = content;
+  c = c.replace(/6281200000000/g, cfg.wa);
+  c = c.replace(/https:\/\/chat\.whatsapp\.com\/xxxxxxxxxxxxxxxx/gi, cfg.wagroup);
+  c = c.replace(/admin@primect\.id/g, cfg.email);
+  c = c.replace(/@primectofficial/gi, `@${cfg.ig}`);
+  c = c.replace(/instagram\.com\/primectofficial/gi, `instagram.com/${cfg.ig}`);
+  c = c.replace(/@PrimeCTofficial/gi, `@${cfg.tg}`);
+  c = c.replace(/t\.me\/PrimeCTofficial/gi, `t.me/${cfg.tg}`);
+
+  if (filename === 'produk.html' && cfg.produk.length) {
+    cfg.produk.forEach(p => {
+      if (!p.nama) return;
+      c = c.replace(
+        new RegExp(`(${esc(p.nama)}[\\s\\S]{0,300}?)(Rp\\s*[\\d.,]+|[\\d]+\\s*[kK])`, 'i'),
+        (m, before) => `${before}Rp ${p.harga}`
+      );
+    });
+  }
+  return c;
+}
+
+// ── SAVE ALL ──
+const FILES = ['index.html','produk.html','faq.html','kontak.html','login.html','partner.html','ai.html','tools.html','convert.html','script.js'];
+
+async function saveAll() {
+  clearLog();
+  const cfg = getCfg();
+  localStorage.setItem('pct_config', JSON.stringify(cfg));
+
+  const btn = document.getElementById('btnSave');
+  const status = document.getElementById('saveStatus');
+  btn.disabled = true; btn.textContent = 'MEMPROSES...';
+  status.className = 'save-status'; status.textContent = '';
+
+  log('⚡ Memulai update...', 'linfo');
+  log(`📦 ${cfg.ghuser}/${cfg.ghrepo} (${cfg.branch})`, 'linfo');
+
+  let ok = 0, skip = 0, fail = 0;
+
+  for (const file of FILES) {
+    try {
+      log(`→ ${file}`);
+      const data = await ghGet(cfg.ghuser, cfg.ghrepo, cfg.branch, file);
+      const original = decodeURIComponent(escape(atob(data.content.replace(/\n/g,''))));
+      const updated  = applyReplace(original, cfg, file);
+
+      if (original === updated) {
+        log(`  ⟳ tidak ada perubahan`); skip++; ok++; continue;
+      }
+      await ghPut(cfg.ghuser, cfg.ghrepo, cfg.branch, file, updated, data.sha);
+      log(`  ✓ berhasil diperbarui`, 'lok'); ok++;
+    } catch(e) {
+      log(`  ✗ ${e.message}`, 'lerr'); fail++;
+    }
+  }
+
+  log('');
+  if (fail === 0) {
+    log(`✅ Selesai! ${ok} file diproses. Vercel sedang deploy (~30 detik)...`, 'lok');
+    status.textContent = `✓ ${ok} file ok`; status.className = 'save-status ok';
+  } else {
+    log(`⚠️ ${ok} ok, ${fail} gagal`, 'lerr');
+    status.textContent = `⚠ ${fail} gagal`; status.className = 'save-status err';
+  }
+
+  btn.disabled = false; btn.textContent = 'SIMPAN & UPDATE SITUS';
+}
+
+renderProduk();
+</script>
+</body>
+</html>
