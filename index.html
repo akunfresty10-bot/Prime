@@ -1,70 +1,405 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YNA STORE – Digital Store</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YNA STORE — Digital Ecosystem</title>
+  
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg-dark: #07090e;
+      --card-bg: rgba(18, 22, 34, 0.75);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --accent-purple: #9333ea;
+      --accent-pink: #ec4899;
+      --accent-cyan: #06b6d4;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --wa-green: #25d366;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      user-select: none;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow-x: hidden;
+      padding: 20px;
+    }
+
+    /* Ambient Animated Glow Background */
+    .bg-glow {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(147, 51, 234, 0.25) 0%, rgba(236, 72, 153, 0.15) 40%, rgba(0, 0, 0, 0) 70%);
+      filter: blur(80px);
+      z-index: 0;
+      pointer-events: none;
+      animation: pulseGlow 8s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulseGlow {
+      0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
+      100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    }
+
+    /* Particle Grid Overlay Effect */
+    .matrix-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: 
+        radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
+      background-size: 24px 24px;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Main Container Card */
+    .portal-card {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 440px;
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      padding: 36px 24px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7),
+                  0 0 30px rgba(147, 51, 234, 0.2);
+      text-align: center;
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Profile Avatar Ring */
+    .avatar-wrapper {
+      position: relative;
+      width: 110px;
+      height: 110px;
+      margin: 0 auto 20px;
+    }
+
+    .avatar-ring {
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink), var(--accent-cyan));
+      animation: spinRing 6s linear infinite;
+    }
+
+    @keyframes spinRing {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .avatar-img {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #0f121d;
+    }
+
+    /* Welcome Badge */
+    .welcome-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(147, 51, 234, 0.15);
+      border: 1px solid rgba(147, 51, 234, 0.4);
+      color: #c084fc;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    /* Header Title & Subtitle */
+    .brand-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #ffffff 30%, #c084fc 70%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+      text-shadow: 0 0 20px rgba(192, 132, 252, 0.4);
+    }
+
+    .brand-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 28px;
+      font-weight: 400;
+    }
+
+    /* Links Container */
+    .links-container {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .btn-link {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-radius: 16px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+
+    /* Primary Gradient Button (Lihat Produk) */
+    .btn-primary-gradient {
+      background: linear-gradient(135deg, #8b5cf6, #d946ef);
+      color: #ffffff;
+      box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-primary-gradient:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(139, 92, 246, 0.6);
+      filter: brightness(1.1);
+    }
+
+    /* Secondary Glassmorphism Buttons */
+    .btn-glass {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-main);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(8px);
+    }
+
+    .btn-glass:hover {
+      background: rgba(255, 255, 255, 0.09);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Button Icon & Layout */
+    .btn-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .btn-primary-gradient .btn-icon {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    .btn-glass .btn-icon {
+      background: rgba(255, 255, 255, 0.06);
+      color: #c084fc;
+    }
+
+    .btn-arrow {
+      font-size: 0.85rem;
+      opacity: 0.6;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .btn-link:hover .btn-arrow {
+      opacity: 1;
+      transform: translateX(4px);
+    }
+
+    /* Footer Credits */
+    .footer-text {
+      margin-top: 28px;
+      font-size: 0.75rem;
+      color: #6b7280;
+      letter-spacing: 0.5px;
+    }
+
+    /* Modal Styling */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-box {
+      background: #111522;
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 400px;
+      padding: 28px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      background: rgba(255, 255, 255, 0.08);
+      border: none;
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Header Atas (Persis Video) -->
-    <header class="top-nav">
-        <div class="nav-right">
-            <img src="https://via.placeholder.com/80/9333ea/ffffff?text=YNA" alt="Logo" class="nav-avatar">
-            <span class="nav-title">YNA STORE</span>
-        </div>
-    </header>
+  <div class="bg-glow"></div>
+  <div class="matrix-bg"></div>
 
-    <!-- Modal Popup Join Group (Persis Video) -->
-    <div id="popupModal" class="modal-overlay">
-        <div class="modal-card">
-            <button class="close-btn" onclick="closePopup()">&times;</button>
-            <div class="modal-icon">
-                <img src="https://via.placeholder.com/100/9333ea/ffffff?text=YNA" alt="Logo Welcome">
-            </div>
-            <h3 class="modal-title">JOIN GRUP WHATSAPP YNA STORE</h3>
-            <p class="modal-desc">
-                Masuk grup whatsapp resmi untuk info promo, update produk, dan pengumuman dari YNA STORE.
-            </p>
-            <a href="https://chat.whatsapp.com/" target="_blank" class="btn btn-primary">Join Grup</a>
-            <button onclick="closePopup()" class="btn btn-secondary">Nanti</button>
-        </div>
+  <main class="portal-card">
+    
+    <!-- Profile Avatar -->
+    <div class="avatar-wrapper">
+      <div class="avatar-ring"></div>
+      <img src="https://via.placeholder.com/150/9333ea/ffffff?text=YNA" alt="YNA Store Logo" class="avatar-img">
     </div>
 
-    <!-- Video Background -->
-    <div class="bg-overlay"></div>
-    <video autoplay muted loop id="bgVideo" class="bg-media">
-        <source src="bg.mp4" type="video/mp4">
-    </video>
+    <!-- Welcome Tag -->
+    <div class="welcome-badge">
+      <i class="fa-solid fa-sparkles"></i> Welcome to Portal
+    </div>
 
-    <!-- Main Container -->
-    <main class="container">
-        
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="avatar-container">
-                <img src="https://via.placeholder.com/150/9333ea/ffffff?text=YNA" alt="YNA Avatar" class="hero-avatar">
-            </div>
-            
-            <p class="sub-welcome">SELAMAT DATANG DI</p>
-            <h1 class="brand-name">YNA STORE</h1>
-            
-            <p class="hero-description">
-                Platform digital terpercaya untuk kebutuhan akun premium, jasa editing, top up game, bot WhatsApp, script bot, panel, VPS, partner, dan layanan digital lainnya.
-            </p>
+    <!-- Site Title -->
+    <h1 class="brand-title">YNA STORE</h1>
 
-            <!-- Menu Tombol (Persis Video) -->
-            <div class="button-group">
-                <a href="#produk" class="btn btn-primary">Lihat Produk</a>
-                <a href="#payment" class="btn btn-glass">Payment</a>
-                <a href="https://wa.me/6283173403262" target="_blank" class="btn btn-glass">Hubungi Owner</a>
-                <a href="#tools" class="btn btn-glass">YNA TOOLS</a>
-            </div>
-        </section>
+    <!-- Description -->
+    <p class="brand-desc">
+      Platform digital terpercaya untuk kebutuhan akun premium, jasa editing, top up game, bot WhatsApp, script bot, panel, VPS, partner, dan layanan digital lainnya.
+    </p>
 
-    </main>
+    <!-- Action Buttons -->
+    <div class="links-container">
+      
+      <!-- LIHAT PRODUK (Navigates to product catalog) -->
+      <a href="product.html" class="btn-link btn-primary-gradient">
+        <div class="btn-left">
+          <div class="btn-icon"><i class="fa-solid fa-bag-shopping"></i></div>
+          <span>Lihat Produk</span>
+        </div>
+        <i class="fa-solid fa-chevron-right btn-arrow"></i>
+      </a>
 
-    <script src="script.js"></script>
+      <!-- PAYMENT METHOD -->
+      <a href="javascript:void(0)" onclick="openModal('Payment Info', 'Silahkan lakukan pembayaran melalui QRIS, Dana, Ovo, Gopay, atau Transfer Bank yang dikirimkan oleh CS saat checkout.')" class="btn-link btn-glass">
+        <div class="btn-left">
+          <div class="btn-icon"><i class="fa-solid fa-credit-card"></i></div>
+          <span>Payment</span>
+        </div>
+        <i class="fa-solid fa-chevron-right btn-arrow"></i>
+      </a>
+
+      <!-- HUBUNGI OWNER -->
+      <a href="https://wa.me/628123456789" target="_blank" class="btn-link btn-glass">
+        <div class="btn-left">
+          <div class="btn-icon" style="color: #25d366;"><i class="fa-brands fa-whatsapp"></i></div>
+          <span>Hubungi Owner</span>
+        </div>
+        <i class="fa-solid fa-chevron-right btn-arrow"></i>
+      </a>
+
+      <!-- YNA TOOLS -->
+      <a href="javascript:void(0)" onclick="openModal('YNA Tools', 'Layanan tools online dan utilitas otomatisasi YNA Store akan segera hadir!')" class="btn-link btn-glass">
+        <div class="btn-left">
+          <div class="btn-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+          <span>YNA TOOLS</span>
+        </div>
+        <i class="fa-solid fa-chevron-right btn-arrow"></i>
+      </a>
+
+    </div>
+
+    <div class="footer-text">
+      &copy; 2026 YNA Store. All rights reserved.
+    </div>
+
+  </main>
+
+  <!-- Interactive Modal -->
+  <div id="infoModal" class="modal-overlay">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+      <h3 id="modalTitle" style="font-family:'Orbitron', sans-serif; font-size:1.2rem; color:#fff; margin-bottom:12px;"></h3>
+      <p id="modalDesc" style="font-size:0.9rem; color:#9ca3af; line-height:1.6;"></p>
+    </div>
+  </div>
+
+  <script>
+    function openModal(title, desc) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalDesc').textContent = desc;
+      document.getElementById('infoModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('infoModal').classList.remove('active');
+    }
+  </script>
+
 </body>
 </html>
