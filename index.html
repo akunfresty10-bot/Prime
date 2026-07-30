@@ -87,11 +87,24 @@
       box-shadow: 0 10px 25px rgba(236, 72, 153, 0.25);
     }
     .hero-avatar img { width: 100%; height: 100%; object-fit: cover; }
-    
+
+    /* --- MODIFIKASI KOTAK HERO UNTUK KEJELASAN TEKS --- */
+    /* Membuat kotak di sekitar teks 'Selamat Datang' dan deskripsi, dengan gaya mirip kotak total pelanggan. */
+    .hero-text-card {
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.25) 0%, rgba(20, 15, 25, 0.85) 100%);
+      border: 1px solid rgba(236, 72, 153, 0.4);
+      border-radius: 24px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 28px; /* Ruang ke tombol di bawahnya */
+      backdrop-filter: blur(12px); /* Buram latar belakang yang lebih kuat untuk meningkatkan kontras teks */
+    }
+
     .hero-welcome { font-size: 0.95rem; font-weight: 700; color: #fbcfe8; letter-spacing: 3px; margin-bottom: 2px; text-transform: uppercase; }
     .hero-greeting { font-size: 2.2rem; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; animation: rgbGlowText 6s infinite linear; line-height: 1.1; }
     
-    .hero-desc { font-size: 0.88rem; color: #e2e8f0; margin-bottom: 28px; line-height: 1.6; padding: 0 10px; margin-top: 10px; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+    /* Menghapus margin atas dari deskripsi agar pas di dalam kotak. Jarak bawah ditangani oleh .hero-text-card */
+    .hero-desc { font-size: 0.88rem; color: #e2e8f0; line-height: 1.6; padding: 0 10px; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
 
     .hero-buttons { display: flex; flex-direction: column; gap: 12px; }
     .h-btn {
@@ -273,10 +286,14 @@
         <img id="hero-logo" src="https://via.placeholder.com/150" alt="Logo">
       </div>
       
-      <div class="hero-welcome">SELAMAT DATANG DI</div>
-      <h1 id="hero-title" class="hero-greeting">PRIME CT STORE</h1>
-      
-      <p id="hero-desc" class="hero-desc">Platform digital terpercaya untuk kebutuhan akun premium, jasa editing, top up game, bot WhatsApp, script bot, panel, VPS, partner, dan layanan digital lainnya.</p>
+      <!-- --- AREA TEKS YANG DILINGKARI DIAPIT DALAM KOTAK BARU --- -->
+      <!-- 'hero-text-card' adalah kotak baru yang memberikan latar belakang buram/gradien di bawah teks agar lebih jelas -->
+      <div class="hero-text-card">
+        <div class="hero-welcome">SELAMAT DATANG DI</div>
+        <h1 id="hero-title" class="hero-greeting">PRIME CT STORE</h1>
+        <p id="hero-desc" class="hero-desc">Platform digital terpercaya untuk kebutuhan akun premium, jasa editing, top up game, bot WhatsApp, script bot, panel, VPS, partner, dan layanan digital lainnya.</p>
+      </div>
+      <!-- --- AKHIR AREA KOTAK TEKS --- -->
       
       <div class="hero-buttons">
         <a id="btn-products-link" href="produk.html" class="h-btn primary">Lihat Produk</a>
@@ -320,8 +337,8 @@
     <!-- SIAPA ITU PRIME CT -->
     <div class="about-box">
       <h3>Siapa itu PRIME CT?</h3>
-      <p><strong>PRIME CT</strong> adalah digital store yang dikembangkan dan dikelola oleh <strong>PRIME CT OFFICIAL</strong>, atau yang akrab dikenal dengan nama panggilan <strong>Prime</strong>. prime dikenal sebagai sosok serba bisa dengan banyak bidang keahlian, mulai dari owner, admin, developer, engineer, desainer, editor, kreator konten, hingga pengelola layanan digital yang terus berkembang mengikuti era teknologi modern.</p>
-      <p>PRIME CT hadir sebagai tempat layanan digital yang praktis, cepat, dan terpercaya untuk membantu kebutuhan pelanggan di dunia online. Fokus utama PRIME CT adalah memberikan pengalaman order yang mudah, tampilan website yang modern, layanan yang responsif, serta katalog produk dan jasa yang terus diperbarui mengikuti kebutuhan dunia digital.</p>
+      <p><strong>PRIME CT</strong> adalah digital store yang dikembangkan dan dikelola oleh <strong>PRIME CT OFFICIAL</strong>, atau yang akrab dikenal dengan nama panggilan <strong>Prime</strong>. prime dikenal sebagai sosok serba bisa with many multi-faceted fields, ranging from being a developer, designer, to content creator. </p>
+      <p>PRIME CT is committed to providing a practical, fast, and trusted place for digital service and needs in the online world. Our focus is to create an experience of easy ordering, a modern website look, and responsive service. </p>
       <div class="role-tags">
         <span class="role-tag">Owner</span>
         <span class="role-tag">Admin</span>
