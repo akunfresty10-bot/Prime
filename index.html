@@ -143,7 +143,9 @@
       border: 1px solid rgba(236, 72, 153, 0.2);
       border-radius: 20px; padding: 20px; margin-bottom: 12px;
       backdrop-filter: blur(10px); display: flex; flex-direction: column; gap: 8px;
+      transition: 0.2s;
     }
+    .category-card:hover { border-color: rgba(236, 72, 153, 0.5); transform: translateY(-2px); }
     .cat-icon-title { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; font-weight: 700; color: #fff; }
     .cat-desc { font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; }
 
@@ -234,7 +236,7 @@
   <!-- AUDIO PLAYER (Tersembunyi) -->
   <audio id="bg-audio" loop></audio>
 
-  <!-- MODAL POPUP WA (Area ini yang akan memicu musik saat diklik) -->
+  <!-- MODAL POPUP WA -->
   <div id="wa-modal-overlay" class="modal-overlay">
     <div class="popup-wa-card" id="popup-click-area">
       <button class="popup-close-circle" onclick="closeWaModal()"><i class="fa-solid fa-xmark"></i></button>
@@ -302,12 +304,13 @@
         <p id="hero-desc" class="hero-desc">Platform digital terpercaya untuk kebutuhan akun premium, jasa editing, top up game, bot WhatsApp, script bot, panel, VPS, partner, dan layanan digital lainnya.</p>
       </div>
       
-      <!-- TOMBOL AKSI KEMBALI SEPERTI SEMULA TAPI LEBIH TEBAL & JELAS -->
+      <!-- TOMBOL AKSI TERHUBUNG -->
       <div class="hero-buttons">
         <a id="btn-products-link" href="produk.html" class="h-btn primary">Lihat Produk</a>
         <button class="h-btn" onclick="openPaymentModal()">Payment</button>
         <a id="hero-owner-btn" href="#" target="_blank" class="h-btn">Hubungi Owner</a>
-        <a id="hero-tools-btn" href="#" target="_blank" class="h-btn">PRIME TOOLS</a>
+        <!-- TAUTAN DIBUAT KE TOOLS.HTML -->
+        <a id="hero-tools-btn" href="tools.html" class="h-btn">PRIME TOOLS</a>
       </div>
     </div>
 
@@ -336,17 +339,20 @@
         <div class="cat-icon-title"><i class="fa-solid fa-window-maximize" style="color: #06b6d4;"></i> PRIME CPANEL</div>
         <div class="cat-desc">Kelola hosting, server, dan panel Pterodactyl langsung dari sini.</div>
       </div>
-      <div class="category-card">
-        <div class="cat-icon-title"><i class="fa-solid fa-arrows-rotate" style="color: #10b981;"></i> PRIME CONVERT</div>
-        <div class="cat-desc">Kompres & convert foto/video langsung dari browser, gratis tiap minggu.</div>
-      </div>
+      <!-- KARTU CONVERT DIBUAT TERHUBUNG KE TOOLS.HTML -->
+      <a href="tools.html" style="text-decoration: none; color: inherit;">
+        <div class="category-card">
+          <div class="cat-icon-title"><i class="fa-solid fa-arrows-rotate" style="color: #10b981;"></i> PRIME CONVERT</div>
+          <div class="cat-desc">Kompres & convert foto/video langsung dari browser, gratis tiap minggu.</div>
+        </div>
+      </a>
     </div>
 
     <!-- SIAPA ITU PRIME CT -->
     <div class="about-box">
       <h3>Siapa itu PRIME CT?</h3>
-      <p><strong>PRIME CT</strong> adalah digital store yang dikembangkan dan dikelola oleh <strong>PRIME CT OFFICIAL</strong>, atau yang akrab dikenal dengan nama panggilan <strong>Prime</strong>. prime dikenal sebagai sosok serba bisa with many multi-faceted fields, ranging from being a developer, designer, to content creator. </p>
-      <p>PRIME CT is committed to providing a practical, fast, and trusted place for digital service and needs in the online world. Our focus is to create an experience of easy ordering, a modern website look, and responsive service. </p>
+      <p><strong>PRIME CT</strong> adalah digital store yang dikembangkan dan dikelola oleh <strong>PRIME CT OFFICIAL</strong>, atau yang akrab dikenal dengan nama panggilan <strong>Prime</strong>. prime dikenal sebagai sosok serba bisa dengan berbagai keahlian, mulai dari developer, designer, hingga content creator. </p>
+      <p>PRIME CT berkomitmen menyediakan layanan praktis, cepat, dan terpercaya untuk seluruh kebutuhan dunia digital. Fokus kami adalah menghadirkan kemudahan transaksi, tampilan modern, serta pelayanan yang responsif.</p>
       <div class="role-tags">
         <span class="role-tag">Owner</span>
         <span class="role-tag">Admin</span>
@@ -409,9 +415,9 @@
       <div class="footer-menu-list">
         <a href="produk.html">Produk & Jasa</a>
         <a href="#" target="_blank">Partner Resmi</a>
-        <a id="mn-tools" href="#" target="_blank">PRIME Tools</a>
+        <a id="mn-tools" href="tools.html">PRIME Tools</a>
         <a id="mn-cpanel" href="#" target="_blank">PRIME Cpanel</a>
-        <a id="mn-convert" href="#" target="_blank">PRIME Convert</a>
+        <a id="mn-convert" href="tools.html">PRIME Convert</a>
         <a id="mn-ai" href="#" target="_blank">PRIME AI</a>
         <a href="#">FAQ</a>
         <a href="#">Kontak</a>
@@ -430,7 +436,7 @@
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     let activeWhatsappNumber = '';
-    let isMusicEnabled = false; // Status global untuk musik
+    let isMusicEnabled = false;
 
     function closeWaModal() { document.getElementById('wa-modal-overlay').classList.remove('active'); }
     function openPaymentModal() { document.getElementById('payment-modal-overlay').classList.add('active'); }
@@ -479,12 +485,7 @@
         if (item.key === 'instagram_link' && item.value) document.getElementById('ft-ig').href = item.value;
         if (item.key === 'telegram_link' && item.value) document.getElementById('ft-tg').href = item.value;
         
-        if (item.key === 'ynatools_link' && item.value) {
-          document.getElementById('hero-tools-btn').href = item.value;
-          document.getElementById('mn-tools').href = item.value;
-        }
         if (item.key === 'ynacpanel_link' && item.value) document.getElementById('mn-cpanel').href = item.value;
-        if (item.key === 'ynaconvert_link' && item.value) document.getElementById('mn-convert').href = item.value;
         if (item.key === 'ynaai_link' && item.value) document.getElementById('mn-ai').href = item.value;
 
         // Background Media (Video/Image)
@@ -513,7 +514,7 @@
           document.getElementById('modal-group-btn').href = item.value;
         }
 
-        // --- PENGATURAN MUSIK LATAR ---
+        // Background Audio Settings
         if (item.key === 'bg_music_url' && item.value) {
           document.getElementById('bg-audio').src = item.value;
         }
@@ -527,7 +528,6 @@
       }
     }
 
-    // --- EVENT LISTENER UNTUK MEMUTAR MUSIK SAAT POPUP DIKLIK ---
     const popupClickArea = document.getElementById('popup-click-area');
     const audioEl = document.getElementById('bg-audio');
 
@@ -547,3 +547,4 @@
   </script>
 </body>
 </html>
+

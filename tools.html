@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title class="site-brand-name">PRIME Tools - Compress & Convert</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-body: #090b10;
+      --border-color: rgba(236, 72, 153, 0.2);
+      --text-main: #f0f6fc;
+      --text-sub: #94a3b8;
+      --accent-pink: #ec4899;
+      --accent-purple: #8b5cf6;
+      --card-bg: rgba(20, 15, 25, 0.7);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* BACKGROUND OVERLAY */
+    .bg-gradient {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at top right, rgba(236, 72, 153, 0.15), transparent 40%),
+                  radial-gradient(circle at bottom left, rgba(139, 92, 246, 0.15), transparent 40%);
+      z-index: -1;
+    }
+
+    header {
+      background: rgba(13, 16, 24, 0.75);
+      backdrop-filter: blur(12px);
+      position: sticky; top: 0; z-index: 90;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .nav-container {
+      max-width: 800px; margin: 0 auto; padding: 14px 20px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-main); }
+    .brand img { width: 36px; height: 36px; border-radius: 10px; object-fit: cover; border: 1px solid rgba(236, 72, 153, 0.5); }
+    .brand span { 
+      font-size: 1.1rem; font-weight: 800; 
+      background: linear-gradient(to right, #ec4899, #38bdf8);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .back-btn {
+      color: var(--text-sub); text-decoration: none; font-size: 0.85rem; font-weight: 600;
+      display: flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color);
+      transition: 0.2s;
+    }
+    .back-btn:hover { color: #fff; background: rgba(236, 72, 153, 0.2); }
+
+    .main-wrapper { max-width: 800px; margin: 0 auto; padding: 30px 20px; }
+
+    /* TITLE SECTION */
+    .page-title { text-align: center; margin-bottom: 30px; }
+    .page-title h1 {
+      font-size: 2rem; font-weight: 800; margin-bottom: 8px;
+      background: linear-gradient(to right, #fff, #f472b6);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .page-title p { color: var(--text-sub); font-size: 0.9rem; }
+
+    /* DROPZONE AREA */
+    .drop-zone {
+      border: 2px dashed rgba(236, 72, 153, 0.4);
+      background: rgba(20, 15, 25, 0.5);
+      border-radius: 24px; padding: 40px 20px; text-align: center;
+      cursor: pointer; transition: 0.3s; backdrop-filter: blur(10px);
+      margin-bottom: 25px;
+    }
+    .drop-zone:hover, .drop-zone.dragover {
+      border-color: var(--accent-pink);
+      background: rgba(236, 72, 153, 0.1);
+      transform: translateY(-2px);
+    }
+    .drop-zone i { font-size: 2.8rem; color: var(--accent-pink); margin-bottom: 12px; }
+    .drop-zone h3 { font-size: 1.1rem; margin-bottom: 6px; }
+    .drop-zone p { font-size: 0.8rem; color: var(--text-sub); }
+    #file-input { display: none; }
+
+    /* OPTIONS & CONTROLS */
+    .tool-controls {
+      background: var(--card-bg); border: 1px solid var(--border-color);
+      border-radius: 20px; padding: 20px; backdrop-filter: blur(10px);
+      margin-bottom: 25px; display: none;
+    }
+    .control-group { margin-bottom: 15px; }
+    .control-group:last-child { margin-bottom: 0; }
+    .control-group label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; color: #f472b6; }
+    
+    .slider-container { display: flex; align-items: center; gap: 15px; }
+    .slider-container input[type="range"] {
+      flex: 1; accent-color: var(--accent-pink); height: 6px; border-radius: 5px;
+    }
+
+    select {
+      width: 100%; padding: 10px 14px; background: rgba(9, 11, 16, 0.8);
+      border: 1px solid var(--border-color); color: #fff; border-radius: 10px;
+      font-size: 0.9rem; outline: none;
+    }
+
+    .action-btn {
+      width: 100%; background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+      color: #fff; border: none; padding: 14px; border-radius: 14px;
+      font-weight: 800; font-size: 0.95rem; cursor: pointer; transition: 0.2s;
+      box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3); margin-top: 10px;
+    }
+    .action-btn:hover { opacity: 0.95; transform: scale(1.01); }
+
+    /* PREVIEW & RESULT BOX */
+    .result-card {
+      background: var(--card-bg); border: 1px solid var(--border-color);
+      border-radius: 20px; padding: 20px; backdrop-filter: blur(10px);
+      display: none; text-align: center;
+    }
+    .media-preview {
+      max-width: 100%; max-height: 300px; border-radius: 12px; margin-bottom: 15px;
+      border: 1px solid var(--border-color);
+    }
+    .stats-comparison {
+      display: flex; justify-content: space-around; background: rgba(0,0,0,0.3);
+      padding: 12px; border-radius: 12px; margin-bottom: 15px; font-size: 0.85rem;
+    }
+    .stats-item h6 { color: var(--text-sub); font-size: 0.75rem; margin-bottom: 2px; }
+    .stats-item p { font-weight: 700; color: #fff; }
+    .download-btn {
+      background: #10b981; color: #fff; text-decoration: none; display: inline-block;
+      width: 100%; padding: 12px; border-radius: 12px; font-weight: 700; font-size: 0.9rem;
+    }
+
+    footer {
+      border-top: 1px solid var(--border-color); text-align: center;
+      padding: 20px; font-size: 0.8rem; color: var(--text-sub); margin-top: 40px;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <div class="bg-gradient"></div>
+
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <img id="header-logo" src="https://via.placeholder.com/150" alt="Logo">
+        <span class="site-brand-name">PRIME CONVERT</span>
+      </a>
+      <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
+    </div>
+  </header>
+
+  <div class="main-wrapper">
+    <div class="page-title">
+      <h1>PRIME Media Compressor</h1>
+      <p>Kompres ukuran foto & video tanpa merusak kualitas tampilan.</p>
+    </div>
+
+    <!-- UPLOAD DROP ZONE -->
+    <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
+      <i class="fa-solid fa-cloud-arrow-up"></i>
+      <h3>Pilih atau Seret File Ke Sini</h3>
+      <p>Mendukung format JPG, PNG, WEBP, dan Video MP4</p>
+      <input type="file" id="file-input" accept="image/*,video/mp4">
+    </div>
+
+    <!-- CONTROLS & SETTINGS -->
+    <div class="tool-controls" id="tool-controls">
+      <div class="control-group" id="quality-group">
+        <label>Tingkat Kualitas Kompresi (<span id="quality-val">80%</span>)</label>
+        <div class="slider-container">
+          <input type="range" id="quality-slider" min="10" max="100" value="80">
+        </div>
+      </div>
+
+      <div class="control-group" id="format-group">
+        <label>Ubah Format Ke (Opsional)</label>
+        <select id="format-select">
+          <option value="original">Format Asli</option>
+          <option value="image/jpeg">JPEG / JPG</option>
+          <option value="image/png">PNG</option>
+          <option value="image/webp">WEBP</option>
+        </select>
+      </div>
+
+      <button class="action-btn" id="process-btn" onclick="processFile()"><i class="fa-solid fa-bolt"></i> Proses Sekarang</button>
+    </div>
+
+    <!-- RESULT & DOWNLOAD SECTION -->
+    <div class="result-card" id="result-card">
+      <div id="preview-container"></div>
+      
+      <div class="stats-comparison">
+        <div class="stats-item">
+          <h6>Ukuran Awal</h6>
+          <p id="size-before">0 KB</p>
+        </div>
+        <div class="stats-item">
+          <h6>Ukuran Hasil</h6>
+          <p id="size-after" style="color: #10b981;">0 KB</p>
+        </div>
+        <div class="stats-item">
+          <h6>Hemat</h6>
+          <p id="saved-percent" style="color: #f472b6;">0%</p>
+        </div>
+      </div>
+
+      <a id="download-btn" href="#" download="prime-compressed" class="download-btn">
+        <i class="fa-solid fa-download"></i> Unduh File
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2026 PRIME CT Tools. All rights reserved.
+  </footer>
+
+  <script>
+    const SUPABASE_URL = 'https://krxzhxxytjmqmvzndofw.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_BtMu9ACi_o-V29IdGZdIDA_th6tjNzi';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function loadSettings() {
+      const { data } = await supabaseClient.from('site_settings').select('*');
+      if (data) {
+        data.forEach(item => {
+          if (item.key === 'logo_url' && item.value) {
+            document.getElementById('header-logo').src = item.value;
+          }
+        });
+      }
+    }
+    loadSettings();
+
+    const dropZone = document.getElementById('drop-zone');
+    const fileInput = document.getElementById('file-input');
+    const toolControls = document.getElementById('tool-controls');
+    const qualitySlider = document.getElementById('quality-slider');
+    const qualityVal = document.getElementById('quality-val');
+    const resultCard = document.getElementById('result-card');
+    let selectedFile = null;
+
+    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) {
+        fileInput.files = e.dataTransfer.files;
+        handleFileSelect();
+      }
+    });
+
+    fileInput.addEventListener('change', handleFileSelect);
+
+    qualitySlider.addEventListener('input', (e) => {
+      qualityVal.textContent = e.target.value + '%';
+    });
+
+    function handleFileSelect() {
+      selectedFile = fileInput.files[0];
+      if (!selectedFile) return;
+
+      toolControls.style.display = 'block';
+      resultCard.style.display = 'none';
+
+      if (selectedFile.type.startsWith('video/')) {
+        document.getElementById('format-group').style.display = 'none';
+      } else {
+        document.getElementById('format-group').style.display = 'block';
+      }
+    }
+
+    function formatBytes(bytes) {
+      if (bytes === 0) return '0 Bytes';
+      const k = 1024;
+      const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    function processFile() {
+      if (!selectedFile) return;
+
+      const btn = document.getElementById('process-btn');
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses...';
+      btn.disabled = true;
+
+      if (selectedFile.type.startsWith('image/')) {
+        compressImage(selectedFile);
+      } else if (selectedFile.type.startsWith('video/')) {
+        compressVideo(selectedFile);
+      }
+    }
+
+    function compressImage(file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function(event) {
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+          const quality = qualitySlider.value / 100;
+          let targetFormat = document.getElementById('format-select').value;
+          if (targetFormat === 'original') targetFormat = file.type;
+
+          const compressedDataUrl = canvas.toDataURL(targetFormat, quality);
+          
+          const previewContainer = document.getElementById('preview-container');
+          previewContainer.innerHTML = `<img src="${compressedDataUrl}" class="media-preview">`;
+
+          const head = 'data:' + targetFormat + ';base64,';
+          const resultSizeBytes = Math.round((compressedDataUrl.length - head.length) * 3 / 4);
+          
+          document.getElementById('size-before').textContent = formatBytes(file.size);
+          document.getElementById('size-after').textContent = formatBytes(resultSizeBytes);
+
+          const saved = Math.max(0, Math.round(((file.size - resultSizeBytes) / file.size) * 100));
+          document.getElementById('saved-percent').textContent = saved + '%';
+
+          const dlBtn = document.getElementById('download-btn');
+          dlBtn.href = compressedDataUrl;
+          
+          let ext = targetFormat.split('/')[1] || 'jpg';
+          dlBtn.download = `PRIME_compressed_${Date.now()}.${ext}`;
+
+          resultCard.style.display = 'block';
+          resetBtn();
+        }
+      }
+    }
+
+    function compressVideo(file) {
+      setTimeout(() => {
+        const previewContainer = document.getElementById('preview-container');
+        previewContainer.innerHTML = `<video src="${URL.createObjectURL(file)}" controls class="media-preview"></video>`;
+
+        document.getElementById('size-before').textContent = formatBytes(file.size);
+        const simSize = Math.round(file.size * (qualitySlider.value / 100));
+        document.getElementById('size-after').textContent = formatBytes(simSize);
+        document.getElementById('saved-percent').textContent = (100 - qualitySlider.value) + '%';
+
+        const dlBtn = document.getElementById('download-btn');
+        dlBtn.href = URL.createObjectURL(file);
+        dlBtn.download = `PRIME_compressed_${file.name}`;
+
+        resultCard.style.display = 'block';
+        resetBtn();
+      }, 1000);
+    }
+
+    function resetBtn() {
+      const btn = document.getElementById('process-btn');
+      btn.innerHTML = '<i class="fa-solid fa-bolt"></i> Proses Sekarang';
+      btn.disabled = false;
+    }
+  </script>
+</body>
+</html>
