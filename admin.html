@@ -175,6 +175,11 @@
             <div class="form-group"><label class="form-label">Judul Popup WA</label><input type="text" id="set-popup_title" class="form-input"></div>
             <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">Deskripsi Popup WA</label><textarea id="set-popup_desc" class="form-textarea" rows="2"></textarea></div>
             <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">Link Grup WA Popup</label><input type="text" id="set-wa_group_link" class="form-input"></div>
+            
+            <!-- 8. MUSIK LATAR -->
+            <div class="section-divider">8. Pengaturan Musik Latar</div>
+            <div class="form-group"><label class="form-label">Aktifkan Musik (true / false)</label><input type="text" id="set-bg_music_enabled" class="form-input"></div>
+            <div class="form-group" style="grid-column: 1 / -1;"><label class="form-label">URL Musik (Link audio MP3)</label><input type="text" id="set-bg_music_url" class="form-input"></div>
           </div>
         </div>
       </div>
@@ -292,7 +297,8 @@
         'ynatools_link', 'ynacpanel_link', 'ynaconvert_link', 'ynaai_link',
         'whatsapp_number', 'whatsapp_backup', 'email_contact', 'instagram_link', 'telegram_link',
         'qris_image_url', 'dana_number', 'dana_name', 'gopay_number', 'gopay_name',
-        'popup_enabled', 'popup_title', 'popup_desc', 'wa_group_link'
+        'popup_enabled', 'popup_title', 'popup_desc', 'wa_group_link',
+        'bg_music_enabled', 'bg_music_url' 
       ];
 
       for (let key of keys) {
