@@ -34,13 +34,14 @@
     #bg-video-container video, #bg-video-container img {
       width: 100%; height: 100%;
       object-fit: cover;
-      opacity: 0.35;
+      opacity: 0.6; /* Ditingkatkan agar video lebih jelas */
     }
     #bg-video-container::after {
       content: '';
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at 50% 20%, rgba(30, 27, 75, 0.4) 0%, #090b10 80%);
+      /* Gradient diubah agar lebih transparan di bagian bawah */
+      background: radial-gradient(circle at 50% 20%, rgba(30, 27, 75, 0.3) 0%, rgba(9, 11, 16, 0.7) 100%);
     }
 
     /* ANIMASI RGB */
@@ -64,7 +65,7 @@
     }
     .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-main); }
     .brand img { width: 38px; height: 38px; border-radius: 12px; object-fit: cover; border: 1px solid rgba(168, 85, 247, 0.4); }
-    .brand span { font-size: 1.1rem; font-weight: 800; animation: rgbGlowText 6s infinite linear; }
+    .brand span { font-size: 1.1rem; font-weight: 800; /* Animasi RGB dihapus dari sini */ } 
 
     .main-wrapper { max-width: 600px; margin: 0 auto; padding: 30px 20px; }
 
@@ -77,8 +78,12 @@
       box-shadow: 0 10px 25px rgba(168, 85, 247, 0.2);
     }
     .hero-avatar img { width: 100%; height: 100%; object-fit: cover; }
-    .hero-greeting { font-size: 1.35rem; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; animation: rgbGlowText 6s infinite linear; }
-    .hero-desc { font-size: 0.88rem; color: #cbd5e1; margin-bottom: 28px; line-height: 1.6; padding: 0 10px; }
+    
+    /* Penyesuaian teks welcome & hero greeting */
+    .hero-welcome { font-size: 0.95rem; font-weight: 700; color: #e2e8f0; letter-spacing: 3px; margin-bottom: 2px; text-transform: uppercase; }
+    .hero-greeting { font-size: 2.2rem; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; animation: rgbGlowText 6s infinite linear; line-height: 1.1; }
+    
+    .hero-desc { font-size: 0.88rem; color: #cbd5e1; margin-bottom: 28px; line-height: 1.6; padding: 0 10px; margin-top: 10px; }
 
     .hero-buttons { display: flex; flex-direction: column; gap: 12px; }
     .h-btn {
@@ -256,11 +261,13 @@
       <div class="hero-avatar">
         <img id="hero-logo" src="https://via.placeholder.com/150" alt="Logo">
       </div>
-      <h1 id="hero-title" class="hero-greeting">SELAMAT DATANG DI PRIME CT</h1>
+      <!-- Struktur Header Dipisah Sesuai Request -->
+      <div class="hero-welcome">SELAMAT DATANG DI</div>
+      <h1 id="hero-title" class="hero-greeting">PRIME CT STORE</h1>
+      
       <p id="hero-desc" class="hero-desc">Platform digital terpercaya untuk kebutuhan akun premium, jasa editing, top up game, bot WhatsApp, script bot, panel, VPS, partner, dan layanan digital lainnya.</p>
       
       <div class="hero-buttons">
-        <!-- TOMBOL KE WEB PRODUK TERPISAH -->
         <a id="btn-products-link" href="produk.html" class="h-btn primary">Lihat Produk</a>
         <button class="h-btn" onclick="openPaymentModal()">Payment</button>
         <a id="hero-owner-btn" href="#" target="_blank" class="h-btn">Hubungi Owner</a>
