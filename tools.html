@@ -3,9 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title class="site-brand-name">PRIME Tools - Compress & Convert</title>
+  <title class="site-brand-name">PRIME Tools - Video Compressor</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- FFmpeg Script dari CDN resmi untuk browser -->
+  <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
+
   <style>
     :root {
       --bg-body: #090b10;
@@ -24,7 +28,6 @@
       position: relative;
     }
 
-    /* BACKGROUND OVERLAY */
     .bg-gradient {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: radial-gradient(circle at top right, rgba(236, 72, 153, 0.15), transparent 40%),
@@ -59,7 +62,6 @@
 
     .main-wrapper { max-width: 800px; margin: 0 auto; padding: 30px 20px; }
 
-    /* TITLE SECTION */
     .page-title { text-align: center; margin-bottom: 30px; }
     .page-title h1 {
       font-size: 2rem; font-weight: 800; margin-bottom: 8px;
@@ -68,7 +70,6 @@
     }
     .page-title p { color: var(--text-sub); font-size: 0.9rem; }
 
-    /* DROPZONE AREA */
     .drop-zone {
       border: 2px dashed rgba(236, 72, 153, 0.4);
       background: rgba(20, 15, 25, 0.5);
@@ -86,7 +87,6 @@
     .drop-zone p { font-size: 0.8rem; color: var(--text-sub); }
     #file-input { display: none; }
 
-    /* OPTIONS & CONTROLS */
     .tool-controls {
       background: var(--card-bg); border: 1px solid var(--border-color);
       border-radius: 20px; padding: 20px; backdrop-filter: blur(10px);
@@ -96,11 +96,6 @@
     .control-group:last-child { margin-bottom: 0; }
     .control-group label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; color: #f472b6; }
     
-    .slider-container { display: flex; align-items: center; gap: 15px; }
-    .slider-container input[type="range"] {
-      flex: 1; accent-color: var(--accent-pink); height: 6px; border-radius: 5px;
-    }
-
     select {
       width: 100%; padding: 10px 14px; background: rgba(9, 11, 16, 0.8);
       border: 1px solid var(--border-color); color: #fff; border-radius: 10px;
@@ -114,15 +109,15 @@
       box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3); margin-top: 10px;
     }
     .action-btn:hover { opacity: 0.95; transform: scale(1.01); }
+    .action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    /* PREVIEW & RESULT BOX */
     .result-card {
       background: var(--card-bg); border: 1px solid var(--border-color);
       border-radius: 20px; padding: 20px; backdrop-filter: blur(10px);
       display: none; text-align: center;
     }
     .media-preview {
-      max-width: 100%; max-height: 300px; border-radius: 12px; margin-bottom: 15px;
+      max-width: 100%; max-height: 280px; border-radius: 12px; margin-bottom: 15px;
       border: 1px solid var(--border-color);
     }
     .stats-comparison {
@@ -134,6 +129,10 @@
     .download-btn {
       background: #10b981; color: #fff; text-decoration: none; display: inline-block;
       width: 100%; padding: 12px; border-radius: 12px; font-weight: 700; font-size: 0.9rem;
+    }
+
+    #status-log {
+      font-size: 0.85rem; color: #38bdf8; margin-top: 10px; text-align: center; font-weight: 600;
     }
 
     footer {
@@ -159,38 +158,30 @@
 
   <div class="main-wrapper">
     <div class="page-title">
-      <h1>PRIME Media Compressor</h1>
-      <p>Kompres ukuran foto & video tanpa merusak kualitas tampilan.</p>
+      <h1>PRIME Video Compressor</h1>
+      <p>Kompres ukuran video MP4 langsung di browser dengan mesin FFmpeg.</p>
     </div>
 
     <!-- UPLOAD DROP ZONE -->
     <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
-      <i class="fa-solid fa-cloud-arrow-up"></i>
-      <h3>Pilih atau Seret File Ke Sini</h3>
-      <p>Mendukung format JPG, PNG, WEBP, dan Video MP4</p>
-      <input type="file" id="file-input" accept="image/*,video/mp4">
+      <i class="fa-solid fa-film"></i>
+      <h3>Pilih atau Seret Video MP4 Ke Sini</h3>
+      <p>Mendukung format video MP4, MKV, atau MOV</p>
+      <input type="file" id="file-input" accept="video/mp4,video/mkv,video/quicktime">
     </div>
 
     <!-- CONTROLS & SETTINGS -->
     <div class="tool-controls" id="tool-controls">
-      <div class="control-group" id="quality-group">
-        <label>Tingkat Kualitas Kompresi (<span id="quality-val">80%</span>)</label>
-        <div class="slider-container">
-          <input type="range" id="quality-slider" min="10" max="100" value="80">
-        </div>
-      </div>
-
-      <div class="control-group" id="format-group">
-        <label>Ubah Format Ke (Opsional)</label>
-        <select id="format-select">
-          <option value="original">Format Asli</option>
-          <option value="image/jpeg">JPEG / JPG</option>
-          <option value="image/png">PNG</option>
-          <option value="image/webp">WEBP</option>
+      <div class="control-group">
+        <label>Pilih Resolusi / Tingkat Kompresi</label>
+        <select id="compression-preset">
+          <option value="medium">Standar (Seimbang & Cepat)</option>
+          <option value="high">Maksimal (Ukuran File Paling Kecil)</option>
         </select>
       </div>
 
-      <button class="action-btn" id="process-btn" onclick="processFile()"><i class="fa-solid fa-bolt"></i> Proses Sekarang</button>
+      <button class="action-btn" id="process-btn" onclick="compressVideo()"><i class="fa-solid fa-bolt"></i> Kompres Video Sekarang</button>
+      <div id="status-log"></div>
     </div>
 
     <!-- RESULT & DOWNLOAD SECTION -->
@@ -200,11 +191,11 @@
       <div class="stats-comparison">
         <div class="stats-item">
           <h6>Ukuran Awal</h6>
-          <p id="size-before">0 KB</p>
+          <p id="size-before">0 MB</p>
         </div>
         <div class="stats-item">
           <h6>Ukuran Hasil</h6>
-          <p id="size-after" style="color: #10b981;">0 KB</p>
+          <p id="size-after" style="color: #10b981;">0 MB</p>
         </div>
         <div class="stats-item">
           <h6>Hemat</h6>
@@ -212,8 +203,8 @@
         </div>
       </div>
 
-      <a id="download-btn" href="#" download="prime-compressed" class="download-btn">
-        <i class="fa-solid fa-download"></i> Unduh File
+      <a id="download-btn" href="#" download="prime-compressed.mp4" class="download-btn">
+        <i class="fa-solid fa-download"></i> Unduh Video Hasil Kompres
       </a>
     </div>
   </div>
@@ -239,12 +230,14 @@
     }
     loadSettings();
 
+    const { createFFmpeg, fetchFile } = FFmpeg;
+    const ffmpeg = createFFmpeg({ log: true });
+
     const dropZone = document.getElementById('drop-zone');
     const fileInput = document.getElementById('file-input');
     const toolControls = document.getElementById('tool-controls');
-    const qualitySlider = document.getElementById('quality-slider');
-    const qualityVal = document.getElementById('quality-val');
     const resultCard = document.getElementById('result-card');
+    const statusLog = document.getElementById('status-log');
     let selectedFile = null;
 
     dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
@@ -260,22 +253,18 @@
 
     fileInput.addEventListener('change', handleFileSelect);
 
-    qualitySlider.addEventListener('input', (e) => {
-      qualityVal.textContent = e.target.value + '%';
-    });
-
     function handleFileSelect() {
       selectedFile = fileInput.files[0];
       if (!selectedFile) return;
 
+      if (!selectedFile.type.startsWith('video/')) {
+        alert("Mohon pilih file video yang valid!");
+        return;
+      }
+
       toolControls.style.display = 'block';
       resultCard.style.display = 'none';
-
-      if (selectedFile.type.startsWith('video/')) {
-        document.getElementById('format-group').style.display = 'none';
-      } else {
-        document.getElementById('format-group').style.display = 'block';
-      }
+      statusLog.textContent = `File dipilih: ${selectedFile.name} (${formatBytes(selectedFile.size)})`;
     }
 
     function formatBytes(bytes) {
@@ -286,87 +275,68 @@
       return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
 
-    function processFile() {
+    async function compressVideo() {
       if (!selectedFile) return;
 
       const btn = document.getElementById('process-btn');
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses...';
       btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memuat Mesin Kompresor...';
 
-      if (selectedFile.type.startsWith('image/')) {
-        compressImage(selectedFile);
-      } else if (selectedFile.type.startsWith('video/')) {
-        compressVideo(selectedFile);
-      }
-    }
-
-    function compressImage(file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = function(event) {
-        const img = new Image();
-        img.src = event.target.result;
-        img.onload = function() {
-          const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d');
-
-          canvas.width = img.width;
-          canvas.height = img.height;
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-          const quality = qualitySlider.value / 100;
-          let targetFormat = document.getElementById('format-select').value;
-          if (targetFormat === 'original') targetFormat = file.type;
-
-          const compressedDataUrl = canvas.toDataURL(targetFormat, quality);
-          
-          const previewContainer = document.getElementById('preview-container');
-          previewContainer.innerHTML = `<img src="${compressedDataUrl}" class="media-preview">`;
-
-          const head = 'data:' + targetFormat + ';base64,';
-          const resultSizeBytes = Math.round((compressedDataUrl.length - head.length) * 3 / 4);
-          
-          document.getElementById('size-before').textContent = formatBytes(file.size);
-          document.getElementById('size-after').textContent = formatBytes(resultSizeBytes);
-
-          const saved = Math.max(0, Math.round(((file.size - resultSizeBytes) / file.size) * 100));
-          document.getElementById('saved-percent').textContent = saved + '%';
-
-          const dlBtn = document.getElementById('download-btn');
-          dlBtn.href = compressedDataUrl;
-          
-          let ext = targetFormat.split('/')[1] || 'jpg';
-          dlBtn.download = `PRIME_compressed_${Date.now()}.${ext}`;
-
-          resultCard.style.display = 'block';
-          resetBtn();
+      if (!ffmpeg.isLoaded()) {
+        try {
+          await ffmpeg.load();
+        } catch (error) {
+          statusLog.textContent = "Gagal memuat modul video. Coba gunakan browser modern (Chrome/Edge).";
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-bolt"></i> Kompres Video Sekarang';
+          return;
         }
       }
-    }
 
-    function compressVideo(file) {
-      setTimeout(() => {
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sedang Mengompres Video...';
+      statusLog.textContent = "Proses sedang berjalan, mohon jangan menutup halaman ini...";
+
+      const inputName = 'input.mp4';
+      const outputName = 'output.mp4';
+
+      try {
+        ffmpeg.FS('writeFile', inputName, await fetchFile(selectedFile));
+
+        const preset = document.getElementById('compression-preset').value;
+        // Konfigurasi enkoding video via FFmpeg
+        if (preset === 'high') {
+          await ffmpeg.run('-i', inputName, '-vcodec', 'libx264', '-crf', '32', outputName);
+        } else {
+          await ffmpeg.run('-i', inputName, '-vcodec', 'libx264', '-crf', '26', outputName);
+        }
+
+        const data = ffmpeg.FS('readFile', outputName);
+        const compressedBlob = new Blob([data.buffer], { type: 'video/mp4' });
+        const compressedUrl = URL.createObjectURL(compressedBlob);
+
+        // Tampilkan hasil
         const previewContainer = document.getElementById('preview-container');
-        previewContainer.innerHTML = `<video src="${URL.createObjectURL(file)}" controls class="media-preview"></video>`;
+        previewContainer.innerHTML = `<video src="${compressedUrl}" controls class="media-preview"></video>`;
 
-        document.getElementById('size-before').textContent = formatBytes(file.size);
-        const simSize = Math.round(file.size * (qualitySlider.value / 100));
-        document.getElementById('size-after').textContent = formatBytes(simSize);
-        document.getElementById('saved-percent').textContent = (100 - qualitySlider.value) + '%';
+        document.getElementById('size-before').textContent = formatBytes(selectedFile.size);
+        document.getElementById('size-after').textContent = formatBytes(compressedBlob.size);
+
+        const saved = Math.max(0, Math.round(((selectedFile.size - compressedBlob.size) / selectedFile.size) * 100));
+        document.getElementById('saved-percent').textContent = saved + '%';
 
         const dlBtn = document.getElementById('download-btn');
-        dlBtn.href = URL.createObjectURL(file);
-        dlBtn.download = `PRIME_compressed_${file.name}`;
+        dlBtn.href = compressedUrl;
+        dlBtn.download = `PRIME_compressed_${selectedFile.name}`;
 
         resultCard.style.display = 'block';
-        resetBtn();
-      }, 1000);
-    }
+        statusLog.textContent = "Kompresi video berhasil diselesaikan!";
+      } catch (err) {
+        console.error(err);
+        statusLog.textContent = "Terjadi kesalahan saat memproses video berukuran besar.";
+      }
 
-    function resetBtn() {
-      const btn = document.getElementById('process-btn');
-      btn.innerHTML = '<i class="fa-solid fa-bolt"></i> Proses Sekarang';
       btn.disabled = false;
+      btn.innerHTML = '<i class="fa-solid fa-bolt"></i> Kompres Video Sekarang';
     }
   </script>
 </body>
