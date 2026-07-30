@@ -3,403 +3,479 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YNA STORE — Digital Ecosystem</title>
-  
-  <!-- Google Fonts & Font Awesome Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+  <title class="site-brand-name">PRIME CT - Digital Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
   <style>
     :root {
-      --bg-dark: #07090e;
-      --card-bg: rgba(18, 22, 34, 0.75);
-      --card-border: rgba(255, 255, 255, 0.1);
-      --accent-purple: #9333ea;
-      --accent-pink: #ec4899;
-      --accent-cyan: #06b6d4;
-      --text-main: #f3f4f6;
-      --text-muted: #9ca3af;
+      --bg-body: #090b10;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --text-main: #f0f6fc;
+      --text-sub: #94a3b8;
       --wa-green: #25d366;
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      user-select: none;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
     body {
-      background-color: var(--bg-dark);
+      background-color: var(--bg-body);
       color: var(--text-main);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       position: relative;
       overflow-x: hidden;
-      padding: 20px;
     }
 
-    /* Ambient Animated Glow Background */
-    .bg-glow {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(147, 51, 234, 0.25) 0%, rgba(236, 72, 153, 0.15) 40%, rgba(0, 0, 0, 0) 70%);
-      filter: blur(80px);
-      z-index: 0;
-      pointer-events: none;
-      animation: pulseGlow 8s infinite alternate ease-in-out;
-    }
-
-    @keyframes pulseGlow {
-      0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
-      100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
-    }
-
-    /* Particle Grid Overlay Effect */
-    .matrix-bg {
+    /* BACKGROUND VIDEO / IMAGE */
+    #bg-video-container {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background-image: 
-        radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
-      background-size: 24px 24px;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    /* Main Container Card */
-    .portal-card {
-      position: relative;
-      z-index: 10;
-      width: 100%;
-      max-width: 440px;
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--card-border);
-      border-radius: 28px;
-      padding: 36px 24px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7),
-                  0 0 30px rgba(147, 51, 234, 0.2);
-      text-align: center;
-      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Profile Avatar Ring */
-    .avatar-wrapper {
-      position: relative;
-      width: 110px;
-      height: 110px;
-      margin: 0 auto 20px;
-    }
-
-    .avatar-ring {
-      position: absolute;
-      inset: -4px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink), var(--accent-cyan));
-      animation: spinRing 6s linear infinite;
-    }
-
-    @keyframes spinRing {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .avatar-img {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid #0f121d;
-    }
-
-    /* Welcome Badge */
-    .welcome-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(147, 51, 234, 0.15);
-      border: 1px solid rgba(147, 51, 234, 0.4);
-      color: #c084fc;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      padding: 6px 14px;
-      border-radius: 20px;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-    }
-
-    /* Header Title & Subtitle */
-    .brand-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2rem;
-      font-weight: 900;
-      letter-spacing: 2px;
-      background: linear-gradient(135deg, #ffffff 30%, #c084fc 70%, #ec4899 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 12px;
-      text-shadow: 0 0 20px rgba(192, 132, 252, 0.4);
-    }
-
-    .brand-desc {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 28px;
-      font-weight: 400;
-    }
-
-    /* Links Container */
-    .links-container {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .btn-link {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 20px;
-      border-radius: 16px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 0.95rem;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: -1;
       overflow: hidden;
+      background: #090b10;
     }
-
-    /* Primary Gradient Button (Lihat Produk) */
-    .btn-primary-gradient {
-      background: linear-gradient(135deg, #8b5cf6, #d946ef);
-      color: #ffffff;
-      box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+    #bg-video-container video, #bg-video-container img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.35;
     }
-
-    .btn-primary-gradient:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 28px rgba(139, 92, 246, 0.6);
-      filter: brightness(1.1);
-    }
-
-    /* Secondary Glassmorphism Buttons */
-    .btn-glass {
-      background: rgba(255, 255, 255, 0.04);
-      color: var(--text-main);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(8px);
-    }
-
-    .btn-glass:hover {
-      background: rgba(255, 255, 255, 0.09);
-      border-color: rgba(255, 255, 255, 0.25);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    }
-
-    /* Button Icon & Layout */
-    .btn-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .btn-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-    }
-
-    .btn-primary-gradient .btn-icon {
-      background: rgba(255, 255, 255, 0.2);
-      color: #fff;
-    }
-
-    .btn-glass .btn-icon {
-      background: rgba(255, 255, 255, 0.06);
-      color: #c084fc;
-    }
-
-    .btn-arrow {
-      font-size: 0.85rem;
-      opacity: 0.6;
-      transition: transform 0.3s ease, opacity 0.3s ease;
-    }
-
-    .btn-link:hover .btn-arrow {
-      opacity: 1;
-      transform: translateX(4px);
-    }
-
-    /* Footer Credits */
-    .footer-text {
-      margin-top: 28px;
-      font-size: 0.75rem;
-      color: #6b7280;
-      letter-spacing: 0.5px;
-    }
-
-    /* Modal Styling */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(10px);
-      z-index: 999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-    }
-
-    .modal-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .modal-box {
-      background: #111522;
-      border: 1px solid var(--card-border);
-      border-radius: 24px;
-      width: 100%;
-      max-width: 400px;
-      padding: 28px;
-      text-align: center;
-      position: relative;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
-    }
-
-    .modal-close {
+    #bg-video-container::after {
+      content: '';
       position: absolute;
-      top: 16px; right: 16px;
-      background: rgba(255, 255, 255, 0.08);
-      border: none;
-      color: #fff;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at 50% 20%, rgba(30, 27, 75, 0.4) 0%, #090b10 80%);
+    }
+
+    /* ANIMASI RGB */
+    @keyframes rgbGlowText {
+      0% { color: #ff3366; filter: drop-shadow(0 0 10px rgba(255, 51, 102, 0.5)); }
+      25% { color: #38bdf8; filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5)); }
+      50% { color: #a855f7; filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.5)); }
+      75% { color: #34d399; filter: drop-shadow(0 0 10px rgba(52, 211, 153, 0.5)); }
+      100% { color: #ff3366; filter: drop-shadow(0 0 10px rgba(255, 51, 102, 0.5)); }
+    }
+
+    header {
+      background: rgba(13, 16, 24, 0.75);
+      backdrop-filter: blur(12px);
+      position: sticky; top: 0; z-index: 90;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .nav-container {
+      max-width: 600px; margin: 0 auto; padding: 12px 20px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-main); }
+    .brand img { width: 38px; height: 38px; border-radius: 12px; object-fit: cover; border: 1px solid rgba(168, 85, 247, 0.4); }
+    .brand span { font-size: 1.1rem; font-weight: 800; animation: rgbGlowText 6s infinite linear; }
+
+    .main-wrapper { max-width: 600px; margin: 0 auto; padding: 30px 20px; }
+
+    /* HERO SECTION */
+    .hero-section { text-align: center; margin-bottom: 40px; }
+    .hero-avatar {
+      width: 90px; height: 90px; margin: 0 auto 18px auto;
+      border-radius: 24px; border: 2px solid rgba(168, 85, 247, 0.5);
+      overflow: hidden; background: #1e1b2e;
+      box-shadow: 0 10px 25px rgba(168, 85, 247, 0.2);
+    }
+    .hero-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-greeting { font-size: 1.35rem; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; animation: rgbGlowText 6s infinite linear; }
+    .hero-desc { font-size: 0.88rem; color: #cbd5e1; margin-bottom: 28px; line-height: 1.6; padding: 0 10px; }
+
+    .hero-buttons { display: flex; flex-direction: column; gap: 12px; }
+    .h-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #fff; padding: 15px 20px; border-radius: 30px;
+      font-weight: 700; font-size: 0.95rem; text-decoration: none;
+      transition: 0.2s; display: block; text-align: center;
+      backdrop-filter: blur(5px);
       cursor: pointer;
     }
+    .h-btn.primary {
+      background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+      border-color: rgba(167, 139, 250, 0.4);
+      box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+    }
+    .h-btn:hover { transform: scale(1.02); opacity: 0.95; }
+
+    /* SECTIONS */
+    .section-box { margin-bottom: 40px; }
+    .section-header-title { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-sub); margin-bottom: 12px; font-weight: 700; }
+    .section-main-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 16px; }
+
+    /* CARDS KATEGORI */
+    .category-card {
+      background: rgba(20, 24, 36, 0.7);
+      border: 1px solid var(--border-color);
+      border-radius: 20px; padding: 20px; margin-bottom: 12px;
+      backdrop-filter: blur(10px); display: flex; flex-direction: column; gap: 8px;
+    }
+    .cat-icon-title { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; font-weight: 700; color: #fff; }
+    .cat-desc { font-size: 0.85rem; color: var(--text-sub); line-height: 1.5; }
+
+    /* ABOUT PRIME CT */
+    .about-box {
+      background: rgba(20, 24, 36, 0.7);
+      border: 1px solid var(--border-color);
+      border-radius: 24px; padding: 24px;
+      backdrop-filter: blur(10px); margin-bottom: 40px;
+    }
+    .about-box h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 14px; }
+    .about-box p { font-size: 0.88rem; color: #cbd5e1; line-height: 1.7; margin-bottom: 14px; }
+    .role-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+    .role-tag { background: rgba(124, 58, 237, 0.15); border: 1px solid rgba(167, 139, 250, 0.3); color: #d8b4fe; font-size: 0.75rem; font-weight: 700; padding: 5px 12px; border-radius: 8px; }
+
+    /* STATS BOX */
+    .stats-box {
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(20, 24, 36, 0.8) 100%);
+      border: 1px solid rgba(167, 139, 250, 0.3);
+      border-radius: 24px; padding: 30px 20px; text-align: center; margin-bottom: 40px;
+      backdrop-filter: blur(10px);
+    }
+    .stats-number { font-size: 2.8rem; font-weight: 800; color: #c084fc; margin-bottom: 8px; }
+    .stats-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; }
+    .stats-desc { font-size: 0.85rem; color: var(--text-sub); line-height: 1.6; margin-bottom: 24px; }
+    
+    .feature-mini-grid { display: grid; grid-template-columns: 1fr; gap: 12px; text-align: left; margin-bottom: 24px; }
+    .feature-mini { background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 14px; border-radius: 14px; }
+    .feature-mini h5 { font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; color: #fff; }
+    .feature-mini p { font-size: 0.8rem; color: var(--text-sub); margin: 0; }
+
+    .order-cta-box {
+      background: rgba(255,255,255,0.02);
+      border: 1px dashed rgba(167, 139, 250, 0.4);
+      border-radius: 18px; padding: 20px; text-align: center;
+    }
+    .order-cta-box p { font-size: 0.85rem; color: #cbd5e1; margin-bottom: 14px; line-height: 1.5; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border-color);
+      background: rgba(9, 11, 16, 0.9);
+      padding: 40px 20px 30px 20px;
+      font-size: 0.85rem; color: var(--text-sub);
+    }
+    .footer-container { max-width: 600px; margin: 0 auto; }
+    .footer-socials { display: flex; gap: 15px; margin-bottom: 25px; }
+    .footer-socials a { color: var(--text-main); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; }
+    .footer-section-title { font-weight: 800; color: #fff; margin-bottom: 12px; font-size: 1rem; text-transform: uppercase; }
+    .footer-contact-list { margin-bottom: 30px; display: flex; flex-direction: column; gap: 8px; }
+    .footer-menu-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; }
+    .footer-menu-list a { color: var(--text-sub); text-decoration: none; transition: 0.2s; }
+    .footer-menu-list a:hover { color: #fff; padding-left: 5px; }
+    .copyright { border-top: 1px solid var(--border-color); padding-top: 20px; text-align: left; font-size: 0.8rem; }
+
+    /* MODAL PAYMENT */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 999; display: flex; justify-content: center; align-items: center; padding: 20px; opacity: 0; visibility: hidden; transition: 0.3s; }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .payment-modal-card { background: linear-gradient(180deg, #180d2a 0%, #0c0d14 100%); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 28px; width: 100%; max-width: 420px; max-height: 90vh; overflow-y: auto; padding: 24px; position: relative; }
+    .popup-close-circle { position: absolute; top: 16px; right: 16px; background: rgba(255, 255, 255, 0.08); border: none; color: #fff; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; }
+    .pay-title { font-size: 1.15rem; font-weight: 800; color: #fff; margin-bottom: 16px; text-align: center; text-transform: uppercase; }
+    .qris-box { background: #fff; padding: 15px; border-radius: 16px; width: 200px; height: 200px; margin: 0 auto 15px auto; display: flex; justify-content: center; align-items: center; }
+    .qris-box img { width: 100%; height: 100%; object-fit: contain; }
+    .wallet-box { background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 14px; padding: 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+    .wallet-info h5 { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 2px; }
+    .wallet-info p { font-size: 0.95rem; font-weight: 700; color: #fff; }
+    .copy-btn { background: #7c3aed; color: #fff; border: none; padding: 8px 14px; border-radius: 8px; font-weight: 700; font-size: 0.78rem; cursor: pointer; }
+    .pay-confirm-btn { display: block; width: 100%; background: var(--wa-green); color: #fff; text-decoration: none; text-align: center; padding: 14px; border-radius: 14px; font-weight: 700; margin-top: 15px; }
+
+    /* MODAL WA */
+    .popup-wa-card { background: linear-gradient(180deg, #180d2a 0%, #0c0d14 100%); border: 1px solid rgba(139, 92, 246, 0.25); border-radius: 28px; width: 100%; max-width: 380px; padding: 32px 24px 28px 24px; text-align: center; position: relative; }
+    .popup-avatar-box { width: 85px; height: 85px; margin: 10px auto 20px auto; border-radius: 20px; overflow: hidden; border: 2px solid rgba(168, 85, 247, 0.5); }
+    .popup-avatar-box img { width: 100%; height: 100%; object-fit: cover; }
+    .popup-title { font-size: 1.15rem; font-weight: 800; color: #fff; margin-bottom: 10px; text-transform: uppercase; }
+    .popup-desc { font-size: 0.85rem; color: #94a3b8; margin-bottom: 20px; line-height: 1.5; }
+    .popup-btn-join { display: block; width: 100%; background: linear-gradient(135deg, #a855f7, #6366f1); color: #fff; text-decoration: none; padding: 14px; border-radius: 14px; font-weight: 700; margin-bottom: 10px; }
+    .popup-btn-later { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); color: #fff; padding: 13px; border-radius: 14px; font-weight: 700; cursor: pointer; }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-  <div class="bg-glow"></div>
-  <div class="matrix-bg"></div>
+  <!-- BACKGROUND VIDEO CONTAINER -->
+  <div id="bg-video-container">
+    <div id="bg-media-slot"></div>
+  </div>
 
-  <main class="portal-card">
-    
-    <!-- Profile Avatar -->
-    <div class="avatar-wrapper">
-      <div class="avatar-ring"></div>
-      <img src="https://via.placeholder.com/150/9333ea/ffffff?text=YNA" alt="YNA Store Logo" class="avatar-img">
-    </div>
-
-    <!-- Welcome Tag -->
-    <div class="welcome-badge">
-      <i class="fa-solid fa-sparkles"></i> Welcome to Portal
-    </div>
-
-    <!-- Site Title -->
-    <h1 class="brand-title">YNA STORE</h1>
-
-    <!-- Description -->
-    <p class="brand-desc">
-      Platform digital terpercaya untuk kebutuhan akun premium, jasa editing, top up game, bot WhatsApp, script bot, panel, VPS, partner, dan layanan digital lainnya.
-    </p>
-
-    <!-- Action Buttons -->
-    <div class="links-container">
-      
-      <!-- LIHAT PRODUK (Navigates to product catalog) -->
-      <a href="product.html" class="btn-link btn-primary-gradient">
-        <div class="btn-left">
-          <div class="btn-icon"><i class="fa-solid fa-bag-shopping"></i></div>
-          <span>Lihat Produk</span>
-        </div>
-        <i class="fa-solid fa-chevron-right btn-arrow"></i>
-      </a>
-
-      <!-- PAYMENT METHOD -->
-      <a href="javascript:void(0)" onclick="openModal('Payment Info', 'Silahkan lakukan pembayaran melalui QRIS, Dana, Ovo, Gopay, atau Transfer Bank yang dikirimkan oleh CS saat checkout.')" class="btn-link btn-glass">
-        <div class="btn-left">
-          <div class="btn-icon"><i class="fa-solid fa-credit-card"></i></div>
-          <span>Payment</span>
-        </div>
-        <i class="fa-solid fa-chevron-right btn-arrow"></i>
-      </a>
-
-      <!-- HUBUNGI OWNER -->
-      <a href="https://wa.me/628123456789" target="_blank" class="btn-link btn-glass">
-        <div class="btn-left">
-          <div class="btn-icon" style="color: #25d366;"><i class="fa-brands fa-whatsapp"></i></div>
-          <span>Hubungi Owner</span>
-        </div>
-        <i class="fa-solid fa-chevron-right btn-arrow"></i>
-      </a>
-
-      <!-- YNA TOOLS -->
-      <a href="javascript:void(0)" onclick="openModal('YNA Tools', 'Layanan tools online dan utilitas otomatisasi YNA Store akan segera hadir!')" class="btn-link btn-glass">
-        <div class="btn-left">
-          <div class="btn-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
-          <span>YNA TOOLS</span>
-        </div>
-        <i class="fa-solid fa-chevron-right btn-arrow"></i>
-      </a>
-
-    </div>
-
-    <div class="footer-text">
-      &copy; 2026 YNA Store. All rights reserved.
-    </div>
-
-  </main>
-
-  <!-- Interactive Modal -->
-  <div id="infoModal" class="modal-overlay">
-    <div class="modal-box">
-      <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
-      <h3 id="modalTitle" style="font-family:'Orbitron', sans-serif; font-size:1.2rem; color:#fff; margin-bottom:12px;"></h3>
-      <p id="modalDesc" style="font-size:0.9rem; color:#9ca3af; line-height:1.6;"></p>
+  <!-- MODAL POPUP WA -->
+  <div id="wa-modal-overlay" class="modal-overlay">
+    <div class="popup-wa-card">
+      <button class="popup-close-circle" onclick="closeWaModal()"><i class="fa-solid fa-xmark"></i></button>
+      <div class="popup-avatar-box"><img id="modal-banner-img" src="https://via.placeholder.com/150" alt=""></div>
+      <h3 id="modal-popup-title" class="popup-title">JOIN GRUP WHATSAPP</h3>
+      <p id="modal-popup-desc" class="popup-desc">Masuk grup WhatsApp resmi untuk info promo & update produk.</p>
+      <a id="modal-group-btn" href="#" target="_blank" class="popup-btn-join">Join Grup</a>
+      <button class="popup-btn-later" onclick="closeWaModal()">Nanti</button>
     </div>
   </div>
 
+  <!-- MODAL PAYMENT -->
+  <div id="payment-modal-overlay" class="modal-overlay">
+    <div class="payment-modal-card">
+      <button class="popup-close-circle" onclick="closePaymentModal()"><i class="fa-solid fa-xmark"></i></button>
+      <h3 class="pay-title">Metode Pembayaran</h3>
+      
+      <div class="qris-box">
+        <img id="pay-qris-img" src="" alt="QRIS">
+      </div>
+      <p style="text-align:center; font-size:0.8rem; color:var(--text-sub); margin-bottom:15px;">Scan QRIS di atas untuk semua e-wallet & mobile banking</p>
+
+      <div class="wallet-box">
+        <div class="wallet-info">
+          <h5>DANA (<span id="pay-dana-name">Owner</span>)</h5>
+          <p id="pay-dana-num">-</p>
+        </div>
+        <button class="copy-btn" onclick="copyText('pay-dana-num', this)">Salin</button>
+      </div>
+
+      <div class="wallet-box">
+        <div class="wallet-info">
+          <h5>GOPAY (<span id="pay-gopay-name">Owner</span>)</h5>
+          <p id="pay-gopay-num">-</p>
+        </div>
+        <button class="copy-btn" onclick="copyText('pay-gopay-num', this)">Salin</button>
+      </div>
+
+      <a id="pay-confirm-wa" href="#" target="_blank" class="pay-confirm-btn">
+        <i class="fa-brands fa-whatsapp"></i> Konfirmasi Bukti Transfer
+      </a>
+    </div>
+  </div>
+
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <img id="header-logo" src="https://via.placeholder.com/150" alt="Logo">
+        <span class="site-brand-name">PRIME CT</span>
+      </a>
+    </div>
+  </header>
+
+  <div class="main-wrapper">
+    <!-- HERO SECTION -->
+    <div class="hero-section">
+      <div class="hero-avatar">
+        <img id="hero-logo" src="https://via.placeholder.com/150" alt="Logo">
+      </div>
+      <h1 id="hero-title" class="hero-greeting">SELAMAT DATANG DI PRIME CT</h1>
+      <p id="hero-desc" class="hero-desc">Platform digital terpercaya untuk kebutuhan akun premium, jasa editing, top up game, bot WhatsApp, script bot, panel, VPS, partner, dan layanan digital lainnya.</p>
+      
+      <div class="hero-buttons">
+        <!-- TOMBOL KE WEB PRODUK TERPISAH -->
+        <a id="btn-products-link" href="produk.html" class="h-btn primary">Lihat Produk</a>
+        <button class="h-btn" onclick="openPaymentModal()">Payment</button>
+        <a id="hero-owner-btn" href="#" target="_blank" class="h-btn">Hubungi Owner</a>
+        <a id="hero-tools-btn" href="#" target="_blank" class="h-btn">PRIME TOOLS</a>
+      </div>
+    </div>
+
+    <!-- KATEGORI POPULER -->
+    <div class="section-box">
+      <div class="section-header-title">Kategori Populer</div>
+      <h2 class="section-main-title">Produk & Jasa PRIME CT</h2>
+      
+      <div class="category-card">
+        <div class="cat-icon-title"><i class="fa-solid fa-crown" style="color: #f59e0b;"></i> AKUN PREMIUM</div>
+        <div class="cat-desc">Netflix, Spotify, Canva, ChatGPT, YouTube, dan lainnya.</div>
+      </div>
+      <div class="category-card">
+        <div class="cat-icon-title"><i class="fa-solid fa-palette" style="color: #ec4899;"></i> EDITING</div>
+        <div class="cat-desc">Jasa HD, desain, CapCut, Remini, Lightroom, dan paid edit.</div>
+      </div>
+      <div class="category-card">
+        <div class="cat-icon-title"><i class="fa-solid fa-robot" style="color: #3b82f6;"></i> BOT WHATSAPP</div>
+        <div class="cat-desc">Script bot, sewa bot, servis bot, jasa bot, dan fitur WA.</div>
+      </div>
+      <div class="category-card">
+        <div class="cat-icon-title"><i class="fa-solid fa-server" style="color: #8b5cf6;"></i> WEB & PANEL</div>
+        <div class="cat-desc">Panel, VPS, jasa web, dan kebutuhan server digital.</div>
+      </div>
+      <div class="category-card">
+        <div class="cat-icon-title"><i class="fa-solid fa-window-maximize" style="color: #06b6d4;"></i> PRIME CPANEL</div>
+        <div class="cat-desc">Kelola hosting, server, dan panel Pterodactyl langsung dari sini.</div>
+      </div>
+      <div class="category-card">
+        <div class="cat-icon-title"><i class="fa-solid fa-arrows-rotate" style="color: #10b981;"></i> PRIME CONVERT</div>
+        <div class="cat-desc">Kompres & convert foto/video langsung dari browser, gratis tiap minggu.</div>
+      </div>
+    </div>
+
+    <!-- SIAPA ITU PRIME CT -->
+    <div class="about-box">
+      <h3>Siapa itu PRIME CT?</h3>
+      <p><strong>PRIME CT</strong> adalah digital store yang dikembangkan dan dikelola oleh <strong>Tabayyuna Muharrama</strong>, atau yang akrab dikenal dengan nama panggilan <strong>Yuna</strong>. Yuna dikenal sebagai sosok serba bisa dengan banyak bidang keahlian, mulai dari owner, admin, developer, engineer, desainer, editor, kreator konten, hingga pengelola layanan digital yang terus berkembang mengikuti era teknologi modern.</p>
+      <p>PRIME CT hadir sebagai tempat layanan digital yang praktis, cepat, dan terpercaya untuk membantu kebutuhan pelanggan di dunia online. Fokus utama PRIME CT adalah memberikan pengalaman order yang mudah, tampilan website yang modern, layanan yang responsif, serta katalog produk dan jasa yang terus diperbarui mengikuti kebutuhan dunia digital.</p>
+      <div class="role-tags">
+        <span class="role-tag">Owner</span>
+        <span class="role-tag">Admin</span>
+        <span class="role-tag">Developer</span>
+        <span class="role-tag">Engineer</span>
+        <span class="role-tag">Designer</span>
+        <span class="role-tag">Editor</span>
+        <span class="role-tag">Content Creator</span>
+      </div>
+    </div>
+
+    <!-- STATISTIK & KEUNGGULAN -->
+    <div class="stats-box">
+      <div class="stats-number">8.929+</div>
+      <div class="stats-title">Total Pelanggan</div>
+      <div class="stats-desc">PRIME CT dipercaya oleh ribuan pelanggan untuk kebutuhan produk digital, jasa online, layanan editing, bot, akun premium, dan kebutuhan digital lainnya.</div>
+      
+      <div class="feature-mini-grid">
+        <div class="feature-mini">
+          <h5>Fast Response</h5>
+          <p>Admin siap bantu proses order dan konfirmasi payment kapan saja.</p>
+        </div>
+        <div class="feature-mini">
+          <h5>Aman & Terpercaya</h5>
+          <p>Payment resmi dan order diarahkan langsung ke kontak owner.</p>
+        </div>
+        <div class="feature-mini">
+          <h5>Produk Lengkap</h5>
+          <p>Katalog produk dan jasa dibuat untuk banyak kebutuhan digital.</p>
+        </div>
+      </div>
+
+      <div class="order-cta-box">
+        <p>Butuh order cepat?<br>Klik produk yang mau isi, detail order, pilih pembayaran, lalu kirim bukti ke WhatsApp Owner.</p>
+        <a href="produk.html" class="h-btn primary" style="display:inline-block; padding: 12px 30px; border-radius: 20px;">Mulai Order</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-container">
+      <div style="font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 8px;" class="site-brand-name">PRIME CT</div>
+      <p style="margin-bottom: 20px;">Platform digital terpercaya untuk kebutuhan layanan digital premium.</p>
+      
+      <div class="footer-socials">
+        <a id="ft-wa" href="#" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        <a id="ft-ig" href="#" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a>
+        <a id="ft-tg" href="#" target="_blank"><i class="fa-brands fa-telegram"></i> Telegram</a>
+      </div>
+
+      <div class="footer-section-title">Kontak Cepat</div>
+      <div class="footer-contact-list">
+        <div>WhatsApp: <span id="ft-wa-text">-</span></div>
+        <div>WA Cadangan: <span id="ft-wacad-text">-</span></div>
+        <div>Gmail: <span id="ft-mail-text">-</span></div>
+      </div>
+
+      <div class="footer-section-title">Menu</div>
+      <div class="footer-menu-list">
+        <a href="produk.html">Produk & Jasa</a>
+        <a href="#" target="_blank">Partner Resmi</a>
+        <a id="mn-tools" href="#" target="_blank">PRIME Tools</a>
+        <a id="mn-cpanel" href="#" target="_blank">PRIME Cpanel</a>
+        <a id="mn-convert" href="#" target="_blank">PRIME Convert</a>
+        <a id="mn-ai" href="#" target="_blank">PRIME AI</a>
+        <a href="#">FAQ</a>
+        <a href="#">Kontak</a>
+        <a href="admin.html">Login / Daftar</a>
+      </div>
+
+      <div class="copyright">
+        &copy; 2026 PRIME CT<br>All Right Prime Developer 2026
+      </div>
+    </div>
+  </footer>
+
   <script>
-    function openModal(title, desc) {
-      document.getElementById('modalTitle').textContent = title;
-      document.getElementById('modalDesc').textContent = desc;
-      document.getElementById('infoModal').classList.add('active');
+    const SUPABASE_URL = 'https://krxzhxxytjmqmvzndofw.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_BtMu9ACi_o-V29IdGZdIDA_th6tjNzi';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let activeWhatsappNumber = '';
+
+    function closeWaModal() { document.getElementById('wa-modal-overlay').classList.remove('active'); }
+    function openPaymentModal() { document.getElementById('payment-modal-overlay').classList.add('active'); }
+    function closePaymentModal() { document.getElementById('payment-modal-overlay').classList.remove('active'); }
+
+    function copyText(elementId, btn) {
+      const text = document.getElementById(elementId).textContent;
+      navigator.clipboard.writeText(text);
+      let old = btn.textContent;
+      btn.textContent = 'Disalin!';
+      setTimeout(() => btn.textContent = old, 2000);
     }
 
-    function closeModal() {
-      document.getElementById('infoModal').classList.remove('active');
+    async function loadSiteSettings() {
+      const { data } = await supabaseClient.from('site_settings').select('*');
+      if (!data) return;
+
+      let isPopupEnabled = false;
+      let groupUrl = '#';
+
+      data.forEach(item => {
+        if (item.key === 'site_title' && item.value) {
+          document.title = item.value;
+          document.querySelectorAll('.site-brand-name').forEach(el => el.textContent = item.value);
+        }
+        if (item.key === 'logo_url' && item.value) {
+          document.getElementById('header-logo').src = item.value;
+          document.getElementById('hero-logo').src = item.value;
+          document.getElementById('modal-banner-img').src = item.value;
+        }
+        if (item.key === 'hero_title' && item.value) {
+          document.getElementById('hero-title').textContent = item.value;
+        }
+        if (item.key === 'hero_desc' && item.value) {
+          document.getElementById('hero-desc').textContent = item.value;
+        }
+        if (item.key === 'whatsapp_number' && item.value) {
+          activeWhatsappNumber = item.value;
+          document.getElementById('hero-owner-btn').href = `https://wa.me/${item.value}`;
+          document.getElementById('ft-wa').href = `https://wa.me/${item.value}`;
+          document.getElementById('ft-wa-text').textContent = item.value;
+          document.getElementById('pay-confirm-wa').href = `https://wa.me/${item.value}?text=${encodeURIComponent('Halo Admin, saya ingin konfirmasi pembayaran.')}`;
+        }
+        if (item.key === 'whatsapp_backup' && item.value) document.getElementById('ft-wacad-text').textContent = item.value;
+        if (item.key === 'email_contact' && item.value) document.getElementById('ft-mail-text').textContent = item.value;
+        if (item.key === 'instagram_link' && item.value) document.getElementById('ft-ig').href = item.value;
+        if (item.key === 'telegram_link' && item.value) document.getElementById('ft-tg').href = item.value;
+        
+        if (item.key === 'ynatools_link' && item.value) {
+          document.getElementById('hero-tools-btn').href = item.value;
+          document.getElementById('mn-tools').href = item.value;
+        }
+        if (item.key === 'ynacpanel_link' && item.value) document.getElementById('mn-cpanel').href = item.value;
+        if (item.key === 'ynaconvert_link' && item.value) document.getElementById('mn-convert').href = item.value;
+        if (item.key === 'ynaai_link' && item.value) document.getElementById('mn-ai').href = item.value;
+
+        // Background Media (Video/Image)
+        if (item.key === 'bg_media_url' && item.value) {
+          const slot = document.getElementById('bg-media-slot');
+          if (item.value.endsWith('.mp4') || item.value.includes('video')) {
+            slot.innerHTML = `<video autoplay muted loop playsinline><source src="${item.value}" type="video/mp4"></video>`;
+          } else {
+            slot.innerHTML = `<img src="${item.value}" alt="Background">`;
+          }
+        }
+
+        // Payment Settings
+        if (item.key === 'qris_image_url' && item.value) document.getElementById('pay-qris-img').src = item.value;
+        if (item.key === 'dana_number' && item.value) document.getElementById('pay-dana-num').textContent = item.value;
+        if (item.key === 'dana_name' && item.value) document.getElementById('pay-dana-name').textContent = item.value;
+        if (item.key === 'gopay_number' && item.value) document.getElementById('pay-gopay-num').textContent = item.value;
+        if (item.key === 'gopay_name' && item.value) document.getElementById('pay-gopay-name').textContent = item.value;
+
+        // WA Popup
+        if (item.key === 'popup_enabled') isPopupEnabled = (item.value === 'true');
+        if (item.key === 'popup_title' && item.value) document.getElementById('modal-popup-title').textContent = item.value;
+        if (item.key === 'popup_desc' && item.value) document.getElementById('modal-popup-desc').textContent = item.value;
+        if (item.key === 'wa_group_link' && item.value) {
+          groupUrl = item.value;
+          document.getElementById('modal-group-btn').href = item.value;
+        }
+      });
+
+      if (isPopupEnabled && groupUrl !== '#') {
+        setTimeout(() => document.getElementById('wa-modal-overlay').classList.add('active'), 500);
+      }
     }
+
+    loadSiteSettings();
   </script>
-
 </body>
 </html>
