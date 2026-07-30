@@ -34,17 +34,16 @@
     #bg-video-container video, #bg-video-container img {
       width: 100%; height: 100%;
       object-fit: cover;
-      opacity: 0.6; /* Ditingkatkan agar video lebih jelas */
+      opacity: 0.6;
     }
     #bg-video-container::after {
       content: '';
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
-      /* Gradient diubah agar lebih transparan di bagian bawah */
       background: radial-gradient(circle at 50% 20%, rgba(30, 27, 75, 0.3) 0%, rgba(9, 11, 16, 0.7) 100%);
     }
 
-    /* ANIMASI RGB */
+    /* ANIMASI RGB UNTUK HERO (TETAP ADA) */
     @keyframes rgbGlowText {
       0% { color: #ff3366; filter: drop-shadow(0 0 10px rgba(255, 51, 102, 0.5)); }
       25% { color: #38bdf8; filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5)); }
@@ -65,7 +64,15 @@
     }
     .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-main); }
     .brand img { width: 38px; height: 38px; border-radius: 12px; object-fit: cover; border: 1px solid rgba(168, 85, 247, 0.4); }
-    .brand span { font-size: 1.1rem; font-weight: 800; /* Animasi RGB dihapus dari sini */ } 
+    
+    /* UBAHAN WARNA HEADER KIRI ATAS SEPERTI YNA */
+    .brand span { 
+      font-size: 1.1rem; 
+      font-weight: 800; 
+      background: linear-gradient(to right, #ec4899, #38bdf8); /* Gradasi Pink ke Biru */
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
     .main-wrapper { max-width: 600px; margin: 0 auto; padding: 30px 20px; }
 
@@ -79,7 +86,6 @@
     }
     .hero-avatar img { width: 100%; height: 100%; object-fit: cover; }
     
-    /* Penyesuaian teks welcome & hero greeting */
     .hero-welcome { font-size: 0.95rem; font-weight: 700; color: #e2e8f0; letter-spacing: 3px; margin-bottom: 2px; text-transform: uppercase; }
     .hero-greeting { font-size: 2.2rem; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; animation: rgbGlowText 6s infinite linear; line-height: 1.1; }
     
@@ -250,6 +256,7 @@
     <div class="nav-container">
       <a href="index.html" class="brand">
         <img id="header-logo" src="https://via.placeholder.com/150" alt="Logo">
+        <!-- Tulisan header kiri atas yang sudah disesuaikan -->
         <span class="site-brand-name">PRIME CT</span>
       </a>
     </div>
@@ -261,7 +268,7 @@
       <div class="hero-avatar">
         <img id="hero-logo" src="https://via.placeholder.com/150" alt="Logo">
       </div>
-      <!-- Struktur Header Dipisah Sesuai Request -->
+      
       <div class="hero-welcome">SELAMAT DATANG DI</div>
       <h1 id="hero-title" class="hero-greeting">PRIME CT STORE</h1>
       
