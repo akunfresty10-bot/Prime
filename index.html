@@ -88,22 +88,28 @@
     }
     .hero-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* --- MODIFIKASI KOTAK HERO UNTUK KEJELASAN TEKS --- */
-    /* Membuat kotak di sekitar teks 'Selamat Datang' dan deskripsi, dengan gaya mirip kotak total pelanggan. */
+    /* --- KOTAK TEKS HERO --- */
     .hero-text-card {
       background: linear-gradient(135deg, rgba(236, 72, 153, 0.25) 0%, rgba(20, 15, 25, 0.85) 100%);
       border: 1px solid rgba(236, 72, 153, 0.4);
       border-radius: 24px;
       padding: 20px;
       text-align: center;
-      margin-bottom: 28px; /* Ruang ke tombol di bawahnya */
-      backdrop-filter: blur(12px); /* Buram latar belakang yang lebih kuat untuk meningkatkan kontras teks */
+      margin-bottom: 20px; 
+      backdrop-filter: blur(12px); 
+    }
+
+    /* --- KOTAK TOMBOL AKSI HERO --- */
+    .hero-action-card {
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.25) 0%, rgba(20, 15, 25, 0.85) 100%);
+      border: 1px solid rgba(236, 72, 153, 0.4);
+      border-radius: 24px;
+      padding: 20px;
+      backdrop-filter: blur(12px);
     }
 
     .hero-welcome { font-size: 0.95rem; font-weight: 700; color: #fbcfe8; letter-spacing: 3px; margin-bottom: 2px; text-transform: uppercase; }
     .hero-greeting { font-size: 2.2rem; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; animation: rgbGlowText 6s infinite linear; line-height: 1.1; }
-    
-    /* Menghapus margin atas dari deskripsi agar pas di dalam kotak. Jarak bawah ditangani oleh .hero-text-card */
     .hero-desc { font-size: 0.88rem; color: #e2e8f0; line-height: 1.6; padding: 0 10px; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
 
     .hero-buttons { display: flex; flex-direction: column; gap: 12px; }
@@ -286,20 +292,21 @@
         <img id="hero-logo" src="https://via.placeholder.com/150" alt="Logo">
       </div>
       
-      <!-- --- AREA TEKS YANG DILINGKARI DIAPIT DALAM KOTAK BARU --- -->
-      <!-- 'hero-text-card' adalah kotak baru yang memberikan latar belakang buram/gradien di bawah teks agar lebih jelas -->
+      <!-- KOTAK TEKS -->
       <div class="hero-text-card">
         <div class="hero-welcome">SELAMAT DATANG DI</div>
         <h1 id="hero-title" class="hero-greeting">PRIME CT STORE</h1>
         <p id="hero-desc" class="hero-desc">Platform digital terpercaya untuk kebutuhan akun premium, jasa editing, top up game, bot WhatsApp, script bot, panel, VPS, partner, dan layanan digital lainnya.</p>
       </div>
-      <!-- --- AKHIR AREA KOTAK TEKS --- -->
       
-      <div class="hero-buttons">
-        <a id="btn-products-link" href="produk.html" class="h-btn primary">Lihat Produk</a>
-        <button class="h-btn" onclick="openPaymentModal()">Payment</button>
-        <a id="hero-owner-btn" href="#" target="_blank" class="h-btn">Hubungi Owner</a>
-        <a id="hero-tools-btn" href="#" target="_blank" class="h-btn">PRIME TOOLS</a>
+      <!-- KOTAK TOMBOL AKSI -->
+      <div class="hero-action-card">
+        <div class="hero-buttons">
+          <a id="btn-products-link" href="produk.html" class="h-btn primary">Lihat Produk</a>
+          <button class="h-btn" onclick="openPaymentModal()">Payment</button>
+          <a id="hero-owner-btn" href="#" target="_blank" class="h-btn">Hubungi Owner</a>
+          <a id="hero-tools-btn" href="#" target="_blank" class="h-btn">PRIME TOOLS</a>
+        </div>
       </div>
     </div>
 
