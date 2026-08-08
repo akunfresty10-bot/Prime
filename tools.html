@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    <title>PRIME Tools - Media Compressor</title>
+    <title>PRIME CT CONVERT - Media Compressor</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Font Awesome v7.0.0 Pro dari CDN Termai -->
+    <link rel="stylesheet" href="https://c.termai.cc/fontawesome/v7.0.0/css/all.css">
     <style>
         * {
             margin: 0;
@@ -21,7 +22,6 @@
             padding: 0 0 20px;
         }
 
-        /* GLASSMORPHISM BASE */
         .glass-card {
             background: rgba(20, 28, 58, 0.65);
             backdrop-filter: blur(12px);
@@ -86,6 +86,7 @@
             border-radius: 40px;
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
         }
         .back-btn:hover {
             color: #60a5fa;
@@ -93,14 +94,12 @@
             border-color: rgba(59, 130, 246, 0.25);
         }
 
-        /* MAIN */
         .main-wrapper {
             max-width: 720px;
             margin: 0 auto;
             padding: 24px 20px 40px;
         }
 
-        /* PAGE TITLE */
         .page-head {
             text-align: center;
             margin-bottom: 28px;
@@ -121,7 +120,6 @@
             opacity: 0.8;
         }
 
-        /* STATUS BADGE */
         .server-status {
             display: inline-flex;
             align-items: center;
@@ -146,7 +144,6 @@
             100% { opacity: 0.3; transform: scale(0.9); }
         }
 
-        /* COMPRESSOR CARD */
         .compressor-card {
             padding: 32px 28px;
             margin-top: 6px;
@@ -178,16 +175,19 @@
             color: #3b82f6;
             opacity: 0.6;
             margin-bottom: 12px;
+            pointer-events: none;
         }
         .drop-zone h3 {
             font-weight: 700;
             font-size: 1.1rem;
             color: #e2e8f0;
+            pointer-events: none;
         }
         .drop-zone p {
             color: #64748b;
             font-size: 0.85rem;
             margin-top: 6px;
+            pointer-events: none;
         }
         .drop-zone .browse-btn {
             display: inline-block;
@@ -202,11 +202,19 @@
             transition: all 0.25s;
             font-size: 0.9rem;
             box-shadow: 0 8px 24px -6px rgba(59, 130, 246, 0.3);
+            pointer-events: auto;
+            position: relative;
+            z-index: 2;
         }
         .drop-zone .browse-btn:hover {
             transform: scale(1.03);
             box-shadow: 0 12px 30px -6px rgba(59, 130, 246, 0.5);
         }
+
+        #hiddenFileInput {
+            display: none !important;
+        }
+
         .file-info-preview {
             margin-top: 16px;
             padding: 14px 18px;
@@ -218,6 +226,7 @@
             gap: 12px;
             flex-wrap: wrap;
             border: 1px solid rgba(59, 130, 246, 0.15);
+            pointer-events: auto;
         }
         .file-info-preview.show {
             display: flex;
@@ -249,12 +258,12 @@
             border-radius: 40px;
             background: rgba(239, 68, 68, 0.1);
             transition: 0.2s;
+            pointer-events: auto;
         }
         .remove-file:hover {
             background: rgba(239, 68, 68, 0.2);
         }
 
-        /* OPTIONS ROW */
         .options-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -323,7 +332,6 @@
             box-shadow: 0 4px 18px rgba(59, 130, 246, 0.3);
         }
 
-        /* SUBMIT */
         .btn-compress {
             width: 100%;
             padding: 16px;
@@ -354,7 +362,6 @@
             box-shadow: none;
         }
 
-        /* PROGRESS */
         .progress-section {
             margin-top: 28px;
             display: none;
@@ -384,7 +391,6 @@
             font-weight: 500;
         }
 
-        /* DOWNLOAD */
         .download-section {
             margin-top: 28px;
             display: none;
@@ -426,7 +432,6 @@
             box-shadow: 0 12px 32px -6px rgba(34, 197, 94, 0.5);
         }
 
-        /* ERROR */
         .error-message {
             background: rgba(239, 68, 68, 0.08);
             border: 1px solid rgba(239, 68, 68, 0.2);
@@ -443,7 +448,6 @@
             display: block;
         }
 
-        /* INFO BOX */
         .info-box {
             margin-top: 32px;
             background: rgba(59, 130, 246, 0.05);
@@ -468,7 +472,6 @@
             color: #e2e8f0;
         }
 
-        /* DONASI BOX */
         .donate-box {
             margin-top: 28px;
             background: rgba(255, 215, 0, 0.04);
@@ -503,7 +506,6 @@
             opacity: 0.6;
         }
 
-        /* FOOTER */
         footer {
             max-width: 720px;
             margin: 50px auto 0;
@@ -524,7 +526,6 @@
             margin-top: 10px;
         }
 
-        /* RESPONSIVE */
         @media (max-width: 600px) {
             .compressor-card {
                 padding: 24px 16px;
@@ -551,12 +552,6 @@
             }
         }
 
-        /* HIDE FILE INPUT */
-        #hiddenFileInput {
-            display: none;
-        }
-
-        /* SPINNER */
         .spinner {
             display: inline-block;
             animation: spin 0.9s linear infinite;
@@ -566,7 +561,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* SLIDER before after (conceptual) */
         .comparison-hint {
             display: flex;
             align-items: center;
@@ -593,11 +587,11 @@
     <div class="nav-container">
         <a href="#" class="brand">
             <img src="https://via.placeholder.com/150" alt="Logo" id="headerLogo">
-            <span id="brandName">PRIME CT</span>
+            <span id="brandName">PRIME CT CONVERT</span>
         </a>
-        <a href="#" class="back-btn" id="backHomeBtn">
-            <i class="fa-solid fa-arrow-left"></i> Kembali
-        </a>
+        <div class="back-btn" id="backHomeBtn">
+            <i class="fa-regular fa-arrow-left"></i> Kembali
+        </div>
     </div>
 </header>
 
@@ -621,7 +615,7 @@
         <!-- DROP ZONE -->
         <div class="drop-zone" id="dropZone">
             <i class="fa-regular fa-cloud-arrow-up"></i>
-            <h3>Drag & drop your file here</h3>
+            <h3 id="dropTitle">Drag & drop your file here</h3>
             <p>Supports MP4, WebM, MOV, AVI, JPG, PNG, WEBP up to 150MB</p>
             <button class="browse-btn" id="browseBtn"><i class="fa-regular fa-folder-open"></i> Browse Files</button>
             <input type="file" id="hiddenFileInput" accept="video/*,image/*" />
@@ -680,7 +674,7 @@
         <div class="error-message" id="errorMessage"></div>
     </div>
 
-    <!-- COMPARISON HINT (visual) -->
+    <!-- COMPARISON HINT -->
     <div class="comparison-hint">
         <span class="line"></span>
         <i class="fa-regular fa-arrows-left-right"></i>
@@ -697,7 +691,7 @@
         </p>
     </div>
 
-    <!-- DONASI BOX (seperti Termai) -->
+    <!-- DONASI BOX -->
     <div class="donate-box">
         <h4><i class="fa-regular fa-heart" style="color:#fcd34d;"></i> Dukung Server Termai</h4>
         <p>Operasional & Pengembangan Server — Setiap donasi Anda akan digunakan untuk membiayai server dan operasional agar tetap berjalan cepat dan gratis.</p>
@@ -713,19 +707,20 @@
 
 <!-- FOOTER -->
 <footer>
-    <div class="brand-name" id="footerBrand">PRIME CT</div>
+    <div class="brand-name" id="footerBrand">PRIME CT CONVERT</div>
     <p>© 2026 PRIME CT · All Right Prime Developer 2026</p>
 </footer>
 
+<!-- Font Awesome v7.0.0 Pro JS -->
+<script src="https://c.termai.cc/fontawesome/v7.0.0/js/all.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
     // =============================================
     // KONFIGURASI
     // =============================================
-    const API_KEY = 'YOUR_API_KEY_HERE'; // Ganti dengan API Key FreeConvert
+    const API_KEY = 'YOUR_API_KEY_HERE';
     const API_URL = 'https://api.freeconvert.com/v1';
 
-    // Supabase (opsional untuk settings)
     const SUPABASE_URL = 'https://krxzhxxytjmqmvzndofw.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_BtMu9ACi_o-V29IdGZdIDA_th6tjNzi';
     const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -748,6 +743,7 @@
     const fileNameDisplay = document.getElementById('fileNameDisplay');
     const fileSizeDisplay = document.getElementById('fileSizeDisplay');
     const removeFileBtn = document.getElementById('removeFileBtn');
+    const dropTitle = document.getElementById('dropTitle');
 
     const qualityBtns = document.querySelectorAll('.quality-btn');
     const outputFormat = document.getElementById('outputFormat');
@@ -760,7 +756,7 @@
     const errorMessage = document.getElementById('errorMessage');
 
     // =============================================
-    // LOAD SETTINGS (Supabase)
+    // LOAD SETTINGS
     // =============================================
     async function loadSettings() {
         try {
@@ -801,52 +797,56 @@
         fileNameDisplay.textContent = file.name;
         fileSizeDisplay.textContent = sizeMB + ' MB';
         fileInfoPreview.classList.add('show');
-        dropZone.querySelector('h3').textContent = 'File siap dikompres!';
+        dropTitle.textContent = 'File siap dikompres!';
         hideError();
     }
 
     function removeFile() {
         selectedFile = null;
         fileInfoPreview.classList.remove('show');
-        dropZone.querySelector('h3').textContent = 'Drag & drop your file here';
+        dropTitle.textContent = 'Drag & drop your file here';
         hiddenInput.value = '';
         downloadSection.classList.remove('active');
         progressSection.classList.remove('active');
         downloadUrl = null;
     }
 
-    // Event: browse
-    browseBtn.addEventListener('click', (e) => {
+    browseBtn.addEventListener('click', function(e) {
         e.stopPropagation();
         hiddenInput.click();
     });
 
-    hiddenInput.addEventListener('change', (e) => {
-        if (e.target.files.length) {
-            handleFile(e.target.files[0]);
+    hiddenInput.addEventListener('change', function(e) {
+        if (this.files && this.files.length > 0) {
+            handleFile(this.files[0]);
+        }
+        this.value = '';
+    });
+
+    dropZone.addEventListener('click', function(e) {
+        if (e.target.closest('.browse-btn') || e.target.closest('.remove-file')) return;
+        if (!selectedFile) {
+            hiddenInput.click();
         }
     });
 
-    // Event: drop zone
-    dropZone.addEventListener('dragover', (e) => {
+    dropZone.addEventListener('dragover', function(e) {
         e.preventDefault();
-        dropZone.classList.add('dragover');
+        this.classList.add('dragover');
     });
-    dropZone.addEventListener('dragleave', () => {
-        dropZone.classList.remove('dragover');
-    });
-    dropZone.addEventListener('drop', (e) => {
+    dropZone.addEventListener('dragleave', function(e) {
         e.preventDefault();
-        dropZone.classList.remove('dragover');
-        if (e.dataTransfer.files.length) {
+        this.classList.remove('dragover');
+    });
+    dropZone.addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.classList.remove('dragover');
+        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
             handleFile(e.dataTransfer.files[0]);
         }
     });
-    dropZone.addEventListener('click', () => {
-        if (!selectedFile) hiddenInput.click();
-    });
 
-    removeFileBtn.addEventListener('click', (e) => {
+    removeFileBtn.addEventListener('click', function(e) {
         e.stopPropagation();
         removeFile();
     });
@@ -855,7 +855,8 @@
     // QUALITY BUTTONS
     // =============================================
     qualityBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
             qualityBtns.forEach(b => b.classList.remove('active'));
             this.classList.add('active');
             selectedQuality = this.dataset.quality;
@@ -899,26 +900,21 @@
     });
 
     // =============================================
-    // CORE COMPRESS FUNCTION
+    // CORE COMPRESS
     // =============================================
     async function compressVideo() {
-        // 1. Upload
         const uploadUrl = await uploadFile(selectedFile);
         updateProgress(10, '📤 File berhasil diupload');
 
-        // 2. Create job
         const jobData = await createJob(uploadUrl);
         const jobId = jobData.id;
         updateProgress(20, '⚙️ Job dibuat');
 
-        // 3. Start
         await startJob(jobId);
         updateProgress(30, '🔄 Konversi dimulai...');
 
-        // 4. Poll
         const result = await pollJobStatus(jobId);
 
-        // 5. Done
         downloadUrl = result.download_url;
         updateProgress(100, '✅ Selesai!');
         downloadSection.classList.add('active');
@@ -1060,18 +1056,16 @@
     }
     function hideError() { errorMessage.classList.remove('show'); }
 
-    // Download
     downloadBtn.addEventListener('click', () => {
         if (downloadUrl) window.open(downloadUrl, '_blank');
     });
 
-    // Back button
     document.getElementById('backHomeBtn').addEventListener('click', (e) => {
         e.preventDefault();
         window.location.href = 'index.html';
     });
 
-    console.log('🎬 Media Compressor siap!');
+    console.log('🎬 PRIME CT CONVERT - Media Compressor siap!');
 </script>
 </body>
 </html>
