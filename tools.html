@@ -150,7 +150,7 @@
             transition: all 0.2s;
         }
 
-        /* DROP ZONE */
+        /* DROP ZONE - DIPERBAIKI */
         .drop-zone {
             border: 2px dashed rgba(59, 130, 246, 0.25);
             border-radius: 24px;
@@ -211,8 +211,14 @@
             box-shadow: 0 12px 30px -6px rgba(59, 130, 246, 0.5);
         }
 
+        /* HIDDEN INPUT - TETAP TERSEMBUNYI TAPI BERFUNGSI */
         #hiddenFileInput {
-            display: none !important;
+            position: absolute;
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            z-index: -1;
         }
 
         .file-info-preview {
@@ -779,7 +785,7 @@
     loadSettings();
 
     // =============================================
-    // FILE HANDLING
+    // FILE HANDLING - DIPERBAIKI
     // =============================================
     function handleFile(file) {
         if (!file) return;
@@ -811,25 +817,31 @@
         downloadUrl = null;
     }
 
+    // ----- EVENT: BROWSE BUTTON (langsung buka file dialog) -----
     browseBtn.addEventListener('click', function(e) {
         e.stopPropagation();
         hiddenInput.click();
     });
 
+    // ----- EVENT: HIDDEN INPUT CHANGE -----
     hiddenInput.addEventListener('change', function(e) {
         if (this.files && this.files.length > 0) {
             handleFile(this.files[0]);
         }
+        // Reset value agar bisa pilih file yang sama lagi
         this.value = '';
     });
 
+    // ----- EVENT: DROP ZONE KLIK (buka file dialog jika tidak ada file) -----
     dropZone.addEventListener('click', function(e) {
+        // Jangan trigger jika klik di tombol browse atau remove
         if (e.target.closest('.browse-btn') || e.target.closest('.remove-file')) return;
         if (!selectedFile) {
             hiddenInput.click();
         }
     });
 
+    // ----- EVENT: DRAG & DROP -----
     dropZone.addEventListener('dragover', function(e) {
         e.preventDefault();
         this.classList.add('dragover');
@@ -846,6 +858,7 @@
         }
     });
 
+    // ----- EVENT: REMOVE FILE -----
     removeFileBtn.addEventListener('click', function(e) {
         e.stopPropagation();
         removeFile();
