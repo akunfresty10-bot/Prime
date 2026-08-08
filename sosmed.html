@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRIME CT - Social Media</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-body: #0a0e1a;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --text-main: #f0f6fc;
+      --text-sub: #94a3b8;
+      --accent-blue: #3b82f6;
+      --accent-blue-light: #60a5fa;
+      --accent-cyan: #06b6d4;
+      --accent-indigo: #4f46e5;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    #bg-video-container {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -1;
+      overflow: hidden;
+      background: #0a0e1a;
+    }
+    #bg-video-container video, #bg-video-container img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.3;
+    }
+    #bg-video-container::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(180deg, rgba(10, 14, 26, 0.7) 0%, rgba(10, 14, 26, 0.95) 100%);
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.85rem;
+      backdrop-filter: blur(10px);
+      transition: 0.2s;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .back-btn:hover {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: rgba(59, 130, 246, 0.6);
+    }
+
+    .sosmed-container {
+      max-width: 600px;
+      width: 100%;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .sosmed-logo {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 20px auto;
+      border-radius: 24px;
+      border: 2px solid rgba(59, 130, 246, 0.5);
+      overflow: hidden;
+      background: #1a1f33;
+      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+    }
+    .sosmed-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .sosmed-title {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      background: linear-gradient(to right, #3b82f6, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .sosmed-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-sub);
+      margin-bottom: 30px;
+    }
+
+    .sosmed-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .sosmed-card {
+      background: rgba(20, 25, 45, 0.65);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 16px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-decoration: none;
+      color: #fff;
+      transition: 0.2s;
+      backdrop-filter: blur(10px);
+    }
+    .sosmed-card:hover {
+      border-color: rgba(59, 130, 246, 0.5);
+      transform: translateY(-2px);
+      background: rgba(30, 40, 70, 0.8);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+    }
+
+    .sosmed-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .sosmed-info {
+      flex-grow: 1;
+      text-align: left;
+    }
+    .sosmed-info h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .sosmed-info p {
+      font-size: 0.78rem;
+      color: var(--text-sub);
+      margin: 0;
+    }
+
+    .sosmed-arrow {
+      color: var(--text-sub);
+      font-size: 0.9rem;
+      transition: 0.2s;
+    }
+    .sosmed-card:hover .sosmed-arrow {
+      color: var(--accent-blue-light);
+      transform: translateX(4px);
+    }
+
+    /* Warna ikon sosial media */
+    .icon-whatsapp { background: rgba(37, 211, 102, 0.15); color: #25d366; }
+    .icon-instagram { background: rgba(225, 48, 108, 0.15); color: #e1306c; }
+    .icon-telegram { background: rgba(0, 136, 204, 0.15); color: #0088cc; }
+    .icon-youtube { background: rgba(255, 0, 0, 0.15); color: #ff0000; }
+    .icon-tiktok { background: rgba(0, 0, 0, 0.3); color: #00f2ea; border: 1px solid rgba(0, 242, 234, 0.2); }
+    .icon-twitter { background: rgba(29, 161, 242, 0.15); color: #1da1f2; }
+    .icon-facebook { background: rgba(24, 119, 242, 0.15); color: #1877f2; }
+    .icon-github { background: rgba(255, 255, 255, 0.08); color: #fff; }
+    .icon-linkedin { background: rgba(0, 119, 181, 0.15); color: #0077b5; }
+    .icon-discord { background: rgba(88, 101, 242, 0.15); color: #5865f2; }
+    .icon-spotify { background: rgba(30, 215, 96, 0.15); color: #1db954; }
+    .icon-website { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+
+    .footer-sosmed {
+      margin-top: 40px;
+      font-size: 0.75rem;
+      color: var(--text-sub);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding-top: 20px;
+      width: 100%;
+    }
+
+    /* ANIMASI LOADING */
+    .loading-text {
+      color: var(--text-sub);
+      font-size: 0.9rem;
+      padding: 40px 0;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <div id="bg-video-container">
+    <div id="bg-media-slot"></div>
+  </div>
+
+  <a href="index.html" class="back-btn">
+    <i class="fa-solid fa-arrow-left"></i> Kembali
+  </a>
+
+  <div class="sosmed-container">
+    <div class="sosmed-logo">
+      <img id="sosmed-logo-img" src="https://via.placeholder.com/150" alt="Logo">
+    </div>
+    <h1 class="sosmed-title">PRIME CT</h1>
+    <p class="sosmed-subtitle">Ikuti kami di semua platform sosial media</p>
+
+    <div id="sosmed-list" class="sosmed-grid">
+      <div class="loading-text"><i class="fa-solid fa-spinner fa-spin"></i> Memuat link...</div>
+    </div>
+
+    <div class="footer-sosmed">
+      &copy; 2026 PRIME CT - All Rights Reserved
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://krxzhxxytjmqmvzndofw.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_BtMu9ACi_o-V29IdGZdIDA_th6tjNzi';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Daftar platform sosial media dengan default icon dan warna
+    const SOCIAL_PLATFORMS = {
+      whatsapp: { icon: 'fa-brands fa-whatsapp', label: 'WhatsApp', color: '#25d366', class: 'icon-whatsapp' },
+      instagram: { icon: 'fa-brands fa-instagram', label: 'Instagram', color: '#e1306c', class: 'icon-instagram' },
+      telegram: { icon: 'fa-brands fa-telegram', label: 'Telegram', color: '#0088cc', class: 'icon-telegram' },
+      youtube: { icon: 'fa-brands fa-youtube', label: 'YouTube', color: '#ff0000', class: 'icon-youtube' },
+      tiktok: { icon: 'fa-brands fa-tiktok', label: 'TikTok', color: '#00f2ea', class: 'icon-tiktok' },
+      twitter: { icon: 'fa-brands fa-twitter', label: 'Twitter / X', color: '#1da1f2', class: 'icon-twitter' },
+      facebook: { icon: 'fa-brands fa-facebook', label: 'Facebook', color: '#1877f2', class: 'icon-facebook' },
+      github: { icon: 'fa-brands fa-github', label: 'GitHub', color: '#ffffff', class: 'icon-github' },
+      linkedin: { icon: 'fa-brands fa-linkedin', label: 'LinkedIn', color: '#0077b5', class: 'icon-linkedin' },
+      discord: { icon: 'fa-brands fa-discord', label: 'Discord', color: '#5865f2', class: 'icon-discord' },
+      spotify: { icon: 'fa-brands fa-spotify', label: 'Spotify', color: '#1db954', class: 'icon-spotify' },
+      website: { icon: 'fa-solid fa-globe', label: 'Website', color: '#3b82f6', class: 'icon-website' }
+    };
+
+    async function loadSosmedLinks() {
+      const { data } = await supabaseClient.from('site_settings').select('*');
+      if (!data) {
+        document.getElementById('sosmed-list').innerHTML = '<p style="color:var(--text-sub);">Gagal memuat link.</p>';
+        return;
+      }
+
+      // Ambil semua link sosial media
+      const sosmedKeys = Object.keys(SOCIAL_PLATFORMS);
+      const links = {};
+
+      data.forEach(item => {
+        if (item.key.startsWith('sosmed_')) {
+          const platform = item.key.replace('sosmed_', '');
+          if (sosmedKeys.includes(platform)) {
+            links[platform] = item.value;
+          }
+        }
+        // Logo
+        if (item.key === 'logo_url' && item.value) {
+          document.getElementById('sosmed-logo-img').src = item.value;
+        }
+        // Background
+        if (item.key === 'bg_media_url' && item.value) {
+          const slot = document.getElementById('bg-media-slot');
+          if (item.value.endsWith('.mp4') || item.value.includes('video')) {
+            slot.innerHTML = `<video autoplay muted loop playsinline><source src="${item.value}" type="video/mp4"></video>`;
+          } else {
+            slot.innerHTML = `<img src="${item.value}" alt="Background">`;
+          }
+        }
+      });
+
+      // Render daftar sosial media
+      const container = document.getElementById('sosmed-list');
+      let hasLinks = false;
+      let html = '';
+
+      for (const [key, platform] of Object.entries(SOCIAL_PLATFORMS)) {
+        const url = links[key] || '';
+        if (url && url.trim() !== '') {
+          hasLinks = true;
+          html += `
+            <a href="${url}" target="_blank" class="sosmed-card">
+              <div class="sosmed-icon ${platform.class}">
+                <i class="${platform.icon}"></i>
+              </div>
+              <div class="sosmed-info">
+                <h4>${platform.label}</h4>
+                <p>${url.replace(/^https?:\/\//, '').split('/')[0]}</p>
+              </div>
+              <div class="sosmed-arrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </a>
+          `;
+        }
+      }
+
+      if (!hasLinks) {
+        html = `
+          <div style="background:rgba(20,25,45,0.65);border:1px solid rgba(59,130,246,0.2);border-radius:16px;padding:30px 20px;text-align:center;">
+            <i class="fa-solid fa-link" style="font-size:2rem;color:var(--text-sub);margin-bottom:12px;display:block;"></i>
+            <p style="color:var(--text-sub);">Belum ada link sosial media yang ditambahkan.</p>
+            <p style="color:var(--text-sub);font-size:0.8rem;margin-top:6px;">Silakan kelola melalui Admin Panel.</p>
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
+    }
+
+    loadSosmedLinks();
+  </script>
+</body>
+</html>
