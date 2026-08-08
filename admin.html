@@ -8,10 +8,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --bg-body: #090b10;
+      --bg-body: #0a0e1a;
       --bg-card: #141824;
       --border-color: rgba(255, 255, 255, 0.08);
-      --accent-purple: #8b5cf6;
+      --accent-blue: #3b82f6;
+      --accent-indigo: #4f46e5;
       --text-main: #f0f6fc;
       --text-sub: #94a3b8;
     }
@@ -23,10 +24,10 @@
     /* SIDEBAR */
     .sidebar { width: 260px; background: rgba(13, 16, 24, 0.95); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; position: fixed; height: 100vh; z-index: 100; transition: 0.3s; }
     .sidebar-brand { padding: 24px 20px; font-size: 1.15rem; font-weight: 800; border-bottom: 1px solid var(--border-color); color: #fff; display: flex; align-items: center; gap: 10px; }
-    .sidebar-brand i { color: var(--accent-purple); }
+    .sidebar-brand i { color: var(--accent-blue); }
     .sidebar-menu { padding: 20px 12px; display: flex; flex-direction: column; gap: 6px; flex-grow: 1; overflow-y: auto; }
     .menu-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: var(--text-sub); text-decoration: none; border-radius: 12px; font-weight: 600; font-size: 0.9rem; transition: 0.2s; cursor: pointer; }
-    .menu-item:hover, .menu-item.active { background: rgba(139, 92, 246, 0.15); color: #fff; }
+    .menu-item:hover, .menu-item.active { background: rgba(59, 130, 246, 0.15); color: #fff; }
     .menu-item i { width: 20px; text-align: center; }
     .sidebar-footer { padding: 16px 20px; border-top: 1px solid var(--border-color); }
     .logout-btn { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); width: 100%; padding: 10px; border-radius: 10px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
@@ -49,19 +50,13 @@
     .form-group { margin-bottom: 16px; }
     .form-label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-sub); margin-bottom: 6px; }
     .form-input, .form-textarea { width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 12px; color: #fff; font-size: 0.9rem; outline: none; }
-    .form-input:focus, .form-textarea:focus { border-color: var(--accent-purple); }
+    .form-input:focus, .form-textarea:focus { border-color: var(--accent-blue); }
     
-    /* KOTAK TEXTAREA LEBAR & LELUASA */
-    .form-textarea {
-      min-height: 150px;
-      resize: vertical;
-      line-height: 1.5;
-    }
+    .form-textarea { min-height: 150px; resize: vertical; line-height: 1.5; }
 
-    .btn-primary { background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); color: #fff; border: none; width: 100%; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+    .btn-primary { background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-indigo) 100%); color: #fff; border: none; width: 100%; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.2s; }
     .btn-primary:hover { opacity: 0.9; }
 
-    /* TABLE */
     .table-responsive { width: 100%; overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem; }
     th { padding: 12px 16px; color: var(--text-sub); border-bottom: 1px solid var(--border-color); font-weight: 700; background: rgba(255,255,255,0.02); }
@@ -76,7 +71,7 @@
     .section-tab-content.active { display: block; }
 
     .grid-settings { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
-    .section-divider { grid-column: 1 / -1; font-size: 1rem; font-weight: 800; color: var(--accent-purple); margin-top: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; }
+    .section-divider { grid-column: 1 / -1; font-size: 1rem; font-weight: 800; color: var(--accent-blue); margin-top: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -112,6 +107,7 @@
         <a class="menu-item active" onclick="switchTab('tab-settings', this)"><i class="fa-solid fa-gear"></i> Pengaturan Situs</a>
         <a class="menu-item" onclick="switchTab('tab-products', this)"><i class="fa-solid fa-box"></i> Kelola Produk</a>
         <a class="menu-item" onclick="switchTab('tab-services', this)"><i class="fa-solid fa-headset"></i> Kelola Layanan</a>
+        <a class="menu-item" onclick="switchTab('tab-sosmed', this)"><i class="fa-solid fa-share-nodes"></i> Kelola Sosmed</a>
       </div>
       <div class="sidebar-footer">
         <button class="logout-btn" onclick="handleLogout()"><i class="fa-solid fa-right-from-bracket"></i> Keluar</button>
@@ -239,6 +235,33 @@
         </div>
       </div>
 
+      <!-- TAB 4: KELOLA SOSIAL MEDIA -->
+      <div id="tab-sosmed" class="section-tab-content">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Kelola Link Sosial Media</h3>
+          </div>
+          <p style="color:var(--text-sub);margin-bottom:20px;font-size:0.85rem;">Masukkan URL lengkap untuk setiap platform sosial media. Kosongkan jika tidak ingin ditampilkan.</p>
+          
+          <div class="grid-settings">
+            <div class="section-divider">Platform Sosial Media</div>
+            
+            <div class="form-group"><label class="form-label">WhatsApp</label><input type="text" id="set-sosmed_whatsapp" class="form-input" placeholder="https://wa.me/628xxxxxxxxxx"></div>
+            <div class="form-group"><label class="form-label">Instagram</label><input type="text" id="set-sosmed_instagram" class="form-input" placeholder="https://instagram.com/username"></div>
+            <div class="form-group"><label class="form-label">Telegram</label><input type="text" id="set-sosmed_telegram" class="form-input" placeholder="https://t.me/username"></div>
+            <div class="form-group"><label class="form-label">YouTube</label><input type="text" id="set-sosmed_youtube" class="form-input" placeholder="https://youtube.com/@channel"></div>
+            <div class="form-group"><label class="form-label">TikTok</label><input type="text" id="set-sosmed_tiktok" class="form-input" placeholder="https://tiktok.com/@username"></div>
+            <div class="form-group"><label class="form-label">Twitter / X</label><input type="text" id="set-sosmed_twitter" class="form-input" placeholder="https://twitter.com/username"></div>
+            <div class="form-group"><label class="form-label">Facebook</label><input type="text" id="set-sosmed_facebook" class="form-input" placeholder="https://facebook.com/username"></div>
+            <div class="form-group"><label class="form-label">GitHub</label><input type="text" id="set-sosmed_github" class="form-input" placeholder="https://github.com/username"></div>
+            <div class="form-group"><label class="form-label">LinkedIn</label><input type="text" id="set-sosmed_linkedin" class="form-input" placeholder="https://linkedin.com/in/username"></div>
+            <div class="form-group"><label class="form-label">Discord</label><input type="text" id="set-sosmed_discord" class="form-input" placeholder="https://discord.gg/invite"></div>
+            <div class="form-group"><label class="form-label">Spotify</label><input type="text" id="set-sosmed_spotify" class="form-input" placeholder="https://open.spotify.com/user/..."></div>
+            <div class="form-group"><label class="form-label">Website / Portfolio</label><input type="text" id="set-sosmed_website" class="form-input" placeholder="https://website.com"></div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -305,7 +328,11 @@
         'whatsapp_number', 'whatsapp_backup', 'email_contact', 'instagram_link', 'telegram_link',
         'qris_image_url', 'dana_number', 'dana_name', 'gopay_number', 'gopay_name',
         'popup_enabled', 'popup_title', 'popup_desc', 'wa_group_link',
-        'bg_music_enabled', 'bg_music_url' 
+        'bg_music_enabled', 'bg_music_url',
+        // Sosial Media Keys
+        'sosmed_whatsapp', 'sosmed_instagram', 'sosmed_telegram', 'sosmed_youtube',
+        'sosmed_tiktok', 'sosmed_twitter', 'sosmed_facebook', 'sosmed_github',
+        'sosmed_linkedin', 'sosmed_discord', 'sosmed_spotify', 'sosmed_website'
       ];
 
       for (let key of keys) {
@@ -325,7 +352,6 @@
         return;
       }
       tbody.innerHTML = data.map(p => {
-        // Simpan data mentah ke objek/atribut kustom, atau gunakan escape aman agar tombol bisa diklik
         const safeName = escapeHtml(p.name);
         const safeDesc = escapeHtml(p.description || '');
         const safeImg = escapeHtml(p.image_url || '');
