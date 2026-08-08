@@ -385,6 +385,16 @@
             padding-top: 15px;
         }
 
+        /* Spinner */
+        .spinner {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         @media (max-width: 600px) {
             .row {
                 grid-template-columns: 1fr;
@@ -419,7 +429,7 @@
     </div>
 
     <div class="compressor-card">
-        <form id="compressForm">
+        <form id="compressForm" onsubmit="return false;">
             <!-- File Input -->
             <div class="form-group">
                 <label><i class="fa-solid fa-upload"></i> Pilih File Video</label>
@@ -455,8 +465,8 @@
                 </div>
             </div>
 
-            <!-- Submit -->
-            <button type="submit" class="btn-submit" id="submitBtn">
+            <!-- Submit - PAKAI onclick BUKAN submit -->
+            <button type="button" class="btn-submit" id="submitBtn">
                 <i class="fa-solid fa-compress"></i> Kompres Video
             </button>
         </form>
@@ -528,6 +538,7 @@
     let selectedFile = null;
     let selectedQuality = 'medium';
     let downloadUrl = null;
+    let isProcessing = false;
 
     // =============================================
     // DOM ELEMENTS
@@ -549,21 +560,25 @@
     // LOAD SETTINGS
     // =============================================
     async function loadSettings() {
-        const { data } = await supabase.from('site_settings').select('*');
-        if (!data) return;
+        try {
+            const { data } = await supabase.from('site_settings').select('*');
+            if (!data) return;
 
-        data.forEach(item => {
-            if (item.key === 'site_title' && item.value) {
-                document.title = item.value + ' - Kompres Video';
-            }
-            if (item.key === 'logo_url' && item.value) {
-                document.getElementById('headerLogo').src = item.value;
-            }
-            if (item.key === 'site_title' && item.value) {
-                document.getElementById('brandName').textContent = item.value;
-                document.getElementById('footerBrand').textContent = item.value;
-            }
-        });
+            data.forEach(item => {
+                if (item.key === 'site_title' && item.value) {
+                    document.title = item.value + ' - Kompres Video';
+                }
+                if (item.key === 'logo_url' && item.value) {
+                    document.getElementById('headerLogo').src = item.value;
+                }
+                if (item.key === 'site_title' && item.value) {
+                    document.getElementById('brandName').textContent = item.value;
+                    document.getElementById('footerBrand').textContent = item.value;
+                }
+            });
+        } catch (e) {
+            console.log('Gagal load settings:', e);
+        }
     }
 
     loadSettings();
@@ -599,10 +614,15 @@
         });
     });
 
-    // Form submit
-    document.getElementById('compressForm').addEventListener('submit', async function(e) {
+    // =============================================
+    // SUBMIT - PAKAI CLICK BUKAN SUBMIT
+    // =============================================
+    submitBtn.addEventListener('click', async function(e) {
         e.preventDefault();
-
+        
+        // Cegah double click
+        if (isProcessing) return;
+        
         if (!selectedFile) {
             showError('Silakan pilih file video terlebih dahulu.');
             return;
@@ -619,14 +639,17 @@
         progressSection.classList.add('active');
         progressFill.style.width = '0%';
         statusText.textContent = '📤 Mengupload file...';
+        isProcessing = true;
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses...';
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner spinner"></i> Memproses...';
 
         try {
             await compressVideo();
         } catch (error) {
             showError(error.message || 'Terjadi kesalahan saat memproses video.');
             progressSection.classList.remove('active');
+        } finally {
+            isProcessing = false;
             submitBtn.disabled = false;
             submitBtn.innerHTML = '<i class="fa-solid fa-compress"></i> Kompres Video';
         }
@@ -665,8 +688,6 @@
         updateProgress(100, '✅ Selesai!');
 
         downloadSection.classList.add('active');
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<i class="fa-solid fa-compress"></i> Kompres Video';
         statusText.textContent = '✅ Video berhasil dikompres! Klik tombol download.';
     }
 
@@ -856,11 +877,18 @@
     function showError(message) {
         errorMessage.textContent = message;
         errorMessage.classList.add('show');
+        // Auto hide setelah 5 detik
+        setTimeout(() => {
+            errorMessage.classList.remove('show');
+        }, 5000);
     }
 
     function hideError() {
         errorMessage.classList.remove('show');
     }
+
+    console.log('🎬 PRIME Convert siap digunakan!');
+    console.log('⚠️ Jangan lupa ganti API_KEY dengan key Anda.');
 </script>
 
 </body>
