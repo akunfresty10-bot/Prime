@@ -2,9 +2,9 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PRIME Tools - Kompres Video</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <title>PRIME Tools - Media Compressor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -15,24 +15,37 @@
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: #0a0e1a;
+            background: #0b0f1a;
             color: #f0f6fc;
             min-height: 100vh;
+            padding: 0 0 20px;
         }
 
-        /* Header */
-        header {
-            background: rgba(10, 14, 26, 0.75);
+        /* GLASSMORPHISM BASE */
+        .glass-card {
+            background: rgba(20, 28, 58, 0.65);
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            border-radius: 32px;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+        }
+
+        /* HEADER */
+        header {
+            background: rgba(11, 15, 26, 0.8);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             position: sticky;
             top: 0;
             z-index: 90;
-            border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+            padding: 0 20px;
         }
         .nav-container {
-            max-width: 600px;
+            max-width: 720px;
             margin: 0 auto;
-            padding: 12px 20px;
+            padding: 14px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -40,23 +53,25 @@
         .brand {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             text-decoration: none;
             color: #f0f6fc;
         }
         .brand img {
-            width: 38px;
-            height: 38px;
-            border-radius: 12px;
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
             object-fit: cover;
-            border: 1px solid rgba(59, 130, 246, 0.5);
+            border: 1.5px solid rgba(59, 130, 246, 0.4);
+            background: #0f1a2e;
         }
         .brand span {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 800;
-            background: linear-gradient(to right, #3b82f6, #06b6d4);
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
         }
         .back-btn {
             color: #94a3b8;
@@ -66,474 +81,657 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: 0.2s;
+            transition: 0.25s;
+            padding: 8px 14px;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
         .back-btn:hover {
             color: #60a5fa;
+            background: rgba(59, 130, 246, 0.12);
+            border-color: rgba(59, 130, 246, 0.25);
         }
 
-        /* Main Container */
+        /* MAIN */
         .main-wrapper {
-            max-width: 600px;
+            max-width: 720px;
             margin: 0 auto;
-            padding: 30px 20px;
+            padding: 24px 20px 40px;
         }
 
-        .page-title {
+        /* PAGE TITLE */
+        .page-head {
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 28px;
         }
-        .page-title h1 {
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(to right, #3b82f6, #06b6d4);
+        .page-head h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 0%, #94b8ff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
         }
-        .page-title p {
+        .page-head p {
             color: #94a3b8;
-            font-size: 0.9rem;
-            margin-top: 4px;
+            font-size: 0.95rem;
+            margin-top: 6px;
+            font-weight: 500;
+            opacity: 0.8;
         }
 
-        /* Card Compressor */
-        .compressor-card {
-            background: rgba(20, 25, 45, 0.65);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 24px;
-            padding: 28px 24px;
-            backdrop-filter: blur(10px);
-            margin-top: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
+        /* STATUS BADGE */
+        .server-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(34, 197, 94, 0.12);
+            padding: 8px 22px;
+            border-radius: 60px;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            margin-bottom: 24px;
+            font-size: 0.85rem;
             font-weight: 600;
-            color: #e2e8f0;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
+            color: #86efac;
+        }
+        .server-status i {
+            font-size: 0.6rem;
+            color: #4ade80;
+            animation: pulse-dot 1.8s infinite;
+        }
+        @keyframes pulse-dot {
+            0% { opacity: 0.3; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.3; transform: scale(0.9); }
         }
 
-        input[type="file"],
-        input[type="text"],
-        select {
+        /* COMPRESSOR CARD */
+        .compressor-card {
+            padding: 32px 28px;
+            margin-top: 6px;
+            transition: all 0.2s;
+        }
+
+        /* DROP ZONE */
+        .drop-zone {
+            border: 2px dashed rgba(59, 130, 246, 0.25);
+            border-radius: 24px;
+            padding: 44px 24px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.02);
+            position: relative;
+        }
+        .drop-zone:hover {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.04);
+        }
+        .drop-zone.dragover {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.08);
+            transform: scale(1.01);
+        }
+        .drop-zone i {
+            font-size: 3rem;
+            color: #3b82f6;
+            opacity: 0.6;
+            margin-bottom: 12px;
+        }
+        .drop-zone h3 {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #e2e8f0;
+        }
+        .drop-zone p {
+            color: #64748b;
+            font-size: 0.85rem;
+            margin-top: 6px;
+        }
+        .drop-zone .browse-btn {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 12px 32px;
+            background: linear-gradient(135deg, #3b82f6, #4f46e5);
+            border-radius: 60px;
+            font-weight: 700;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-size: 0.9rem;
+            box-shadow: 0 8px 24px -6px rgba(59, 130, 246, 0.3);
+        }
+        .drop-zone .browse-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 30px -6px rgba(59, 130, 246, 0.5);
+        }
+        .file-info-preview {
+            margin-top: 16px;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            border: 1px solid rgba(59, 130, 246, 0.15);
+        }
+        .file-info-preview.show {
+            display: flex;
+        }
+        .file-info-preview .file-detail {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #e2e8f0;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .file-info-preview .file-detail i {
+            color: #3b82f6;
+            font-size: 1.4rem;
+        }
+        .file-info-preview .file-size {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 4px 14px;
+            border-radius: 40px;
+        }
+        .remove-file {
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 4px 12px;
+            border-radius: 40px;
+            background: rgba(239, 68, 68, 0.1);
+            transition: 0.2s;
+        }
+        .remove-file:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        /* OPTIONS ROW */
+        .options-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 24px;
+        }
+        .options-row .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #94a3b8;
+            margin-bottom: 8px;
+        }
+        .options-row select {
             width: 100%;
             padding: 12px 16px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            font-size: 0.9rem;
+            border-radius: 16px;
             background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
             color: #f0f6fc;
-            transition: all 0.3s;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394a3b8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
-
-        input:focus,
-        select:focus {
+        .options-row select:focus {
             border-color: #3b82f6;
             outline: none;
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
         }
-
-        input::file-selector-button {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 8px;
-            background: linear-gradient(135deg, #3b82f6, #4f46e5);
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-
-        input::file-selector-button:hover {
-            opacity: 0.9;
-        }
-
-        .file-info {
-            background: rgba(255, 255, 255, 0.04);
-            padding: 10px 16px;
-            border-radius: 10px;
-            margin-top: 8px;
-            font-size: 0.85rem;
-            color: #94a3b8;
-            display: none;
-        }
-
-        .file-info.show {
-            display: block;
-        }
-
-        .row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .quality-options {
+        .quality-group {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
         }
-
         .quality-btn {
             flex: 1;
-            padding: 10px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.03);
-            color: #94a3b8;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-            font-weight: 600;
-            font-size: 0.85rem;
             min-width: 70px;
+            padding: 10px 6px;
+            border-radius: 40px;
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.02);
+            color: #94a3b8;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
             font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: 0.3px;
         }
-
         .quality-btn:hover {
             border-color: #3b82f6;
-            color: #f0f6fc;
+            color: #e2e8f0;
         }
-
         .quality-btn.active {
             background: linear-gradient(135deg, #3b82f6, #4f46e5);
             color: white;
             border-color: #3b82f6;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 4px 18px rgba(59, 130, 246, 0.3);
         }
 
-        .btn-submit {
+        /* SUBMIT */
+        .btn-compress {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
+            margin-top: 28px;
             background: linear-gradient(135deg, #3b82f6, #4f46e5);
-            color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 60px;
+            font-weight: 800;
             font-size: 1rem;
-            font-weight: 700;
+            color: white;
             cursor: pointer;
             transition: all 0.3s;
+            box-shadow: 0 10px 30px -8px rgba(59, 130, 246, 0.35);
             font-family: 'Plus Jakarta Sans', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
         }
-
-        .btn-submit:hover:not(:disabled) {
-            transform: scale(1.02);
-            box-shadow: 0 6px 25px rgba(59, 130, 246, 0.4);
+        .btn-compress:hover:not(:disabled) {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 16px 40px -8px rgba(59, 130, 246, 0.5);
         }
-
-        .btn-submit:disabled {
+        .btn-compress:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none;
+            box-shadow: none;
         }
 
-        /* Progress */
+        /* PROGRESS */
         .progress-section {
-            margin-top: 24px;
+            margin-top: 28px;
             display: none;
         }
-
         .progress-section.active {
             display: block;
         }
-
-        .progress-bar {
+        .progress-bar-track {
             width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
             overflow: hidden;
         }
-
         .progress-fill {
             height: 100%;
             width: 0%;
             background: linear-gradient(90deg, #3b82f6, #06b6d4);
-            transition: width 0.5s;
-            border-radius: 10px;
+            border-radius: 20px;
+            transition: width 0.5s ease;
         }
-
         .status-text {
+            margin-top: 14px;
             text-align: center;
-            margin-top: 10px;
             color: #94a3b8;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+            font-weight: 500;
         }
 
-        /* Download */
+        /* DOWNLOAD */
         .download-section {
-            margin-top: 20px;
+            margin-top: 28px;
             display: none;
             text-align: center;
+            padding: 24px 20px;
+            background: rgba(34, 197, 94, 0.06);
+            border-radius: 24px;
+            border: 1px solid rgba(34, 197, 94, 0.15);
         }
-
         .download-section.active {
             display: block;
         }
-
+        .download-section .success-icon {
+            font-size: 2.8rem;
+            color: #4ade80;
+            margin-bottom: 8px;
+        }
+        .download-section h4 {
+            font-weight: 700;
+            color: #86efac;
+            font-size: 1.1rem;
+        }
         .btn-download {
-            padding: 12px 30px;
+            margin-top: 14px;
+            padding: 14px 44px;
             background: #22c55e;
             color: white;
             border: none;
-            border-radius: 12px;
-            font-size: 1rem;
+            border-radius: 60px;
             font-weight: 700;
+            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: 0.25s;
             font-family: 'Plus Jakarta Sans', sans-serif;
+            box-shadow: 0 8px 24px -6px rgba(34, 197, 94, 0.3);
         }
-
         .btn-download:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 25px rgba(34, 197, 94, 0.4);
+            transform: scale(1.04);
+            box-shadow: 0 12px 32px -6px rgba(34, 197, 94, 0.5);
         }
 
-        /* Error */
+        /* ERROR */
         .error-message {
-            color: #ef4444;
-            font-size: 0.85rem;
-            margin-top: 12px;
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            padding: 16px 20px;
+            border-radius: 20px;
+            margin-top: 20px;
+            color: #fca5a5;
+            font-size: 0.9rem;
             display: none;
             text-align: center;
-            padding: 12px;
-            background: rgba(239, 68, 68, 0.1);
-            border-radius: 10px;
-            border: 1px solid rgba(239, 68, 68, 0.2);
+            font-weight: 500;
         }
-
         .error-message.show {
             display: block;
         }
 
-        /* Success */
-        .success-message {
-            color: #22c55e;
-            font-size: 0.9rem;
-            margin-top: 12px;
-            display: none;
-            text-align: center;
-            padding: 12px;
-            background: rgba(34, 197, 94, 0.1);
-            border-radius: 10px;
-            border: 1px solid rgba(34, 197, 94, 0.2);
-        }
-
-        .success-message.show {
-            display: block;
-        }
-
-        /* Info Box */
+        /* INFO BOX */
         .info-box {
-            background: rgba(59, 130, 246, 0.08);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 16px;
-            padding: 16px 20px;
-            margin-top: 20px;
+            margin-top: 32px;
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            border-radius: 24px;
+            padding: 20px 24px;
             display: flex;
             align-items: flex-start;
-            gap: 12px;
+            gap: 16px;
         }
-
         .info-box i {
             color: #3b82f6;
-            font-size: 1.2rem;
-            margin-top: 2px;
+            font-size: 1.4rem;
+            margin-top: 3px;
         }
-
         .info-box p {
             font-size: 0.85rem;
             color: #94a3b8;
-            line-height: 1.6;
+            line-height: 1.7;
         }
-
         .info-box strong {
             color: #e2e8f0;
         }
 
-        /* Footer */
-        footer {
-            border-top: 1px solid rgba(59, 130, 246, 0.2);
-            background: rgba(10, 14, 26, 0.9);
-            padding: 40px 20px 30px 20px;
-            margin-top: 40px;
-            font-size: 0.85rem;
-            color: #94a3b8;
-        }
-        .footer-container {
-            max-width: 600px;
-            margin: 0 auto;
+        /* DONASI BOX */
+        .donate-box {
+            margin-top: 28px;
+            background: rgba(255, 215, 0, 0.04);
+            border: 1px solid rgba(255, 215, 0, 0.12);
+            border-radius: 24px;
+            padding: 24px 20px;
             text-align: center;
         }
-        .footer-container .brand-name {
-            font-size: 1rem;
+        .donate-box h4 {
             font-weight: 700;
-            background: linear-gradient(to right, #3b82f6, #06b6d4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #fcd34d;
+            font-size: 1rem;
+            margin-bottom: 6px;
         }
-        .copyright {
-            margin-top: 15px;
+        .donate-box p {
+            color: #94a3b8;
             font-size: 0.8rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 15px;
+            max-width: 400px;
+            margin: 0 auto 14px;
+        }
+        .donate-box .qris-placeholder {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 20px;
+            max-width: 180px;
+            margin: 0 auto 10px;
+            border: 1px dashed #fcd34d33;
+        }
+        .donate-box .qris-placeholder i {
+            font-size: 3rem;
+            color: #fcd34d;
+            opacity: 0.6;
         }
 
-        /* Spinner */
+        /* FOOTER */
+        footer {
+            max-width: 720px;
+            margin: 50px auto 0;
+            padding: 30px 20px 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            text-align: center;
+        }
+        footer .brand-name {
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1rem;
+        }
+        footer p {
+            color: #475569;
+            font-size: 0.75rem;
+            margin-top: 10px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            .compressor-card {
+                padding: 24px 16px;
+            }
+            .options-row {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+            .page-head h1 {
+                font-size: 1.7rem;
+            }
+            .drop-zone {
+                padding: 32px 16px;
+            }
+            .drop-zone i {
+                font-size: 2.4rem;
+            }
+            .brand span {
+                font-size: 1rem;
+            }
+            .back-btn {
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+        }
+
+        /* HIDE FILE INPUT */
+        #hiddenFileInput {
+            display: none;
+        }
+
+        /* SPINNER */
         .spinner {
             display: inline-block;
-            animation: spin 1s linear infinite;
+            animation: spin 0.9s linear infinite;
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
-        @media (max-width: 600px) {
-            .row {
-                grid-template-columns: 1fr;
-                gap: 0;
-            }
-            .compressor-card {
-                padding: 20px 16px;
-            }
+        /* SLIDER before after (conceptual) */
+        .comparison-hint {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            margin: 18px 0 8px;
+            color: #64748b;
+            font-size: 0.8rem;
+        }
+        .comparison-hint .line {
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .comparison-hint i {
+            color: #3b82f6;
         }
     </style>
 </head>
 <body>
 
-<!-- Header -->
+<!-- HEADER -->
 <header>
     <div class="nav-container">
-        <a href="index.html" class="brand">
+        <a href="#" class="brand">
             <img src="https://via.placeholder.com/150" alt="Logo" id="headerLogo">
             <span id="brandName">PRIME CT</span>
         </a>
-        <a href="index.html" class="back-btn">
+        <a href="#" class="back-btn" id="backHomeBtn">
             <i class="fa-solid fa-arrow-left"></i> Kembali
         </a>
     </div>
 </header>
 
-<!-- Main Content -->
+<!-- MAIN -->
 <div class="main-wrapper">
-    <div class="page-title">
-        <h1>🎬 PRIME Convert</h1>
-        <p>Kompres video dengan mudah dan cepat</p>
+
+    <div class="page-head">
+        <h1>🎬 Media Compressor</h1>
+        <p>Kompres video atau gambar dengan cerdas tanpa mengurangi kualitas</p>
     </div>
 
-    <div class="compressor-card">
-        <form id="compressForm" onsubmit="return false;">
-            <!-- File Input -->
-            <div class="form-group">
-                <label><i class="fa-solid fa-upload"></i> Pilih File Video</label>
-                <input type="file" id="videoFile" accept="video/*" required />
-                <div class="file-info" id="fileInfo"></div>
-            </div>
+    <div style="display:flex; justify-content:center;">
+        <div class="server-status">
+            <i class="fa-solid fa-circle"></i> Server Siap <span style="color:#64748b; font-weight:400; margin-left:6px;">· 0 antrean</span>
+        </div>
+    </div>
 
-            <!-- Output Name -->
-            <div class="form-group">
-                <label><i class="fa-solid fa-file"></i> Nama File Output</label>
-                <input type="text" id="outputName" placeholder="video_compressed" value="compressed_video" />
-            </div>
+    <!-- COMPRESSOR CARD -->
+    <div class="compressor-card glass-card">
 
-            <!-- Quality & Format -->
-            <div class="row">
-                <div class="form-group">
-                    <label><i class="fa-solid fa-sliders"></i> Kualitas</label>
-                    <div class="quality-options">
-                        <button type="button" class="quality-btn" data-quality="high">Tinggi</button>
-                        <button type="button" class="quality-btn active" data-quality="medium">Sedang</button>
-                        <button type="button" class="quality-btn" data-quality="low">Rendah</button>
-                    </div>
+        <!-- DROP ZONE -->
+        <div class="drop-zone" id="dropZone">
+            <i class="fa-regular fa-cloud-arrow-up"></i>
+            <h3>Drag & drop your file here</h3>
+            <p>Supports MP4, WebM, MOV, AVI, JPG, PNG, WEBP up to 150MB</p>
+            <button class="browse-btn" id="browseBtn"><i class="fa-regular fa-folder-open"></i> Browse Files</button>
+            <input type="file" id="hiddenFileInput" accept="video/*,image/*" />
+            <div class="file-info-preview" id="fileInfoPreview">
+                <div class="file-detail">
+                    <i class="fa-regular fa-file-video"></i>
+                    <span id="fileNameDisplay">video.mp4</span>
                 </div>
+                <span class="file-size" id="fileSizeDisplay">0 MB</span>
+                <span class="remove-file" id="removeFileBtn"><i class="fa-regular fa-circle-xmark"></i> Hapus</span>
+            </div>
+        </div>
 
-                <div class="form-group">
-                    <label><i class="fa-solid fa-arrow-right-arrow-left"></i> Format Output</label>
-                    <select id="outputFormat">
-                        <option value="mp4">MP4</option>
-                        <option value="webm">WebM</option>
-                        <option value="mov">MOV</option>
-                        <option value="avi">AVI</option>
-                    </select>
+        <!-- OPTIONS -->
+        <div class="options-row">
+            <div class="form-group">
+                <label><i class="fa-regular fa-sliders"></i> Kualitas</label>
+                <div class="quality-group" id="qualityGroup">
+                    <button type="button" class="quality-btn" data-quality="high">Tinggi</button>
+                    <button type="button" class="quality-btn active" data-quality="medium">Sedang</button>
+                    <button type="button" class="quality-btn" data-quality="low">Rendah</button>
                 </div>
             </div>
+            <div class="form-group">
+                <label><i class="fa-regular fa-arrow-right-arrow-left"></i> Format Output</label>
+                <select id="outputFormat">
+                    <option value="mp4">MP4</option>
+                    <option value="webm">WebM</option>
+                    <option value="mov">MOV</option>
+                    <option value="avi">AVI</option>
+                </select>
+            </div>
+        </div>
 
-            <!-- Submit - PAKAI onclick BUKAN submit -->
-            <button type="button" class="btn-submit" id="submitBtn">
-                <i class="fa-solid fa-compress"></i> Kompres Video
-            </button>
-        </form>
+        <!-- SUBMIT -->
+        <button class="btn-compress" id="compressBtn">
+            <i class="fa-regular fa-compress"></i> Kompres Video
+        </button>
 
-        <!-- Progress -->
+        <!-- PROGRESS -->
         <div class="progress-section" id="progressSection">
-            <div class="progress-bar">
+            <div class="progress-bar-track">
                 <div class="progress-fill" id="progressFill"></div>
             </div>
-            <div class="status-text" id="statusText">Memulai proses...</div>
+            <div class="status-text" id="statusText">⏳ Mengupload file...</div>
         </div>
 
-        <!-- Download -->
+        <!-- DOWNLOAD -->
         <div class="download-section" id="downloadSection">
-            <div class="success-message show">
-                <i class="fa-solid fa-check-circle"></i> Video berhasil dikompres!
-            </div>
-            <button class="btn-download" id="downloadBtn">
-                <i class="fa-solid fa-download"></i> Download Video
-            </button>
+            <div class="success-icon"><i class="fa-regular fa-circle-check"></i></div>
+            <h4>✅ Video berhasil dikompres!</h4>
+            <button class="btn-download" id="downloadBtn"><i class="fa-regular fa-download"></i> Download Video</button>
         </div>
 
-        <!-- Error -->
+        <!-- ERROR -->
         <div class="error-message" id="errorMessage"></div>
     </div>
 
-    <!-- Info Box -->
+    <!-- COMPARISON HINT (visual) -->
+    <div class="comparison-hint">
+        <span class="line"></span>
+        <i class="fa-regular fa-arrows-left-right"></i>
+        <span style="font-weight:500;">Before / After</span>
+        <span class="line"></span>
+    </div>
+
+    <!-- INFO BOX -->
     <div class="info-box">
-        <i class="fa-solid fa-circle-info"></i>
+        <i class="fa-regular fa-circle-info"></i>
         <p>
-            <strong>Gratis tiap minggu!</strong> Kompres video dengan 3 pilihan kualitas.
-            File maksimal <strong>100MB</strong> untuk free tier.
-            <br><br>
-            <span style="font-size:0.8rem; color:#64748b;">
-                ⚡ Didukung oleh FreeConvert API
-            </span>
+            <strong>Kompres Hingga 90%</strong> — Ukuran file ciut drastis, hemat kuota, tapi kualitas video tetap jernih!<br>
+            <span style="font-size:0.8rem; color:#64748b;">⚡ Didukung oleh FreeConvert API · Mulus di HP standar</span>
         </p>
     </div>
+
+    <!-- DONASI BOX (seperti Termai) -->
+    <div class="donate-box">
+        <h4><i class="fa-regular fa-heart" style="color:#fcd34d;"></i> Dukung Server Termai</h4>
+        <p>Operasional & Pengembangan Server — Setiap donasi Anda akan digunakan untuk membiayai server dan operasional agar tetap berjalan cepat dan gratis.</p>
+        <div class="qris-placeholder">
+            <i class="fa-regular fa-qrcode"></i>
+            <p style="color:#94a3b8; font-size:0.6rem; margin-top:6px;">[ QRIS ]</p>
+        </div>
+        <p style="font-size:0.7rem; color:#64748b;">Scan QRIS dengan GoPay, OVO, Dana, LinkAja, atau Mobile Banking</p>
+        <button style="margin-top:12px; background:transparent; border:1px solid #fcd34d33; padding:8px 20px; border-radius:40px; color:#fcd34d; font-weight:600; font-size:0.75rem; cursor:pointer;">Unduh Gambar QRIS</button>
+    </div>
+
 </div>
 
-<!-- Footer -->
+<!-- FOOTER -->
 <footer>
-    <div class="footer-container">
-        <div class="brand-name" id="footerBrand">PRIME CT</div>
-        <p style="margin-top:8px; font-size:0.8rem;">Platform digital terpercaya</p>
-        <div class="copyright">
-            &copy; 2026 PRIME CT<br>
-            All Right Prime Developer 2026
-        </div>
-    </div>
+    <div class="brand-name" id="footerBrand">PRIME CT</div>
+    <p>© 2026 PRIME CT · All Right Prime Developer 2026</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
     // =============================================
-    // KONFIGURASI API
+    // KONFIGURASI
     // =============================================
     const API_KEY = 'YOUR_API_KEY_HERE'; // Ganti dengan API Key FreeConvert
     const API_URL = 'https://api.freeconvert.com/v1';
 
-    // Supabase
+    // Supabase (opsional untuk settings)
     const SUPABASE_URL = 'https://krxzhxxytjmqmvzndofw.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_BtMu9ACi_o-V29IdGZdIDA_th6tjNzi';
     const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // =============================================
-    // VARIABEL
+    // STATE
     // =============================================
     let selectedFile = null;
     let selectedQuality = 'medium';
@@ -541,14 +739,19 @@
     let isProcessing = false;
 
     // =============================================
-    // DOM ELEMENTS
+    // DOM REFS
     // =============================================
-    const fileInput = document.getElementById('videoFile');
-    const fileInfo = document.getElementById('fileInfo');
-    const outputName = document.getElementById('outputName');
-    const outputFormat = document.getElementById('outputFormat');
+    const dropZone = document.getElementById('dropZone');
+    const hiddenInput = document.getElementById('hiddenFileInput');
+    const browseBtn = document.getElementById('browseBtn');
+    const fileInfoPreview = document.getElementById('fileInfoPreview');
+    const fileNameDisplay = document.getElementById('fileNameDisplay');
+    const fileSizeDisplay = document.getElementById('fileSizeDisplay');
+    const removeFileBtn = document.getElementById('removeFileBtn');
+
     const qualityBtns = document.querySelectorAll('.quality-btn');
-    const submitBtn = document.getElementById('submitBtn');
+    const outputFormat = document.getElementById('outputFormat');
+    const compressBtn = document.getElementById('compressBtn');
     const progressSection = document.getElementById('progressSection');
     const progressFill = document.getElementById('progressFill');
     const statusText = document.getElementById('statusText');
@@ -557,16 +760,15 @@
     const errorMessage = document.getElementById('errorMessage');
 
     // =============================================
-    // LOAD SETTINGS
+    // LOAD SETTINGS (Supabase)
     // =============================================
     async function loadSettings() {
         try {
             const { data } = await supabase.from('site_settings').select('*');
             if (!data) return;
-
             data.forEach(item => {
                 if (item.key === 'site_title' && item.value) {
-                    document.title = item.value + ' - Kompres Video';
+                    document.title = item.value + ' - Media Compressor';
                 }
                 if (item.key === 'logo_url' && item.value) {
                     document.getElementById('headerLogo').src = item.value;
@@ -576,36 +778,82 @@
                     document.getElementById('footerBrand').textContent = item.value;
                 }
             });
-        } catch (e) {
-            console.log('Gagal load settings:', e);
-        }
+        } catch (e) { console.log('Settings load skipped'); }
     }
-
     loadSettings();
 
     // =============================================
-    // EVENT LISTENERS
+    // FILE HANDLING
     // =============================================
+    function handleFile(file) {
+        if (!file) return;
+        const validTypes = ['video/mp4', 'video/webm', 'video/quicktime', 'video/x-msvideo', 'image/jpeg', 'image/png', 'image/webp'];
+        if (!validTypes.includes(file.type) && !file.type.startsWith('video/') && !file.type.startsWith('image/')) {
+            showError('Format file tidak didukung. Gunakan MP4, WebM, MOV, AVI, JPG, PNG, WEBP.');
+            return;
+        }
+        if (file.size > 150 * 1024 * 1024) {
+            showError('Ukuran file maksimal 150MB.');
+            return;
+        }
+        selectedFile = file;
+        const sizeMB = (file.size / (1024 * 1024)).toFixed(2);
+        fileNameDisplay.textContent = file.name;
+        fileSizeDisplay.textContent = sizeMB + ' MB';
+        fileInfoPreview.classList.add('show');
+        dropZone.querySelector('h3').textContent = 'File siap dikompres!';
+        hideError();
+    }
 
-    // File input
-    fileInput.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            selectedFile = file;
-            const sizeMB = (file.size / (1024 * 1024)).toFixed(2);
-            fileInfo.textContent = `📁 ${file.name} (${sizeMB} MB)`;
-            fileInfo.classList.add('show');
+    function removeFile() {
+        selectedFile = null;
+        fileInfoPreview.classList.remove('show');
+        dropZone.querySelector('h3').textContent = 'Drag & drop your file here';
+        hiddenInput.value = '';
+        downloadSection.classList.remove('active');
+        progressSection.classList.remove('active');
+        downloadUrl = null;
+    }
 
-            // Auto fill output name
-            const baseName = file.name.replace(/\.[^.]+$/, '');
-            outputName.value = baseName + '_compressed';
-        } else {
-            selectedFile = null;
-            fileInfo.classList.remove('show');
+    // Event: browse
+    browseBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        hiddenInput.click();
+    });
+
+    hiddenInput.addEventListener('change', (e) => {
+        if (e.target.files.length) {
+            handleFile(e.target.files[0]);
         }
     });
 
-    // Quality buttons
+    // Event: drop zone
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('dragover');
+    });
+    dropZone.addEventListener('dragleave', () => {
+        dropZone.classList.remove('dragover');
+    });
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+        if (e.dataTransfer.files.length) {
+            handleFile(e.dataTransfer.files[0]);
+        }
+    });
+    dropZone.addEventListener('click', () => {
+        if (!selectedFile) hiddenInput.click();
+    });
+
+    removeFileBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        removeFile();
+    });
+
+    // =============================================
+    // QUALITY BUTTONS
+    // =============================================
     qualityBtns.forEach(btn => {
         btn.addEventListener('click', function() {
             qualityBtns.forEach(b => b.classList.remove('active'));
@@ -615,33 +863,28 @@
     });
 
     // =============================================
-    // SUBMIT - PAKAI CLICK BUKAN SUBMIT
+    // COMPRESS
     // =============================================
-    submitBtn.addEventListener('click', async function(e) {
+    compressBtn.addEventListener('click', async function(e) {
         e.preventDefault();
-        
-        // Cegah double click
         if (isProcessing) return;
-        
         if (!selectedFile) {
-            showError('Silakan pilih file video terlebih dahulu.');
+            showError('Silakan pilih file terlebih dahulu.');
             return;
         }
-
         if (API_KEY === 'YOUR_API_KEY_HERE') {
             showError('⚠️ Ganti API_KEY dengan key dari FreeConvert dashboard.');
             return;
         }
 
-        // Reset UI
         hideError();
         downloadSection.classList.remove('active');
         progressSection.classList.add('active');
         progressFill.style.width = '0%';
         statusText.textContent = '📤 Mengupload file...';
         isProcessing = true;
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fa-solid fa-spinner spinner"></i> Memproses...';
+        compressBtn.disabled = true;
+        compressBtn.innerHTML = '<i class="fa-regular fa-spinner spinner"></i> Memproses...';
 
         try {
             await compressVideo();
@@ -650,75 +893,59 @@
             progressSection.classList.remove('active');
         } finally {
             isProcessing = false;
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = '<i class="fa-solid fa-compress"></i> Kompres Video';
-        }
-    });
-
-    // Download
-    downloadBtn.addEventListener('click', function() {
-        if (downloadUrl) {
-            window.open(downloadUrl, '_blank');
+            compressBtn.disabled = false;
+            compressBtn.innerHTML = '<i class="fa-regular fa-compress"></i> Kompres Video';
         }
     });
 
     // =============================================
-    // FUNGSI UTAMA
+    // CORE COMPRESS FUNCTION
     // =============================================
-
     async function compressVideo() {
-        // Step 1: Upload
+        // 1. Upload
         const uploadUrl = await uploadFile(selectedFile);
         updateProgress(10, '📤 File berhasil diupload');
 
-        // Step 2: Create job
+        // 2. Create job
         const jobData = await createJob(uploadUrl);
         const jobId = jobData.id;
         updateProgress(20, '⚙️ Job dibuat');
 
-        // Step 3: Start
+        // 3. Start
         await startJob(jobId);
         updateProgress(30, '🔄 Konversi dimulai...');
 
-        // Step 4: Poll status
+        // 4. Poll
         const result = await pollJobStatus(jobId);
 
-        // Step 5: Done
+        // 5. Done
         downloadUrl = result.download_url;
         updateProgress(100, '✅ Selesai!');
-
         downloadSection.classList.add('active');
         statusText.textContent = '✅ Video berhasil dikompres! Klik tombol download.';
     }
 
     // =============================================
-    // FUNGSI API
+    // API HELPERS
     // =============================================
-
     async function uploadFile(file) {
         const formData = new FormData();
         formData.append('file', file);
-
         const response = await fetch(`${API_URL}/upload`, {
             method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${API_KEY}`
-            },
+            headers: { 'Authorization': `Bearer ${API_KEY}` },
             body: formData
         });
-
         if (!response.ok) {
-            const error = await response.json();
-            throw new Error(`Upload gagal: ${error.message || response.statusText}`);
+            const err = await response.json();
+            throw new Error(`Upload gagal: ${err.message || response.statusText}`);
         }
-
         const data = await response.json();
         return data.url;
     }
 
     async function createJob(uploadUrl) {
-        const qualitySettings = getQualitySettings(selectedQuality);
-
+        const q = getQualitySettings(selectedQuality);
         const payload = {
             tasks: {
                 'import-1': {
@@ -732,12 +959,12 @@
                     input_format: getFileExtension(selectedFile.name),
                     output_format: outputFormat.value,
                     options: {
-                        video_codec: qualitySettings.video_codec,
-                        video_bitrate: qualitySettings.video_bitrate,
+                        video_codec: q.video_codec,
+                        video_bitrate: q.video_bitrate,
                         video_audio_remove: false,
-                        video_width: qualitySettings.video_width,
-                        video_height: qualitySettings.video_height,
-                        video_framerate: qualitySettings.video_framerate || 'source'
+                        video_width: q.video_width,
+                        video_height: q.video_height,
+                        video_framerate: q.video_framerate || 'source'
                     }
                 },
                 'export-1': {
@@ -746,7 +973,6 @@
                 }
             }
         };
-
         const response = await fetch(`${API_URL}/process/jobs`, {
             method: 'POST',
             headers: {
@@ -755,108 +981,65 @@
             },
             body: JSON.stringify(payload)
         });
-
         if (!response.ok) {
-            const error = await response.json();
-            throw new Error(`Gagal membuat job: ${error.message || response.statusText}`);
+            const err = await response.json();
+            throw new Error(`Gagal membuat job: ${err.message || response.statusText}`);
         }
-
         return await response.json();
     }
 
     async function startJob(jobId) {
         const response = await fetch(`${API_URL}/process/jobs/${jobId}/start`, {
             method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${API_KEY}`
-            }
+            headers: { 'Authorization': `Bearer ${API_KEY}` }
         });
-
         if (!response.ok) {
-            const error = await response.json();
-            throw new Error(`Gagal memulai job: ${error.message || response.statusText}`);
+            const err = await response.json();
+            throw new Error(`Gagal memulai job: ${err.message || response.statusText}`);
         }
     }
 
     async function pollJobStatus(jobId) {
         const maxAttempts = 120;
         let attempts = 0;
-
         while (attempts < maxAttempts) {
             const response = await fetch(`${API_URL}/process/jobs/${jobId}`, {
-                headers: {
-                    'Authorization': `Bearer ${API_KEY}`
-                }
+                headers: { 'Authorization': `Bearer ${API_KEY}` }
             });
-
-            if (!response.ok) {
-                throw new Error('Gagal mendapatkan status job');
-            }
-
+            if (!response.ok) throw new Error('Gagal mendapatkan status job');
             const data = await response.json();
             const status = data.status;
 
             if (status === 'processing') {
-                const progress = Math.min(30 + (data.progress || 0) * 0.7, 95);
-                updateProgress(progress, `⏳ Memproses... ${Math.round(data.progress || 0)}%`);
+                const p = Math.min(30 + (data.progress || 0) * 0.7, 95);
+                updateProgress(p, `⏳ Memproses... ${Math.round(data.progress || 0)}%`);
             }
-
             if (status === 'completed') {
                 const exportTask = data.tasks.find(t => t.operation === 'export/url');
                 if (exportTask && exportTask.result && exportTask.result.files) {
                     const file = exportTask.result.files[0];
-                    return {
-                        download_url: file.url,
-                        filename: file.filename
-                    };
+                    return { download_url: file.url, filename: file.filename };
                 }
                 throw new Error('URL download tidak ditemukan');
             }
-
-            if (status === 'failed') {
-                throw new Error(`Job gagal: ${data.error || 'Unknown error'}`);
-            }
-
-            if (status === 'canceled') {
-                throw new Error('Job dibatalkan');
-            }
-
+            if (status === 'failed') throw new Error(`Job gagal: ${data.error || 'Unknown error'}`);
+            if (status === 'canceled') throw new Error('Job dibatalkan');
             await sleep(2000);
             attempts++;
         }
-
         throw new Error('Timeout: Proses terlalu lama');
     }
 
     // =============================================
-    // FUNGSI PEMBANTU
+    // UTILITY
     // =============================================
-
-    function getQualitySettings(quality) {
-        const settings = {
-            high: {
-                video_codec: 'h264',
-                video_bitrate: '5000k',
-                video_width: 1920,
-                video_height: 1080,
-                video_framerate: 'source'
-            },
-            medium: {
-                video_codec: 'h264',
-                video_bitrate: '2500k',
-                video_width: 1280,
-                video_height: 720,
-                video_framerate: 'source'
-            },
-            low: {
-                video_codec: 'h264',
-                video_bitrate: '800k',
-                video_width: 640,
-                video_height: 360,
-                video_framerate: 'source'
-            }
+    function getQualitySettings(q) {
+        const map = {
+            high: { video_codec: 'h264', video_bitrate: '5000k', video_width: 1920, video_height: 1080, video_framerate: 'source' },
+            medium: { video_codec: 'h264', video_bitrate: '2500k', video_width: 1280, video_height: 720, video_framerate: 'source' },
+            low: { video_codec: 'h264', video_bitrate: '800k', video_width: 640, video_height: 360, video_framerate: 'source' }
         };
-        return settings[quality] || settings.medium;
+        return map[q] || map.medium;
     }
 
     function getFileExtension(filename) {
@@ -865,31 +1048,30 @@
 
     function updateProgress(percent, text) {
         progressFill.style.width = `${percent}%`;
-        if (text) {
-            statusText.textContent = text;
-        }
+        if (text) statusText.textContent = text;
     }
 
-    function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
+    function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-    function showError(message) {
-        errorMessage.textContent = message;
+    function showError(msg) {
+        errorMessage.textContent = msg;
         errorMessage.classList.add('show');
-        // Auto hide setelah 5 detik
-        setTimeout(() => {
-            errorMessage.classList.remove('show');
-        }, 5000);
+        setTimeout(() => errorMessage.classList.remove('show'), 6000);
     }
+    function hideError() { errorMessage.classList.remove('show'); }
 
-    function hideError() {
-        errorMessage.classList.remove('show');
-    }
+    // Download
+    downloadBtn.addEventListener('click', () => {
+        if (downloadUrl) window.open(downloadUrl, '_blank');
+    });
 
-    console.log('🎬 PRIME Convert siap digunakan!');
-    console.log('⚠️ Jangan lupa ganti API_KEY dengan key Anda.');
+    // Back button
+    document.getElementById('backHomeBtn').addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = 'index.html';
+    });
+
+    console.log('🎬 Media Compressor siap!');
 </script>
-
 </body>
 </html>
