@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kompres Video - FreeConvert API</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input[type="file"],
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #667eea;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .quality-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .quality-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            font-weight: 500;
+            font-size: 14px;
+            min-width: 80px;
+        }
+
+        .quality-btn:hover {
+            border-color: #667eea;
+        }
+
+        .quality-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-submit:hover {
+            transform: scale(1.02);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-section {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .progress-section.active {
+            display: block;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.5s;
+            border-radius: 10px;
+        }
+
+        .status-text {
+            text-align: center;
+            margin-top: 10px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .download-section {
+            margin-top: 20px;
+            display: none;
+            text-align: center;
+        }
+
+        .download-section.active {
+            display: block;
+        }
+
+        .btn-download {
+            padding: 12px 30px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-download:hover {
+            transform: scale(1.05);
+        }
+
+        .error {
+            color: #f44336;
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .file-info {
+            background: #f8f9fa;
+            padding: 10px 16px;
+            border-radius: 10px;
+            margin-top: 8px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            .row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🎬 Kompres Video</h1>
+    <p class="subtitle">Kompres video dengan mudah menggunakan FreeConvert API</p>
+
+    <form id="compressForm">
+        <div class="form-group">
+            <label>Pilih File Video</label>
+            <input type="file" id="videoFile" accept="video/*" required />
+            <div class="file-info" id="fileInfo"></div>
+        </div>
+
+        <div class="form-group">
+            <label>Nama File Output</label>
+            <input type="text" id="outputName" placeholder="video_compressed" value="compressed_video" />
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label>Kualitas Kompresi</label>
+                <div class="quality-options">
+                    <button type="button" class="quality-btn" data-quality="high">Tinggi</button>
+                    <button type="button" class="quality-btn active" data-quality="medium">Sedang</button>
+                    <button type="button" class="quality-btn" data-quality="low">Rendah</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Format Output</label>
+                <select id="outputFormat">
+                    <option value="mp4">MP4</option>
+                    <option value="webm">WebM</option>
+                    <option value="mov">MOV</option>
+                    <option value="avi">AVI</option>
+                </select>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">
+            🔄 Kompres Video
+        </button>
+    </form>
+
+    <div class="progress-section" id="progressSection">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="status-text" id="statusText">Memulai proses...</div>
+    </div>
+
+    <div class="download-section" id="downloadSection">
+        <p style="margin-bottom: 15px; color: #4CAF50; font-weight: 600;">✅ Video berhasil dikompres!</p>
+        <button class="btn-download" id="downloadBtn">⬇️ Download Video</button>
+    </div>
+
+    <div class="error" id="errorMessage"></div>
+</div>
+
+<script>
+    // =============================================
+    // KONFIGURASI API
+    // GANTI DENGAN API KEY ANDA
+    // =============================================
+    const API_KEY = 'api_production_10a394cfb8770c547832a5418d3fa8f3d7092554e94f72faeb82732786b4744a.6a76b8f7b1cfa9d7528222e5.6a76ba2de871135529bd64b5'; // Dapatkan di https://www.freeconvert.com/dashboard
+    const API_URL = 'https://api.freeconvert.com/v1';
+
+    // =============================================
+    // VARIABEL GLOBAL
+    // =============================================
+    let selectedFile = null;
+    let selectedQuality = 'medium';
+    let jobId = null;
+    let downloadUrl = null;
+
+    // =============================================
+    // DOM ELEMENTS
+    // =============================================
+    const fileInput = document.getElementById('videoFile');
+    const fileInfo = document.getElementById('fileInfo');
+    const outputName = document.getElementById('outputName');
+    const outputFormat = document.getElementById('outputFormat');
+    const qualityBtns = document.querySelectorAll('.quality-btn');
+    const submitBtn = document.getElementById('submitBtn');
+    const progressSection = document.getElementById('progressSection');
+    const progressFill = document.getElementById('progressFill');
+    const statusText = document.getElementById('statusText');
+    const downloadSection = document.getElementById('downloadSection');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const errorMessage = document.getElementById('errorMessage');
+
+    // =============================================
+    // EVENT LISTENERS
+    // =============================================
+
+    // File input
+    fileInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            selectedFile = file;
+            const sizeMB = (file.size / (1024 * 1024)).toFixed(2);
+            fileInfo.textContent = `📁 ${file.name} (${sizeMB} MB)`;
+            fileInfo.style.display = 'block';
+        } else {
+            selectedFile = null;
+            fileInfo.style.display = 'none';
+        }
+    });
+
+    // Quality buttons
+    qualityBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            qualityBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            selectedQuality = this.dataset.quality;
+        });
+    });
+
+    // Form submit
+    document.getElementById('compressForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        if (!selectedFile) {
+            showError('Silakan pilih file video terlebih dahulu.');
+            return;
+        }
+
+        if (API_KEY === 'YOUR_API_KEY_HERE') {
+            showError('⚠️ Silakan ganti API_KEY dengan API key Anda dari FreeConvert dashboard.');
+            return;
+        }
+
+        // Reset UI
+        hideError();
+        downloadSection.classList.remove('active');
+        progressSection.classList.add('active');
+        progressFill.style.width = '0%';
+        statusText.textContent = '📤 Mengupload file...';
+        submitBtn.disabled = true;
+        submitBtn.textContent = '⏳ Memproses...';
+
+        try {
+            await compressVideo();
+        } catch (error) {
+            showError(error.message || 'Terjadi kesalahan saat memproses video.');
+            progressSection.classList.remove('active');
+            submitBtn.disabled = false;
+            submitBtn.textContent = '🔄 Kompres Video';
+        }
+    });
+
+    // Download button
+    downloadBtn.addEventListener('click', function() {
+        if (downloadUrl) {
+            window.open(downloadUrl, '_blank');
+        }
+    });
+
+    // =============================================
+    // FUNGSI UTAMA
+    // =============================================
+
+    async function compressVideo() {
+        // Step 1: Upload file
+        const uploadUrl = await uploadFile(selectedFile);
+        updateProgress(10, '📤 File berhasil diupload');
+
+        // Step 2: Create job
+        const jobData = await createJob(uploadUrl);
+        jobId = jobData.id;
+        updateProgress(20, '⚙️ Job dibuat');
+
+        // Step 3: Start conversion
+        await startJob(jobId);
+        updateProgress(30, '🔄 Konversi dimulai...');
+
+        // Step 4: Poll for status
+        const result = await pollJobStatus(jobId);
+        
+        // Step 5: Get download URL
+        downloadUrl = result.download_url;
+        updateProgress(100, '✅ Selesai!');
+
+        // Show download button
+        downloadSection.classList.add('active');
+        submitBtn.disabled = false;
+        submitBtn.textContent = '🔄 Kompres Video';
+        statusText.textContent = '✅ Video berhasil dikompres! Klik tombol download.';
+    }
+
+    // =============================================
+    // FUNGSI API
+    // =============================================
+
+    async function uploadFile(file) {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = await fetch(`${API_URL}/upload`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${API_KEY}`
+            },
+            body: formData
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(`Upload gagal: ${error.message || response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data.url; // URL file yang diupload
+    }
+
+    async function createJob(uploadUrl) {
+        // Get quality settings
+        const qualitySettings = getQualitySettings(selectedQuality);
+
+        const payload = {
+            tasks: {
+                'import-1': {
+                    operation: 'import/url',
+                    url: uploadUrl,
+                    filename: selectedFile.name
+                },
+                'convert-1': {
+                    operation: 'convert',
+                    input: 'import-1',
+                    input_format: getFileExtension(selectedFile.name),
+                    output_format: outputFormat.value,
+                    options: {
+                        video_codec: qualitySettings.video_codec,
+                        video_bitrate: qualitySettings.video_bitrate,
+                        video_audio_remove: false,
+                        video_width: qualitySettings.video_width,
+                        video_height: qualitySettings.video_height,
+                        video_framerate: qualitySettings.video_framerate || 'source'
+                    }
+                },
+                'export-1': {
+                    operation: 'export/url',
+                    input: 'convert-1'
+                }
+            }
+        };
+
+        const response = await fetch(`${API_URL}/process/jobs`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${API_KEY}`
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(`Gagal membuat job: ${error.message || response.statusText}`);
+        }
+
+        return await response.json();
+    }
+
+    async function startJob(jobId) {
+        const response = await fetch(`${API_URL}/process/jobs/${jobId}/start`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${API_KEY}`
+            }
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(`Gagal memulai job: ${error.message || response.statusText}`);
+        }
+    }
+
+    async function pollJobStatus(jobId) {
+        const maxAttempts = 120; // 2 menit (interval 1 detik)
+        let attempts = 0;
+
+        while (attempts < maxAttempts) {
+            const response = await fetch(`${API_URL}/process/jobs/${jobId}`, {
+                headers: {
+                    'Authorization': `Bearer ${API_KEY}`
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Gagal mendapatkan status job');
+            }
+
+            const data = await response.json();
+            const status = data.status;
+
+            // Update progress berdasarkan status
+            if (status === 'processing') {
+                const progress = Math.min(30 + (data.progress || 0) * 0.7, 95);
+                updateProgress(progress, `⏳ Memproses... ${Math.round(data.progress || 0)}%`);
+            }
+
+            if (status === 'completed') {
+                // Cari task export untuk mendapatkan download URL
+                const exportTask = data.tasks.find(t => t.operation === 'export/url');
+                if (exportTask && exportTask.result && exportTask.result.files) {
+                    const file = exportTask.result.files[0];
+                    return {
+                        download_url: file.url,
+                        filename: file.filename
+                    };
+                }
+                throw new Error('URL download tidak ditemukan');
+            }
+
+            if (status === 'failed') {
+                throw new Error(`Job gagal: ${data.error || 'Unknown error'}`);
+            }
+
+            if (status === 'canceled') {
+                throw new Error('Job dibatalkan');
+            }
+
+            // Tunggu 2 detik sebelum cek lagi
+            await sleep(2000);
+            attempts++;
+        }
+
+        throw new Error('Timeout: Proses terlalu lama');
+    }
+
+    // =============================================
+    // FUNGSI PEMBANTU
+    // =============================================
+
+    function getQualitySettings(quality) {
+        const settings = {
+            high: {
+                video_codec: 'h264',
+                video_bitrate: '5000k',
+                video_width: 1920,
+                video_height: 1080,
+                video_framerate: 'source'
+            },
+            medium: {
+                video_codec: 'h264',
+                video_bitrate: '2500k',
+                video_width: 1280,
+                video_height: 720,
+                video_framerate: 'source'
+            },
+            low: {
+                video_codec: 'h264',
+                video_bitrate: '800k',
+                video_width: 640,
+                video_height: 360,
+                video_framerate: 'source'
+            }
+        };
+        return settings[quality] || settings.medium;
+    }
+
+    function getFileExtension(filename) {
+        return filename.split('.').pop().toLowerCase();
+    }
+
+    function updateProgress(percent, text) {
+        progressFill.style.width = `${percent}%`;
+        if (text) {
+            statusText.textContent = text;
+        }
+    }
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function showError(message) {
+        errorMessage.textContent = message;
+        errorMessage.style.display = 'block';
+    }
+
+    function hideError() {
+        errorMessage.style.display = 'none';
+    }
+
+    // =============================================
+    // INISIALISASI
+    // =============================================
+    console.log('🎬 Video Compressor siap digunakan!');
+    console.log('⚠️ Jangan lupa ganti API_KEY dengan key Anda.');
+</script>
+
+</body>
+</html>
