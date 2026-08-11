@@ -4,228 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title class="site-brand-name">PRIME CT - Digital Store</title>
+  
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root {
-      --bg-body: #0a0e1a;
-      --border-color: rgba(255, 255, 255, 0.08);
-      --text-main: #f0f6fc;
-      --text-sub: #94a3b8;
-      --wa-green: #25d366;
-      --accent-blue: #3b82f6;
-      --accent-blue-light: #60a5fa;
-      --accent-blue-dark: #1d4ed8;
-      --accent-cyan: #06b6d4;
-      --accent-indigo: #4f46e5;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body {
-      background-color: var(--bg-body);
-      color: var(--text-main);
-      min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
-    }
-
-    #bg-video-container {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      z-index: -1;
-      overflow: hidden;
-      background: #0a0e1a;
-    }
-    #bg-video-container video, #bg-video-container img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      opacity: 0.4;
-    }
-    #bg-video-container::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(180deg, rgba(10, 14, 26, 0.7) 0%, rgba(10, 14, 26, 0.95) 100%);
-    }
-
-    @keyframes blueGlowText {
-      0% { color: #3b82f6; filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5)); }
-      50% { color: #06b6d4; filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.5)); }
-      100% { color: #3b82f6; filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5)); }
-    }
-
-    header {
-      background: rgba(10, 14, 26, 0.75);
-      backdrop-filter: blur(12px);
-      position: sticky; top: 0; z-index: 90;
-      border-bottom: 1px solid rgba(59, 130, 246, 0.3);
-    }
-    .nav-container {
-      max-width: 600px; margin: 0 auto; padding: 12px 20px;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-main); }
-    .brand img { width: 38px; height: 38px; border-radius: 12px; object-fit: cover; border: 1px solid rgba(59, 130, 246, 0.5); }
-    
-    .brand span { 
-      font-size: 1.1rem; 
-      font-weight: 800; 
-      background: linear-gradient(to right, #3b82f6, #06b6d4);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .main-wrapper { max-width: 600px; margin: 0 auto; padding: 30px 20px; }
-
-    .hero-section { text-align: center; margin-bottom: 40px; }
-    .hero-avatar {
-      width: 90px; height: 90px; margin: 0 auto 18px auto;
-      border-radius: 24px; border: 2px solid rgba(59, 130, 246, 0.6);
-      overflow: hidden; background: #1a1f33;
-      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.25);
-    }
-    .hero-avatar img { width: 100%; height: 100%; object-fit: cover; }
-
-    .hero-text-card {
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(10, 14, 26, 0.9) 100%);
-      border: 1px solid rgba(59, 130, 246, 0.4);
-      border-radius: 24px;
-      padding: 20px;
-      text-align: center;
-      margin-bottom: 28px; 
-      backdrop-filter: blur(12px); 
-    }
-
-    .hero-welcome { font-size: 0.95rem; font-weight: 700; color: #93c5fd; letter-spacing: 3px; margin-bottom: 2px; text-transform: uppercase; }
-    .hero-greeting { font-size: 2.2rem; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; animation: blueGlowText 6s infinite linear; line-height: 1.1; }
-    .hero-desc { font-size: 0.88rem; color: #e2e8f0; line-height: 1.6; padding: 0 10px; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
-
-    .hero-buttons { display: flex; flex-direction: column; gap: 14px; }
-    .h-btn {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(10, 14, 26, 0.7) 100%);
-      border: 1px solid rgba(59, 130, 246, 0.4);
-      color: #fff; 
-      padding: 16px 20px; 
-      border-radius: 30px;
-      font-weight: 800; 
-      font-size: 0.95rem; 
-      letter-spacing: 0.5px;
-      text-decoration: none;
-      transition: 0.2s; 
-      display: block; 
-      text-align: center;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); 
-      text-shadow: 0 1px 3px rgba(0,0,0,0.9);
-      cursor: pointer;
-    }
-    .h-btn.primary {
-      background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-indigo) 100%);
-      border-color: rgba(59, 130, 246, 0.8);
-      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
-      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-    }
-    .h-btn:hover { transform: scale(1.02); opacity: 0.95; box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6); }
-
-    .section-box { margin-bottom: 40px; }
-    .section-header-title { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: #60a5fa; margin-bottom: 12px; font-weight: 700; }
-    .section-main-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 16px; }
-
-    .category-card {
-      background: rgba(20, 25, 45, 0.65);
-      border: 1px solid rgba(59, 130, 246, 0.2);
-      border-radius: 20px; padding: 20px; margin-bottom: 12px;
-      backdrop-filter: blur(10px); display: flex; flex-direction: column; gap: 8px;
-      transition: 0.2s;
-    }
-    .category-card:hover { border-color: rgba(59, 130, 246, 0.5); transform: translateY(-2px); }
-    .cat-icon-title { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; font-weight: 700; color: #fff; }
-    .cat-desc { font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; }
-
-    .about-box {
-      background: rgba(20, 25, 45, 0.65);
-      border: 1px solid rgba(59, 130, 246, 0.2);
-      border-radius: 24px; padding: 24px;
-      backdrop-filter: blur(10px); margin-bottom: 40px;
-    }
-    .about-box h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 14px; }
-    .about-box p { font-size: 0.88rem; color: #e2e8f0; line-height: 1.7; margin-bottom: 14px; }
-    .role-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
-    .role-tag { background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); color: #93c5fd; font-size: 0.75rem; font-weight: 700; padding: 5px 12px; border-radius: 8px; }
-
-    .stats-box {
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(10, 14, 26, 0.9) 100%);
-      border: 1px solid rgba(59, 130, 246, 0.4);
-      border-radius: 24px; padding: 30px 20px; text-align: center; margin-bottom: 40px;
-      backdrop-filter: blur(10px);
-    }
-    .stats-number { font-size: 2.8rem; font-weight: 800; color: #60a5fa; margin-bottom: 8px; text-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
-    .stats-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; }
-    .stats-desc { font-size: 0.85rem; color: #cbd5e1; line-height: 1.6; margin-bottom: 24px; }
-    
-    .feature-mini-grid { display: grid; grid-template-columns: 1fr; gap: 12px; text-align: left; margin-bottom: 24px; }
-    .feature-mini { background: rgba(255,255,255,0.05); border: 1px solid rgba(59, 130, 246, 0.2); padding: 14px; border-radius: 14px; }
-    .feature-mini h5 { font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; color: #fff; }
-    .feature-mini p { font-size: 0.8rem; color: #cbd5e1; margin: 0; }
-
-    .order-cta-box {
-      background: rgba(59, 130, 246, 0.05);
-      border: 1px dashed rgba(59, 130, 246, 0.5);
-      border-radius: 18px; padding: 20px; text-align: center;
-    }
-    .order-cta-box p { font-size: 0.85rem; color: #e2e8f0; margin-bottom: 14px; line-height: 1.5; }
-
-    footer {
-      border-top: 1px solid rgba(59, 130, 246, 0.2);
-      background: rgba(10, 14, 26, 0.9);
-      padding: 40px 20px 30px 20px;
-      font-size: 0.85rem; color: var(--text-sub);
-    }
-    .footer-container { max-width: 600px; margin: 0 auto; }
-    .footer-socials { display: flex; gap: 15px; margin-bottom: 25px; }
-    .footer-socials a { color: #93c5fd; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; }
-    .footer-section-title { font-weight: 800; color: #60a5fa; margin-bottom: 12px; font-size: 1rem; text-transform: uppercase; }
-    .footer-contact-list { margin-bottom: 30px; display: flex; flex-direction: column; gap: 8px; }
-    .footer-menu-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; }
-    .footer-menu-list a { color: var(--text-sub); text-decoration: none; transition: 0.2s; }
-    .footer-menu-list a:hover { color: #60a5fa; padding-left: 5px; }
-    .copyright { border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 20px; text-align: left; font-size: 0.8rem; }
-
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 999; display: flex; justify-content: center; align-items: center; padding: 20px; opacity: 0; visibility: hidden; transition: 0.3s; }
-    .modal-overlay.active { opacity: 1; visibility: visible; }
-    .payment-modal-card { background: linear-gradient(180deg, #0d1a33 0%, #0a0e1a 100%); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 28px; width: 100%; max-width: 420px; max-height: 90vh; overflow-y: auto; padding: 24px; position: relative; }
-    .popup-close-circle { position: absolute; top: 16px; right: 16px; background: rgba(255, 255, 255, 0.08); border: none; color: #fff; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; }
-    .pay-title { font-size: 1.15rem; font-weight: 800; color: #fff; margin-bottom: 16px; text-align: center; text-transform: uppercase; }
-    .qris-box { background: #fff; padding: 15px; border-radius: 16px; width: 200px; height: 200px; margin: 0 auto 15px auto; display: flex; justify-content: center; align-items: center; }
-    .qris-box img { width: 100%; height: 100%; object-fit: contain; }
-    .wallet-box { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-    .wallet-info h5 { font-size: 0.85rem; color: #cbd5e1; margin-bottom: 2px; }
-    .wallet-info p { font-size: 0.95rem; font-weight: 700; color: #fff; }
-    .copy-btn { background: var(--accent-blue); color: #fff; border: none; padding: 8px 14px; border-radius: 8px; font-weight: 700; font-size: 0.78rem; cursor: pointer; }
-    .pay-confirm-btn { display: block; width: 100%; background: var(--wa-green); color: #fff; text-decoration: none; text-align: center; padding: 14px; border-radius: 14px; font-weight: 700; margin-top: 15px; }
-
-    .popup-wa-card { background: linear-gradient(180deg, #0d1a33 0%, #0a0e1a 100%); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 28px; width: 100%; max-width: 380px; padding: 32px 24px 28px 24px; text-align: center; position: relative; cursor: pointer; }
-    .popup-avatar-box { width: 85px; height: 85px; margin: 10px auto 20px auto; border-radius: 20px; overflow: hidden; border: 2px solid rgba(59, 130, 246, 0.5); }
-    .popup-avatar-box img { width: 100%; height: 100%; object-fit: cover; }
-    .popup-title { font-size: 1.15rem; font-weight: 800; color: #fff; margin-bottom: 10px; text-transform: uppercase; }
-    .popup-desc { font-size: 0.85rem; color: #cbd5e1; margin-bottom: 20px; line-height: 1.5; }
-    .popup-btn-join { display: block; width: 100%; background: linear-gradient(135deg, var(--accent-blue), var(--accent-indigo)); color: #fff; text-decoration: none; padding: 14px; border-radius: 14px; font-weight: 700; margin-bottom: 10px; }
-    .popup-btn-later { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 13px; border-radius: 14px; font-weight: 700; cursor: pointer; }
-  </style>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- CSS Utama -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
+  <!-- ===== BACKGROUND VIDEO ===== -->
   <div id="bg-video-container">
     <div id="bg-media-slot"></div>
   </div>
 
+  <!-- ===== BACKGROUND AUDIO ===== -->
   <audio id="bg-audio" loop></audio>
 
-  <!-- MODAL POPUP WA -->
+  <!-- ===== MODAL WA POPUP ===== -->
   <div id="wa-modal-overlay" class="modal-overlay">
     <div class="popup-wa-card" id="popup-click-area">
-      <button class="popup-close-circle" onclick="closeWaModal()"><i class="fa-solid fa-xmark"></i></button>
-      <div class="popup-avatar-box"><img id="modal-banner-img" src="https://via.placeholder.com/150" alt=""></div>
+      <button class="popup-close-circle" onclick="closeWaModal()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="popup-avatar-box">
+        <img id="modal-banner-img" src="https://via.placeholder.com/150" alt="">
+      </div>
       <h3 id="modal-popup-title" class="popup-title">JOIN GRUP WHATSAPP</h3>
       <p id="modal-popup-desc" class="popup-desc">Masuk grup WhatsApp resmi untuk info promo & update produk.</p>
       <a id="modal-group-btn" href="#" target="_blank" class="popup-btn-join">Join Grup</a>
@@ -233,16 +38,20 @@
     </div>
   </div>
 
-  <!-- MODAL PAYMENT -->
+  <!-- ===== MODAL PAYMENT ===== -->
   <div id="payment-modal-overlay" class="modal-overlay">
     <div class="payment-modal-card">
-      <button class="popup-close-circle" onclick="closePaymentModal()"><i class="fa-solid fa-xmark"></i></button>
+      <button class="popup-close-circle" onclick="closePaymentModal()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
       <h3 class="pay-title">Metode Pembayaran</h3>
       
       <div class="qris-box">
         <img id="pay-qris-img" src="" alt="QRIS">
       </div>
-      <p style="text-align:center; font-size:0.8rem; color:var(--text-sub); margin-bottom:15px;">Scan QRIS di atas untuk semua e-wallet & mobile banking</p>
+      <p style="text-align:center; font-size:0.8rem; color:var(--text-sub); margin-bottom:15px;">
+        Scan QRIS di atas untuk semua e-wallet & mobile banking
+      </p>
 
       <div class="wallet-box">
         <div class="wallet-info">
@@ -266,6 +75,7 @@
     </div>
   </div>
 
+  <!-- ===== HEADER ===== -->
   <header>
     <div class="nav-container">
       <a href="index.html" class="brand">
@@ -275,7 +85,9 @@
     </div>
   </header>
 
+  <!-- ===== MAIN CONTENT ===== -->
   <div class="main-wrapper">
+
     <!-- HERO SECTION -->
     <div class="hero-section">
       <div class="hero-avatar">
@@ -285,7 +97,9 @@
       <div class="hero-text-card">
         <div class="hero-welcome">SELAMAT DATANG DI</div>
         <h1 id="hero-title" class="hero-greeting">PRIME CT STORE</h1>
-        <p id="hero-desc" class="hero-desc">Platform digital terpercaya untuk kebutuhan akun premium, jasa editing, top up game, bot WhatsApp, script bot, panel, VPS, partner, dan layanan digital lainnya.</p>
+        <p id="hero-desc" class="hero-desc">
+          Platform digital terpercaya untuk kebutuhan akun premium, jasa editing, top up game, bot WhatsApp, script bot, panel, VPS, partner, dan layanan digital lainnya.
+        </p>
       </div>
       
       <div class="hero-buttons">
@@ -303,40 +117,66 @@
       <h2 class="section-main-title">Produk & Jasa PRIME CT</h2>
       
       <div class="category-card">
-        <div class="cat-icon-title"><i class="fa-solid fa-crown" style="color: #60a5fa;"></i> AKUN PREMIUM</div>
+        <div class="cat-icon-title">
+          <i class="fa-solid fa-crown" style="color: #60a5fa;"></i> AKUN PREMIUM
+        </div>
         <div class="cat-desc">Netflix, Spotify, Canva, ChatGPT, YouTube, dan lainnya.</div>
       </div>
+      
       <div class="category-card">
-        <div class="cat-icon-title"><i class="fa-solid fa-palette" style="color: var(--accent-blue-light);"></i> EDITING</div>
+        <div class="cat-icon-title">
+          <i class="fa-solid fa-palette" style="color: var(--accent-blue-light);"></i> EDITING
+        </div>
         <div class="cat-desc">Jasa HD, desain, CapCut, Remini, Lightroom, dan paid edit.</div>
       </div>
+      
       <div class="category-card">
-        <div class="cat-icon-title"><i class="fa-solid fa-robot" style="color: var(--accent-cyan);"></i> BOT WHATSAPP</div>
+        <div class="cat-icon-title">
+          <i class="fa-solid fa-robot" style="color: var(--accent-cyan);"></i> BOT WHATSAPP
+        </div>
         <div class="cat-desc">Script bot, sewa bot, servis bot, jasa bot, dan fitur WA.</div>
       </div>
+      
       <div class="category-card">
-        <div class="cat-icon-title"><i class="fa-solid fa-server" style="color: var(--accent-indigo);"></i> WEB & PANEL</div>
+        <div class="cat-icon-title">
+          <i class="fa-solid fa-server" style="color: var(--accent-indigo);"></i> WEB & PANEL
+        </div>
         <div class="cat-desc">Panel, VPS, jasa web, dan kebutuhan server digital.</div>
       </div>
+      
       <a href="sosmed.html" style="text-decoration: none; color: inherit;">
         <div class="category-card">
-          <div class="cat-icon-title"><i class="fa-solid fa-share-nodes" style="color: var(--accent-cyan);"></i> PRIME SOSMED</div>
+          <div class="cat-icon-title">
+            <i class="fa-solid fa-share-nodes" style="color: var(--accent-cyan);"></i> PRIME SOSMED
+          </div>
           <div class="cat-desc">Kumpulan link sosial media resmi PRIME CT dalam satu halaman.</div>
         </div>
       </a>
+      
       <a href="tools.html" style="text-decoration: none; color: inherit;">
         <div class="category-card">
-          <div class="cat-icon-title"><i class="fa-solid fa-arrows-rotate" style="color: #34d399;"></i> PRIME CONVERT</div>
+          <div class="cat-icon-title">
+            <i class="fa-solid fa-arrows-rotate" style="color: #34d399;"></i> PRIME CONVERT
+          </div>
           <div class="cat-desc">Kompres & convert foto/video langsung dari browser, gratis tiap minggu.</div>
         </div>
       </a>
     </div>
 
-    <!-- SIAPA ITU PRIME CT -->
+    <!-- TENTANG PRIME CT -->
     <div class="about-box">
       <h3>Siapa itu PRIME CT?</h3>
-      <p><strong>PRIME CT</strong> adalah digital store yang dikembangkan dan dikelola oleh <strong>PRIME CT OFFICIAL</strong>, atau yang akrab dikenal dengan nama panggilan <strong>Prime</strong>. prime dikenal sebagai sosok serba bisa dengan berbagai keahlian, mulai dari developer, designer, hingga content creator. </p>
-      <p>PRIME CT berkomitmen menyediakan layanan praktis, cepat, dan terpercaya untuk seluruh kebutuhan dunia digital. Fokus kami adalah menghadirkan kemudahan transaksi, tampilan modern, serta pelayanan yang responsif.</p>
+      <p>
+        <strong>PRIME CT</strong> adalah digital store yang dikembangkan dan dikelola oleh 
+        <strong>PRIME CT OFFICIAL</strong>, atau yang akrab dikenal dengan nama panggilan 
+        <strong>Prime</strong>. Prime dikenal sebagai sosok serba bisa dengan berbagai keahlian, 
+        mulai dari developer, designer, hingga content creator.
+      </p>
+      <p>
+        PRIME CT berkomitmen menyediakan layanan praktis, cepat, dan terpercaya untuk seluruh 
+        kebutuhan dunia digital. Fokus kami adalah menghadirkan kemudahan transaksi, tampilan 
+        modern, serta pelayanan yang responsif.
+      </p>
       <div class="role-tags">
         <span class="role-tag">Owner</span>
         <span class="role-tag">Admin</span>
@@ -352,7 +192,10 @@
     <div class="stats-box">
       <div class="stats-number">8.929+</div>
       <div class="stats-title">Total Pelanggan</div>
-      <div class="stats-desc">PRIME CT dipercaya oleh ribuan pelanggan untuk kebutuhan produk digital, jasa online, layanan editing, bot, akun premium, dan kebutuhan digital lainnya.</div>
+      <div class="stats-desc">
+        PRIME CT dipercaya oleh ribuan pelanggan untuk kebutuhan produk digital, jasa online, 
+        layanan editing, bot, akun premium, dan kebutuhan digital lainnya.
+      </div>
       
       <div class="feature-mini-grid">
         <div class="feature-mini">
@@ -370,16 +213,23 @@
       </div>
 
       <div class="order-cta-box">
-        <p>Butuh order cepat?<br>Klik produk yang mau isi, detail order, pilih pembayaran, lalu kirim bukti ke WhatsApp Owner.</p>
-        <a href="produk.html" class="h-btn primary" style="display:inline-block; padding: 12px 30px; border-radius: 20px;">Mulai Order</a>
+        <p>
+          Butuh order cepat?<br>
+          Klik produk yang mau isi, detail order, pilih pembayaran, lalu kirim bukti ke WhatsApp Owner.
+        </p>
+        <a href="produk.html" class="h-btn primary" style="display:inline-block; padding: 12px 30px; border-radius: 20px;">
+          Mulai Order
+        </a>
       </div>
     </div>
   </div>
 
-  <!-- FOOTER -->
+  <!-- ===== FOOTER ===== -->
   <footer>
     <div class="footer-container">
-      <div style="font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 8px;" class="site-brand-name">PRIME CT</div>
+      <div style="font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 8px;" class="site-brand-name">
+        PRIME CT
+      </div>
       <p style="margin-bottom: 20px;">Platform digital terpercaya untuk kebutuhan layanan digital premium.</p>
       
       <div class="footer-socials">
@@ -414,117 +264,9 @@
     </div>
   </footer>
 
-  <script>
-    const SUPABASE_URL = 'https://krxzhxxytjmqmvzndofw.supabase.co';
-    const SUPABASE_ANON_KEY = 'sb_publishable_BtMu9ACi_o-V29IdGZdIDA_th6tjNzi';
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    let activeWhatsappNumber = '';
-    let isMusicEnabled = false;
-
-    function closeWaModal() { document.getElementById('wa-modal-overlay').classList.remove('active'); }
-    function openPaymentModal() { document.getElementById('payment-modal-overlay').classList.add('active'); }
-    function closePaymentModal() { document.getElementById('payment-modal-overlay').classList.remove('active'); }
-
-    function copyText(elementId, btn) {
-      const text = document.getElementById(elementId).textContent;
-      navigator.clipboard.writeText(text);
-      let old = btn.textContent;
-      btn.textContent = 'Disalin!';
-      setTimeout(() => btn.textContent = old, 2000);
-    }
-
-    async function loadSiteSettings() {
-      const { data } = await supabaseClient.from('site_settings').select('*');
-      if (!data) return;
-
-      let isPopupEnabled = false;
-      let groupUrl = '#';
-
-      data.forEach(item => {
-        if (item.key === 'site_title' && item.value) {
-          document.title = item.value;
-          document.querySelectorAll('.site-brand-name').forEach(el => el.textContent = item.value);
-        }
-        if (item.key === 'logo_url' && item.value) {
-          document.getElementById('header-logo').src = item.value;
-          document.getElementById('hero-logo').src = item.value;
-          document.getElementById('modal-banner-img').src = item.value;
-        }
-        if (item.key === 'hero_title' && item.value) {
-          document.getElementById('hero-title').textContent = item.value;
-        }
-        if (item.key === 'hero_desc' && item.value) {
-          document.getElementById('hero-desc').textContent = item.value;
-        }
-        if (item.key === 'whatsapp_number' && item.value) {
-          activeWhatsappNumber = item.value;
-          document.getElementById('hero-owner-btn').href = `https://wa.me/${item.value}`;
-          document.getElementById('ft-wa').href = `https://wa.me/${item.value}`;
-          document.getElementById('ft-wa-text').textContent = item.value;
-          document.getElementById('pay-confirm-wa').href = `https://wa.me/${item.value}?text=${encodeURIComponent('Halo Admin, saya ingin konfirmasi pembayaran.')}`;
-        }
-        if (item.key === 'whatsapp_backup' && item.value) document.getElementById('ft-wacad-text').textContent = item.value;
-        if (item.key === 'email_contact' && item.value) document.getElementById('ft-mail-text').textContent = item.value;
-        if (item.key === 'instagram_link' && item.value) document.getElementById('ft-ig').href = item.value;
-        if (item.key === 'telegram_link' && item.value) document.getElementById('ft-tg').href = item.value;
-        
-        if (item.key === 'ynacpanel_link' && item.value) document.getElementById('mn-cpanel').href = item.value;
-        if (item.key === 'ynaai_link' && item.value) document.getElementById('mn-ai').href = item.value;
-        if (item.key === 'ynatools_link' && item.value) document.getElementById('mn-tools').href = item.value;
-
-        if (item.key === 'bg_media_url' && item.value) {
-          const slot = document.getElementById('bg-media-slot');
-          if (item.value.endsWith('.mp4') || item.value.includes('video')) {
-            slot.innerHTML = `<video autoplay muted loop playsinline><source src="${item.value}" type="video/mp4"></video>`;
-          } else {
-            slot.innerHTML = `<img src="${item.value}" alt="Background">`;
-          }
-        }
-
-        if (item.key === 'qris_image_url' && item.value) document.getElementById('pay-qris-img').src = item.value;
-        if (item.key === 'dana_number' && item.value) document.getElementById('pay-dana-num').textContent = item.value;
-        if (item.key === 'dana_name' && item.value) document.getElementById('pay-dana-name').textContent = item.value;
-        if (item.key === 'gopay_number' && item.value) document.getElementById('pay-gopay-num').textContent = item.value;
-        if (item.key === 'gopay_name' && item.value) document.getElementById('pay-gopay-name').textContent = item.value;
-
-        if (item.key === 'popup_enabled') isPopupEnabled = (item.value === 'true');
-        if (item.key === 'popup_title' && item.value) document.getElementById('modal-popup-title').textContent = item.value;
-        if (item.key === 'popup_desc' && item.value) document.getElementById('modal-popup-desc').textContent = item.value;
-        if (item.key === 'wa_group_link' && item.value) {
-          groupUrl = item.value;
-          document.getElementById('modal-group-btn').href = item.value;
-        }
-
-        if (item.key === 'bg_music_url' && item.value) {
-          document.getElementById('bg-audio').src = item.value;
-        }
-        if (item.key === 'bg_music_enabled') {
-          isMusicEnabled = (item.value === 'true');
-        }
-      });
-
-      if (isPopupEnabled && groupUrl !== '#') {
-        setTimeout(() => document.getElementById('wa-modal-overlay').classList.add('active'), 500);
-      }
-    }
-
-    const popupClickArea = document.getElementById('popup-click-area');
-    const audioEl = document.getElementById('bg-audio');
-
-    if (popupClickArea) {
-      popupClickArea.addEventListener('click', () => {
-        if (isMusicEnabled) {
-          if (audioEl.paused) {
-            audioEl.play().catch(error => {
-              console.log("Pemutaran audio diblokir oleh browser:", error);
-            });
-          }
-        }
-      });
-    }
-
-    loadSiteSettings();
-  </script>
+  <!-- ===== SUPABASE ===== -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- ===== JAVASCRIPT UTAMA ===== -->
+  <script src="js/main.js"></script>
 </body>
 </html>
