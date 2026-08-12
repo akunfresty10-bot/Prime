@@ -11,6 +11,9 @@
   --accent-secondary: #7c3aed;
   --accent-gradient: linear-gradient(135deg, #00d4ff, #7c3aed);
   --shadow-glow: 0 8px 32px rgba(0, 212, 255, 0.15);
+  --accent-blue-light: #60a5fa;
+  --accent-cyan: #22d3ee;
+  --accent-indigo: #818cf8;
 }
 
 /* ============================================
@@ -528,7 +531,7 @@ footer {
 }
 
 /* ============================================
-   MODAL OVERLAY (Sama seperti sebelumnya)
+   MODAL OVERLAY
 ============================================ */
 .modal-overlay {
   position: fixed;
