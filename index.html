@@ -14,6 +14,20 @@
 </head>
 <body>
 
+  <!-- ===== SPLASH SCREEN / LOADING AWAL ===== -->
+  <div id="splash-screen" class="splash-overlay">
+    <div class="popup-wa-card" style="text-align: center;">
+      <div class="popup-avatar-box" style="margin: 0 auto 15px auto;">
+        <img id="splash-logo" src="https://via.placeholder.com/150" alt="Logo">
+      </div>
+      <h3 class="popup-title" style="margin-bottom: 5px;">PCT STORE</h3>
+      <p class="popup-desc" style="margin-bottom: 20px;">Memuat tampilan digital...</p>
+      <div class="splash-progress-bar">
+        <div class="splash-progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- ===== BACKGROUND VIDEO ===== -->
   <div id="bg-video-container">
     <div id="bg-media-slot"></div>
@@ -94,7 +108,8 @@
         <img id="hero-logo" src="https://via.placeholder.com/150" alt="Logo">
       </div>
       
-      <div class="hero-text-card">
+      <!-- Ditambahkan class "animate-slide-up" -->
+      <div class="hero-text-card animate-slide-up">
         <div class="hero-welcome">SELAMAT DATANG DI</div>
         <h1 id="hero-title" class="hero-greeting">PRIME CT STORE</h1>
         <p id="hero-desc" class="hero-desc">
@@ -102,7 +117,8 @@
         </p>
       </div>
       
-      <div class="hero-buttons">
+      <!-- Ditambahkan class "animate-slide-up" -->
+      <div class="hero-buttons animate-slide-up" style="animation-delay: 0.2s;">
         <a id="btn-products-link" href="produk.html" class="h-btn primary">Lihat Produk</a>
         <button class="h-btn" onclick="openPaymentModal()">Payment</button>
         <a id="hero-owner-btn" href="#" target="_blank" class="h-btn">Hubungi Owner</a>
@@ -249,10 +265,10 @@
       <div class="footer-menu-list">
         <a href="produk.html">Produk & Jasa</a>
         <a href="#" target="_blank">Partner Resmi</a>
-        <a id="mn-tools" href="tools.html">PRIME Tools</a>
-        <a id="mn-sosmed" href="sosmed.html">PRIME SOSMED</a>
-        <a id="mn-convert" href="tools.html">PRIME Convert</a>
-        <a id="mn-ai" href="#" target="_blank">PRIME AI</a>
+        <a id="mn-tools" href="tools.html">PCT Tools</a>
+        <a id="mn-sosmed" href="sosmed.html">PCT SOSMED</a>
+        <a id="mn-convert" href="tools.html">PCT Convert</a>
+        <a id="mn-ai" href="#" target="_blank">PCT AI</a>
         <a href="#">FAQ</a>
         <a href="#">Kontak</a>
         <a href="admin.html">Login / Daftar</a>
