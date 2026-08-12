@@ -1,4 +1,4 @@
-// ============================================
+// // ============================================
 // SUPABASE CONFIG
 // ============================================
 const SUPABASE_URL = 'https://krxzhxxytjmqmvzndofw.supabase.co';
@@ -18,6 +18,7 @@ const audioEl = document.getElementById('bg-audio');
 const popupClickArea = document.getElementById('popup-click-area');
 const waModalOverlay = document.getElementById('wa-modal-overlay');
 const paymentModalOverlay = document.getElementById('payment-modal-overlay');
+const splashScreen = document.getElementById('splash-screen');
 
 // ============================================
 // MODAL FUNCTIONS
@@ -67,6 +68,7 @@ async function loadSiteSettings() {
       document.getElementById('header-logo').src = value;
       document.getElementById('hero-logo').src = value;
       document.getElementById('modal-banner-img').src = value;
+      document.getElementById('splash-logo').src = value; // Update Logo di Splash Screen
     }
 
     // ===== HERO =====
@@ -166,10 +168,20 @@ async function loadSiteSettings() {
     }
   });
 
-  // ===== TAMPILKAN POPUP JIKA ENABLED =====
-  if (isPopupEnabled && groupUrl !== '#') {
-    setTimeout(() => waModalOverlay.classList.add('active'), 500);
-  }
+  // ===== LOGIKA HIDE SPLASH SCREEN & MUNCULKAN POPUP =====
+  setTimeout(() => {
+    // 1. Hilangkan Splash Screen (Fade Out)
+    if (splashScreen) {
+      splashScreen.classList.add('fade-out');
+    }
+    
+    // 2. Munculkan WA Popup jika di-enable (Delay sedikit setelah loading hilang)
+    if (isPopupEnabled && groupUrl !== '#') {
+      setTimeout(() => {
+        waModalOverlay.classList.add('active');
+      }, 500);
+    }
+  }, 1500); // 1.5 detik durasi loading progress bar
 }
 
 // ============================================
