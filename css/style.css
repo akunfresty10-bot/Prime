@@ -1,4 +1,4 @@
-/* ============================================
+/* /* ============================================
    ROOT VARIABLES - Gaya YNA STORE
 ============================================ */
 :root {
@@ -755,4 +755,57 @@ footer {
 .popup-btn-later:hover {
   border-color: var(--accent-primary);
   color: var(--text-main);
+}
+
+/* ============================================
+   SPLASH SCREEN & ANIMASI SLIDE IN
+============================================ */
+.splash-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-body);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.splash-overlay.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.splash-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.splash-progress-fill {
+  width: 0%;
+  height: 100%;
+  background: var(--accent-gradient);
+  animation: progressAnimation 1.5s ease-in-out forwards;
+}
+
+@keyframes progressAnimation {
+  0% { width: 0%; }
+  50% { width: 75%; }
+  100% { width: 100%; }
+}
+
+.animate-slide-up {
+  opacity: 0;
+  animation: slideInUp 0.8s ease-out forwards;
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
 }
