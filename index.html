@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YNA STORE — Digital Store</title>
+  <title class="site-brand-name">PRIME CT - Digital Store</title>
   
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- CSS -->
+  <!-- CSS Utama -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -29,7 +29,7 @@
         <i class="fa-solid fa-xmark"></i>
       </button>
       <div class="popup-avatar-box">
-        <img id="modal-banner-img" src="assets/logo.png" alt="YNA Logo">
+        <img id="modal-banner-img" src="https://via.placeholder.com/150" alt="">
       </div>
       <h3 id="modal-popup-title" class="popup-title">JOIN GRUP WHATSAPP</h3>
       <p id="modal-popup-desc" class="popup-desc">Masuk grup WhatsApp resmi untuk info promo & update produk.</p>
@@ -47,7 +47,7 @@
       <h3 class="pay-title">Metode Pembayaran</h3>
       
       <div class="qris-box">
-        <img id="pay-qris-img" src="assets/qris-sample.png" alt="QRIS">
+        <img id="pay-qris-img" src="" alt="QRIS">
       </div>
       <p style="text-align:center; font-size:0.8rem; color:var(--text-sub); margin-bottom:15px;">
         Scan QRIS di atas untuk semua e-wallet & mobile banking
@@ -55,7 +55,7 @@
 
       <div class="wallet-box">
         <div class="wallet-info">
-          <h5>DANA (<span id="pay-dana-name">YNA</span>)</h5>
+          <h5>DANA (<span id="pay-dana-name">Owner</span>)</h5>
           <p id="pay-dana-num">-</p>
         </div>
         <button class="copy-btn" onclick="copyText('pay-dana-num', this)">Salin</button>
@@ -63,7 +63,7 @@
 
       <div class="wallet-box">
         <div class="wallet-info">
-          <h5>GOPAY (<span id="pay-gopay-name">YNA</span>)</h5>
+          <h5>GOPAY (<span id="pay-gopay-name">Owner</span>)</h5>
           <p id="pay-gopay-num">-</p>
         </div>
         <button class="copy-btn" onclick="copyText('pay-gopay-num', this)">Salin</button>
@@ -79,12 +79,9 @@
   <header>
     <div class="nav-container">
       <a href="index.html" class="brand">
-        <img id="header-logo" src="assets/logo.png" alt="YNA Logo">
-        <span class="site-brand-name">YNA STORE</span>
+        <img id="header-logo" src="https://via.placeholder.com/150" alt="Logo">
+        <span class="site-brand-name">PRIME CT</span>
       </a>
-      <div style="display:flex; gap:12px;">
-        <a href="admin.html" style="color:var(--text-sub); text-decoration:none; font-size:0.8rem; font-weight:600;">Login</a>
-      </div>
     </div>
   </header>
 
@@ -94,12 +91,12 @@
     <!-- HERO SECTION -->
     <div class="hero-section">
       <div class="hero-avatar">
-        <img id="hero-logo" src="assets/logo.png" alt="YNA Logo">
+        <img id="hero-logo" src="https://via.placeholder.com/150" alt="Logo">
       </div>
       
       <div class="hero-text-card">
         <div class="hero-welcome">SELAMAT DATANG DI</div>
-        <h1 id="hero-title" class="hero-greeting">YNA STORE</h1>
+        <h1 id="hero-title" class="hero-greeting">PRIME CT STORE</h1>
         <p id="hero-desc" class="hero-desc">
           Platform digital terpercaya untuk kebutuhan akun premium, jasa editing, top up game, bot WhatsApp, script bot, panel, VPS, partner, dan layanan digital lainnya.
         </p>
@@ -109,15 +106,15 @@
         <a id="btn-products-link" href="produk.html" class="h-btn primary">Lihat Produk</a>
         <button class="h-btn" onclick="openPaymentModal()">Payment</button>
         <a id="hero-owner-btn" href="#" target="_blank" class="h-btn">Hubungi Owner</a>
-        <a id="hero-tools-btn" href="tools.html" class="h-btn">YNA TOOLS</a>
-        <a href="#" class="h-btn">YNA SOSMED</a>
+        <a id="hero-tools-btn" href="tools.html" class="h-btn">PRIME TOOLS</a>
+        <a href="sosmed.html" class="h-btn">PRIME SOSMED</a>
       </div>
     </div>
 
     <!-- KATEGORI POPULER -->
     <div class="section-box">
       <div class="section-header-title">Kategori Populer</div>
-      <h2 class="section-main-title">Produk & Jasa YNA</h2>
+      <h2 class="section-main-title">Produk & Jasa PRIME CT</h2>
       
       <div class="category-card">
         <div class="cat-icon-title">
@@ -147,38 +144,38 @@
         <div class="cat-desc">Panel, VPS, jasa web, dan kebutuhan server digital.</div>
       </div>
       
-      <div class="category-card">
-        <div class="cat-icon-title">
-          <i class="fa-solid fa-cubes" style="color: #f59e0b;"></i> YNA CPANEL
+      <a href="sosmed.html" style="text-decoration: none; color: inherit;">
+        <div class="category-card">
+          <div class="cat-icon-title">
+            <i class="fa-solid fa-share-nodes" style="color: var(--accent-cyan);"></i> PRIME SOSMED
+          </div>
+          <div class="cat-desc">Kumpulan link sosial media resmi PRIME CT dalam satu halaman.</div>
         </div>
-        <div class="cat-desc">Kelola hosting, server, dan panel Pterodactyl langsung dari sini.</div>
-      </div>
+      </a>
       
       <a href="tools.html" style="text-decoration: none; color: inherit;">
         <div class="category-card">
           <div class="cat-icon-title">
-            <i class="fa-solid fa-arrows-rotate" style="color: #34d399;"></i> YNA CONVERT
+            <i class="fa-solid fa-arrows-rotate" style="color: #34d399;"></i> PRIME CONVERT
           </div>
           <div class="cat-desc">Kompres & convert foto/video langsung dari browser, gratis tiap minggu.</div>
         </div>
       </a>
     </div>
 
-    <!-- TENTANG YNA STORE -->
+    <!-- TENTANG PRIME CT -->
     <div class="about-box">
-      <h3>Siapa itu YNA STORE?</h3>
+      <h3>Siapa itu PRIME CT?</h3>
       <p>
-        <strong>YNA STORE</strong> adalah digital store yang dikembangkan dan dikelola oleh 
-        <strong>Tabayyuna Muharrama</strong>, atau yang akrab dikenal dengan nama panggilan 
-        <strong>Yuna</strong>. Yuna dikenal sebagai sosok serba bisa dengan banyak bidang keahlian, 
-        mulai dari owner, admin, developer, engineer, desainer, editor, konten kreator, hingga 
-        pengelola layanan digital yang terus berkembang mengikuti era teknologi modern.
+        <strong>PRIME CT</strong> adalah digital store yang dikembangkan dan dikelola oleh 
+        <strong>PRIME CT OFFICIAL</strong>, atau yang akrab dikenal dengan nama panggilan 
+        <strong>Prime</strong>. Prime dikenal sebagai sosok serba bisa dengan berbagai keahlian, 
+        mulai dari developer, designer, hingga content creator.
       </p>
       <p>
-        YNA STORE hadir sebagai tempat layanan digital yang praktis, cepat, dan terpercaya untuk 
-        membantu kebutuhan pelanggan di dunia online. Fokus utama YNA STORE adalah memberikan 
-        pengalaman order yang mudah, tampilan website yang modern, layanan yang responsif, serta 
-        katalog produk dan jasa yang terus diperbarui mengikuti kebutuhan dunia digital.
+        PRIME CT berkomitmen menyediakan layanan praktis, cepat, dan terpercaya untuk seluruh 
+        kebutuhan dunia digital. Fokus kami adalah menghadirkan kemudahan transaksi, tampilan 
+        modern, serta pelayanan yang responsif.
       </p>
       <div class="role-tags">
         <span class="role-tag">Owner</span>
@@ -188,7 +185,6 @@
         <span class="role-tag">Designer</span>
         <span class="role-tag">Editor</span>
         <span class="role-tag">Content Creator</span>
-        <span class="role-tag">Digital Service</span>
       </div>
     </div>
 
@@ -197,7 +193,7 @@
       <div class="stats-number">8.929+</div>
       <div class="stats-title">Total Pelanggan</div>
       <div class="stats-desc">
-        YNA STORE dipercaya oleh ribuan pelanggan untuk kebutuhan produk digital, jasa online, 
+        PRIME CT dipercaya oleh ribuan pelanggan untuk kebutuhan produk digital, jasa online, 
         layanan editing, bot, akun premium, dan kebutuhan digital lainnya.
       </div>
       
@@ -219,7 +215,7 @@
       <div class="order-cta-box">
         <p>
           Butuh order cepat?<br>
-          Klik produk yang kamu mau, isi detail order, pilih pembayaran, lalu kirim bukti ke WhatsApp YNA.
+          Klik produk yang mau isi, detail order, pilih pembayaran, lalu kirim bukti ke WhatsApp Owner.
         </p>
         <a href="produk.html" class="h-btn primary" style="display:inline-block; padding: 12px 30px; border-radius: 20px;">
           Mulai Order
@@ -232,7 +228,7 @@
   <footer>
     <div class="footer-container">
       <div style="font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 8px;" class="site-brand-name">
-        YNA STORE
+        PRIME CT
       </div>
       <p style="margin-bottom: 20px;">Platform digital terpercaya untuk kebutuhan layanan digital premium.</p>
       
@@ -253,24 +249,24 @@
       <div class="footer-menu-list">
         <a href="produk.html">Produk & Jasa</a>
         <a href="#" target="_blank">Partner Resmi</a>
-        <a id="mn-tools" href="tools.html">YNA Tools</a>
-        <a id="mn-sosmed" href="#">YNA SOSMED</a>
-        <a id="mn-convert" href="tools.html">YNA Convert</a>
-        <a id="mn-ai" href="#" target="_blank">YNA AI</a>
+        <a id="mn-tools" href="tools.html">PRIME Tools</a>
+        <a id="mn-sosmed" href="sosmed.html">PRIME SOSMED</a>
+        <a id="mn-convert" href="tools.html">PRIME Convert</a>
+        <a id="mn-ai" href="#" target="_blank">PRIME AI</a>
         <a href="#">FAQ</a>
         <a href="#">Kontak</a>
         <a href="admin.html">Login / Daftar</a>
       </div>
 
       <div class="copyright">
-        &copy; 2026 YNA STORE<br>All Right YNA Developer 2026
+        &copy; 2026 PRIME CT<br>All Right Prime Developer 2026
       </div>
     </div>
   </footer>
 
   <!-- ===== SUPABASE ===== -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <!-- ===== JAVASCRIPT ===== -->
+  <!-- ===== JAVASCRIPT UTAMA ===== -->
   <script src="js/main.js"></script>
 </body>
 </html>
