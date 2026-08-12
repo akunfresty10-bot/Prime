@@ -64,8 +64,9 @@ async function loadSiteSettings() {
 
     // ===== LOGO =====
     if (key === 'logo_url' && value) {
-      const logoImgs = document.querySelectorAll('#header-logo, #hero-logo, #modal-banner-img');
-      logoImgs.forEach(el => { if (el) el.src = value; });
+      document.getElementById('header-logo').src = value;
+      document.getElementById('hero-logo').src = value;
+      document.getElementById('modal-banner-img').src = value;
     }
 
     // ===== HERO =====
@@ -79,67 +80,66 @@ async function loadSiteSettings() {
     // ===== WHATSAPP =====
     if (key === 'whatsapp_number' && value) {
       activeWhatsappNumber = value;
-      document.querySelectorAll('#hero-owner-btn, #ft-wa, #pay-confirm-wa, #order-wa-btn').forEach(el => {
-        if (el) el.href = `https://wa.me/${value}`;
-      });
-      document.querySelectorAll('#ft-wa-text').forEach(el => { if (el) el.textContent = value; });
+      document.getElementById('hero-owner-btn').href = `https://wa.me/${value}`;
+      document.getElementById('ft-wa').href = `https://wa.me/${value}`;
+      document.getElementById('ft-wa-text').textContent = value;
+      document.getElementById('pay-confirm-wa').href = 
+        `https://wa.me/${value}?text=${encodeURIComponent('Halo Admin, saya ingin konfirmasi pembayaran.')}`;
     }
 
     if (key === 'whatsapp_backup' && value) {
-      document.querySelectorAll('#ft-wacad-text').forEach(el => { if (el) el.textContent = value; });
+      document.getElementById('ft-wacad-text').textContent = value;
     }
 
     // ===== EMAIL =====
     if (key === 'email_contact' && value) {
-      document.querySelectorAll('#ft-mail-text').forEach(el => { if (el) el.textContent = value; });
+      document.getElementById('ft-mail-text').textContent = value;
     }
 
     // ===== SOCIAL MEDIA =====
     if (key === 'instagram_link' && value) {
-      document.querySelectorAll('#ft-ig').forEach(el => { if (el) el.href = value; });
+      document.getElementById('ft-ig').href = value;
     }
     if (key === 'telegram_link' && value) {
-      document.querySelectorAll('#ft-tg').forEach(el => { if (el) el.href = value; });
+      document.getElementById('ft-tg').href = value;
     }
 
     // ===== MENU LINKS =====
     if (key === 'ynacpanel_link' && value) {
-      document.querySelectorAll('#mn-cpanel').forEach(el => { if (el) el.href = value; });
+      document.getElementById('mn-cpanel').href = value;
     }
     if (key === 'ynaai_link' && value) {
-      document.querySelectorAll('#mn-ai').forEach(el => { if (el) el.href = value; });
+      document.getElementById('mn-ai').href = value;
     }
     if (key === 'ynatools_link' && value) {
-      document.querySelectorAll('#mn-tools, #hero-tools-btn').forEach(el => { if (el) el.href = value; });
+      document.getElementById('mn-tools').href = value;
     }
 
     // ===== BACKGROUND MEDIA =====
     if (key === 'bg_media_url' && value) {
       const slot = document.getElementById('bg-media-slot');
-      if (slot) {
-        if (value.endsWith('.mp4') || value.includes('video')) {
-          slot.innerHTML = `<video autoplay muted loop playsinline><source src="${value}" type="video/mp4"></video>`;
-        } else {
-          slot.innerHTML = `<img src="${value}" alt="Background">`;
-        }
+      if (value.endsWith('.mp4') || value.includes('video')) {
+        slot.innerHTML = `<video autoplay muted loop playsinline><source src="${value}" type="video/mp4"></video>`;
+      } else {
+        slot.innerHTML = `<img src="${value}" alt="Background">`;
       }
     }
 
     // ===== PAYMENT =====
     if (key === 'qris_image_url' && value) {
-      document.querySelectorAll('#pay-qris-img').forEach(el => { if (el) el.src = value; });
+      document.getElementById('pay-qris-img').src = value;
     }
     if (key === 'dana_number' && value) {
-      document.querySelectorAll('#pay-dana-num').forEach(el => { if (el) el.textContent = value; });
+      document.getElementById('pay-dana-num').textContent = value;
     }
     if (key === 'dana_name' && value) {
-      document.querySelectorAll('#pay-dana-name').forEach(el => { if (el) el.textContent = value; });
+      document.getElementById('pay-dana-name').textContent = value;
     }
     if (key === 'gopay_number' && value) {
-      document.querySelectorAll('#pay-gopay-num').forEach(el => { if (el) el.textContent = value; });
+      document.getElementById('pay-gopay-num').textContent = value;
     }
     if (key === 'gopay_name' && value) {
-      document.querySelectorAll('#pay-gopay-name').forEach(el => { if (el) el.textContent = value; });
+      document.getElementById('pay-gopay-name').textContent = value;
     }
 
     // ===== POPUP =====
@@ -147,14 +147,14 @@ async function loadSiteSettings() {
       isPopupEnabled = (value === 'true');
     }
     if (key === 'popup_title' && value) {
-      document.querySelectorAll('#modal-popup-title').forEach(el => { if (el) el.textContent = value; });
+      document.getElementById('modal-popup-title').textContent = value;
     }
     if (key === 'popup_desc' && value) {
-      document.querySelectorAll('#modal-popup-desc').forEach(el => { if (el) el.textContent = value; });
+      document.getElementById('modal-popup-desc').textContent = value;
     }
     if (key === 'wa_group_link' && value) {
       groupUrl = value;
-      document.querySelectorAll('#modal-group-btn').forEach(el => { if (el) el.href = value; });
+      document.getElementById('modal-group-btn').href = value;
     }
 
     // ===== BACKGROUND MUSIC =====
