@@ -1,5 +1,5 @@
-/* /* ============================================
-   ROOT VARIABLES - Gaya YNA STORE
+/* ============================================
+   ROOT VARIABLES - GAYA DIGITAL STORE
 ============================================ */
 :root {
   --bg-body: #0b0f1c;
@@ -128,10 +128,7 @@ header {
 }
 
 /* ============================================
-   HERO SECTION
-============================================ */
-./* ============================================
-   HERO SECTION & BUTTONS (EXACT MATCH DESIGN)
+   HERO SECTION & COMPACT BUTTONS
 ============================================ */
 .hero-section {
   text-align: center;
@@ -191,15 +188,15 @@ header {
 .hero-buttons {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Memposisikan tombol persis di tengah */
-  gap: 10px; /* Jarak antar tombol rapat */
+  align-items: center;
+  gap: 10px;
   margin-top: 22px;
 }
 
 .h-btn {
   width: 100%;
-  max-width: 220px; /* Menentukan lebar tombol agar ramping */
-  padding: 10px 16px; /* Tinggi tombol diperkecil */
+  max-width: 220px; /* Lebar tombol ramping di tengah */
+  padding: 10px 16px; /* Tinggi tombol hemat tempat */
   border-radius: 14px;
   font-size: 0.83rem;
   font-weight: 700;
@@ -221,7 +218,7 @@ header {
   border-color: rgba(255, 255, 255, 0.25);
 }
 
-/* Tombol Utama (Lihat Produk) Warna Gradient Ungu */
+/* Tombol Utama (Lihat Produk) Gradient Ungu */
 .h-btn.primary {
   background: linear-gradient(135deg, #a855f7, #6366f1);
   border: none;
@@ -232,7 +229,6 @@ header {
   transform: translateY(-2px);
   box-shadow: 0 6px 22px rgba(168, 85, 247, 0.6);
 }
-
 
 /* ============================================
    SECTION
