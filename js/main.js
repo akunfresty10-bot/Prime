@@ -117,16 +117,6 @@ async function loadSiteSettings() {
       document.getElementById('mn-tools').href = value;
     }
 
-    // ===== BACKGROUND MEDIA =====
-    if (key === 'bg_media_url' && value) {
-      const slot = document.getElementById('bg-media-slot');
-      if (value.endsWith('.mp4') || value.includes('video')) {
-        slot.innerHTML = `<video autoplay muted loop playsinline><source src="${value}" type="video/mp4"></video>`;
-      } else {
-        slot.innerHTML = `<img src="${value}" alt="Background">`;
-      }
-    }
-
     // ===== PAYMENT =====
     if (key === 'qris_image_url' && value) {
       document.getElementById('pay-qris-img').src = value;
