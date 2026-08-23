@@ -65,24 +65,7 @@ body {
   background: rgba(11, 15, 28, 0.4);
 }
 
-/* ===== DESKTOP: video jadi banner 16:9 di atas, tetap fixed saat discroll ===== */
-@media (min-width: 993px) {
-  #bg-video-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
-    z-index: -1;
-  }
 
-  #bg-media-slot,
-  #bg-media-slot video,
-  #bg-media-slot img {
-    object-position: center;
-  }
-}
 
 /* ============================================
    ANIMATIONS
