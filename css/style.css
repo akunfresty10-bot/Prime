@@ -53,8 +53,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(11, 15, 28, 0.85);
-  backdrop-filter: blur(2px);
+  background: rgba(11, 15, 28, 0.4);
 }
 
 /* ============================================
