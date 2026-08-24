@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title class="site-brand-name">PCT AI - PRIME CT STORE</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- CSS Utama & Custom AI Style -->
+  <link rel="stylesheet" href="css/style.css">
+  
+  <style>
+    /* Styling Tambahan Khusus Halaman PCT AI */
+    .ai-wrapper {
+      max-width: 850px;
+      margin: 0 auto;
+      padding: 20px 15px;
+    }
+
+    .ai-hero {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .ai-tab-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
+
+    .ai-tab-btn {
+      flex: 1;
+      max-width: 200px;
+      padding: 12px 18px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .ai-tab-btn.active {
+      background: linear-gradient(135deg, var(--accent-primary, #a855f7), #6366f1);
+      border-color: transparent;
+      box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+    }
+
+    .ai-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      color: #cbd5e1;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .ai-input, .ai-select, .ai-textarea {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      padding: 12px 15px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.3s;
+      box-sizing: border-box;
+    }
+
+    .ai-input:focus, .ai-select:focus, .ai-textarea:focus {
+      border-color: #a855f7;
+    }
+
+    .ai-select option {
+      background: #0f172a;
+      color: #fff;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .btn-submit-ai {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(90deg, #a855f7, #38bdf8);
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-submit-ai:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
+    }
+
+    .btn-submit-ai:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* Output Section */
+    .ai-output-box {
+      display: none;
+      position: relative;
+    }
+
+    .ai-output-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .ai-output-title {
+      font-weight: 800;
+      color: #38bdf8;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-copy-result {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-copy-result:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .ai-output-content {
+      color: #e2e8f0;
+      line-height: 1.7;
+      font-size: 0.95rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== SPLASH SCREEN ===== -->
+  <div id="splash-screen" class="splash-overlay">
+    <div class="popup-wa-card" style="text-align: center;">
+      <div class="popup-avatar-box">
+        <img id="splash-logo" src="https://via.placeholder.com/150" alt="Logo">
+      </div>
+      <h3 class="popup-title" style="margin-bottom: 5px;">PCT AI</h3>
+      <p class="popup-desc" style="margin-bottom: 20px;">Memuat AI Assistant...</p>
+      <div class="splash-progress-bar">
+        <div class="splash-progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== BACKGROUND VIDEO ===== -->
+  <div id="bg-video-container">
+    <div id="bg-media-slot">
+      <video autoplay muted loop playsinline>
+        <source src="assets/bg.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+
+  <!-- ===== HEADER ===== -->
+  <a href="index.html" class="brand">
+    <div class="header-avatar">
+      <img id="header-logo" src="https://via.placeholder.com/150" alt="Logo">
+    </div>
+    <span class="site-brand-name">PRIME CT</span>
+  </a>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <div class="main-wrapper ai-wrapper">
+
+    <!-- HERO SECTION -->
+    <div class="ai-hero animate-slide-up">
+      <div class="hero-welcome">ASISTEN CERDAS</div>
+      <h1 class="hero-greeting site-brand-name">PCT AI ASSISTANT</h1>
+      <p class="hero-desc">
+        Solusi AI pintar berbasis DocsBot AI untuk menjawab pertanyaan kompleks & mengolah konten YouTube secara otomatis.
+      </p>
+    </div>
+
+    <!-- TAB SWITCHER -->
+    <div class="ai-tab-container animate-slide-up">
+      <button class="ai-tab-btn active" onclick="switchAiTab('text')">
+        <i class="fa-solid fa-brain"></i> Text AI
+      </button>
+      <button class="ai-tab-btn" onclick="switchAiTab('youtube')">
+        <i class="fa-brands fa-youtube"></i> YouTube AI
+      </button>
+    </div>
+
+    <!-- TAB 1: TEXT / CHAT AI -->
+    <div id="tab-text" class="tab-content active animate-slide-up">
+      <div class="ai-card">
+        <form id="form-text-ai" onsubmit="handleAiSubmit(event, 'text')">
+          <div class="form-group">
+            <label for="text-prompt"><i class="fa-solid fa-pen-nib"></i> Pertanyaan / Prompt Utama *</label>
+            <textarea id="text-prompt" class="ai-textarea" rows="4" placeholder="Contoh: Jelaskan cara kerja Artificial Intelligence secara mudah..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="text-context"><i class="fa-solid fa-file-lines"></i> Konteks Tambahan (Opsional)</label>
+            <textarea id="text-context" class="ai-textarea" rows="2" placeholder="Masukkan konteks atau latar belakang informasi..."></textarea>
+          </div>
+
+          <div class="options-grid">
+            <div class="form-group">
+              <label for="text-tone"><i class="fa-solid fa-masks-theater"></i> Gaya Bahasa (Tone)</label>
+              <select id="text-tone" class="ai-select">
+                <option value="Neutral Expert">Neutral Expert</option>
+                <option value="Academic Researcher">Academic Researcher</option>
+                <option value="Friendly Guide" selected>Friendly Guide</option>
+                <option value="Persuasive Pitch">Persuasive Pitch</option>
+                <option value="Support Hero">Support Hero</option>
+                <option value="Technical Mentor">Technical Mentor</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="text-length"><i class="fa-solid fa-ruler"></i> Panjang Jawaban</label>
+              <select id="text-length" class="ai-select">
+                <option value="Quick Snapshot">Quick Snapshot (Singkat)</option>
+                <option value="Balanced Breakdown" selected>Balanced Breakdown (Sedang)</option>
+                <option value="Deep Dive">Deep Dive (Mendalam)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="text-format"><i class="fa-solid fa-list-check"></i> Format Penulisan</label>
+              <select id="text-format" class="ai-select">
+                <option value="Guided Paragraphs">Guided Paragraphs</option>
+                <option value="Bullet Answers" selected>Bullet Answers</option>
+                <option value="Step-by-Step Playbook">Step-by-Step Playbook</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" id="btn-text-submit" class="btn-submit-ai">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Hasilkan Jawaban
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- TAB 2: YOUTUBE AI -->
+    <div id="tab-youtube" class="tab-content animate-slide-up">
+      <div class="ai-card">
+        <form id="form-yt-ai" onsubmit="handleAiSubmit(event, 'youtube')">
+          <div class="form-group">
+            <label for="yt-url"><i class="fa-brands fa-youtube" style="color:#ff0000;"></i> Link Video YouTube *</label>
+            <input type="url" id="yt-url" class="ai-input" placeholder="https://www.youtube.com/watch?v=..." required>
+          </div>
+
+          <div class="form-group">
+            <label for="yt-type"><i class="fa-solid fa-sliders"></i> Mode Ekstraksi Konten</label>
+            <select id="yt-type" class="ai-select">
+              <option value="summary" selected>Summary (Rangkuman Penting)</option>
+              <option value="transcript">Transcript (Transkrip Teks)</option>
+              <option value="chapters">Chapters (Daftar Bab Video)</option>
+            </select>
+          </div>
+
+          <button type="submit" id="btn-yt-submit" class="btn-submit-ai">
+            <i class="fa-solid fa-bolt"></i> Proses Video YouTube
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- HASIL OUTPUT AI -->
+    <div id="ai-output-box" class="ai-card ai-output-box">
+      <div class="ai-output-header">
+        <div class="ai-output-title">
+          <i class="fa-solid fa-robot"></i> Hasil PCT AI
+        </div>
+        <button class="btn-copy-result" onclick="copyAiResult(this)">
+          <i class="fa-regular fa-copy"></i> Salin Teks
+        </button>
+      </div>
+      <div id="ai-output-content" class="ai-output-content"></div>
+    </div>
+
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="footer-container">
+      <div style="font-size: 1rem; font-weight: 800; color: #fff; margin-bottom: 8px;" class="site-brand-name">
+        PRIME CT
+      </div>
+      <p style="margin-bottom: 20px;">Platform digital terpercaya untuk kebutuhan layanan digital premium.</p>
+      
+      <div class="footer-section-title">Menu Utama</div>
+      <div class="footer-menu-list">
+        <a href="index.html">Beranda</a>
+        <a href="produk.html">Produk & Jasa</a>
+        <a href="tools.html">PCT Tools</a>
+        <a href="sosmed.html">PCT Sosmed</a>
+        <a href="ai.html" style="color: #38bdf8; font-weight:700;">PCT AI</a>
+      </div>
+
+      <div class="copyright">
+        &copy; 𝟮𝟬𝟮𝟲_𝗽𝗿𝗶𝗺𝗲𝗖𝗧𝗼𝗳𝗳𝗶𝗰𝗶𝗮𝗹<br>All Right Prime Developer 2026
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== JS LOGIC ===== -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/main.js"></script>
+  <script src="js/ai.js"></script>
+</body>
+</html>
