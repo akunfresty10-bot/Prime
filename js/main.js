@@ -181,10 +181,10 @@ if (popupClickArea) {
 loadSiteSettings();
 
 // ============================================
-// HERO TEXT LETTER ANIMATION
+// HERO TEXT LETTER ANIMATION (FIXED)
 // ============================================
 function initHeroTextAnimation() {
-  if (hasAnimatedHeroText) return; // Mencegah animasi berjalan 2x
+  if (hasAnimatedHeroText) return;
   hasAnimatedHeroText = true;
 
   const welcomeEl = document.querySelector('.hero-welcome');
@@ -192,8 +192,12 @@ function initHeroTextAnimation() {
 
   const animateLetters = (el, direction) => {
     if (!el) return;
-    const text = el.textContent.trim();
-    el.textContent = ''; 
+    
+    // Ambil teks saat ini, jika kosong gunakan default
+    const text = el.textContent.trim() || el.innerText.trim();
+    if (!text) return;
+
+    el.textContent = ''; // Kosongkan konteks teks utama
 
     [...text].forEach((char, index) => {
       const span = document.createElement('span');
@@ -204,6 +208,7 @@ function initHeroTextAnimation() {
     });
   };
 
+  // Jalankan animasi teks
   animateLetters(welcomeEl, 'left');
   animateLetters(titleEl, 'right');
 }
