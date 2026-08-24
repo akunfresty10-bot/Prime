@@ -216,8 +216,8 @@ function initHeroTextAnimation() {
   const welcomeData = setupLetters(welcomeEl);
   const titleData = setupLetters(titleEl);
 
-  // 2. Kecepatan mengetik (semakin kecil angkanya, semakin cepat ngetiknya)
-  const typingSpeed = 0.12; // 0.06 detik per huruf
+  // 2. Kecepatan mengetik
+  const typingSpeed = 0.12; 
 
   // Mengetik baris 1: "SELAMAT DATANG DI"
   welcomeData.spans.forEach((span, index) => {
@@ -227,7 +227,7 @@ function initHeroTextAnimation() {
   // Hitung waktu selesai baris 1
   const welcomeDuration = welcomeData.spans.length * typingSpeed;
 
-  // Mengetik baris 2: "PCT STORE" (mulai setelah baris 1 selesai)
+  // Mengetik baris 2: "PCT STORE"
   titleData.spans.forEach((span, index) => {
     span.style.animationDelay = `${welcomeDuration + (index * typingSpeed)}s`;
   });
@@ -240,7 +240,42 @@ function initHeroTextAnimation() {
     cascadeElements.forEach((el, index) => {
       setTimeout(() => {
         el.classList.add('show-cascade');
-      }, index * 120); // Jeda 120ms antar papan/tombol
+      }, index * 120);
     });
   }, totalTypingTime);
 }
+
+// ============================================
+// LOGIKA ANGKAS PENGUNJUNG OTOMATIS (+1)
+// ============================================
+async function updateVisitorCount() {
+  try {
+    const { data } = await supabaseClient
+      .from('site_settings')
+      .select('value')
+      .eq('key', 'total_visitors')
+      .single();
+
+    let currentCount = 0;
+    if (data && data.value) {
+      currentCount = parseInt(data.value, 10) || 0;
+    }
+
+    const newCount = currentCount + 1;
+
+    await supabaseClient
+      .from('site_settings')
+      .update({ value: newCount.toString() })
+      .eq('key', 'total_visitors');
+
+    const countEl = document.getElementById('stats-visitor-count');
+    if (countEl) {
+      countEl.textContent = `${newCount.toLocaleString('id-ID')}+`;
+    }
+  } catch (err) {
+    console.error('Gagal memperbarui pengunjung:', err);
+  }
+}
+
+// Jalankan logika penambah pengunjung saat situs dibuka
+updateVisitorCount();
