@@ -1,22 +1,18 @@
 /* ============================================
-   ROOT VARIABLES - GAYA DIGITAL STORE v2
-   Upgrade dengan efek neon & animasi premium
+   ROOT VARIABLES - GAYA YNA STORE (PINK THEME)
 ============================================ */
 :root {
   --bg-body: #0b0f1c;
   --bg-card: rgba(255, 255, 255, 0.04);
-  --border-glow: rgba(0, 255, 255, 0.2);
+  --border-glow: rgba(236, 72, 153, 0.25);
   --text-main: #f0f6fc;
   --text-sub: #94a3b8;
-  --accent-primary: #00d4ff;
-  --accent-secondary: #7c3aed;
-  --accent-pink: #ec4899;
-  --accent-gradient: linear-gradient(135deg, #00d4ff, #7c3aed, #ec4899);
-  --shadow-glow: 0 8px 32px rgba(0, 212, 255, 0.2);
-  --shadow-neon: 0 0 40px rgba(0, 212, 255, 0.15);
-  --accent-blue-light: #60a5fa;
-  --accent-cyan: #22d3ee;
-  --accent-indigo: #818cf8;
+  --accent-primary: #ec4899;
+  --accent-secondary: #f472b6;
+  --accent-purple: #a855f7;
+  --accent-gradient: linear-gradient(135deg, #ec4899, #f472b6, #a855f7);
+  --shadow-glow: 0 8px 32px rgba(236, 72, 153, 0.25);
+  --shadow-neon: 0 0 50px rgba(236, 72, 153, 0.2);
   --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
@@ -40,9 +36,9 @@ body {
   min-height: 100vh;
   line-height: 1.6;
   background-image: 
-    radial-gradient(ellipse at 10% 30%, rgba(0, 212, 255, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 90% 70%, rgba(124, 58, 237, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 100%, rgba(236, 72, 153, 0.04) 0%, transparent 40%);
+    radial-gradient(ellipse at 20% 30%, rgba(236, 72, 153, 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 70%, rgba(168, 85, 247, 0.10) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 100%, rgba(244, 114, 182, 0.06) 0%, transparent 40%);
   background-attachment: fixed;
   overflow-x: hidden;
 }
@@ -89,29 +85,30 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(11, 15, 28, 0.6);
+  background: rgba(11, 15, 28, 0.5);
   backdrop-filter: blur(2px);
 }
 
-/* Animated gradient orb untuk background */
+/* Animated gradient orb untuk background - PINK THEME */
 #bg-video-container::before {
   content: '';
   position: absolute;
   inset: 0;
   background: 
-    radial-gradient(circle at 20% 30%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+    radial-gradient(circle at 20% 30%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(244, 114, 182, 0.05) 0%, transparent 60%);
   animation: orbPulse 8s ease-in-out infinite alternate;
   z-index: 0;
 }
 
 @keyframes orbPulse {
-  0% { opacity: 0.5; transform: scale(1); }
+  0% { opacity: 0.6; transform: scale(1); }
   100% { opacity: 1; transform: scale(1.1); }
 }
 
 /* ============================================
-   ANIMATIONS - UPGRADED
+   ANIMATIONS
 ============================================ */
 @keyframes gradientShift {
   0% { background-position: 0% 50%; }
@@ -120,8 +117,8 @@ body {
 }
 
 @keyframes floatGlow {
-  0%, 100% { transform: translateY(0px) scale(1); filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.3)); }
-  50% { transform: translateY(-8px) scale(1.02); filter: drop-shadow(0 0 35px rgba(0, 212, 255, 0.6)); }
+  0%, 100% { transform: translateY(0px) scale(1); filter: drop-shadow(0 0 20px rgba(236, 72, 153, 0.4)); }
+  50% { transform: translateY(-8px) scale(1.02); filter: drop-shadow(0 0 45px rgba(236, 72, 153, 0.7)); }
 }
 
 @keyframes shimmer {
@@ -130,18 +127,23 @@ body {
 }
 
 @keyframes borderGlow {
-  0%, 100% { border-color: rgba(0, 212, 255, 0.2); box-shadow: 0 0 20px rgba(0, 212, 255, 0.05); }
-  50% { border-color: rgba(124, 58, 237, 0.4); box-shadow: 0 0 40px rgba(124, 58, 237, 0.1); }
+  0%, 100% { border-color: rgba(236, 72, 153, 0.2); box-shadow: 0 0 20px rgba(236, 72, 153, 0.05); }
+  50% { border-color: rgba(168, 85, 247, 0.4); box-shadow: 0 0 40px rgba(168, 85, 247, 0.12); }
 }
 
 @keyframes pulseRing {
-  0% { transform: scale(0.95); opacity: 0.7; }
+  0% { transform: scale(0.95); opacity: 0.6; }
   50% { transform: scale(1.05); opacity: 1; }
-  100% { transform: scale(0.95); opacity: 0.7; }
+  100% { transform: scale(0.95); opacity: 0.6; }
+}
+
+@keyframes textGlowPink {
+  0%, 100% { text-shadow: 0 0 20px rgba(236, 72, 153, 0.3); }
+  50% { text-shadow: 0 0 40px rgba(236, 72, 153, 0.6), 0 0 80px rgba(236, 72, 153, 0.2); }
 }
 
 /* ============================================
-   HEADER - UPGRADED
+   HEADER
 ============================================ */
 header {
   background: rgba(11, 15, 28, 0.8);
@@ -186,7 +188,7 @@ header {
 }
 
 .brand:hover img {
-  box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+  box-shadow: 0 0 30px rgba(236, 72, 153, 0.4);
 }
 
 .brand span {
@@ -209,7 +211,7 @@ header {
 }
 
 /* ============================================
-   HERO SECTION - UPGRADED
+   HERO SECTION - PINK THEME
 ============================================ */
 .hero-section {
   text-align: center;
@@ -217,18 +219,33 @@ header {
   position: relative;
 }
 
-/* Efek glow ring di belakang avatar */
+/* Efek glow ring di belakang avatar - PINK */
 .hero-section::before {
   content: '';
   position: absolute;
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  width: 150px;
-  height: 150px;
-  background: radial-gradient(circle, rgba(0, 212, 255, 0.08) 0%, transparent 70%);
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.12) 0%, transparent 70%);
   border-radius: 50%;
   animation: pulseRing 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Efek glow kedua - lebih besar */
+.hero-section::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: pulseRing 5s ease-in-out infinite 0.5s;
   pointer-events: none;
 }
 
@@ -241,7 +258,7 @@ header {
   background: var(--accent-gradient);
   background-size: 300% 300%;
   animation: gradientShift 4s ease infinite;
-  box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
+  box-shadow: 0 0 40px rgba(236, 72, 153, 0.35);
   transition: var(--transition-smooth);
   position: relative;
   z-index: 1;
@@ -249,7 +266,7 @@ header {
 
 .hero-avatar:hover {
   transform: scale(1.05) rotate(-3deg);
-  box-shadow: 0 0 50px rgba(168, 85, 247, 0.5);
+  box-shadow: 0 0 60px rgba(236, 72, 153, 0.5);
 }
 
 .hero-avatar img {
@@ -271,9 +288,10 @@ header {
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 3px;
-  color: #94a3b8;
+  color: #f472b6;
   margin-bottom: 6px;
   text-transform: uppercase;
+  opacity: 0.9;
 }
 
 .hero-welcome i {
@@ -288,22 +306,22 @@ header {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-size: 300% 300%;
-  animation: gradientShift 4s ease infinite;
+  animation: gradientShift 4s ease infinite, textGlowPink 3s ease-in-out infinite;
   margin-bottom: 12px;
-  text-shadow: none;
+  text-shadow: 0 0 40px rgba(236, 72, 153, 0.2);
   letter-spacing: -0.5px;
 }
 
 .hero-desc {
   font-size: 0.85rem;
-  color: var(--text-sub);
+  color: #cbd5e1;
   line-height: 1.7;
   max-width: 440px;
   margin: 0 auto;
 }
 
 /* ============================================
-   BUTTONS - UPGRADED
+   BUTTONS - PINK THEME
 ============================================ */
 .hero-buttons {
   display: flex;
@@ -324,7 +342,7 @@ header {
   text-align: center;
   color: #ffffff;
   background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(236, 72, 153, 0.2);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   transition: var(--transition-smooth);
@@ -343,7 +361,7 @@ header {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  background: linear-gradient(90deg, transparent, rgba(236, 72, 153, 0.08), transparent);
   transition: 0.6s;
 }
 
@@ -353,8 +371,8 @@ header {
 
 .h-btn:hover {
   transform: translateY(-3px) scale(1.02);
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(236, 72, 153, 0.12);
+  border-color: rgba(236, 72, 153, 0.4);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
@@ -362,15 +380,16 @@ header {
   transform: scale(0.97);
 }
 
+/* Tombol Primary - PINK */
 .h-btn.primary {
-  background: linear-gradient(135deg, #a855f7, #6366f1);
+  background: linear-gradient(135deg, #ec4899, #a855f7);
   border: none;
-  box-shadow: 0 4px 24px rgba(168, 85, 247, 0.4);
+  box-shadow: 0 4px 28px rgba(236, 72, 153, 0.45);
 }
 
 .h-btn.primary:hover {
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 40px rgba(168, 85, 247, 0.6);
+  box-shadow: 0 8px 48px rgba(236, 72, 153, 0.6);
 }
 
 .h-btn i {
@@ -378,7 +397,7 @@ header {
 }
 
 /* ============================================
-   SECTION - UPGRADED
+   SECTION
 ============================================ */
 .section-box {
   margin-bottom: 48px;
@@ -407,13 +426,13 @@ header {
 }
 
 /* ============================================
-   CATEGORY CARDS - UPGRADED
+   CATEGORY CARDS - PINK THEME
 ============================================ */
 .category-card {
   background: var(--bg-card);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-glow);
+  border: 1px solid rgba(236, 72, 153, 0.15);
   border-radius: 22px;
   padding: 22px 24px;
   margin-bottom: 14px;
@@ -423,7 +442,7 @@ header {
   overflow: hidden;
 }
 
-/* Efek glow line di card */
+/* Efek glow line di card - PINK */
 .category-card::after {
   content: '';
   position: absolute;
@@ -444,7 +463,7 @@ header {
 .category-card:hover {
   transform: translateY(-4px) scale(1.01);
   border-color: var(--accent-primary);
-  box-shadow: var(--shadow-neon);
+  box-shadow: 0 8px 40px rgba(236, 72, 153, 0.15);
 }
 
 .cat-icon-title {
@@ -465,8 +484,8 @@ header {
 }
 
 .category-card:hover .cat-icon-title i {
-  transform: scale(1.15);
-  color: var(--accent-secondary);
+  transform: scale(1.15) rotate(-5deg);
+  color: #f472b6;
 }
 
 .cat-desc {
@@ -477,13 +496,13 @@ header {
 }
 
 /* ============================================
-   ABOUT BOX - UPGRADED
+   ABOUT BOX - PINK THEME
 ============================================ */
 .about-box {
   background: var(--bg-card);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-glow);
+  border: 1px solid rgba(236, 72, 153, 0.15);
   border-radius: 26px;
   padding: 32px 24px;
   margin-bottom: 44px;
@@ -499,12 +518,12 @@ header {
   right: -50%;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle, rgba(0, 212, 255, 0.03) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.05) 0%, transparent 70%);
   pointer-events: none;
 }
 
 .about-box:hover {
-  border-color: rgba(0, 212, 255, 0.3);
+  border-color: rgba(236, 72, 153, 0.35);
   box-shadow: var(--shadow-neon);
 }
 
@@ -535,8 +554,8 @@ header {
 
 .role-tag {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(0, 212, 255, 0.15);
-  color: var(--accent-primary);
+  border: 1px solid rgba(236, 72, 153, 0.2);
+  color: #f472b6;
   font-size: 0.7rem;
   font-weight: 700;
   padding: 5px 16px;
@@ -551,7 +570,7 @@ header {
   color: #fff;
   border-color: transparent;
   transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+  box-shadow: 0 4px 25px rgba(236, 72, 153, 0.35);
 }
 
 .role-tag i {
@@ -559,13 +578,13 @@ header {
 }
 
 /* ============================================
-   STATS BOX - UPGRADED
+   STATS BOX - PINK THEME
 ============================================ */
 .stats-box {
   background: var(--bg-card);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-glow);
+  border: 1px solid rgba(236, 72, 153, 0.15);
   border-radius: 26px;
   padding: 36px 24px 32px;
   text-align: center;
@@ -574,7 +593,7 @@ header {
 }
 
 .stats-box:hover {
-  border-color: rgba(0, 212, 255, 0.25);
+  border-color: rgba(236, 72, 153, 0.3);
   box-shadow: var(--shadow-neon);
 }
 
@@ -614,7 +633,7 @@ header {
 
 .feature-mini {
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border-glow);
+  border: 1px solid rgba(236, 72, 153, 0.12);
   padding: 18px 20px;
   border-radius: 18px;
   transition: var(--transition-smooth);
@@ -646,14 +665,14 @@ header {
 
 .order-cta-box {
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border-glow);
+  border: 1px solid rgba(236, 72, 153, 0.15);
   border-radius: 20px;
   padding: 26px 20px;
   transition: var(--transition-smooth);
 }
 
 .order-cta-box:hover {
-  border-color: rgba(0, 212, 255, 0.3);
+  border-color: rgba(236, 72, 153, 0.35);
 }
 
 .order-cta-box p {
@@ -668,10 +687,10 @@ header {
 }
 
 /* ============================================
-   FOOTER - UPGRADED
+   FOOTER - PINK THEME
 ============================================ */
 footer {
-  border-top: 1px solid var(--border-glow);
+  border-top: 1px solid rgba(236, 72, 153, 0.2);
   background: rgba(11, 15, 28, 0.95);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -709,8 +728,8 @@ footer {
 
 .footer-socials a:hover {
   color: var(--accent-primary);
-  background: rgba(255, 255, 255, 0.06);
-  border-color: var(--border-glow);
+  background: rgba(236, 72, 153, 0.08);
+  border-color: rgba(236, 72, 153, 0.2);
   transform: translateY(-2px);
 }
 
@@ -770,7 +789,7 @@ footer {
 }
 
 .copyright {
-  border-top: 1px solid var(--border-glow);
+  border-top: 1px solid rgba(236, 72, 153, 0.15);
   padding-top: 22px;
   font-size: 0.75rem;
   color: var(--text-sub);
@@ -779,7 +798,7 @@ footer {
 }
 
 /* ============================================
-   MODAL - UPGRADED
+   MODAL - PINK THEME
 ============================================ */
 .modal-overlay {
   position: fixed;
@@ -804,7 +823,7 @@ footer {
 
 .payment-modal-card {
   background: var(--bg-body);
-  border: 1px solid var(--border-glow);
+  border: 1px solid rgba(236, 72, 153, 0.2);
   border-radius: 30px;
   width: 100%;
   max-width: 420px;
@@ -826,7 +845,7 @@ footer {
   top: 16px;
   right: 16px;
   background: var(--bg-card);
-  border: 1px solid var(--border-glow);
+  border: 1px solid rgba(236, 72, 153, 0.2);
   color: var(--text-sub);
   width: 38px;
   height: 38px;
@@ -877,7 +896,7 @@ footer {
 
 .wallet-box {
   background: var(--bg-card);
-  border: 1px solid var(--border-glow);
+  border: 1px solid rgba(236, 72, 153, 0.15);
   border-radius: 16px;
   padding: 14px 18px;
   margin-bottom: 12px;
@@ -944,11 +963,11 @@ footer {
 }
 
 /* ============================================
-   WA POPUP - UPGRADED
+   WA POPUP - PINK THEME
 ============================================ */
 .popup-wa-card {
   background: var(--bg-body);
-  border: 1px solid var(--border-glow);
+  border: 1px solid rgba(236, 72, 153, 0.2);
   border-radius: 30px;
   width: 100%;
   max-width: 380px;
@@ -971,7 +990,7 @@ footer {
   border-radius: 22px;
   overflow: hidden;
   border: 2px solid var(--accent-primary);
-  box-shadow: var(--shadow-neon);
+  box-shadow: 0 0 40px rgba(236, 72, 153, 0.3);
   animation: floatGlow 3s ease-in-out infinite;
 }
 
@@ -1022,7 +1041,7 @@ footer {
 .popup-btn-later {
   width: 100%;
   background: var(--bg-card);
-  border: 1px solid var(--border-glow);
+  border: 1px solid rgba(236, 72, 153, 0.2);
   color: var(--text-sub);
   padding: 14px;
   border-radius: 16px;
@@ -1038,7 +1057,7 @@ footer {
 }
 
 /* ============================================
-   SPLASH SCREEN - UPGRADED
+   SPLASH SCREEN - PINK THEME
 ============================================ */
 .splash-overlay {
   position: fixed;
@@ -1113,7 +1132,7 @@ footer {
 }
 
 /* ============================================
-   ANIMASI SLIDE IN - UPGRADED
+   ANIMASI SLIDE IN
 ============================================ */
 .animate-slide-up {
   opacity: 0;
