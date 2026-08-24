@@ -320,12 +320,12 @@ header {
 .h-btn.primary {
   background: var(--accent-btn-gradient);
   border: none;
-  box-shadow: 0 6px 28px rgba(168, 85, 247, 0.5);
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.4);
 }
 
 .h-btn.primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 35px rgba(168, 85, 247, 0.7);
+  box-shadow: 0 8px 35px rgba(0, 0, 0, 0.5);
 }
 
 /* ============================================
