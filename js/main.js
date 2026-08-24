@@ -10,6 +10,7 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // ============================================
 let activeWhatsappNumber = '';
 let isMusicEnabled = false;
+let hasAnimatedHeroText = false; // Flag agar animasi hanya berjalan 1x
 
 // ============================================
 // DOM ELEMENTS
@@ -25,6 +26,8 @@ const splashScreen = document.getElementById('splash-screen');
 // ============================================
 function closeWaModal() {
   waModalOverlay.classList.remove('active');
+  // Jalankan animasi teks saat popup WA ditutup
+  initHeroTextAnimation();
 }
 
 function openPaymentModal() {
@@ -156,13 +159,13 @@ async function loadSiteSettings() {
       splashScreen.classList.add('fade-out');
     }
 
-    // Jalankan animasi teks per huruf setelah splash screen menghilang
-    initHeroTextAnimation();
-
     if (isPopupEnabled && groupUrl !== '#') {
       setTimeout(() => {
         waModalOverlay.classList.add('active');
       }, 400);
+    } else {
+      // Jika popup WA tidak tampil, langsung jalankan animasi teks
+      initHeroTextAnimation();
     }
   }, 1500);
 }
@@ -181,28 +184,26 @@ loadSiteSettings();
 // HERO TEXT LETTER ANIMATION
 // ============================================
 function initHeroTextAnimation() {
+  if (hasAnimatedHeroText) return; // Mencegah animasi berjalan 2x
+  hasAnimatedHeroText = true;
+
   const welcomeEl = document.querySelector('.hero-welcome');
   const titleEl = document.getElementById('hero-title');
 
   const animateLetters = (el, direction) => {
     if (!el) return;
     const text = el.textContent.trim();
-    el.textContent = ''; // Kosongkan teks awal untuk diisi elemen span per huruf
+    el.textContent = ''; 
 
     [...text].forEach((char, index) => {
       const span = document.createElement('span');
-      // Menjaga agar spasi antarkata tetap terbaca
       span.textContent = char === ' ' ? '\u00A0' : char; 
       span.classList.add('char-anim', direction === 'left' ? 'from-left' : 'from-right');
-      // Berikan delay bertahap per huruf (0.05 detik)
       span.style.animationDelay = `${index * 0.05}s`;
       el.appendChild(span);
     });
   };
 
-  // Teks "SELAMAT DATANG DI" muncul satu per satu dari kiri ke kanan
   animateLetters(welcomeEl, 'left');
-
-  // Teks Judul Store ("PRIME CT STORE") muncul satu per satu dari kanan ke kiri
   animateLetters(titleEl, 'right');
 }
