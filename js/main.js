@@ -1,4 +1,4 @@
-// // ============================================
+// ============================================
 // SUPABASE CONFIG
 // ============================================
 const SUPABASE_URL = 'https://krxzhxxytjmqmvzndofw.supabase.co';
@@ -57,21 +57,18 @@ async function loadSiteSettings() {
     const key = item.key;
     const value = item.value;
 
-    // ===== SITE TITLE =====
     if (key === 'site_title' && value) {
       document.title = value;
       document.querySelectorAll('.site-brand-name').forEach(el => el.textContent = value);
     }
 
-    // ===== LOGO =====
     if (key === 'logo_url' && value) {
       document.getElementById('header-logo').src = value;
       document.getElementById('hero-logo').src = value;
       document.getElementById('modal-banner-img').src = value;
-      document.getElementById('splash-logo').src = value; // Update Logo di Splash Screen
+      document.getElementById('splash-logo').src = value;
     }
 
-    // ===== HERO =====
     if (key === 'hero_title' && value) {
       document.getElementById('hero-title').textContent = value;
     }
@@ -79,7 +76,6 @@ async function loadSiteSettings() {
       document.getElementById('hero-desc').textContent = value;
     }
 
-    // ===== WHATSAPP =====
     if (key === 'whatsapp_number' && value) {
       activeWhatsappNumber = value;
       document.getElementById('hero-owner-btn').href = `https://wa.me/${value}`;
@@ -93,12 +89,10 @@ async function loadSiteSettings() {
       document.getElementById('ft-wacad-text').textContent = value;
     }
 
-    // ===== EMAIL =====
     if (key === 'email_contact' && value) {
       document.getElementById('ft-mail-text').textContent = value;
     }
 
-    // ===== SOCIAL MEDIA =====
     if (key === 'instagram_link' && value) {
       document.getElementById('ft-ig').href = value;
     }
@@ -106,18 +100,19 @@ async function loadSiteSettings() {
       document.getElementById('ft-tg').href = value;
     }
 
-    // ===== MENU LINKS =====
     if (key === 'ynacpanel_link' && value) {
-      document.getElementById('mn-cpanel').href = value;
+      const el = document.getElementById('mn-cpanel');
+      if (el) el.href = value;
     }
     if (key === 'ynaai_link' && value) {
-      document.getElementById('mn-ai').href = value;
+      const el = document.getElementById('mn-ai');
+      if (el) el.href = value;
     }
     if (key === 'ynatools_link' && value) {
-      document.getElementById('mn-tools').href = value;
+      const el = document.getElementById('mn-tools');
+      if (el) el.href = value;
     }
 
-    // ===== PAYMENT =====
     if (key === 'qris_image_url' && value) {
       document.getElementById('pay-qris-img').src = value;
     }
@@ -134,7 +129,6 @@ async function loadSiteSettings() {
       document.getElementById('pay-gopay-name').textContent = value;
     }
 
-    // ===== POPUP =====
     if (key === 'popup_enabled') {
       isPopupEnabled = (value === 'true');
     }
@@ -149,7 +143,6 @@ async function loadSiteSettings() {
       document.getElementById('modal-group-btn').href = value;
     }
 
-    // ===== BACKGROUND MUSIC =====
     if (key === 'bg_music_url' && value) {
       audioEl.src = value;
     }
@@ -158,36 +151,24 @@ async function loadSiteSettings() {
     }
   });
 
-  // ===== LOGIKA HIDE SPLASH SCREEN & MUNCULKAN POPUP =====
   setTimeout(() => {
-    // 1. Hilangkan Splash Screen (Fade Out)
     if (splashScreen) {
       splashScreen.classList.add('fade-out');
     }
-    
-    // 2. Munculkan WA Popup jika di-enable (Delay sedikit setelah loading hilang)
     if (isPopupEnabled && groupUrl !== '#') {
       setTimeout(() => {
         waModalOverlay.classList.add('active');
-      }, 500);
+      }, 400);
     }
-  }, 1500); // 1.5 detik durasi loading progress bar
+  }, 1500);
 }
 
-// ============================================
-// EVENT: PLAY MUSIC SAAT KLIK POPUP
-// ============================================
 if (popupClickArea) {
   popupClickArea.addEventListener('click', () => {
     if (isMusicEnabled && audioEl.paused) {
-      audioEl.play().catch(() => {
-        console.log('Pemutaran audio diblokir oleh browser');
-      });
+      audioEl.play().catch(() => {});
     }
   });
 }
 
-// ============================================
-// INIT
-// ============================================
 loadSiteSettings();
