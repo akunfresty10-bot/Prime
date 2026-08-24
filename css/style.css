@@ -818,3 +818,43 @@ footer {
   color: var(--text-sub);
   text-align: center;
 }
+/* ============================================
+   ANIMASI TEKS PER HURUF (HERO)
+============================================ */
+.char-anim {
+  display: inline-block;
+  opacity: 0;
+  animation-duration: 0.4s;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.char-anim.from-left {
+  animation-name: charSlideFromLeft;
+}
+
+.char-anim.from-right {
+  animation-name: charSlideFromRight;
+}
+
+@keyframes charSlideFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-25px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes charSlideFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(25px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
