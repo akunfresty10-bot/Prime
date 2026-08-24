@@ -217,7 +217,7 @@ function initHeroTextAnimation() {
   const titleData = setupLetters(titleEl);
 
   // 2. Kecepatan mengetik (semakin kecil angkanya, semakin cepat ngetiknya)
-  const typingSpeed = 0.06; // 0.06 detik per huruf
+  const typingSpeed = 0.012; // 0.06 detik per huruf
 
   // Mengetik baris 1: "SELAMAT DATANG DI"
   welcomeData.spans.forEach((span, index) => {
