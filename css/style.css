@@ -1,5 +1,5 @@
 /* ============================================
-   ROOT VARIABLES - YNA STORE THEME
+   ROOT VARIABLES
 ============================================ */
 :root {
   --bg-body: #090514;
@@ -226,7 +226,7 @@ header {
   border-radius: 24px;
   padding: 3px;
   background: var(--accent-gradient);
-  box-shadow: 0 0 30px rgba(168, 85, 247, 0.45);
+  box-shadow: 0 0 30px rgba(5, 20, 100, 0.5);
   transition: var(--transition-smooth);
   position: relative;
   z-index: 1;
@@ -234,7 +234,7 @@ header {
 
 .hero-avatar:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 45px rgba(232, 121, 249, 0.6);
+  box-shadow: 0 0 45px rgba(10, 0, 0, 0.5);
 }
 
 .hero-avatar img {
