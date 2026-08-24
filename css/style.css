@@ -175,7 +175,7 @@ header {
   border-radius: 12px;
   object-fit: cover;
   border: 1px solid var(--border-glow);
-  box-shadow: var(--shadow-glow);
+  box-shadow: var(none) ;
 }
 
 .brand span {
