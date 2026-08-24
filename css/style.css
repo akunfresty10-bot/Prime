@@ -586,7 +586,7 @@ header {
   border-radius: 22px;
   overflow: hidden;
   border: 2px solid var(--accent-pink);
-  box-shadow: 0 0 25px rgba(232, 121, 249, 0.4);
+  box-shadow: none;
 }
 
 .popup-avatar-box img {
