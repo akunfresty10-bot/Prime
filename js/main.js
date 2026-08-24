@@ -181,7 +181,7 @@ if (popupClickArea) {
 loadSiteSettings();
 
 // ============================================
-// HERO TEXT LETTER ANIMATION (FIXED)
+// HERO TEXT & CASCADE CONTENT ANIMATION
 // ============================================
 function initHeroTextAnimation() {
   if (hasAnimatedHeroText) return;
@@ -190,25 +190,41 @@ function initHeroTextAnimation() {
   const welcomeEl = document.querySelector('.hero-welcome');
   const titleEl = document.getElementById('hero-title');
 
-  const animateLetters = (el, direction) => {
-    if (!el) return;
-    
-    // Ambil teks saat ini, jika kosong gunakan default
-    const text = el.textContent.trim() || el.innerText.trim();
-    if (!text) return;
+  // 1. Sembunyikan semua elemen di bawah teks terlebih dahulu
+  const cascadeElements = document.querySelectorAll(
+    '.hero-desc, .h-btn, .section-header-title, .section-main-title, .category-card, .about-box, .stats-box'
+  );
+  cascadeElements.forEach(el => el.classList.add('cascade-item'));
 
-    el.textContent = ''; // Kosongkan konteks teks utama
+  const animateLetters = (el, direction) => {
+    if (!el) return 0;
+    const text = el.textContent.trim() || el.innerText.trim();
+    if (!text) return 0;
+
+    el.textContent = ''; 
 
     [...text].forEach((char, index) => {
       const span = document.createElement('span');
       span.textContent = char === ' ' ? '\u00A0' : char; 
       span.classList.add('char-anim', direction === 'left' ? 'from-left' : 'from-right');
-      span.style.animationDelay = `${index * 0.01}s`;
+      span.style.animationDelay = `${index * 0.08}s`; // Jeda antar huruf
       el.appendChild(span);
     });
+
+    // Kembalikan estimasi durasi animasi teks (dalam milidetik)
+    return (text.length * 0.08 + 0.8) * 1000;
   };
 
-  // Jalankan animasi teks
+  // 2. Jalankan animasi teks per huruf
   animateLetters(welcomeEl, 'left');
-  animateLetters(titleEl, 'right');
+  const titleDuration = animateLetters(titleEl, 'right');
+
+  // 3. Setelah animasi teks PCT STORE selesai, munculkan elemen berurutan ke bawah
+  setTimeout(() => {
+    cascadeElements.forEach((el, index) => {
+      setTimeout(() => {
+        el.classList.add('show-cascade');
+      }, index * 150); // 150ms adalah jeda kemunculan antar tombol/papan
+    });
+  }, titleDuration);
 }
