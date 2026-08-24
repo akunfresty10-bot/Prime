@@ -246,10 +246,11 @@ function initHeroTextAnimation() {
 }
 
 // ============================================
-// LOGIKA ANGKAS PENGUNJUNG OTOMATIS (+1)
+// LOGIKA ANGKAS PENGUNJUNG OTOMATIS (+1) & ANIMASI SCROLL
 // ============================================
 async function updateVisitorCount() {
   try {
+    // 1. Ambil data dari Supabase
     const { data } = await supabaseClient
       .from('site_settings')
       .select('value')
@@ -261,21 +262,62 @@ async function updateVisitorCount() {
       currentCount = parseInt(data.value, 10) || 0;
     }
 
+    // 2. Tambah +1 untuk pengunjung baru
     const newCount = currentCount + 1;
 
+    // 3. Simpan ke Supabase
     await supabaseClient
       .from('site_settings')
       .update({ value: newCount.toString() })
       .eq('key', 'total_visitors');
 
     const countEl = document.getElementById('stats-visitor-count');
-    if (countEl) {
-      countEl.textContent = `${newCount.toLocaleString('id-ID')}+`;
-    }
+    if (!countEl) return;
+
+    // Set tampilan awal ke 0+
+    countEl.textContent = '0+';
+
+    // 4. Fungsi Animasi Angka NAIK dari 0 ke Target
+    const startCounterAnimation = (targetNumber) => {
+      const duration = 2000; // Durasi animasi (2000ms = 2 detik)
+      const startTime = performance.now();
+
+      const animate = (currentTime) => {
+        const elapsedTime = currentTime - startTime;
+        const progress = Math.min(elapsedTime / duration, 1);
+        
+        // Easing (easeOutQuad) agar putaran angka melambat saat mau sampai tujuan
+        const easeProgress = 1 - (1 - progress) * (1 - progress);
+        const currentVal = Math.floor(easeProgress * targetNumber);
+
+        countEl.textContent = `${currentVal.toLocaleString('id-ID')}+`;
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          countEl.textContent = `${targetNumber.toLocaleString('id-ID')}+`;
+        }
+      };
+
+      requestAnimationFrame(animate);
+    };
+
+    // 5. Observer untuk mendeteksi saat elemen di-scroll sampai kelihatan di layar
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          startCounterAnimation(newCount);
+          observer.unobserve(entry.target); // Jalankan 1 kali saja per load
+        }
+      });
+    }, { threshold: 0.3 }); // Mulai saat 30% elemen terlihat di layar
+
+    observer.observe(countEl);
+
   } catch (err) {
     console.error('Gagal memperbarui pengunjung:', err);
   }
 }
 
-// Jalankan logika penambah pengunjung saat situs dibuka
+// Jalankan fungsi
 updateVisitorCount();
