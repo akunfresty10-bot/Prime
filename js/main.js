@@ -172,3 +172,30 @@ if (popupClickArea) {
 }
 
 loadSiteSettings();
+// ============================================
+// HERO TEXT LETTER ANIMATION
+// ============================================
+function initHeroTextAnimation() {
+  const welcomeEl = document.querySelector('.hero-welcome');
+  const titleEl = document.getElementById('hero-title');
+
+  const animateLetters = (el, direction) => {
+    if (!el) return;
+    const text = el.textContent.trim();
+    el.textContent = ''; // Kosongkan teks awal
+
+    [...text].forEach((char, index) => {
+      const span = document.createElement('span');
+      // Menjaga agar spasi antarkata tetap terbaca
+      span.textContent = char === ' ' ? '\u00A0' : char; 
+      span.classList.add('char-anim', direction === 'left' ? 'from-left' : 'from-right');
+      // Berikan delay bertahap per huruf (0.05 detik)
+      span.style.animationDelay = `${index * 0.05}s`;
+      el.appendChild(span);
+    });
+  };
+
+  animateLetters(welcomeEl, 'left');  // Teks "SELAMAT DATANG DI" dari kiri ke kanan
+  animateLetters(titleEl, 'right');   // Teks "PRIME CT STORE" dari kanan ke kiri
+}
+
