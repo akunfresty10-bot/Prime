@@ -181,7 +181,7 @@ if (popupClickArea) {
 loadSiteSettings();
 
 // ============================================
-// HERO TEXT & CASCADE CONTENT ANIMATION
+// TYPEWRITER ANIMATION & STAGGERED CASCADE
 // ============================================
 function initHeroTextAnimation() {
   if (hasAnimatedHeroText) return;
@@ -190,41 +190,57 @@ function initHeroTextAnimation() {
   const welcomeEl = document.querySelector('.hero-welcome');
   const titleEl = document.getElementById('hero-title');
 
-  // 1. Sembunyikan semua elemen di bawah teks terlebih dahulu
+  // 1. Sembunyikan elemen di bawahnya
   const cascadeElements = document.querySelectorAll(
     '.hero-desc, .h-btn, .section-header-title, .section-main-title, .category-card, .about-box, .stats-box'
   );
   cascadeElements.forEach(el => el.classList.add('cascade-item'));
 
-  const animateLetters = (el, direction) => {
-    if (!el) return 0;
+  // Fungsi helper memecah teks ke huruf
+  const setupLetters = (el) => {
+    if (!el) return { text: '', spans: [] };
     const text = el.textContent.trim() || el.innerText.trim();
-    if (!text) return 0;
+    if (!text) return { text: '', spans: [] };
 
     el.textContent = ''; 
-
-    [...text].forEach((char, index) => {
+    const spans = [...text].map(char => {
       const span = document.createElement('span');
       span.textContent = char === ' ' ? '\u00A0' : char; 
-      span.classList.add('char-anim', direction === 'left' ? 'from-left' : 'from-right');
-      span.style.animationDelay = `${index * 0.08}s`; // Jeda antar huruf
+      span.classList.add('char-anim');
       el.appendChild(span);
+      return span;
     });
-
-    // Kembalikan estimasi durasi animasi teks (dalam milidetik)
-    return (text.length * 0.08 + 0.8) * 1000;
+    return { text, spans };
   };
 
-  // 2. Jalankan animasi teks per huruf
-  animateLetters(welcomeEl, 'left');
-  const titleDuration = animateLetters(titleEl, 'right');
+  const welcomeData = setupLetters(welcomeEl);
+  const titleData = setupLetters(titleEl);
 
-  // 3. Setelah animasi teks PCT STORE selesai, munculkan elemen berurutan ke bawah
+  // 2. Kecepatan mengetik (semakin kecil angkanya, semakin cepat ngetiknya)
+  const typingSpeed = 0.06; // 0.06 detik per huruf
+
+  // Mengetik baris 1: "SELAMAT DATANG DI"
+  welcomeData.spans.forEach((span, index) => {
+    span.style.animationDelay = `${index * typingSpeed}s`;
+  });
+
+  // Hitung waktu selesai baris 1
+  const welcomeDuration = welcomeData.spans.length * typingSpeed;
+
+  // Mengetik baris 2: "PCT STORE" (mulai setelah baris 1 selesai)
+  titleData.spans.forEach((span, index) => {
+    span.style.animationDelay = `${welcomeDuration + (index * typingSpeed)}s`;
+  });
+
+  // Hitung total waktu selesai kedua baris
+  const totalTypingTime = (welcomeDuration + (titleData.spans.length * typingSpeed) + 0.2) * 1000;
+
+  // 3. Munculkan tombol-tombol & papan berurutan setelah ngetik selesai
   setTimeout(() => {
     cascadeElements.forEach((el, index) => {
       setTimeout(() => {
         el.classList.add('show-cascade');
-      }, index * 150); // 150ms adalah jeda kemunculan antar tombol/papan
+      }, index * 120); // Jeda 120ms antar papan/tombol
     });
-  }, titleDuration);
+  }, totalTypingTime);
 }
