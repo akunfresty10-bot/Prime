@@ -203,7 +203,7 @@ function initHeroTextAnimation() {
       const span = document.createElement('span');
       span.textContent = char === ' ' ? '\u00A0' : char; 
       span.classList.add('char-anim', direction === 'left' ? 'from-left' : 'from-right');
-      span.style.animationDelay = `${index * 0.05}s`;
+      span.style.animationDelay = `${index * 0.01}s`;
       el.appendChild(span);
     });
   };
