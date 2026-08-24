@@ -1,290 +1,640 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title class="site-brand-name">PRIME CT - Digital Store</title>
+/* =========================================================
+   PRIME CT - YNA STORE NEON GLASSMORPHIC THEME
+   ========================================================= */
+
+:root {
+  --bg-main: #0a0612;
+  --glass-bg: rgba(26, 20, 42, 0.55);
+  --glass-bg-hover: rgba(38, 30, 60, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-glow: rgba(192, 132, 252, 0.3);
   
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- CSS Utama -->
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+  --accent-pink: #e879f9;
+  --accent-purple: #a855f7;
+  --accent-cyan: #38bdf8;
+  
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  --text-dim: #6b7280;
+}
 
-  <!-- ===== SPLASH SCREEN / LOADING AWAL ===== -->
-  <div id="splash-screen" class="splash-overlay">
-    <div class="popup-wa-card" style="text-align: center;">
-      <div class="popup-avatar-box">
-        <img id="splash-logo" src="https://via.placeholder.com/150" alt="Logo">
-      </div>
-      <h3 class="popup-title" style="margin-bottom: 5px;">PCT STORE</h3>
-      <p class="popup-desc" style="margin-bottom: 20px;">Memuat tampilan digital...</p>
-      <div class="splash-progress-bar">
-        <div class="splash-progress-fill"></div>
-      </div>
-    </div>
-  </div>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
 
-  <!-- ===== BACKGROUND VIDEO ===== -->
-  <div id="bg-video-container">
-    <div id="bg-media-slot">
-      <video autoplay muted loop playsinline>
-        <source src="assets/bg.mp4" type="video/mp4">
-      </video>
-    </div>
-  </div>
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
 
-  <!-- ===== BACKGROUND AUDIO ===== -->
-  <audio id="bg-audio" loop></audio>
+/* Ambient RGB Background Glow (Meniru efek pencahayaan foto 2) */
+body::before {
+  content: '';
+  position: fixed;
+  top: -10%;
+  right: -10%;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, rgba(0,0,0,0) 70%);
+  z-index: -1;
+  pointer-events: none;
+}
 
-  <!-- ===== MODAL WA POPUP ===== -->
-  <div id="wa-modal-overlay" class="modal-overlay">
-    <div class="popup-wa-card" id="popup-click-area">
-      <button class="popup-close-circle" onclick="closeWaModal()">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-      <div class="popup-avatar-box">
-        <img id="modal-banner-img" src="https://via.placeholder.com/150" alt="">
-      </div>
-      <h3 id="modal-popup-title" class="popup-title">JOIN GRUP WHATSAPP</h3>
-      <p id="modal-popup-desc" class="popup-desc">Masuk grup WhatsApp resmi untuk info promo & update produk.</p>
-      <a id="modal-group-btn" href="#" target="_blank" class="popup-btn-join">Join Grup</a>
-      <button class="popup-btn-later" onclick="closeWaModal()">Nanti</button>
-    </div>
-  </div>
+body::after {
+  content: '';
+  position: fixed;
+  bottom: 5%;
+  left: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(232, 121, 249, 0.25) 0%, rgba(0,0,0,0) 70%);
+  z-index: -1;
+  pointer-events: none;
+}
 
-  <!-- ===== MODAL PAYMENT ===== -->
-  <div id="payment-modal-overlay" class="modal-overlay">
-    <div class="payment-modal-card">
-      <button class="popup-close-circle" onclick="closePaymentModal()">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-      <h3 class="pay-title">Metode Pembayaran</h3>
-      
-      <div class="qris-box">
-        <img id="pay-qris-img" src="" alt="QRIS">
-      </div>
-      <p style="text-align:center; font-size:0.8rem; color:var(--text-sub); margin-bottom:15px;">
-        Scan QRIS di atas untuk semua e-wallet & mobile banking
-      </p>
+/* Background Media / Video Overlay */
+#bg-video-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  overflow: hidden;
+  opacity: 0.25;
+}
 
-      <div class="wallet-box">
-        <div class="wallet-info">
-          <h5>DANA (<span id="pay-dana-name">Owner</span>)</h5>
-          <p id="pay-dana-num">-</p>
-        </div>
-        <button class="copy-btn" onclick="copyText('pay-dana-num', this)">Salin</button>
-      </div>
+#bg-video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-      <div class="wallet-box">
-        <div class="wallet-info">
-          <h5>GOPAY (<span id="pay-gopay-name">Owner</span>)</h5>
-          <p id="pay-gopay-num">-</p>
-        </div>
-        <button class="copy-btn" onclick="copyText('pay-gopay-num', this)">Salin</button>
-      </div>
+/* ===== HEADER ===== */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10, 6, 18, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 12px 20px;
+}
 
-      <a id="pay-confirm-wa" href="#" target="_blank" class="pay-confirm-btn">
-        <i class="fa-brands fa-whatsapp"></i> Konfirmasi Bukti Transfer
-      </a>
-    </div>
-  </div>
+.nav-container {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  <!-- ===== HEADER ===== -->
-  <header>
-    <div class="nav-container">
-      <a href="index.html" class="brand">
-        <img id="header-logo" src="https://via.placeholder.com/150" alt="Logo">
-        <span class="site-brand-name">PRIME CT</span>
-      </a>
-    </div>
-  </header>
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
 
-  <!-- ===== MAIN CONTENT ===== -->
-  <div class="main-wrapper">
+.brand img {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(232, 121, 249, 0.5);
+  object-fit: cover;
+}
 
-    <!-- HERO SECTION -->
-    <div class="hero-section">
-      <div class="hero-avatar">
-        <img id="hero-logo" src="https://via.placeholder.com/150" alt="Logo">
-      </div>
-      
-      <div class="hero-text-card animate-slide-up">
-        <div class="hero-welcome">SELAMAT DATANG DI</div>
-        <h1 id="hero-title" class="hero-greeting site-brand-name">PRIME CT STORE</h1>
-        <p id="hero-desc" class="hero-desc">
-          Platform digital terpercaya untuk kebutuhan akun premium, jasa editing, top up game, bot WhatsApp, script bot, panel, VPS, partner, dan layanan digital lainnya.
-        </p>
-      </div>
-      
-      <div class="hero-buttons animate-slide-up" style="animation-delay: 0.2s;">
-        <a id="btn-products-link" href="produk.html" class="h-btn primary">Lihat Produk</a>
-        <button class="h-btn" onclick="openPaymentModal()">Payment</button>
-        <a id="hero-owner-btn" href="#" target="_blank" class="h-btn">Hubungi Owner</a>
-        <a id="hero-tools-btn" href="tools.html" class="h-btn">PRIME TOOLS</a>
-        <a href="sosmed.html" class="h-btn">PRIME SOSMED</a>
-      </div>
-    </div>
+.brand span {
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #e879f9 0%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-    <!-- KATEGORI POPULER -->
-    <div class="section-box">
-      <div class="section-header-title">Kategori Populer</div>
-      <h2 class="section-main-title">Produk & Jasa PRIME CT</h2>
-      
-      <div class="category-card">
-        <div class="cat-icon-title">
-          <i class="fa-solid fa-crown" style="color: var(--accent-primary);"></i> AKUN PREMIUM
-        </div>
-        <div class="cat-desc">Netflix, Spotify, Canva, ChatGPT, YouTube, dan lainnya.</div>
-      </div>
-      
-      <div class="category-card">
-        <div class="cat-icon-title">
-          <i class="fa-solid fa-palette" style="color: var(--accent-pink);"></i> EDITING
-        </div>
-        <div class="cat-desc">Jasa HD, desain, CapCut, Remini, Lightroom, dan paid edit.</div>
-      </div>
-      
-      <div class="category-card">
-        <div class="cat-icon-title">
-          <i class="fa-solid fa-robot" style="color: var(--accent-cyan);"></i> BOT WHATSAPP
-        </div>
-        <div class="cat-desc">Script bot, sewa bot, servis bot, jasa bot, dan fitur WA.</div>
-      </div>
-      
-      <div class="category-card">
-        <div class="cat-icon-title">
-          <i class="fa-solid fa-server" style="color: var(--accent-indigo);"></i> WEB & PANEL
-        </div>
-        <div class="cat-desc">Panel, VPS, jasa web, dan kebutuhan server digital.</div>
-      </div>
-      
-      <a href="sosmed.html" style="text-decoration: none; color: inherit;">
-        <div class="category-card">
-          <div class="cat-icon-title">
-            <i class="fa-solid fa-share-nodes" style="color: var(--accent-pink);"></i> PRIME SOSMED
-          </div>
-          <div class="cat-desc">Kumpulan link sosial media resmi PRIME CT dalam satu halaman.</div>
-        </div>
-      </a>
-      
-      <a href="tools.html" style="text-decoration: none; color: inherit;">
-        <div class="category-card">
-          <div class="cat-icon-title">
-            <i class="fa-solid fa-arrows-rotate" style="color: var(--accent-primary);"></i> PRIME CONVERT
-          </div>
-          <div class="cat-desc">Kompres & convert foto/video langsung dari browser, gratis tiap minggu.</div>
-        </div>
-      </a>
-    </div>
+/* ===== MAIN WRAPPER ===== */
+.main-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px 16px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
-    <!-- TENTANG PRIME CT -->
-    <div class="about-box">
-      <h3>Siapa itu PRIME CT?</h3>
-      <p>
-        <strong>PRIME CT</strong> adalah digital store yang dikembangkan dan dikelola oleh 
-        <strong>PRIME CT OFFICIAL</strong>, atau yang akrab dikenal dengan nama panggilan 
-        <strong>Prime</strong>. Prime dikenal sebagai sosok serba bisa dengan berbagai keahlian, 
-        mulai dari developer, designer, hingga content creator.
-      </p>
-      <p>
-        PRIME CT berkomitmen menyediakan layanan praktis, cepat, dan terpercaya untuk seluruh 
-        kebutuhan dunia digital. Fokus kami adalah menghadirkan kemudahan transaksi, tampilan 
-        modern, serta pelayanan yang responsif.
-      </p>
-      <div class="role-tags">
-        <span class="role-tag">Owner</span>
-        <span class="role-tag">Admin</span>
-        <span class="role-tag">Developer</span>
-        <span class="role-tag">Engineer</span>
-        <span class="role-tag">Designer</span>
-        <span class="role-tag">Editor</span>
-        <span class="role-tag">Content Creator</span>
-      </div>
-    </div>
+/* ===== GLASS CARD CONTAINER ===== */
+.section-box, 
+.about-box, 
+.stats-box,
+.hero-text-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: 28px;
+  padding: 24px 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
 
-    <!-- STATISTIK & KEUNGGULAN -->
-    <div class="stats-box">
-      <div class="stats-number">8.929+</div>
-      <div class="stats-title">Total Pelanggan</div>
-      <div class="stats-desc">
-        PRIME CT dipercaya oleh ribuan pelanggan untuk kebutuhan produk digital, jasa online, 
-        layanan editing, bot, akun premium, dan kebutuhan digital lainnya.
-      </div>
-      
-      <div class="feature-mini-grid">
-        <div class="feature-mini">
-          <h5><i class="fa-solid fa-bolt"></i> Fast Response</h5>
-          <p>Admin siap bantu proses order dan konfirmasi payment kapan saja.</p>
-        </div>
-        <div class="feature-mini">
-          <h5><i class="fa-solid fa-shield-halved"></i> Aman & Terpercaya</h5>
-          <p>Payment resmi dan order diarahkan langsung ke kontak owner.</p>
-        </div>
-        <div class="feature-mini">
-          <h5><i class="fa-solid fa-box-open"></i> Produk Lengkap</h5>
-          <p>Katalog produk dan jasa dibuat untuk banyak kebutuhan digital.</p>
-        </div>
-      </div>
+.section-box:hover,
+.about-box:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+}
 
-      <div class="order-cta-box">
-        <p>
-          Butuh order cepat?<br>
-          Klik produk yang mau isi, detail order, pilih pembayaran, lalu kirim bukti ke WhatsApp Owner.
-        </p>
-        <a href="produk.html" class="h-btn primary" style="display:inline-block; max-width: 220px; margin: 0 auto;">
-          Mulai Order
-        </a>
-      </div>
-    </div>
-  </div>
+/* HERO SECTION */
+.hero-section {
+  text-align: center;
+  padding: 10px 0;
+}
 
-  <!-- ===== FOOTER ===== -->
-  <footer>
-    <div class="footer-container">
-      <div style="font-size: 1rem; font-weight: 800; color: #fff; margin-bottom: 8px;" class="site-brand-name">
-        PRIME CT
-      </div>
-      <p style="margin-bottom: 20px;">Platform digital terpercaya untuk kebutuhan layanan digital premium.</p>
-      
-      <div class="footer-socials">
-        <a id="ft-wa" href="#" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
-        <a id="ft-ig" href="#" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a>
-        <a id="ft-tg" href="#" target="_blank"><i class="fa-brands fa-telegram"></i> Telegram</a>
-      </div>
+.hero-avatar img {
+  width: 90px;
+  height: 90px;
+  border-radius: 24px;
+  box-shadow: 0 0 25px rgba(168, 85, 247, 0.6);
+  margin-bottom: 16px;
+  object-fit: cover;
+}
 
-      <div class="footer-section-title">Kontak Cepat</div>
-      <div class="footer-contact-list">
-        <div>WhatsApp: <span id="ft-wa-text">-</span></div>
-        <div>WA Cadangan: <span id="ft-wacad-text">-</span></div>
-        <div>Gmail: <span id="ft-mail-text">-</span></div>
-      </div>
+.hero-welcome {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--accent-pink);
+  margin-bottom: 6px;
+}
 
-      <div class="footer-section-title">Menu</div>
-      <div class="footer-menu-list">
-        <a href="produk.html">Produk & Jasa</a>
-        <a href="#" target="_blank">Partner Resmi</a>
-        <a id="mn-tools" href="tools.html">PCT Tools</a>
-        <a id="mn-sosmed" href="sosmed.html">PCT SOSMED</a>
-        <a id="mn-convert" href="tools.html">PCT Convert</a>
-        <a id="mn-ai" href="#" target="_blank">PCT AI</a>
-        <a href="#">FAQ</a>
-        <a href="#">Kontak</a>
-        <a href="admin.html">Login / Daftar</a>
-      </div>
+.hero-greeting {
+  font-size: 1.6rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #ffffff 30%, #e879f9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 12px;
+}
 
-      <div class="copyright">
-        &copy; 2026 PRIME CT<br>All Right Prime Developer 2026
-      </div>
-    </div>
-  </footer>
+.hero-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
 
-  <!-- ===== SUPABASE ===== -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <!-- ===== JAVASCRIPT UTAMA ===== -->
-  <script src="js/main.js"></script>
-</body>
-</html>
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+/* ===== BUTTONS ===== */
+.h-btn {
+  padding: 10px 18px;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.h-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.h-btn.primary {
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+  border: none;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(232, 121, 249, 0.3);
+}
+
+/* ===== CATEGORY CARD ===== */
+.section-header-title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--accent-cyan);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.section-main-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+.category-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+}
+
+.category-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: var(--glass-border-glow);
+}
+
+.cat-icon-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.cat-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ===== ABOUT SECTION & TAGS (Identik Foto 2) ===== */
+.about-box h3 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+.about-box p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin-bottom: 14px;
+}
+
+.about-box p strong {
+  color: #ffffff;
+}
+
+/* Role Pills / Tag Bulat Transparan */
+.role-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.role-tag {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 18px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #e5e7eb;
+}
+
+/* ===== STATS & CTA ===== */
+.stats-box {
+  text-align: center;
+}
+
+.stats-number {
+  font-size: 2.2rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.stats-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.stats-desc {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.feature-mini-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.feature-mini {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  padding: 12px 14px;
+  border-radius: 14px;
+}
+
+.feature-mini h5 {
+  font-size: 0.85rem;
+  color: #fff;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.feature-mini p {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.order-cta-box {
+  background: rgba(168, 85, 247, 0.08);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  padding: 16px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.order-cta-box p {
+  margin-bottom: 12px;
+}
+
+/* ===== MODAL & POPUP ===== */
+.modal-overlay, .splash-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(5, 3, 10, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active, .splash-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.popup-wa-card, .payment-modal-card {
+  background: rgba(22, 16, 36, 0.9);
+  border: 1px solid var(--glass-border-glow);
+  border-radius: 24px;
+  padding: 24px;
+  width: 100%;
+  max-width: 380px;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+.popup-close-circle {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-avatar-box img {
+  width: 65px;
+  height: 65px;
+  border-radius: 18px;
+  margin-bottom: 12px;
+}
+
+.popup-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.popup-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+.popup-btn-join {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  margin-top: 16px;
+  font-size: 0.85rem;
+}
+
+.popup-btn-later {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+/* Payment Modal Specifics */
+.pay-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.qris-box {
+  text-align: center;
+  background: #fff;
+  padding: 12px;
+  border-radius: 16px;
+  margin-bottom: 10px;
+}
+
+.qris-box img {
+  max-width: 180px;
+  height: auto;
+}
+
+.wallet-box {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.wallet-info h5 {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.wallet-info p {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.copy-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.pay-confirm-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  margin-top: 14px;
+  font-size: 0.85rem;
+}
+
+/* Splash Loader Progress */
+.splash-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.splash-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));
+  animation: loadProgress 2s ease forwards;
+}
+
+@keyframes loadProgress {
+  to { width: 100%; }
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background: rgba(8, 5, 15, 0.85);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid var(--glass-border);
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.footer-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.footer-container p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.footer-socials {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.footer-socials a {
+  color: #fff;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--glass-border);
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  text-decoration: none;
+}
+
+.footer-section-title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin: 16px 0 8px;
+}
+
+.footer-contact-list, .footer-menu-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.footer-menu-list a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.footer-menu-list a:hover {
+  color: var(--accent-pink);
+}
+
+.copyright {
+  margin-top: 24px;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
