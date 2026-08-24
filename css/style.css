@@ -871,3 +871,23 @@ footer {
   opacity: 1;
   transform: translateY(0); /* Muncul halus ke posisi asli */
 }
+/* ============================================
+   ANIMASI KETIKAN (TYPEWRITER EFFECT)
+============================================ */
+@keyframes typeChar {
+  0% { opacity: 0; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.char-anim {
+  display: inline-block;
+  opacity: 0;
+  animation: typeChar 0.05s ease-out forwards;
+}
+
+/* Menjaga warna gradient judul agar tidak transparan */
+.hero-greeting .char-anim {
+  background: linear-gradient(135deg, #38bdf8, #a855f7, #f472b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
