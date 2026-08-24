@@ -3,32 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title class="site-brand-name">PRIME CT - Digital Store</title>
+  <title class="site-brand-name">PRIME STORE — Digital Store</title>
   
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <!-- Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- CSS Utama -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- ===== SPLASH SCREEN / LOADING AWAL ===== -->
+  <!-- SPLASH SCREEN -->
   <div id="splash-screen" class="splash-overlay">
-    <div class="popup-wa-card" style="text-align: center;">
-      <div class="popup-avatar-box" style="margin: 0 auto 15px auto;">
+    <div class="popup-wa-card">
+      <div class="popup-avatar-box">
         <img id="splash-logo" src="https://via.placeholder.com/150" alt="Logo">
       </div>
-      <h3 class="popup-title" style="margin-bottom: 5px;">PCT STORE</h3>
-      <p class="popup-desc" style="margin-bottom: 20px;">Memuat tampilan digital...</p>
+      <h3 class="popup-title site-brand-name">PRIME STORE</h3>
+      <p class="popup-desc">Memuat tampilan digital...</p>
       <div class="splash-progress-bar">
         <div class="splash-progress-fill"></div>
       </div>
     </div>
   </div>
 
-  <!-- ===== BACKGROUND VIDEO ===== -->
+  <!-- BACKGROUND VIDEO -->
   <div id="bg-video-container">
     <div id="bg-media-slot">
       <video autoplay muted loop playsinline>
@@ -37,10 +34,9 @@
     </div>
   </div>
 
-  <!-- ===== BACKGROUND AUDIO ===== -->
   <audio id="bg-audio" loop></audio>
 
-  <!-- ===== MODAL WA POPUP ===== -->
+  <!-- MODAL WA POPUP -->
   <div id="wa-modal-overlay" class="modal-overlay">
     <div class="popup-wa-card" id="popup-click-area">
       <button class="popup-close-circle" onclick="closeWaModal()">
@@ -49,14 +45,14 @@
       <div class="popup-avatar-box">
         <img id="modal-banner-img" src="https://via.placeholder.com/150" alt="">
       </div>
-      <h3 id="modal-popup-title" class="popup-title">JOIN GRUP WHATSAPP</h3>
-      <p id="modal-popup-desc" class="popup-desc">Masuk grup WhatsApp resmi untuk info promo & update produk.</p>
+      <h3 id="modal-popup-title" class="popup-title">JOIN GRUP WHATSAPP PRIME STORE</h3>
+      <p id="modal-popup-desc" class="popup-desc">Masuk grup whatsapp resmi untuk info promo, update produk, dan pengumuman dari PRIME STORE.</p>
       <a id="modal-group-btn" href="#" target="_blank" class="popup-btn-join">Join Grup</a>
       <button class="popup-btn-later" onclick="closeWaModal()">Nanti</button>
     </div>
   </div>
 
-  <!-- ===== MODAL PAYMENT ===== -->
+  <!-- MODAL PAYMENT -->
   <div id="payment-modal-overlay" class="modal-overlay">
     <div class="payment-modal-card">
       <button class="popup-close-circle" onclick="closePaymentModal()">
@@ -93,17 +89,17 @@
     </div>
   </div>
 
-  <!-- ===== HEADER ===== -->
+  <!-- HEADER -->
   <header>
     <div class="nav-container">
       <a href="index.html" class="brand">
         <img id="header-logo" src="https://via.placeholder.com/150" alt="Logo">
-        <span class="site-brand-name">PRIME CT</span>
+        <span class="site-brand-name">PRIME STORE</span>
       </a>
     </div>
   </header>
 
-  <!-- ===== MAIN CONTENT ===== -->
+  <!-- MAIN WRAPPER -->
   <div class="main-wrapper">
 
     <!-- HERO SECTION -->
@@ -112,90 +108,61 @@
         <img id="hero-logo" src="https://via.placeholder.com/150" alt="Logo">
       </div>
       
-      <!-- Ditambahkan class "animate-slide-up" -->
-      <div class="hero-text-card animate-slide-up">
+      <div class="hero-text-card">
         <div class="hero-welcome">SELAMAT DATANG DI</div>
-        <h1 id="hero-title" class="hero-greeting">PRIME CT STORE</h1>
+        <h1 id="hero-title" class="hero-greeting site-brand-name">PRIME STORE</h1>
         <p id="hero-desc" class="hero-desc">
           Platform digital terpercaya untuk kebutuhan akun premium, jasa editing, top up game, bot WhatsApp, script bot, panel, VPS, partner, dan layanan digital lainnya.
         </p>
       </div>
       
-      <!-- Ditambahkan class "animate-slide-up" -->
-      <div class="hero-buttons animate-slide-up" style="animation-delay: 0.2s;">
+      <div class="hero-buttons">
         <a id="btn-products-link" href="produk.html" class="h-btn primary">Lihat Produk</a>
         <button class="h-btn" onclick="openPaymentModal()">Payment</button>
         <a id="hero-owner-btn" href="#" target="_blank" class="h-btn">Hubungi Owner</a>
         <a id="hero-tools-btn" href="tools.html" class="h-btn">PRIME TOOLS</a>
-        <a href="sosmed.html" class="h-btn">PRIME SOSMED</a>
       </div>
     </div>
 
     <!-- KATEGORI POPULER -->
     <div class="section-box">
       <div class="section-header-title">Kategori Populer</div>
-      <h2 class="section-main-title">Produk & Jasa PRIME CT</h2>
+      <h2 class="section-main-title">Produk & Jasa PRIME STORE</h2>
       
       <div class="category-card">
         <div class="cat-icon-title">
-          <i class="fa-solid fa-crown" style="color: #60a5fa;"></i> AKUN PREMIUM
+          <i class="fa-solid fa-crown"></i> AKUN PREMIUM
         </div>
         <div class="cat-desc">Netflix, Spotify, Canva, ChatGPT, YouTube, dan lainnya.</div>
       </div>
       
       <div class="category-card">
         <div class="cat-icon-title">
-          <i class="fa-solid fa-palette" style="color: var(--accent-blue-light);"></i> EDITING
+          <i class="fa-solid fa-palette"></i> EDITING
         </div>
         <div class="cat-desc">Jasa HD, desain, CapCut, Remini, Lightroom, dan paid edit.</div>
       </div>
       
       <div class="category-card">
         <div class="cat-icon-title">
-          <i class="fa-solid fa-robot" style="color: var(--accent-cyan);"></i> BOT WHATSAPP
+          <i class="fa-solid fa-robot"></i> BOT WHATSAPP
         </div>
         <div class="cat-desc">Script bot, sewa bot, servis bot, jasa bot, dan fitur WA.</div>
       </div>
       
       <div class="category-card">
         <div class="cat-icon-title">
-          <i class="fa-solid fa-server" style="color: var(--accent-indigo);"></i> WEB & PANEL
+          <i class="fa-solid fa-server"></i> WEB & PANEL
         </div>
         <div class="cat-desc">Panel, VPS, jasa web, dan kebutuhan server digital.</div>
       </div>
-      
-      <a href="sosmed.html" style="text-decoration: none; color: inherit;">
-        <div class="category-card">
-          <div class="cat-icon-title">
-            <i class="fa-solid fa-share-nodes" style="color: var(--accent-cyan);"></i> PRIME SOSMED
-          </div>
-          <div class="cat-desc">Kumpulan link sosial media resmi PRIME CT dalam satu halaman.</div>
-        </div>
-      </a>
-      
-      <a href="tools.html" style="text-decoration: none; color: inherit;">
-        <div class="category-card">
-          <div class="cat-icon-title">
-            <i class="fa-solid fa-arrows-rotate" style="color: #34d399;"></i> PRIME CONVERT
-          </div>
-          <div class="cat-desc">Kompres & convert foto/video langsung dari browser, gratis tiap minggu.</div>
-        </div>
-      </a>
     </div>
 
-    <!-- TENTANG PRIME CT -->
+    <!-- TENTANG STORE -->
     <div class="about-box">
-      <h3>Siapa itu PRIME CT?</h3>
+      <h3>Siapa itu PRIME STORE?</h3>
       <p>
-        <strong>PRIME CT</strong> adalah digital store yang dikembangkan dan dikelola oleh 
-        <strong>PRIME CT OFFICIAL</strong>, atau yang akrab dikenal dengan nama panggilan 
-        <strong>Prime</strong>. Prime dikenal sebagai sosok serba bisa dengan berbagai keahlian, 
-        mulai dari developer, designer, hingga content creator.
-      </p>
-      <p>
-        PRIME CT berkomitmen menyediakan layanan praktis, cepat, dan terpercaya untuk seluruh 
-        kebutuhan dunia digital. Fokus kami adalah menghadirkan kemudahan transaksi, tampilan 
-        modern, serta pelayanan yang responsif.
+        <strong>PRIME STORE</strong> hadir sebagai tempat layanan digital yang praktis, cepat, dan terpercaya untuk membantu kebutuhan pelanggan di dunia online.
       </p>
       <div class="role-tags">
         <span class="role-tag">Owner</span>
@@ -204,51 +171,42 @@
         <span class="role-tag">Engineer</span>
         <span class="role-tag">Designer</span>
         <span class="role-tag">Editor</span>
-        <span class="role-tag">Content Creator</span>
       </div>
     </div>
 
-    <!-- STATISTIK & KEUNGGULAN -->
+    <!-- STATISTIK -->
     <div class="stats-box">
       <div class="stats-number">8.929+</div>
       <div class="stats-title">Total Pelanggan</div>
       <div class="stats-desc">
-        PRIME CT dipercaya oleh ribuan pelanggan untuk kebutuhan produk digital, jasa online, 
-        layanan editing, bot, akun premium, dan kebutuhan digital lainnya.
+        Dipercaya oleh ribuan pelanggan untuk kebutuhan produk digital, jasa online, layanan editing, bot, akun premium, dan kebutuhan digital lainnya.
       </div>
       
       <div class="feature-mini-grid">
         <div class="feature-mini">
-          <h5>Fast Response</h5>
+          <h5><i class="fa-solid fa-bolt"></i> Fast Response</h5>
           <p>Admin siap bantu proses order dan konfirmasi payment kapan saja.</p>
         </div>
         <div class="feature-mini">
-          <h5>Aman & Terpercaya</h5>
+          <h5><i class="fa-solid fa-shield-halved"></i> Aman & Terpercaya</h5>
           <p>Payment resmi dan order diarahkan langsung ke kontak owner.</p>
-        </div>
-        <div class="feature-mini">
-          <h5>Produk Lengkap</h5>
-          <p>Katalog produk dan jasa dibuat untuk banyak kebutuhan digital.</p>
         </div>
       </div>
 
       <div class="order-cta-box">
-        <p>
-          Butuh order cepat?<br>
-          Klik produk yang mau isi, detail order, pilih pembayaran, lalu kirim bukti ke WhatsApp Owner.
-        </p>
-        <a href="produk.html" class="h-btn primary" style="display:inline-block; padding: 12px 30px; border-radius: 20px;">
+        <p>Butuh order cepat? Klik tombol di bawah ini untuk memulai.</p>
+        <a href="produk.html" class="h-btn primary" style="display:inline-block; max-width:200px; margin: 0 auto;">
           Mulai Order
         </a>
       </div>
     </div>
   </div>
 
-  <!-- ===== FOOTER ===== -->
+  <!-- FOOTER -->
   <footer>
     <div class="footer-container">
-      <div style="font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 8px;" class="site-brand-name">
-        PRIME CT
+      <div style="font-size: 1rem; font-weight: 800; color: #fff; margin-bottom: 8px;" class="site-brand-name">
+        PRIME STORE
       </div>
       <p style="margin-bottom: 20px;">Platform digital terpercaya untuk kebutuhan layanan digital premium.</p>
       
@@ -265,28 +223,13 @@
         <div>Gmail: <span id="ft-mail-text">-</span></div>
       </div>
 
-      <div class="footer-section-title">Menu</div>
-      <div class="footer-menu-list">
-        <a href="produk.html">Produk & Jasa</a>
-        <a href="#" target="_blank">Partner Resmi</a>
-        <a id="mn-tools" href="tools.html">PCT Tools</a>
-        <a id="mn-sosmed" href="sosmed.html">PCT SOSMED</a>
-        <a id="mn-convert" href="tools.html">PCT Convert</a>
-        <a id="mn-ai" href="#" target="_blank">PCT AI</a>
-        <a href="#">FAQ</a>
-        <a href="#">Kontak</a>
-        <a href="admin.html">Login / Daftar</a>
-      </div>
-
       <div class="copyright">
-        &copy; 2026 PRIME CT<br>All Right Prime Developer 2026
+        &copy; 2026 PRIME STORE. All Rights Reserved.
       </div>
     </div>
   </footer>
 
-  <!-- ===== SUPABASE ===== -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <!-- ===== JAVASCRIPT UTAMA ===== -->
   <script src="js/main.js"></script>
 </body>
 </html>
