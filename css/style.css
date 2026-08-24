@@ -1,5 +1,5 @@
 /* ============================================
-   ROOT VARIABLES - GAYA YNA STORE (PINK THEME)
+   ROOT VARIABLES - YNA STORE PINK THEME
 ============================================ */
 :root {
   --bg-body: #0b0f1c;
@@ -36,31 +36,15 @@ body {
   min-height: 100vh;
   line-height: 1.6;
   background-image: 
-    radial-gradient(ellipse at 20% 30%, rgba(236, 72, 153, 0.12) 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 70%, rgba(168, 85, 247, 0.10) 0%, transparent 55%),
-    radial-gradient(ellipse at 50% 100%, rgba(244, 114, 182, 0.06) 0%, transparent 40%);
+    radial-gradient(ellipse at 20% 30%, rgba(236, 72, 153, 0.15) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 70%, rgba(168, 85, 247, 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 100%, rgba(244, 114, 182, 0.08) 0%, transparent 40%);
   background-attachment: fixed;
   overflow-x: hidden;
 }
 
 /* ============================================
-   SCROLLBAR STYLING
-============================================ */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg-body);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--accent-gradient);
-  border-radius: 10px;
-}
-
-/* ============================================
-   BACKGROUND VIDEO / ANIMATED BG
+   BACKGROUND VIDEO - PINK THEME
 ============================================ */
 #bg-video-container {
   position: fixed;
@@ -89,15 +73,16 @@ body {
   backdrop-filter: blur(2px);
 }
 
-/* Animated gradient orb untuk background - PINK THEME */
+/* Animated gradient orb - PINK DOMINAN */
 #bg-video-container::before {
   content: '';
   position: absolute;
   inset: 0;
   background: 
-    radial-gradient(circle at 20% 30%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.12) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(244, 114, 182, 0.05) 0%, transparent 60%);
+    radial-gradient(circle at 20% 30%, rgba(236, 72, 153, 0.20) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(244, 114, 182, 0.10) 0%, transparent 60%),
+    radial-gradient(circle at 10% 80%, rgba(236, 72, 153, 0.08) 0%, transparent 40%);
   animation: orbPulse 8s ease-in-out infinite alternate;
   z-index: 0;
 }
@@ -138,8 +123,8 @@ body {
 }
 
 @keyframes textGlowPink {
-  0%, 100% { text-shadow: 0 0 20px rgba(236, 72, 153, 0.3); }
-  50% { text-shadow: 0 0 40px rgba(236, 72, 153, 0.6), 0 0 80px rgba(236, 72, 153, 0.2); }
+  0%, 100% { text-shadow: 0 0 20px rgba(236, 72, 153, 0.3), 0 0 60px rgba(236, 72, 153, 0.05); }
+  50% { text-shadow: 0 0 40px rgba(236, 72, 153, 0.6), 0 0 80px rgba(236, 72, 153, 0.2), 0 0 120px rgba(236, 72, 153, 0.05); }
 }
 
 /* ============================================
@@ -202,51 +187,45 @@ header {
 }
 
 /* ============================================
-   MAIN WRAPPER
-============================================ */
-.main-wrapper {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 30px 20px 60px;
-}
-
-/* ============================================
-   HERO SECTION - PINK THEME
+   HERO SECTION - YNA STYLE PINK
 ============================================ */
 .hero-section {
   text-align: center;
   margin-bottom: 45px;
   position: relative;
+  padding: 20px 0;
 }
 
-/* Efek glow ring di belakang avatar - PINK */
+/* BACKGROUND GLOW BESAR - SEPERTI YNA STORE */
 .hero-section::before {
   content: '';
   position: absolute;
-  top: 20px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  width: 180px;
-  height: 180px;
-  background: radial-gradient(circle, rgba(236, 72, 153, 0.12) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.10) 0%, rgba(168, 85, 247, 0.06) 30%, transparent 70%);
   border-radius: 50%;
   animation: pulseRing 4s ease-in-out infinite;
   pointer-events: none;
+  z-index: 0;
 }
 
-/* Efek glow kedua - lebih besar */
+/* GLOW KEDUA - LEBIH BESAR */
 .hero-section::after {
   content: '';
   position: absolute;
-  top: -10px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  width: 250px;
-  height: 250px;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.06) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(244, 114, 182, 0.06) 0%, transparent 60%);
   border-radius: 50%;
   animation: pulseRing 5s ease-in-out infinite 0.5s;
   pointer-events: none;
+  z-index: 0;
 }
 
 .hero-avatar {
@@ -282,6 +261,8 @@ header {
   box-shadow: none;
   padding: 0;
   margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-welcome {
@@ -299,6 +280,7 @@ header {
   margin-right: 6px;
 }
 
+/* HERO GREETING - PINK GLOW SEPERTI YNA STORE */
 .hero-greeting {
   font-size: 2.4rem;
   font-weight: 800;
@@ -308,8 +290,9 @@ header {
   background-size: 300% 300%;
   animation: gradientShift 4s ease infinite, textGlowPink 3s ease-in-out infinite;
   margin-bottom: 12px;
-  text-shadow: 0 0 40px rgba(236, 72, 153, 0.2);
   letter-spacing: -0.5px;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-desc {
@@ -318,6 +301,8 @@ header {
   line-height: 1.7;
   max-width: 440px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 /* ============================================
@@ -329,6 +314,8 @@ header {
   align-items: center;
   gap: 12px;
   margin-top: 24px;
+  position: relative;
+  z-index: 1;
 }
 
 .h-btn {
@@ -353,7 +340,6 @@ header {
   overflow: hidden;
 }
 
-/* Efek shimmer pada tombol */
 .h-btn::before {
   content: '';
   position: absolute;
@@ -380,7 +366,6 @@ header {
   transform: scale(0.97);
 }
 
-/* Tombol Primary - PINK */
 .h-btn.primary {
   background: linear-gradient(135deg, #ec4899, #a855f7);
   border: none;
@@ -442,7 +427,6 @@ header {
   overflow: hidden;
 }
 
-/* Efek glow line di card - PINK */
 .category-card::after {
   content: '';
   position: absolute;
