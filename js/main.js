@@ -151,17 +151,21 @@ async function loadSiteSettings() {
     }
   });
 
-  setTimeout(() => {
+    setTimeout(() => {
     if (splashScreen) {
       splashScreen.classList.add('fade-out');
     }
+
+    // Jalankan animasi teks setelah splash screen menghilang
+    initHeroTextAnimation();
+
     if (isPopupEnabled && groupUrl !== '#') {
       setTimeout(() => {
         waModalOverlay.classList.add('active');
       }, 400);
     }
   }, 1500);
-}
+
 
 if (popupClickArea) {
   popupClickArea.addEventListener('click', () => {
