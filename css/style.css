@@ -36,11 +36,25 @@ body {
   min-height: 100vh;
   line-height: 1.6;
   background-image: 
-    radial-gradient(ellipse at 20% 30%, rgba(236, 72, 153, 0.15) 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 70%, rgba(168, 85, 247, 0.12) 0%, transparent 55%),
-    radial-gradient(ellipse at 50% 100%, rgba(244, 114, 182, 0.08) 0%, transparent 40%);
+    radial-gradient(ellipse at 20% 30%, rgba(236, 72, 153, 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 70%, rgba(168, 85, 247, 0.10) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 100%, rgba(244, 114, 182, 0.06) 0%, transparent 40%);
   background-attachment: fixed;
   overflow-x: hidden;
+}
+
+/* ============================================
+   SCROLLBAR STYLING
+============================================ */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-body);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent-gradient);
+  border-radius: 10px;
 }
 
 /* ============================================
@@ -55,7 +69,6 @@ body {
   z-index: -1;
   overflow: hidden;
 }
-
 #bg-media-slot,
 #bg-media-slot video,
 #bg-media-slot img {
@@ -64,7 +77,6 @@ body {
   object-fit: cover;
   object-position: top center;
 }
-
 #bg-video-container::after {
   content: '';
   position: absolute;
@@ -72,17 +84,14 @@ body {
   background: rgba(11, 15, 28, 0.5);
   backdrop-filter: blur(2px);
 }
-
-/* Animated gradient orb - PINK DOMINAN SEPERTI YNA */
 #bg-video-container::before {
   content: '';
   position: absolute;
   inset: 0;
   background: 
-    radial-gradient(circle at 25% 35%, rgba(236, 72, 153, 0.25) 0%, transparent 45%),
-    radial-gradient(circle at 75% 65%, rgba(168, 85, 247, 0.18) 0%, transparent 45%),
-    radial-gradient(circle at 50% 50%, rgba(244, 114, 182, 0.12) 0%, transparent 55%),
-    radial-gradient(circle at 15% 80%, rgba(236, 72, 153, 0.10) 0%, transparent 40%);
+    radial-gradient(circle at 25% 35%, rgba(236, 72, 153, 0.20) 0%, transparent 45%),
+    radial-gradient(circle at 75% 65%, rgba(168, 85, 247, 0.15) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(244, 114, 182, 0.10) 0%, transparent 55%);
   animation: orbPulse 8s ease-in-out infinite alternate;
   z-index: 0;
 }
@@ -106,11 +115,6 @@ body {
   50% { transform: translateY(-8px) scale(1.02); filter: drop-shadow(0 0 55px rgba(236, 72, 153, 0.8)); }
 }
 
-@keyframes shimmer {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
-
 @keyframes borderGlow {
   0%, 100% { border-color: rgba(236, 72, 153, 0.25); box-shadow: 0 0 25px rgba(236, 72, 153, 0.08); }
   50% { border-color: rgba(168, 85, 247, 0.5); box-shadow: 0 0 50px rgba(168, 85, 247, 0.15); }
@@ -125,26 +129,48 @@ body {
 @keyframes textGlowPink {
   0%, 100% { 
     text-shadow: 
-      0 0 30px rgba(236, 72, 153, 0.4),
-      0 0 60px rgba(236, 72, 153, 0.15),
-      0 0 100px rgba(236, 72, 153, 0.05);
+      0 0 30px rgba(236, 72, 153, 0.5),
+      0 0 60px rgba(236, 72, 153, 0.20),
+      0 0 100px rgba(236, 72, 153, 0.08);
   }
   50% { 
     text-shadow: 
-      0 0 50px rgba(236, 72, 153, 0.7),
-      0 0 80px rgba(236, 72, 153, 0.3),
-      0 0 120px rgba(236, 72, 153, 0.10),
+      0 0 50px rgba(236, 72, 153, 0.8),
+      0 0 80px rgba(236, 72, 153, 0.35),
+      0 0 120px rgba(236, 72, 153, 0.15),
       0 0 160px rgba(236, 72, 153, 0.05);
   }
 }
 
 @keyframes heroBgPulse {
   0%, 100% { 
-    background: radial-gradient(circle at center, rgba(236, 72, 153, 0.15) 0%, rgba(168, 85, 247, 0.08) 40%, transparent 70%);
+    background: radial-gradient(ellipse at 50% 40%, 
+      rgba(236, 72, 153, 0.25) 0%, 
+      rgba(168, 85, 247, 0.15) 40%, 
+      rgba(11, 15, 28, 0.60) 80%,
+      rgba(11, 15, 28, 0.90) 100%
+    );
   }
   50% { 
-    background: radial-gradient(circle at center, rgba(236, 72, 153, 0.25) 0%, rgba(168, 85, 247, 0.15) 40%, transparent 70%);
+    background: radial-gradient(ellipse at 50% 40%, 
+      rgba(236, 72, 153, 0.40) 0%, 
+      rgba(168, 85, 247, 0.25) 40%, 
+      rgba(11, 15, 28, 0.55) 80%,
+      rgba(11, 15, 28, 0.85) 100%
+    );
   }
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes progressAnimation {
+  0% { width: 0%; }
+  40% { width: 60%; }
+  70% { width: 85%; }
+  100% { width: 100%; }
 }
 
 /* ============================================
@@ -177,7 +203,6 @@ header {
   text-decoration: none;
   transition: var(--transition-smooth);
 }
-
 .brand:hover {
   transform: scale(1.03);
 }
@@ -191,7 +216,6 @@ header {
   box-shadow: var(--shadow-glow);
   transition: var(--transition-smooth);
 }
-
 .brand:hover img {
   box-shadow: 0 0 35px rgba(236, 72, 153, 0.5);
 }
@@ -207,50 +231,74 @@ header {
 }
 
 /* ============================================
-   HERO SECTION - SEPERTI YNA STORE (PINK GLOW)
+   MAIN WRAPPER
+============================================ */
+.main-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px 20px 60px;
+}
+
+/* ============================================
+   HERO SECTION - YNA STYLE (PINK SOLID GLOW)
 ============================================ */
 .hero-section {
   text-align: center;
   margin-bottom: 45px;
   position: relative;
-  padding: 30px 20px;
+  padding: 40px 24px 32px;
   border-radius: 32px;
   
-  /* INI YANG MEMBUAT BACKGROUND HERO JADI PINK GLOW SEPERTI YNA */
-  background: radial-gradient(ellipse at 50% 40%, rgba(236, 72, 153, 0.18) 0%, rgba(168, 85, 247, 0.08) 50%, transparent 80%);
-  animation: heroBgPulse 4s ease-in-out infinite;
-  border: 1px solid rgba(236, 72, 153, 0.10);
+  /* BACKGROUND SOLID PINK GLOW */
+  background: radial-gradient(ellipse at 50% 40%, 
+    rgba(236, 72, 153, 0.30) 0%, 
+    rgba(168, 85, 247, 0.18) 40%, 
+    rgba(11, 15, 28, 0.60) 80%,
+    rgba(11, 15, 28, 0.90) 100%
+  );
+  
+  border: 1px solid rgba(236, 72, 153, 0.25);
   box-shadow: 
-    0 0 60px rgba(236, 72, 153, 0.08),
-    inset 0 0 60px rgba(236, 72, 153, 0.03);
+    0 0 80px rgba(236, 72, 153, 0.15),
+    inset 0 0 80px rgba(236, 72, 153, 0.05);
+  
+  animation: heroBgPulse 4s ease-in-out infinite;
 }
 
-/* GLOW RING BESAR DI BELAKANG AVATAR - SEPERTI YNA */
+/* GLOW RING BESAR DI BELAKANG */
 .hero-section::before {
   content: '';
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 450px;
-  height: 450px;
-  background: radial-gradient(circle, rgba(236, 72, 153, 0.20) 0%, rgba(168, 85, 247, 0.10) 30%, transparent 70%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, 
+    rgba(236, 72, 153, 0.25) 0%, 
+    rgba(168, 85, 247, 0.12) 30%, 
+    transparent 70%
+  );
   border-radius: 50%;
   animation: pulseRing 4s ease-in-out infinite;
   pointer-events: none;
   z-index: 0;
 }
 
-/* GLOW KEDUA - LEBIH BESAR DAN LEMBUT */
+/* GLOW KEDUA - LEBIH BESAR */
 .hero-section::after {
   content: '';
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 650px;
-  height: 650px;
-  background: radial-gradient(circle, rgba(244, 114, 182, 0.08) 0%, rgba(236, 72, 153, 0.04) 40%, transparent 70%);
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, 
+    rgba(244, 114, 182, 0.10) 0%, 
+    rgba(236, 72, 153, 0.05) 40%, 
+    transparent 70%
+  );
   border-radius: 50%;
   animation: pulseRing 5s ease-in-out infinite 0.5s;
   pointer-events: none;
@@ -266,17 +314,15 @@ header {
   background: var(--accent-gradient);
   background-size: 300% 300%;
   animation: gradientShift 4s ease infinite;
-  box-shadow: 0 0 50px rgba(236, 72, 153, 0.4);
+  box-shadow: 0 0 50px rgba(236, 72, 153, 0.5);
   transition: var(--transition-smooth);
   position: relative;
   z-index: 1;
 }
-
 .hero-avatar:hover {
   transform: scale(1.05) rotate(-3deg);
-  box-shadow: 0 0 70px rgba(236, 72, 153, 0.6);
+  box-shadow: 0 0 80px rgba(236, 72, 153, 0.7);
 }
-
 .hero-avatar img {
   width: 100%;
   height: 100%;
@@ -287,7 +333,6 @@ header {
 .hero-text-card {
   background: transparent;
   border: none;
-  box-shadow: none;
   padding: 0;
   margin-bottom: 20px;
   position: relative;
@@ -302,16 +347,16 @@ header {
   margin-bottom: 6px;
   text-transform: uppercase;
   opacity: 0.9;
+  position: relative;
+  z-index: 1;
 }
-
 .hero-welcome i {
   color: var(--accent-primary);
   margin-right: 6px;
 }
 
-/* HERO GREETING - PINK GLOW SEPERTI YNA STORE */
 .hero-greeting {
-  font-size: 2.6rem;
+  font-size: 2.4rem;
   font-weight: 800;
   background: var(--accent-gradient);
   -webkit-background-clip: text;
@@ -334,9 +379,6 @@ header {
   z-index: 1;
 }
 
-/* ============================================
-   BUTTONS - PINK THEME SEPERTI YNA
-============================================ */
 .hero-buttons {
   display: flex;
   flex-direction: column;
@@ -347,6 +389,9 @@ header {
   z-index: 1;
 }
 
+/* ============================================
+   BUTTONS
+============================================ */
 .h-btn {
   width: 100%;
   max-width: 240px;
@@ -368,7 +413,6 @@ header {
   position: relative;
   overflow: hidden;
 }
-
 .h-btn::before {
   content: '';
   position: absolute;
@@ -379,33 +423,27 @@ header {
   background: linear-gradient(90deg, transparent, rgba(236, 72, 153, 0.10), transparent);
   transition: 0.6s;
 }
-
 .h-btn:hover::before {
   left: 100%;
 }
-
 .h-btn:hover {
   transform: translateY(-3px) scale(1.02);
   background: rgba(236, 72, 153, 0.12);
   border-color: rgba(236, 72, 153, 0.45);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
-
 .h-btn:active {
   transform: scale(0.97);
 }
-
 .h-btn.primary {
   background: linear-gradient(135deg, #ec4899, #a855f7);
   border: none;
   box-shadow: 0 4px 28px rgba(236, 72, 153, 0.5);
 }
-
 .h-btn.primary:hover {
   transform: translateY(-3px) scale(1.02);
   box-shadow: 0 8px 50px rgba(236, 72, 153, 0.65);
 }
-
 .h-btn i {
   margin-right: 8px;
 }
@@ -416,7 +454,6 @@ header {
 .section-box {
   margin-bottom: 48px;
 }
-
 .section-header-title {
   font-size: 0.7rem;
   text-transform: uppercase;
@@ -426,7 +463,6 @@ header {
   margin-bottom: 4px;
   opacity: 0.8;
 }
-
 .section-main-title {
   font-size: 1.6rem;
   font-weight: 800;
@@ -440,7 +476,7 @@ header {
 }
 
 /* ============================================
-   CATEGORY CARDS - PINK THEME
+   CATEGORY CARDS
 ============================================ */
 .category-card {
   background: var(--bg-card);
@@ -455,7 +491,6 @@ header {
   position: relative;
   overflow: hidden;
 }
-
 .category-card::after {
   content: '';
   position: absolute;
@@ -468,17 +503,14 @@ header {
   transform-origin: left;
   transition: var(--transition-smooth);
 }
-
 .category-card:hover::after {
   transform: scaleX(1);
 }
-
 .category-card:hover {
   transform: translateY(-4px) scale(1.01);
   border-color: var(--accent-primary);
   box-shadow: 0 8px 40px rgba(236, 72, 153, 0.15);
 }
-
 .cat-icon-title {
   display: flex;
   align-items: center;
@@ -487,7 +519,6 @@ header {
   font-weight: 700;
   color: var(--text-main);
 }
-
 .cat-icon-title i {
   font-size: 1.4rem;
   color: var(--accent-primary);
@@ -495,12 +526,10 @@ header {
   text-align: center;
   transition: var(--transition-smooth);
 }
-
 .category-card:hover .cat-icon-title i {
   transform: scale(1.15) rotate(-5deg);
   color: #f472b6;
 }
-
 .cat-desc {
   font-size: 0.85rem;
   color: var(--text-sub);
@@ -509,7 +538,7 @@ header {
 }
 
 /* ============================================
-   ABOUT BOX - PINK THEME
+   ABOUT BOX
 ============================================ */
 .about-box {
   background: var(--bg-card);
@@ -523,7 +552,6 @@ header {
   position: relative;
   overflow: hidden;
 }
-
 .about-box::before {
   content: '';
   position: absolute;
@@ -534,12 +562,10 @@ header {
   background: radial-gradient(circle, rgba(236, 72, 153, 0.05) 0%, transparent 70%);
   pointer-events: none;
 }
-
 .about-box:hover {
   border-color: rgba(236, 72, 153, 0.35);
   box-shadow: var(--shadow-neon);
 }
-
 .about-box h3 {
   font-size: 1.2rem;
   font-weight: 800;
@@ -550,21 +576,18 @@ header {
   background-size: 300% 300%;
   animation: gradientShift 4s ease infinite;
 }
-
 .about-box p {
   font-size: 0.9rem;
   color: var(--text-sub);
   line-height: 1.9;
   margin-bottom: 14px;
 }
-
 .role-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 18px;
 }
-
 .role-tag {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(236, 72, 153, 0.2);
@@ -577,7 +600,6 @@ header {
   text-transform: uppercase;
   transition: var(--transition-smooth);
 }
-
 .role-tag:hover {
   background: var(--accent-gradient);
   color: #fff;
@@ -585,13 +607,12 @@ header {
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 4px 25px rgba(236, 72, 153, 0.35);
 }
-
 .role-tag i {
   margin-right: 4px;
 }
 
 /* ============================================
-   STATS BOX - PINK THEME
+   STATS BOX
 ============================================ */
 .stats-box {
   background: var(--bg-card);
@@ -604,12 +625,10 @@ header {
   margin-bottom: 44px;
   transition: var(--transition-smooth);
 }
-
 .stats-box:hover {
   border-color: rgba(236, 72, 153, 0.3);
   box-shadow: var(--shadow-neon);
 }
-
 .stats-number {
   font-size: 3.4rem;
   font-weight: 800;
@@ -621,21 +640,18 @@ header {
   margin-bottom: 2px;
   line-height: 1.1;
 }
-
 .stats-title {
   font-size: 1.1rem;
   font-weight: 700;
   margin-bottom: 10px;
   color: var(--text-main);
 }
-
 .stats-desc {
   font-size: 0.85rem;
   color: var(--text-sub);
   line-height: 1.8;
   margin-bottom: 24px;
 }
-
 .feature-mini-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -643,7 +659,6 @@ header {
   text-align: left;
   margin-bottom: 24px;
 }
-
 .feature-mini {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(236, 72, 153, 0.12);
@@ -651,25 +666,21 @@ header {
   border-radius: 18px;
   transition: var(--transition-smooth);
 }
-
 .feature-mini:hover {
   border-color: var(--accent-primary);
   transform: translateX(4px);
   box-shadow: var(--shadow-glow);
 }
-
 .feature-mini h5 {
   font-size: 0.9rem;
   font-weight: 700;
   color: var(--text-main);
   margin-bottom: 2px;
 }
-
 .feature-mini h5 i {
   margin-right: 8px;
   color: var(--accent-primary);
 }
-
 .feature-mini p {
   font-size: 0.8rem;
   color: var(--text-sub);
@@ -683,24 +694,21 @@ header {
   padding: 26px 20px;
   transition: var(--transition-smooth);
 }
-
 .order-cta-box:hover {
   border-color: rgba(236, 72, 153, 0.35);
 }
-
 .order-cta-box p {
   font-size: 0.9rem;
   color: var(--text-sub);
   margin-bottom: 16px;
   line-height: 1.7;
 }
-
 .order-cta-box .h-btn {
   max-width: 100%;
 }
 
 /* ============================================
-   FOOTER - PINK THEME
+   FOOTER
 ============================================ */
 footer {
   border-top: 1px solid rgba(236, 72, 153, 0.2);
@@ -711,19 +719,16 @@ footer {
   font-size: 0.85rem;
   color: var(--text-sub);
 }
-
 .footer-container {
   max-width: 600px;
   margin: 0 auto;
 }
-
 .footer-socials {
   display: flex;
   gap: 20px;
   margin-bottom: 30px;
   flex-wrap: wrap;
 }
-
 .footer-socials a {
   color: var(--text-sub);
   text-decoration: none;
@@ -738,18 +743,15 @@ footer {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid transparent;
 }
-
 .footer-socials a:hover {
   color: var(--accent-primary);
   background: rgba(236, 72, 153, 0.08);
   border-color: rgba(236, 72, 153, 0.2);
   transform: translateY(-2px);
 }
-
 .footer-socials a i {
   font-size: 1.1rem;
 }
-
 .footer-section-title {
   font-weight: 700;
   color: var(--text-main);
@@ -759,14 +761,12 @@ footer {
   letter-spacing: 2px;
   opacity: 0.8;
 }
-
 .footer-contact-list {
   margin-bottom: 30px;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
-
 .footer-contact-list span {
   display: flex;
   align-items: center;
@@ -774,20 +774,17 @@ footer {
   color: var(--text-sub);
   font-size: 0.85rem;
 }
-
 .footer-contact-list span i {
   width: 20px;
   color: var(--accent-primary);
   opacity: 0.7;
 }
-
 .footer-menu-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin-bottom: 30px;
 }
-
 .footer-menu-list a {
   color: var(--text-sub);
   text-decoration: none;
@@ -795,12 +792,10 @@ footer {
   font-size: 0.9rem;
   padding: 4px 0;
 }
-
 .footer-menu-list a:hover {
   color: var(--accent-primary);
   padding-left: 10px;
 }
-
 .copyright {
   border-top: 1px solid rgba(236, 72, 153, 0.15);
   padding-top: 22px;
@@ -811,7 +806,7 @@ footer {
 }
 
 /* ============================================
-   MODAL - PINK THEME
+   MODAL
 ============================================ */
 .modal-overlay {
   position: fixed;
@@ -828,7 +823,6 @@ footer {
   visibility: hidden;
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-
 .modal-overlay.active {
   opacity: 1;
   visibility: visible;
@@ -848,11 +842,9 @@ footer {
   transform: scale(0.95) translateY(20px);
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
 .modal-overlay.active .payment-modal-card {
   transform: scale(1) translateY(0);
 }
-
 .popup-close-circle {
   position: absolute;
   top: 16px;
@@ -869,13 +861,11 @@ footer {
   align-items: center;
   justify-content: center;
 }
-
 .popup-close-circle:hover {
   border-color: var(--accent-primary);
   color: var(--text-main);
   transform: rotate(90deg);
 }
-
 .pay-title {
   font-size: 1.3rem;
   font-weight: 800;
@@ -887,7 +877,6 @@ footer {
   background-size: 300% 300%;
   animation: gradientShift 4s ease infinite;
 }
-
 .qris-box {
   background: #fff;
   padding: 16px;
@@ -900,13 +889,11 @@ footer {
   align-items: center;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
-
 .qris-box img {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
-
 .wallet-box {
   background: var(--bg-card);
   border: 1px solid rgba(236, 72, 153, 0.15);
@@ -918,11 +905,9 @@ footer {
   align-items: center;
   transition: var(--transition-smooth);
 }
-
 .wallet-box:hover {
   border-color: var(--accent-primary);
 }
-
 .wallet-info h5 {
   font-size: 0.75rem;
   color: var(--text-sub);
@@ -930,13 +915,11 @@ footer {
   text-transform: uppercase;
   letter-spacing: 1px;
 }
-
 .wallet-info p {
   font-size: 0.95rem;
   font-weight: 700;
   color: var(--text-main);
 }
-
 .copy-btn {
   background: var(--accent-gradient);
   color: #fff;
@@ -948,12 +931,10 @@ footer {
   cursor: pointer;
   transition: var(--transition-smooth);
 }
-
 .copy-btn:hover {
   transform: scale(1.06);
   box-shadow: var(--shadow-glow);
 }
-
 .pay-confirm-btn {
   display: block;
   width: 100%;
@@ -969,14 +950,13 @@ footer {
   background-size: 300% 300%;
   animation: gradientShift 4s ease infinite;
 }
-
 .pay-confirm-btn:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-neon);
 }
 
 /* ============================================
-   WA POPUP - PINK THEME
+   WA POPUP
 ============================================ */
 .popup-wa-card {
   background: var(--bg-body);
@@ -991,11 +971,9 @@ footer {
   transform: scale(0.95) translateY(20px);
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
 .modal-overlay.active .popup-wa-card {
   transform: scale(1) translateY(0);
 }
-
 .popup-avatar-box {
   width: 84px;
   height: 84px;
@@ -1006,13 +984,11 @@ footer {
   box-shadow: 0 0 40px rgba(236, 72, 153, 0.3);
   animation: floatGlow 3s ease-in-out infinite;
 }
-
 .popup-avatar-box img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
 .popup-title {
   font-size: 1.1rem;
   font-weight: 800;
@@ -1023,14 +999,12 @@ footer {
   background-size: 300% 300%;
   animation: gradientShift 4s ease infinite;
 }
-
 .popup-desc {
   font-size: 0.85rem;
   color: var(--text-sub);
   margin-bottom: 22px;
   line-height: 1.7;
 }
-
 .popup-btn-join {
   display: block;
   width: 100%;
@@ -1045,12 +1019,10 @@ footer {
   background-size: 300% 300%;
   animation: gradientShift 4s ease infinite;
 }
-
 .popup-btn-join:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-neon);
 }
-
 .popup-btn-later {
   width: 100%;
   background: var(--bg-card);
@@ -1062,7 +1034,6 @@ footer {
   cursor: pointer;
   transition: var(--transition-smooth);
 }
-
 .popup-btn-later:hover {
   border-color: var(--accent-primary);
   color: var(--text-main);
@@ -1070,7 +1041,7 @@ footer {
 }
 
 /* ============================================
-   SPLASH SCREEN - PINK THEME
+   SPLASH SCREEN
 ============================================ */
 .splash-overlay {
   position: fixed;
@@ -1087,12 +1058,10 @@ footer {
   z-index: 99999;
   transition: opacity 0.6s ease, visibility 0.6s ease;
 }
-
 .splash-overlay.fade-out {
   opacity: 0;
   visibility: hidden;
 }
-
 .splash-logo {
   font-size: 2.4rem;
   font-weight: 900;
@@ -1103,7 +1072,6 @@ footer {
   animation: gradientShift 2s ease infinite;
   letter-spacing: 2px;
 }
-
 .splash-loader {
   display: flex;
   flex-direction: column;
@@ -1112,7 +1080,6 @@ footer {
   width: 80%;
   max-width: 280px;
 }
-
 .splash-progress-bar {
   width: 100%;
   height: 4px;
@@ -1120,7 +1087,6 @@ footer {
   border-radius: 4px;
   overflow: hidden;
 }
-
 .splash-progress-fill {
   width: 0%;
   height: 100%;
@@ -1128,20 +1094,12 @@ footer {
   background-size: 300% 300%;
   animation: progressAnimation 1.8s ease-in-out forwards;
 }
-
 .splash-text {
   font-size: 0.7rem;
   color: var(--text-sub);
   letter-spacing: 4px;
   text-transform: uppercase;
   opacity: 0.5;
-}
-
-@keyframes progressAnimation {
-  0% { width: 0%; }
-  40% { width: 60%; }
-  70% { width: 85%; }
-  100% { width: 100%; }
 }
 
 /* ============================================
@@ -1151,12 +1109,6 @@ footer {
   opacity: 0;
   animation: slideInUp 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
-
-@keyframes slideInUp {
-  from { opacity: 0; transform: translateY(50px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 .animate-slide-up:nth-child(1) { animation-delay: 0.05s; }
 .animate-slide-up:nth-child(2) { animation-delay: 0.1s; }
 .animate-slide-up:nth-child(3) { animation-delay: 0.15s; }
@@ -1173,21 +1125,17 @@ footer {
     flex-wrap: wrap;
     justify-content: center;
   }
-  
   .h-btn {
     max-width: 180px;
   }
-  
   .feature-mini-grid {
     grid-template-columns: 1fr 1fr;
   }
-  
   .hero-greeting {
     font-size: 3rem;
   }
-  
   .hero-section {
-    padding: 40px 30px;
+    padding: 50px 40px 40px;
   }
 }
 
@@ -1195,25 +1143,20 @@ footer {
   .hero-greeting {
     font-size: 2rem;
   }
-  
   .hero-avatar {
     width: 75px;
     height: 75px;
   }
-  
   .stats-number {
     font-size: 2.8rem;
   }
-  
   .about-box {
     padding: 24px 18px;
   }
-  
   .category-card {
     padding: 18px 18px;
   }
-  
   .hero-section {
-    padding: 20px 16px;
+    padding: 24px 16px 20px;
   }
 }
