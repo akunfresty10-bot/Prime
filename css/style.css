@@ -891,3 +891,39 @@ footer {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+/* ============================================
+   ANIMASI GARIS LOADING (BOLAK-BALIK KIRI-KANAN)
+============================================ */
+.splash-progress-bar {
+  width: 100%;
+  max-width: 240px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+}
+
+.splash-progress-fill {
+  width: 35%;
+  height: 100%;
+  background: linear-gradient(90deg, #38bdf8, #a855f7, #f472b6);
+  border-radius: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.8);
+  animation: progressPingPong 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes progressPingPong {
+  0% {
+    left: 0%;
+    transform: translateX(0%);
+  }
+  100% {
+    left: 100%;
+    transform: translateX(-100%);
+  }
+}
