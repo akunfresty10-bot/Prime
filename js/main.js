@@ -13,7 +13,7 @@ let isMusicEnabled = false;
 let hasAnimatedHeroText = false; // Flag agar animasi hanya berjalan 1x
 
 // ============================================
-// DOM ELEMENTS
+// DOM ELEMENTS (SAFE CHECK)
 // ============================================
 const audioEl = document.getElementById('bg-audio');
 const popupClickArea = document.getElementById('popup-click-area');
@@ -22,24 +22,44 @@ const paymentModalOverlay = document.getElementById('payment-modal-overlay');
 const splashScreen = document.getElementById('splash-screen');
 
 // ============================================
+// SPLASH SCREEN FALLBACK (PREVENT STUCK)
+// ============================================
+function hideSplashScreen() {
+  if (splashScreen) {
+    splashScreen.classList.add('fade-out');
+    splashScreen.style.opacity = '0';
+    splashScreen.style.transition = 'opacity 0.5s ease';
+    setTimeout(() => {
+      splashScreen.style.display = 'none';
+    }, 500);
+  }
+}
+
+// Fallback otomatis jika halaman selesai dimuat atau melebihi 1.5 detik
+window.addEventListener('load', hideSplashScreen);
+setTimeout(hideSplashScreen, 1500);
+
+// ============================================
 // MODAL FUNCTIONS
 // ============================================
 function closeWaModal() {
-  waModalOverlay.classList.remove('active');
+  if (waModalOverlay) waModalOverlay.classList.remove('active');
   // Jalankan animasi teks saat popup WA ditutup
   initHeroTextAnimation();
 }
 
 function openPaymentModal() {
-  paymentModalOverlay.classList.add('active');
+  if (paymentModalOverlay) paymentModalOverlay.classList.add('active');
 }
 
 function closePaymentModal() {
-  paymentModalOverlay.classList.remove('active');
+  if (paymentModalOverlay) paymentModalOverlay.classList.remove('active');
 }
 
 function copyText(elementId, btn) {
-  const text = document.getElementById(elementId).textContent;
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  const text = el.textContent;
   navigator.clipboard.writeText(text);
   const oldText = btn.textContent;
   btn.textContent = 'Disalin!';
@@ -50,129 +70,152 @@ function copyText(elementId, btn) {
 // LOAD SITE SETTINGS FROM SUPABASE
 // ============================================
 async function loadSiteSettings() {
-  const { data } = await supabaseClient.from('site_settings').select('*');
-  if (!data) return;
+  try {
+    const { data } = await supabaseClient.from('site_settings').select('*');
+    if (!data) return;
 
-  let isPopupEnabled = false;
-  let groupUrl = '#';
+    let isPopupEnabled = false;
+    let groupUrl = '#';
 
-  data.forEach(item => {
-    const key = item.key;
-    const value = item.value;
+    data.forEach(item => {
+      const key = item.key;
+      const value = item.value;
 
-    if (key === 'site_title' && value) {
-      document.title = value;
-      document.querySelectorAll('.site-brand-name').forEach(el => el.textContent = value);
-    }
+      if (key === 'site_title' && value) {
+        document.title = value;
+        document.querySelectorAll('.site-brand-name').forEach(el => el.textContent = value);
+      }
 
-    if (key === 'logo_url' && value) {
-      document.getElementById('header-logo').src = value;
-      document.getElementById('hero-logo').src = value;
-      document.getElementById('modal-banner-img').src = value;
-      document.getElementById('splash-logo').src = value;
-    }
+      if (key === 'logo_url' && value) {
+        const hLogo = document.getElementById('header-logo');
+        const hrLogo = document.getElementById('hero-logo');
+        const mLogo = document.getElementById('modal-banner-img');
+        const sLogo = document.getElementById('splash-logo');
+        if (hLogo) hLogo.src = value;
+        if (hrLogo) hrLogo.src = value;
+        if (mLogo) mLogo.src = value;
+        if (sLogo) sLogo.src = value;
+      }
 
-    if (key === 'hero_title' && value) {
-      document.getElementById('hero-title').textContent = value;
-    }
-    if (key === 'hero_desc' && value) {
-      document.getElementById('hero-desc').textContent = value;
-    }
+      if (key === 'hero_title' && value) {
+        const el = document.getElementById('hero-title');
+        if (el) el.textContent = value;
+      }
+      if (key === 'hero_desc' && value) {
+        const el = document.getElementById('hero-desc');
+        if (el) el.textContent = value;
+      }
 
-    if (key === 'whatsapp_number' && value) {
-      activeWhatsappNumber = value;
-      document.getElementById('hero-owner-btn').href = `https://wa.me/${value}`;
-      document.getElementById('ft-wa').href = `https://wa.me/${value}`;
-      document.getElementById('ft-wa-text').textContent = value;
-      document.getElementById('pay-confirm-wa').href = 
-        `https://wa.me/${value}?text=${encodeURIComponent('Halo Admin, saya ingin konfirmasi pembayaran.')}`;
-    }
+      if (key === 'whatsapp_number' && value) {
+        activeWhatsappNumber = value;
+        const hBtn = document.getElementById('hero-owner-btn');
+        const ftWa = document.getElementById('ft-wa');
+        const ftWaTxt = document.getElementById('ft-wa-text');
+        const payWa = document.getElementById('pay-confirm-wa');
+        if (hBtn) hBtn.href = `https://wa.me/${value}`;
+        if (ftWa) ftWa.href = `https://wa.me/${value}`;
+        if (ftWaTxt) ftWaTxt.textContent = value;
+        if (payWa) payWa.href = `https://wa.me/${value}?text=${encodeURIComponent('Halo Admin, saya ingin konfirmasi pembayaran.')}`;
+      }
 
-    if (key === 'whatsapp_backup' && value) {
-      document.getElementById('ft-wacad-text').textContent = value;
-    }
+      if (key === 'whatsapp_backup' && value) {
+        const el = document.getElementById('ft-wacad-text');
+        if (el) el.textContent = value;
+      }
 
-    if (key === 'email_contact' && value) {
-      document.getElementById('ft-mail-text').textContent = value;
-    }
+      if (key === 'email_contact' && value) {
+        const el = document.getElementById('ft-mail-text');
+        if (el) el.textContent = value;
+      }
 
-    if (key === 'instagram_link' && value) {
-      document.getElementById('ft-ig').href = value;
-    }
-    if (key === 'telegram_link' && value) {
-      document.getElementById('ft-tg').href = value;
-    }
+      if (key === 'instagram_link' && value) {
+        const el = document.getElementById('ft-ig');
+        if (el) el.href = value;
+      }
+      if (key === 'telegram_link' && value) {
+        const el = document.getElementById('ft-tg');
+        if (el) el.href = value;
+      }
 
-    if (key === 'ynacpanel_link' && value) {
-      const el = document.getElementById('mn-cpanel');
-      if (el) el.href = value;
-    }
-    if (key === 'ynaai_link' && value) {
-      const el = document.getElementById('mn-ai');
-      if (el) el.href = value;
-    }
-    if (key === 'ynatools_link' && value) {
-      const el = document.getElementById('mn-tools');
-      if (el) el.href = value;
-    }
+      if (key === 'ynacpanel_link' && value) {
+        const el = document.getElementById('mn-cpanel');
+        if (el) el.href = value;
+      }
+      if (key === 'ynaai_link' && value) {
+        const el = document.getElementById('mn-ai');
+        if (el) el.href = value;
+      }
+      if (key === 'ynatools_link' && value) {
+        const el = document.getElementById('mn-tools');
+        if (el) el.href = value;
+      }
 
-    if (key === 'qris_image_url' && value) {
-      document.getElementById('pay-qris-img').src = value;
-    }
-    if (key === 'dana_number' && value) {
-      document.getElementById('pay-dana-num').textContent = value;
-    }
-    if (key === 'dana_name' && value) {
-      document.getElementById('pay-dana-name').textContent = value;
-    }
-    if (key === 'gopay_number' && value) {
-      document.getElementById('pay-gopay-num').textContent = value;
-    }
-    if (key === 'gopay_name' && value) {
-      document.getElementById('pay-gopay-name').textContent = value;
-    }
+      if (key === 'qris_image_url' && value) {
+        const el = document.getElementById('pay-qris-img');
+        if (el) el.src = value;
+      }
+      if (key === 'dana_number' && value) {
+        const el = document.getElementById('pay-dana-num');
+        if (el) el.textContent = value;
+      }
+      if (key === 'dana_name' && value) {
+        const el = document.getElementById('pay-dana-name');
+        if (el) el.textContent = value;
+      }
+      if (key === 'gopay_number' && value) {
+        const el = document.getElementById('pay-gopay-num');
+        if (el) el.textContent = value;
+      }
+      if (key === 'gopay_name' && value) {
+        const el = document.getElementById('pay-gopay-name');
+        if (el) el.textContent = value;
+      }
 
-    if (key === 'popup_enabled') {
-      isPopupEnabled = (value === 'true');
-    }
-    if (key === 'popup_title' && value) {
-      document.getElementById('modal-popup-title').textContent = value;
-    }
-    if (key === 'popup_desc' && value) {
-      document.getElementById('modal-popup-desc').textContent = value;
-    }
-    if (key === 'wa_group_link' && value) {
-      groupUrl = value;
-      document.getElementById('modal-group-btn').href = value;
-    }
+      if (key === 'popup_enabled') {
+        isPopupEnabled = (value === 'true');
+      }
+      if (key === 'popup_title' && value) {
+        const el = document.getElementById('modal-popup-title');
+        if (el) el.textContent = value;
+      }
+      if (key === 'popup_desc' && value) {
+        const el = document.getElementById('modal-popup-desc');
+        if (el) el.textContent = value;
+      }
+      if (key === 'wa_group_link' && value) {
+        groupUrl = value;
+        const el = document.getElementById('modal-group-btn');
+        if (el) el.href = value;
+      }
 
-    if (key === 'bg_music_url' && value) {
-      audioEl.src = value;
-    }
-    if (key === 'bg_music_enabled') {
-      isMusicEnabled = (value === 'true');
-    }
-  });
+      if (key === 'bg_music_url' && value) {
+        if (audioEl) audioEl.src = value;
+      }
+      if (key === 'bg_music_enabled') {
+        isMusicEnabled = (value === 'true');
+      }
+    });
 
-  setTimeout(() => {
-    if (splashScreen) {
-      splashScreen.classList.add('fade-out');
-    }
+    setTimeout(() => {
+      hideSplashScreen();
 
-    if (isPopupEnabled && groupUrl !== '#') {
-      setTimeout(() => {
-        waModalOverlay.classList.add('active');
-      }, 400);
-    } else {
-      // Jika popup WA tidak tampil, langsung jalankan animasi teks
-      initHeroTextAnimation();
-    }
-  }, 1500);
+      if (isPopupEnabled && groupUrl !== '#' && waModalOverlay) {
+        setTimeout(() => {
+          waModalOverlay.classList.add('active');
+        }, 400);
+      } else {
+        initHeroTextAnimation();
+      }
+    }, 1500);
+  } catch (err) {
+    console.error('Gagal memuat pengaturan situs:', err);
+    hideSplashScreen();
+  }
 }
 
 if (popupClickArea) {
   popupClickArea.addEventListener('click', () => {
-    if (isMusicEnabled && audioEl.paused) {
+    if (isMusicEnabled && audioEl && audioEl.paused) {
       audioEl.play().catch(() => {});
     }
   });
@@ -185,18 +228,18 @@ loadSiteSettings();
 // ============================================
 function initHeroTextAnimation() {
   if (hasAnimatedHeroText) return;
-  hasAnimatedHeroText = true;
 
   const welcomeEl = document.querySelector('.hero-welcome');
   const titleEl = document.getElementById('hero-title');
 
-  // 1. Sembunyikan elemen di bawahnya
+  if (!welcomeEl && !titleEl) return;
+  hasAnimatedHeroText = true;
+
   const cascadeElements = document.querySelectorAll(
     '.hero-desc, .h-btn, .section-header-title, .section-main-title, .category-card, .about-box, .stats-box'
   );
   cascadeElements.forEach(el => el.classList.add('cascade-item'));
 
-  // Fungsi helper memecah teks ke huruf
   const setupLetters = (el) => {
     if (!el) return { text: '', spans: [] };
     const text = el.textContent.trim() || el.innerText.trim();
@@ -216,26 +259,20 @@ function initHeroTextAnimation() {
   const welcomeData = setupLetters(welcomeEl);
   const titleData = setupLetters(titleEl);
 
-  // 2. Kecepatan mengetik
   const typingSpeed = 0.12; 
 
-  // Mengetik baris 1: "SELAMAT DATANG DI"
   welcomeData.spans.forEach((span, index) => {
     span.style.animationDelay = `${index * typingSpeed}s`;
   });
 
-  // Hitung waktu selesai baris 1
   const welcomeDuration = welcomeData.spans.length * typingSpeed;
 
-  // Mengetik baris 2: "PCT STORE"
   titleData.spans.forEach((span, index) => {
     span.style.animationDelay = `${welcomeDuration + (index * typingSpeed)}s`;
   });
 
-  // Hitung total waktu selesai kedua baris
   const totalTypingTime = (welcomeDuration + (titleData.spans.length * typingSpeed) + 0.2) * 1000;
 
-  // 3. Munculkan tombol-tombol & papan berurutan setelah ngetik selesai
   setTimeout(() => {
     cascadeElements.forEach((el, index) => {
       setTimeout(() => {
@@ -246,11 +283,10 @@ function initHeroTextAnimation() {
 }
 
 // ============================================
-// LOGIKA ANGKAS PENGUNJUNG OTOMATIS (+1) & ANIMASI SCROLL
+// LOGIKA ANGKA PENGUNJUNG OTOMATIS (+1) & ANIMASI SCROLL
 // ============================================
 async function updateVisitorCount() {
   try {
-    // 1. Ambil data dari Supabase
     const { data } = await supabaseClient
       .from('site_settings')
       .select('value')
@@ -262,10 +298,8 @@ async function updateVisitorCount() {
       currentCount = parseInt(data.value, 10) || 0;
     }
 
-    // 2. Tambah +1 untuk pengunjung baru
     const newCount = currentCount + 1;
 
-    // 3. Simpan ke Supabase
     await supabaseClient
       .from('site_settings')
       .update({ value: newCount.toString() })
@@ -274,19 +308,16 @@ async function updateVisitorCount() {
     const countEl = document.getElementById('stats-visitor-count');
     if (!countEl) return;
 
-    // Set tampilan awal ke 0+
     countEl.textContent = '0+';
 
-    // 4. Fungsi Animasi Angka NAIK dari 0 ke Target
     const startCounterAnimation = (targetNumber) => {
-      const duration = 2000; // Durasi animasi (2000ms = 2 detik)
+      const duration = 2000;
       const startTime = performance.now();
 
       const animate = (currentTime) => {
         const elapsedTime = currentTime - startTime;
         const progress = Math.min(elapsedTime / duration, 1);
         
-        // Easing (easeOutQuad) agar putaran angka melambat saat mau sampai tujuan
         const easeProgress = 1 - (1 - progress) * (1 - progress);
         const currentVal = Math.floor(easeProgress * targetNumber);
 
@@ -302,15 +333,14 @@ async function updateVisitorCount() {
       requestAnimationFrame(animate);
     };
 
-    // 5. Observer untuk mendeteksi saat elemen di-scroll sampai kelihatan di layar
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           startCounterAnimation(newCount);
-          observer.unobserve(entry.target); // Jalankan 1 kali saja per load
+          observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.3 }); // Mulai saat 30% elemen terlihat di layar
+    }, { threshold: 0.3 });
 
     observer.observe(countEl);
 
@@ -319,5 +349,4 @@ async function updateVisitorCount() {
   }
 }
 
-// Jalankan fungsi
-updateVisitorCount();
+document.addEventListener('DOMContentLoaded', updateVisitorCount);
