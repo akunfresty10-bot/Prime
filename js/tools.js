@@ -5,31 +5,149 @@
 // URL Endpoint Backend Serverless / API Route milikmu
 const TOOLS_API_ENDPOINT = '/api/removebg'; // Sesuaikan lokasi endpoint backend kamu
 
+// ============================================
+// DAFTAR EKOSISTEM TOOLS
+// ============================================
+// Untuk menambah tools baru nanti: cukup tambah 1 object di sini.
+// - id            : dipakai sebagai "mode" yang dikirim ke backend
+// - name / desc   : ditampilkan di kartu hub & header workspace
+// - icon          : class Font Awesome
+// - color         : warna aksen kartu & icon
+// - available     : false = tampil sebagai "Segera Hadir" (kartu nonaktif, belum bisa diklik)
+// - optionsId     : id elemen opsi (di dalam form) yang ditampilkan khusus untuk tool ini, boleh null
+// - btnLabel      : teks pada tombol submit saat tool ini aktif
+const TOOLS_CONFIG = [
+  {
+    id: 'removebg',
+    name: 'Hapus Background',
+    desc: 'Hilangkan background foto secara otomatis jadi transparan dalam hitungan detik.',
+    icon: 'fa-wand-magic-sparkles',
+    color: '#38bdf8',
+    available: true,
+    optionsId: 'options-removebg',
+    btnLabel: 'Proses Hapus Background'
+  },
+  {
+    id: 'upscale',
+    name: 'Upscale Gambar',
+    desc: 'Perbesar resolusi & pertajam detail gambar tanpa pecah atau blur.',
+    icon: 'fa-expand',
+    color: '#a855f7',
+    available: true,
+    optionsId: 'options-upscale',
+    btnLabel: 'Proses Upscale Gambar'
+  },
+  {
+    id: 'compress',
+    name: 'Kompres Gambar',
+    desc: 'Perkecil ukuran file gambar tanpa mengorbankan kualitas secara signifikan.',
+    icon: 'fa-file-zipper',
+    color: '#22c55e',
+    available: false,
+    optionsId: null,
+    btnLabel: 'Proses Kompres Gambar'
+  },
+  {
+    id: 'convert',
+    name: 'Convert Format',
+    desc: 'Ubah format gambar (JPG, PNG, WEBP) sesuai kebutuhan kamu.',
+    icon: 'fa-arrows-rotate',
+    color: '#f59e0b',
+    available: false,
+    optionsId: null,
+    btnLabel: 'Proses Convert Gambar'
+  }
+];
+
 let currentMode = 'removebg';
 let selectedImageSource = null; // Bisa berupa string Base64 atau URL
 
-// 1. Pindah Tab (Remove BG <-> Upscale)
-function switchToolTab(mode) {
-  currentMode = mode;
-  document.querySelectorAll('.tools-tab-btn').forEach(btn => btn.classList.remove('active'));
+// ============================================
+// 0. RENDER HUB (KARTU PILIHAN TOOLS)
+// ============================================
+function renderToolsHub() {
+  const grid = document.getElementById('tools-hub-grid');
+  if (!grid) return;
 
-  const btnRemoveBg = document.querySelectorAll('.tools-tab-btn')[0];
-  const btnUpscale = document.querySelectorAll('.tools-tab-btn')[1];
-  const optsRemoveBg = document.getElementById('options-removebg');
-  const optsUpscale = document.getElementById('options-upscale');
+  grid.innerHTML = TOOLS_CONFIG.map(tool => `
+    <div
+      class="tool-hub-card${tool.available ? '' : ' disabled'}"
+      style="--tool-accent: ${tool.color};"
+      onclick="${tool.available ? `openToolWorkspace('${tool.id}')` : ''}"
+    >
+      ${!tool.available ? `<span class="tool-hub-badge soon">SEGERA HADIR</span>` : ''}
+      <div class="tool-hub-icon"><i class="fa-solid ${tool.icon}"></i></div>
+      <div class="tool-hub-name">${tool.name}</div>
+      <div class="tool-hub-desc">${tool.desc}</div>
+    </div>
+  `).join('');
+}
+
+document.addEventListener('DOMContentLoaded', renderToolsHub);
+
+// ============================================
+// 1. Buka Workspace Tool Tertentu (dari klik kartu hub)
+// ============================================
+function openToolWorkspace(toolId) {
+  const tool = TOOLS_CONFIG.find(t => t.id === toolId);
+  if (!tool || !tool.available) return;
+
+  currentMode = tool.id;
+  resetToolForm();
+
+  // Tampilkan opsi form yang relevan untuk tool ini, sembunyikan sisanya
+  TOOLS_CONFIG.forEach(t => {
+    if (!t.optionsId) return;
+    const el = document.getElementById(t.optionsId);
+    if (el) el.style.display = (t.id === tool.id) ? 'grid' : 'none';
+  });
+
+  // Update header workspace
+  const iconEl = document.getElementById('workspace-icon');
+  const titleEl = document.getElementById('workspace-title');
+  const subtitleEl = document.getElementById('workspace-subtitle');
   const btnLabel = document.getElementById('btn-label-text');
 
-  if (mode === 'removebg') {
-    btnRemoveBg.classList.add('active');
-    optsRemoveBg.style.display = 'grid';
-    optsUpscale.style.display = 'none';
-    btnLabel.textContent = 'Proses Hapus Background';
-  } else {
-    btnUpscale.classList.add('active');
-    optsRemoveBg.style.display = 'none';
-    optsUpscale.style.display = 'grid';
-    btnLabel.textContent = 'Proses Upscale Gambar';
+  if (iconEl) {
+    iconEl.style.setProperty('--tool-accent', tool.color);
+    iconEl.innerHTML = `<i class="fa-solid ${tool.icon}"></i>`;
   }
+  if (titleEl) titleEl.textContent = tool.name;
+  if (subtitleEl) subtitleEl.textContent = tool.desc;
+  if (btnLabel) btnLabel.textContent = tool.btnLabel;
+
+  // Pindah tampilan: sembunyikan hub, tampilkan workspace
+  const hubView = document.getElementById('tools-hub-view');
+  const workspaceView = document.getElementById('tools-workspace-view');
+  if (hubView) hubView.style.display = 'none';
+  if (workspaceView) workspaceView.style.display = 'block';
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 2. Kembali ke Hub (Daftar Tools)
+function backToToolsHub() {
+  const hubView = document.getElementById('tools-hub-view');
+  const workspaceView = document.getElementById('tools-workspace-view');
+  if (workspaceView) workspaceView.style.display = 'none';
+  if (hubView) hubView.style.display = 'block';
+
+  resetToolForm();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Reset form & hasil setiap ganti/masuk tool
+function resetToolForm() {
+  selectedImageSource = null;
+
+  const form = document.getElementById('form-tool');
+  if (form) form.reset();
+
+  const uploadLabel = document.getElementById('upload-text-label');
+  if (uploadLabel) uploadLabel.textContent = 'Klik atau Drag & Drop gambar ke sini';
+
+  const resultBox = document.getElementById('tools-result-box');
+  if (resultBox) resultBox.style.display = 'none';
 }
 
 // 2. Handling File Upload & Drag-and-Drop
