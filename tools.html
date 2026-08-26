@@ -14,6 +14,8 @@
 
   <style>
     /* Styling Tambahan Halaman PCT Tools */
+    --tools-border: rgba(255, 255, 255, 0.08);
+
     .tools-wrapper {
       max-width: 900px;
       margin: 0 auto;
@@ -25,35 +27,137 @@
       margin-bottom: 25px;
     }
 
-    .tools-tab-container {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 25px;
-      justify-content: center;
+    /* ===== TOOLS HUB (Daftar Pilihan Tools / Ekosistem) ===== */
+    .tools-hub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
+      margin-bottom: 10px;
     }
 
-    .tools-tab-btn {
-      flex: 1;
-      max-width: 230px;
-      padding: 14px 18px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 14px;
-      color: #fff;
-      font-weight: 700;
-      font-size: 0.95rem;
+    .tool-hub-card {
+      position: relative;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      padding: 22px 20px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      text-align: left;
+    }
+
+    .tool-hub-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--tool-accent, #a855f7);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .tool-hub-card.disabled {
+      cursor: not-allowed;
+      opacity: 0.55;
+    }
+
+    .tool-hub-card.disabled:hover {
+      transform: none;
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: none;
+    }
+
+    .tool-hub-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 14px;
+      background: var(--tool-accent, #a855f7);
     }
 
-    .tools-tab-btn.active {
-      background: linear-gradient(135deg, #38bdf8, #a855f7);
-      border-color: transparent;
-      box-shadow: 0 4px 20px rgba(56, 189, 248, 0.4);
+    .tool-hub-name {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .tool-hub-desc {
+      font-size: 0.82rem;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    .tool-hub-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 20px;
+      letter-spacing: 0.3px;
+    }
+
+    .tool-hub-badge.soon {
+      background: rgba(148, 163, 184, 0.15);
+      color: #cbd5e1;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+    }
+
+    /* ===== WORKSPACE (Tampilan setelah 1 tool dipilih) ===== */
+    .tools-back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 8px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .tools-back-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .tools-workspace-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .tools-workspace-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: #fff;
+      flex-shrink: 0;
+      background: var(--tool-accent, #a855f7);
+    }
+
+    .tools-workspace-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .tools-workspace-subtitle {
+      font-size: 0.8rem;
+      color: #94a3b8;
     }
 
     .tools-card {
@@ -297,26 +401,38 @@
 
     <!-- HERO SECTION -->
     <div class="tools-hero animate-slide-up">
-      <div class="hero-welcome">ALAT UTILITAS GAMBAR</div>
+      <div class="hero-welcome">EKOSISTEM ALAT DIGITAL</div>
       <h1 class="hero-greeting site-brand-name">PRIME TOOLS DIGITAL</h1>
       <p class="hero-desc">
-        Proses dan optimalkan foto kamu dengan cepat menggunakan teknologi pemrosesan gambar berkecepatan tinggi.
+        Pilih tools yang kamu butuhkan. Semua diproses cepat langsung dari browser kamu.
       </p>
     </div>
 
-    <!-- TAB SWITCHER -->
-    <div class="tools-tab-container animate-slide-up">
-      <button class="tools-tab-btn active" onclick="switchToolTab('removebg')">
-        <i class="fa-solid fa-wand-magic-sparkles"></i> Hapus Background
-      </button>
-      <button class="tools-tab-btn" onclick="switchToolTab('upscale')">
-        <i class="fa-solid fa-expand"></i> Upscale Gambar
-      </button>
+    <!-- ===== TOOLS HUB: DAFTAR PILIHAN TOOLS ===== -->
+    <div id="tools-hub-view">
+      <div id="tools-hub-grid" class="tools-hub-grid animate-slide-up">
+        <!-- Kartu tools dirender otomatis oleh js/tools.js dari TOOLS_CONFIG -->
+      </div>
     </div>
 
-    <!-- MAIN TOOL CARD -->
-    <div class="tools-card animate-slide-up">
-      <form id="form-tool" onsubmit="handleToolSubmit(event)">
+    <!-- ===== WORKSPACE: TAMPIL SETELAH SALAH SATU TOOLS DIPILIH ===== -->
+    <div id="tools-workspace-view" style="display: none;">
+
+      <button type="button" class="tools-back-btn" onclick="backToToolsHub()">
+        <i class="fa-solid fa-arrow-left"></i> Kembali ke Daftar Tools
+      </button>
+
+      <div class="tools-workspace-header animate-slide-up">
+        <div id="workspace-icon" class="tools-workspace-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+        <div>
+          <div id="workspace-title" class="tools-workspace-title">Hapus Background</div>
+          <div id="workspace-subtitle" class="tools-workspace-subtitle">Hilangkan background foto secara otomatis</div>
+        </div>
+      </div>
+
+      <!-- MAIN TOOL CARD -->
+      <div class="tools-card animate-slide-up">
+        <form id="form-tool" onsubmit="handleToolSubmit(event)">
 
         <!-- Upload File / Drag & Drop -->
         <div class="upload-box" id="drop-zone" onclick="triggerFileInput()">
@@ -395,6 +511,10 @@
         </a>
       </div>
     </div>
+    <!-- /tools-result-box -->
+
+    </div>
+    <!-- /tools-workspace-view -->
 
   </div>
 
