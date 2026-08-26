@@ -168,13 +168,70 @@ function processImageFile(file) {
     return;
   }
 
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    selectedImageSource = e.target.result; // Format Data URL (Base64)
-    document.getElementById('upload-text-label').innerHTML = `<i class="fa-solid fa-circle-check" style="color:#4ade80;"></i> Gambar Terpilih: <b>${file.name}</b>`;
-    document.getElementById('image-url-input').value = ''; // Reset input URL
-  };
-  reader.readAsDataURL(file);
+  if (file.size > 10 * 1024 * 1024) {
+    alert('Ukuran gambar maksimal 10MB. Silakan pilih gambar lain.');
+    return;
+  }
+
+  const uploadLabel = document.getElementById('upload-text-label');
+  if (uploadLabel) uploadLabel.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Memproses gambar...`;
+
+  compressImageFile(file)
+    .then((dataUrl) => {
+      selectedImageSource = dataUrl; // Format Data URL (Base64), sudah dikompres/resize
+      if (uploadLabel) {
+        uploadLabel.innerHTML = `<i class="fa-solid fa-circle-check" style="color:#4ade80;"></i> Gambar Terpilih: <b>${file.name}</b>`;
+      }
+      document.getElementById('image-url-input').value = ''; // Reset input URL
+    })
+    .catch((err) => {
+      console.error('Gagal mengompres gambar:', err);
+      alert('Gagal memuat gambar, coba gambar lain.');
+      if (uploadLabel) uploadLabel.textContent = 'Klik atau Drag & Drop gambar ke sini';
+    });
+}
+
+// Kompres & resize gambar di browser sebelum dikirim ke server.
+// Foto dari HP (mis. hasil kamera/BeautyPlus) sering berukuran besar (bisa 5-15MB),
+// setelah dikonversi ke base64 ukurannya naik ~33% dan gampang melebihi batas
+// ukuran request yang diizinkan hosting -> menyebabkan server menolak tanpa
+// pesan error yang jelas. Resize + kompres di sini mencegah masalah itu.
+function compressImageFile(file, maxDimension = 1600, quality = 0.85) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error('Gagal membaca file'));
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onerror = () => reject(new Error('Gagal memuat gambar'));
+      img.onload = () => {
+        let { width, height } = img;
+
+        if (width > maxDimension || height > maxDimension) {
+          if (width >= height) {
+            height = Math.round(height * (maxDimension / width));
+            width = maxDimension;
+          } else {
+            width = Math.round(width * (maxDimension / height));
+            height = maxDimension;
+          }
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        // PNG dipertahankan sebagai PNG (butuh transparansi utuh untuk hasil remove-bg
+        // sebelumnya jika ada), format lain dikompres sebagai JPEG.
+        const outputType = file.type === 'image/png' ? 'image/png' : 'image/jpeg';
+        const dataUrl = canvas.toDataURL(outputType, quality);
+        resolve(dataUrl);
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
 }
 
 function handleUrlInput(event) {
@@ -254,8 +311,29 @@ async function handleToolSubmit(event) {
     });
 
     if (!response.ok) {
-      const errData = await response.json().catch(() => ({}));
-      throw new Error(errData.error || 'Gagal memproses gambar dari server.');
+      // Coba baca sebagai JSON dulu (format error normal dari backend kita)
+      let serverMessage = '';
+      const rawText = await response.text().catch(() => '');
+      try {
+        const errData = rawText ? JSON.parse(rawText) : {};
+        serverMessage = errData.error || '';
+      } catch (_) {
+        // Bukan JSON (mis. halaman error HTML dari hosting, payload terlalu besar, dsb)
+        serverMessage = '';
+      }
+
+      if (!serverMessage) {
+        if (response.status === 413) {
+          serverMessage = 'Ukuran gambar terlalu besar untuk diproses server. Coba gambar dengan resolusi lebih kecil.';
+        } else if (response.status === 504) {
+          serverMessage = 'Server terlalu lama merespons (timeout). Coba lagi dalam beberapa saat.';
+        } else {
+          serverMessage = `Gagal memproses gambar dari server (HTTP ${response.status}).`;
+        }
+      }
+
+      console.error('Respons error dari server:', response.status, rawText);
+      throw new Error(serverMessage);
     }
 
     // Ambil response berupa Blob (Gambar langsung)
