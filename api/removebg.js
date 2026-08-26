@@ -8,6 +8,14 @@
 import axios from "axios";
 import FormData from "form-data";
 
+/**
+ * Remove Background API (Yunusek)
+ * @param {Object} options
+ * @param {string|Buffer} options.image - Image URL, base64, or Buffer (required)
+ * @param {string} [options.mode="removebg"] - Mode: "removebg" or "upscale"
+ * @param {string} [options.scale="2"] - Scale for upscale mode
+ * @param {boolean} [options.highRes=false] - High resolution mode for removebg
+ */
 async function removebg(options = {}) {
   const {
     image,
@@ -77,11 +85,11 @@ async function removebg(options = {}) {
   throw new Error('Invalid mode (use "removebg" or "upscale")');
 }
 
+// NOTE: default export HARUS berupa handler (req, res) agar endpoint
+// /api/removebg tetap berfungsi sebagai serverless function.
+// Fungsi scraper "removebg" tetap dipakai persis seperti yang diberikan,
+// hanya dipanggil dari dalam handler ini.
 export default async function handler(req, res) {
-  if (req.method !== 'POST' && req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method Not Allowed' });
-  }
-
   const params = req.method === "GET" ? req.query : req.body;
   const { mode = "removebg", image } = params;
 
