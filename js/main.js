@@ -286,27 +286,28 @@ function initHeroTextAnimation() {
 // LOGIKA ANGKA PENGUNJUNG OTOMATIS (+1) & ANIMASI SCROLL
 // ============================================
 async function updateVisitorCount() {
-  try {
-    const { data } = await supabaseClient
-      .from('site_settings')
-      .select('value')
-      .eq('key', 'total_visitors')
-      .single();
+  const countEl = document.getElementById('stats-visitor-count');
+  if (!countEl) return;
 
-    let currentCount = 0;
-    if (data && data.value) {
-      currentCount = parseInt(data.value, 10) || 0;
+  // Tampilkan dulu angka terakhir yang tersimpan di browser (fallback),
+  // supaya kalau request ke Supabase lambat/gagal, angka TIDAK terlihat balik ke 0.
+  const cachedCount = parseInt(localStorage.getItem('cachedVisitorCount'), 10);
+  if (!isNaN(cachedCount)) {
+    countEl.textContent = `${cachedCount.toLocaleString('id-ID')}+`;
+  }
+
+  try {
+    // Increment dilakukan langsung di database (atomic), bukan baca-lalu-tulis dari browser.
+    // Ini mencegah angka tertimpa jadi kecil/0 kalau proses baca sempat gagal.
+    const { data: newCount, error } = await supabaseClient.rpc('increment_total_visitors');
+
+    if (error || newCount === null || newCount === undefined) {
+      console.error('Gagal memperbarui pengunjung, angka lama dipertahankan:', error);
+      return; // JANGAN tulis apapun ke DB atau ke tampilan kalau gagal
     }
 
-    const newCount = currentCount + 1;
-
-    await supabaseClient
-      .from('site_settings')
-      .update({ value: newCount.toString() })
-      .eq('key', 'total_visitors');
-
-    const countEl = document.getElementById('stats-visitor-count');
-    if (!countEl) return;
+    // Simpan sebagai cache lokal agar tidak pernah tampil turun/0 di kunjungan berikutnya
+    localStorage.setItem('cachedVisitorCount', newCount.toString());
 
     countEl.textContent = '0+';
 
