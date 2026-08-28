@@ -1,353 +1,5 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PCT TOOLS</title>
-
-    <!-- GOOGLE ADSENSE -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2899178587236701" crossorigin="anonymous"></script>
-
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
-    <style>
-        /* ============================================================ */
-        /* VARIABEL & TEMA                                              */
-        /* ============================================================ */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            /* Tema Default (Merah) */
-            --bg-color: #0a0508; 
-            --container-bg: #12080d; 
-            --card-bg: #1a0c14; 
-            --border-color: #3d1520;
-            --text-main: #fce4e8; 
-            --text-muted: #d48a9a; 
-            --accent-color: #ff2d55;
-            --theme-primary: #ff2d55; 
-            --theme-primary-light: #ff6b8a;
-            --theme-border-color: rgba(255, 45, 85, 0.2);
-            --btn-bg: #2a0d18; 
-            --input-bg: #120810;
-        }
-        
-        [data-theme="gold"] {
-            /* Tema Gold */
-            --bg-color: #0f0a03; 
-            --container-bg: #1a1205; 
-            --card-bg: #261a08; 
-            --border-color: #4a3610;
-            --text-main: #fef3c7; 
-            --text-muted: #d4a347; 
-            --accent-color: #fbbf24;
-            --theme-primary: #fbbf24; 
-            --theme-primary-light: #fcd34d;
-            --theme-border-color: rgba(251, 191, 36, 0.2);
-            --btn-bg: #33230a; 
-            --input-bg: #140d04;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Poppins', sans-serif;
-            overflow-x: hidden;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        /* ============================================================ */
-        /* LOADING SCREEN                                               */
-        /* ============================================================ */
-        #loadingScreen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-color); z-index: 9999;
-            display: flex; justify-content: center; align-items: center;
-            transition: opacity 0.5s ease;
-        }
-        .loading-title { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 15px; text-align: center; }
-        .loading-title span { color: var(--theme-primary); }
-        .loading-bar-track { width: 200px; height: 6px; background: var(--container-bg); border-radius: 10px; overflow: hidden; border: 1px solid var(--border-color); }
-        .loading-bar-fill { height: 100%; background: var(--theme-primary); width: 0%; transition: width 0.2s ease; }
-
-        /* ============================================================ */
-        /* LAYOUT & HEADER                                              */
-        /* ============================================================ */
-        .app-wrap { display: flex; flex-direction: column; min-height: 100vh; }
-        
-        .header-top {
-            position: sticky; top: 0; z-index: 100;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 12px 16px; background: rgba(18, 8, 13, 0.9);
-            backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color);
-        }
-        .menu-btn { display: flex; flex-direction: column; gap: 4px; cursor: pointer; }
-        .menu-btn span { width: 24px; height: 2px; background: var(--text-main); border-radius: 2px; }
-        
-        .logo-wrapper { display: flex; align-items: center; gap: 8px; }
-        .logo-icon { color: var(--theme-primary); font-size: 1.2rem; }
-        .brand-name { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1.1rem; }
-        .brand-name span { color: var(--theme-primary); }
-        .brand-tagline { display: block; font-size: 0.6rem; color: var(--text-muted); letter-spacing: 1px; }
-        
-        .header-right { display: flex; align-items: center; gap: 12px; }
-        .theme-toggle-group { display: flex; gap: 6px; background: var(--container-bg); padding: 4px; border-radius: 20px; border: 1px solid var(--border-color); }
-        .theme-btn { background: transparent; border: none; cursor: pointer; font-size: 1rem; opacity: 0.5; transition: 0.3s; }
-        .theme-btn.active { opacity: 1; transform: scale(1.1); }
-        
-        /* Navigasi Desktop (Disembunyikan di Mobile) */
-        .header-nav { display: none; }
-        @media(min-width: 768px) {
-            .header-nav { display: flex; gap: 15px; }
-            .header-nav a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: 0.3s; }
-            .header-nav a.active, .header-nav a:hover { color: var(--theme-primary); }
-        }
-
-        /* ============================================================ */
-        /* KONTEN HALAMAN                                               */
-        /* ============================================================ */
-        .content-wrap { flex: 1; padding: 16px; padding-bottom: 80px; }
-        .page { display: none; animation: fadeIn 0.4s ease; }
-        .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Kartu Info (Device & Profile) */
-        .device-card { background: var(--card-bg); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .dev-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.85rem; border-bottom: 1px dashed var(--border-color); padding-bottom: 6px; }
-        .dev-row:last-child { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
-        .dev-row .label { color: var(--text-muted); }
-        .dev-row .value { font-weight: 600; font-family: 'JetBrains Mono', monospace; }
-        .dev-row .role { color: var(--theme-primary); }
-
-        /* Video / Banner */
-        .video-landscape { width: 100%; border-radius: 12px; overflow: hidden; margin-bottom: 16px; border: 1px solid var(--border-color); }
-        .video-landscape video { width: 100%; display: block; }
-
-        /* Tombol Media Sosial */
-        .channel-buttons { display: flex; gap: 10px; margin-bottom: 20px; }
-        .channel-btn { flex: 1; padding: 10px; text-align: center; border-radius: 8px; text-decoration: none; font-size: 0.8rem; font-weight: 600; color: #fff; transition: 0.3s; }
-        .channel-btn.wa { background: #25D366; }
-        .channel-btn.tt { background: #000; border: 1px solid #333; }
-        .channel-btn:active { transform: scale(0.95); }
-
-        /* ============================================================ */
-        /* GRID TOOLS & PENCARIAN                                       */
-        /* ============================================================ */
-        .section-title { font-size: 1rem; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-        
-        .search-wrapper { position: relative; margin-bottom: 16px; }
-        .search-wrapper i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
-        .search-wrapper input { width: 100%; padding: 12px 12px 12px 35px; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-main); outline: none; font-family: 'Poppins', sans-serif; }
-        .search-wrapper input:focus { border-color: var(--theme-primary); }
-
-        .category-tabs { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 10px; }
-        .category-tabs::-webkit-scrollbar { display: none; }
-        .category-tab { padding: 8px 16px; background: var(--btn-bg); border: 1px solid var(--border-color); border-radius: 20px; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; white-space: nowrap; cursor: pointer; transition: 0.3s; }
-        .category-tab.active { background: var(--theme-primary); color: #fff; border-color: var(--theme-primary); }
-
-        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; }
-        .tool-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px 10px; text-align: center; cursor: pointer; transition: 0.3s; }
-        .tool-card:hover { border-color: var(--theme-primary); transform: translateY(-3px); }
-        .tool-icon { font-size: 24px; margin-bottom: 10px; color: var(--theme-primary); }
-        .tool-name { font-size: 0.75rem; font-weight: 600; }
-        
-        /* ============================================================ */
-        /* BOTTOM NAV & SIDEBAR                                         */
-        /* ============================================================ */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(18, 8, 13, 0.95); backdrop-filter: blur(10px); border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; padding: 10px 0; z-index: 100; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
-        .nav-item { background: none; border: none; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 1.2rem; cursor: pointer; transition: 0.3s; }
-        .nav-item span { font-size: 0.65rem; font-family: 'Inter', sans-serif; font-weight: 500; }
-        .nav-item.active { color: var(--theme-primary); transform: translateY(-3px); }
-
-        .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 200; opacity: 0; visibility: hidden; transition: 0.3s; }
-        .sidebar-overlay.show { opacity: 1; visibility: visible; }
-        
-        .sidebar { position: fixed; top: 0; left: -280px; width: 260px; height: 100%; background: var(--container-bg); border-right: 1px solid var(--border-color); z-index: 201; transition: left 0.3s ease; padding: 20px 0; display: flex; flex-direction: column; }
-        .sidebar.open { left: 0; }
-        .sb-head { display: flex; align-items: center; gap: 15px; padding: 0 20px 20px; border-bottom: 1px solid var(--border-color); margin-bottom: 20px; }
-        .sb-head .avatar { width: 50px; height: 50px; background: var(--theme-primary); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: 700; color: #fff; }
-        .sb-name { font-weight: 700; font-size: 1.1rem; }
-        .sb-role { font-size: 0.75rem; color: var(--theme-primary); }
-        .sb-item { padding: 15px 25px; display: flex; align-items: center; gap: 15px; color: var(--text-main); text-decoration: none; font-size: 0.95rem; cursor: pointer; transition: 0.3s; }
-        .sb-item i { color: var(--text-muted); font-size: 1.2rem; width: 20px; text-align: center; }
-        .sb-item:hover, .sb-item.active { background: var(--card-bg); border-left: 4px solid var(--theme-primary); }
-        .sb-item:hover i, .sb-item.active i { color: var(--theme-primary); }
-
-        /* ============================================================ */
-        /* TOOL VIEWER (MODAL POPUP)                                    */
-        /* ============================================================ */
-        .tool-viewer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 300; display: none; flex-direction: column; animation: slideUp 0.3s ease; overflow-y: auto; }
-        .tool-viewer.active { display: flex; }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        
-        .tool-viewer-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: var(--container-bg); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; }
-        .tool-viewer-title { font-size: 1.1rem; font-weight: 700; }
-        .tool-viewer-close { background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
-        
-        .tool-viewer-content { padding: 20px; flex: 1; }
-        .form-group { margin-bottom: 15px; }
-        .v-input { width: 100%; padding: 12px; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: #fff; font-family: 'Inter', sans-serif; margin-top: 5px; outline: none; }
-        .v-input:focus { border-color: var(--theme-primary); }
-        .v-btn { width: 100%; padding: 12px; background: var(--theme-primary); color: #fff; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px; font-family: 'Poppins', sans-serif; }
-        .v-btn:active { transform: scale(0.98); }
-        .result-box { margin-top: 15px; padding: 15px; background: var(--card-bg); border: 1px dashed var(--theme-primary); border-radius: 8px; font-size: 0.85rem; word-break: break-all; }
-        .limit-info { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px; display: flex; justify-content: space-between; }
-        .limit-info .count { font-weight: bold; color: var(--theme-primary); }
-    </style>
-</head>
-<body>
-
-<!-- LOADING SCREEN -->
-<div id="loadingScreen">
-    <div style="text-align: center;">
-        <div class="loading-title">PCT <span>TOOLS</span></div>
-        <div class="loading-bar-track">
-            <div class="loading-bar-fill" id="loadingBarFill"></div>
-        </div>
-        <div style="margin-top:10px; font-size:0.8rem; color:var(--text-muted);">Memuat sistem...</div>
-    </div>
-</div>
-
-<!-- APP WRAP -->
-<div class="app-wrap">
-    
-    <!-- HEADER -->
-    <header class="header-top">
-        <div class="menu-btn" onclick="toggleSidebar()">
-            <span></span><span></span><span></span>
-        </div>
-        <div class="logo-wrapper">
-            <div class="logo-icon"><i class="fas fa-bolt"></i></div>
-            <div class="logo-text">
-                <span class="brand-name"> PCT <span> TOOLS </span></span>
-                <span class="brand-tagline">PREMIUM TOOLS</span>
-            </div>
-        </div>
-        <div class="header-right">
-            <div class="theme-toggle-group">
-                <button class="theme-btn theme-btn-red active" data-theme="red" onclick="setTheme('red')" title="Tema Merah">🔴</button>
-                <button class="theme-btn theme-btn-gold" data-theme="gold" onclick="setTheme('gold')" title="Tema Kuning">🟡</button>
-            </div>
-            <!-- Nav Desktop -->
-            <nav class="header-nav">
-                <a href="index.html"><i class="fas fa-globe"></i> Web Utama</a>
-            </nav>
-        </div>
-    </header>
-
-    <!-- CONTENT PAGES -->
-    <div class="content-wrap">
-        
-        <!-- HALAMAN BERANDA -->
-        <div class="page active" id="homePage">
-            <div class="video-landscape">
-                <!-- Gunakan poster jika video gagal dimuat / ganti src video jika perlu -->
-                <video autoplay loop muted playsinline id="homeVideo" style="background:#000;">
-                    <source src="https://c.termai.cc/v179/bgXPN.mp4" type="video/mp4">
-                </video>
-            </div>
-            
-            <div class="device-card">
-                <div class="dev-row"><span class="label"><i class="fas fa-user"></i> Username</span><span class="value">Guest</span></div>
-                <div class="dev-row"><span class="label"><i class="fas fa-laptop"></i> OS</span><span class="value" id="devOS">Mendeteksi...</span></div>
-                <div class="dev-row"><span class="label"><i class="fas fa-crown"></i> Role</span><span class="value role">✦ GUEST</span></div>
-            </div>
-            
-            <div class="channel-buttons">
-                <a href="https://whatsapp.com/channel/0029Vb7IUkRJpe8dIoPcAO31" target="_blank" class="channel-btn wa"><i class="fab fa-whatsapp"></i>𝐒𝐀𝐋𝐔𝐑𝐀𝐍 𝐏𝐂𝐓 𝐒𝐓𝐎𝐑𝐄</a>
-                <a href="https://chat.whatsapp.com/Bznb7P7IaGNAIgumOjUPT5?s=cl&p=a&mlu=4" target="_blank" class="channel-btn tt"><i class="fab fa-tiktok"></i>𝐆𝐑𝐎𝐔𝐏 𝐏𝐂𝐓 𝐒𝐓𝐎𝐑𝐄</a>
-            </div>
-
-            <div class="section-title"><i class="fas fa-fire" style="color:var(--theme-primary);"></i> Tools Populer</div>
-            <div class="tools-grid" id="popularGrid">
-                <!-- Di-generate via JS -->
-            </div>
-        </div>
-
-        <!-- HALAMAN TOOLS -->
-        <div class="page" id="toolsPage">
-            <div class="search-wrapper">
-                <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Cari nama tools..." onkeyup="filterTools()">
-            </div>
-            <div class="category-tabs">
-                <button class="category-tab active" onclick="filterCategory('all', this)"><i class="fas fa-th-large"></i> ALL</button>
-                <button class="category-tab" onclick="filterCategory('maker', this)"><i class="fas fa-wand-magic-sparkles"></i> MAKER</button>
-                <button class="category-tab" onclick="filterCategory('downloader', this)"><i class="fas fa-download"></i> DOWNLOADER</button>
-                <button class="category-tab" onclick="filterCategory('tools', this)"><i class="fas fa-screwdriver-wrench"></i> UTILITIES</button>
-            </div>
-            <div class="tools-grid" id="allToolsGrid">
-                <!-- Di-generate via JS -->
-            </div>
-        </div>
-
-        <!-- HALAMAN PROFIL -->
-        <div class="page" id="profilePage">
-            <div class="device-card" style="text-align: center; padding: 30px 15px;">
-                <div style="width: 80px; height: 80px; background: var(--theme-primary); border-radius: 50%; margin: 0 auto 15px; display: flex; justify-content: center; align-items: center; font-size: 30px; font-weight: bold; color: white;">G</div>
-                <h2 style="margin-bottom: 5px;">Guest User</h2>
-                <p style="color: var(--theme-primary); font-size: 0.9rem; margin-bottom: 20px;">✦ GUEST TIER</p>
-                <div class="dev-row"><span class="label">Status API</span><span class="value" style="color:#25D366;">Aktif</span></div>
-                <div class="dev-row"><span class="label">Sisa Limit</span><span class="value">5/5 (Harian)</span></div>
-            </div>
-        </div>
-
-        <!-- HALAMAN CHAT -->
-        <div class="page" id="chatPage">
-            <div class="device-card" style="text-align: center; padding: 40px 15px;">
-                <i class="fas fa-comments" style="font-size: 40px; color: var(--theme-primary); margin-bottom: 15px;"></i>
-                <h3>Chat Admin</h3>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin: 10px 0 20px;">Fitur Live Chat sedang dalam pengembangan. Silakan hubungi via WhatsApp untuk sementara waktu.</p>
-                <a href="https://wa.me/6281234567890" target="_blank" class="v-btn" style="text-decoration:none;"><i class="fab fa-whatsapp"></i> Hubungi WhatsApp</a>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- BOTTOM NAV -->
-    <div class="bottom-nav">
-        <button class="nav-item" onclick="window.location.href='index.html'"><i class="fas fa-globe"></i><span>Utama</span></button>
-        <button class="nav-item active" data-page="homePage"><i class="fas fa-home"></i><span>Beranda</span></button>
-        <button class="nav-item" data-page="toolsPage"><i class="fas fa-toolbox"></i><span>Tools</span></button>
-        <button class="nav-item" data-page="profilePage"><i class="fas fa-user"></i><span>Profil</span></button>
-        <button class="nav-item" data-page="chatPage"><i class="fas fa-comment"></i><span>Chat</span></button>
-    </div>
-</div>
-
-<!-- SIDEBAR -->
-<div class="sidebar-overlay" id="sbOverlay"></div>
-<div class="sidebar" id="sidebar">
-    <div class="sb-head">
-        <div class="avatar">G</div>
-        <div>
-            <div class="sb-name">Guest</div>
-            <div class="sb-role">✦ GUEST</div>
-        </div>
-    </div>
-    <div class="sb-item" onclick="window.location.href='index.html'"><i class="fas fa-globe"></i> Web Utama</div>
-    <div class="sb-item active" data-page="homePage"><i class="fas fa-home"></i> Beranda</div>
-    <div class="sb-item" data-page="toolsPage"><i class="fas fa-toolbox"></i> Semua Tools</div>
-    <div class="sb-item" data-page="profilePage"><i class="fas fa-user"></i> Profil User</div>
-    <div class="sb-item" data-page="chatPage"><i class="fas fa-comment"></i> Chat Admin</div>
-</div>
-
-<!-- TOOL VIEWER (MODAL UNTUK BUKA TOOLS) -->
-<div class="tool-viewer" id="toolViewer">
-    <div class="tool-viewer-header">
-        <div class="tool-viewer-title" id="toolViewerTitle">Nama Tool</div>
-        <button class="tool-viewer-close" onclick="closeTool()"><i class="fas fa-times"></i></button>
-    </div>
-    <div class="tool-viewer-content" id="toolViewerContent">
-        <!-- Konten tool diinjeksi ke sini via JS -->
-    </div>
-</div>
-
-<!-- ============================================================ -->
-<!-- JAVASCRIPT LOGIC                                           -->
-<!-- ============================================================ -->
 <script>
+    // 1. DATA TOOLS
     const toolsData = [
         { id: 'vidcompress', name: 'Media Compressor', icon: 'fas fa-compress-arrows-alt', category: 'tools', popular: true },
         { id: 'fakedev', name: 'Fake Developer', icon: 'fas fa-id-card', category: 'maker', popular: true },
@@ -362,6 +14,7 @@
         { id: 'subdomain', name: 'Subdomain Finder', icon: 'fas fa-network-wired', category: 'tools', popular: false }
     ];
 
+    // 2. RENDER LIST CARDS
     function renderTools(filterCategory = 'all', searchQuery = '') {
         const grid = document.getElementById('toolsGrid');
         grid.innerHTML = '';
@@ -395,6 +48,7 @@
         });
     }
 
+    // 3. EVENT LISTENERS CATEGORY & SEARCH
     document.querySelectorAll('.cat-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
@@ -410,6 +64,7 @@
         renderTools(activeCat, e.target.value);
     });
 
+    // 4. OPEN & CLOSE MODAL VIEWER
     function openTool(toolId, toolName) {
         const viewer = document.getElementById('toolViewer');
         const title = document.getElementById('toolViewerTitle');
@@ -434,6 +89,7 @@
         document.body.style.overflow = 'auto';
     }
 
+    // 5. RENDER DEFAULT DUMMY TOOL
     function renderDefaultTool(container, name) {
         container.innerHTML = `
             <div class="limit-info">
@@ -447,6 +103,7 @@
         `;
     }
 
+    // 6. RENDER MEDIA COMPRESSOR TOOL (UI VIDEO)
     function renderVidCompressTool(container) {
         container.innerHTML = `
             <div class="limit-info">
@@ -560,6 +217,7 @@
         };
     }
 
+    // 7. INIT FIRST RENDER
     document.addEventListener('DOMContentLoaded', () => {
         renderTools();
     });
