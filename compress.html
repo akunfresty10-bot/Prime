@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Media Compressor</title>
+  <!-- Font & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f6f9fc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      background: white;
+      border-radius: 2.5rem;
+      padding: 2.5rem 2.5rem 3rem;
+      box-shadow: 0 20px 60px rgba(0, 20, 40, 0.06), 0 8px 24px rgba(0, 0, 0, 0.02);
+      transition: all 0.2s ease;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #0b1d2e;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    h1 i {
+      color: #2563eb;
+      font-size: 2rem;
+    }
+
+    .subhead {
+      color: #5b6f82;
+      font-size: 1.05rem;
+      margin-top: 0.2rem;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .badge {
+      background: #e6f0ff;
+      color: #1a5bc7;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 1rem;
+      border-radius: 100px;
+      letter-spacing: 0.3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge i {
+      font-size: 0.65rem;
+    }
+
+    /* drop zone */
+    .drop-zone {
+      margin: 2.2rem 0 1.8rem;
+      padding: 3.2rem 1.5rem;
+      border: 2px dashed #d0dbe8;
+      border-radius: 2rem;
+      text-align: center;
+      background: #fafcff;
+      cursor: pointer;
+      transition: 0.15s;
+      position: relative;
+    }
+
+    .drop-zone.drag-over {
+      border-color: #2563eb;
+      background: #eef6ff;
+      transform: scale(1.01);
+    }
+
+    .drop-zone i {
+      font-size: 3.4rem;
+      color: #7b93ab;
+      margin-bottom: 0.75rem;
+    }
+
+    .drop-zone p {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #1f2e3f;
+    }
+
+    .drop-zone span {
+      color: #5b6f82;
+      font-size: 0.95rem;
+      display: block;
+      margin-top: 0.25rem;
+    }
+
+    .drop-zone .formats {
+      margin-top: 0.75rem;
+      font-size: 0.8rem;
+      color: #6f8aa0;
+      background: #eef2f6;
+      display: inline-block;
+      padding: 0.25rem 1.2rem;
+      border-radius: 40px;
+      letter-spacing: 0.2px;
+    }
+
+    .drop-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    /* progress / status */
+    .status-area {
+      margin: 1.5rem 0 2rem;
+      min-height: 4.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.8rem 1.5rem;
+      background: #f8fafc;
+      padding: 0.75rem 1.5rem;
+      border-radius: 100px;
+      border: 1px solid #e5edf5;
+    }
+
+    .status-text {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: #1f2e3f;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .status-text i {
+      color: #2563eb;
+      font-size: 1.1rem;
+    }
+
+    .status-progress {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 6px;
+      background: #dee8f2;
+      border-radius: 10px;
+      overflow: hidden;
+      min-width: 60px;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: #2563eb;
+      border-radius: 10px;
+      transition: width 0.35s ease;
+    }
+
+    .progress-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #1f2e3f;
+      min-width: 44px;
+      text-align: right;
+    }
+
+    .btn {
+      border: none;
+      background: #0b1d2e;
+      color: white;
+      padding: 0.7rem 1.8rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      transition: 0.15s;
+      box-shadow: 0 2px 10px rgba(11, 29, 46, 0.08);
+    }
+
+    .btn:hover {
+      background: #1a2f44;
+      transform: scale(1.02);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      pointer-events: none;
+      filter: grayscale(0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #0b1d2e;
+      border: 1.5px solid #d0dbe8;
+      box-shadow: none;
+    }
+
+    .btn-outline:hover {
+      background: #f0f5fb;
+      border-color: #b0c4d8;
+      transform: none;
+    }
+
+    .btn-success {
+      background: #0b7e4b;
+      box-shadow: 0 2px 12px rgba(11, 126, 75, 0.2);
+    }
+
+    .btn-success:hover {
+      background: #0f965a;
+    }
+
+    .result-area {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: #f2f7fe;
+      border-radius: 1.5rem;
+      display: none;
+      border: 1px solid #dbe7f5;
+    }
+
+    .result-area.show {
+      display: block;
+    }
+
+    .result-area .row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .result-area .file-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .file-info i {
+      font-size: 2.2rem;
+      color: #2563eb;
+    }
+
+    .file-info div {
+      line-height: 1.4;
+    }
+
+    .file-info .name {
+      font-weight: 600;
+      color: #0b1d2e;
+    }
+
+    .file-info .size {
+      font-size: 0.85rem;
+      color: #4b6a84;
+    }
+
+    .donate-section {
+      margin-top: 2.8rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e5edf5;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .donate-section .text {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .donate-section .text i {
+      font-size: 1.8rem;
+      color: #f5a623;
+    }
+
+    .donate-section .text p {
+      font-weight: 500;
+      color: #1f2e3f;
+      font-size: 0.95rem;
+    }
+
+    .donate-section .text small {
+      display: block;
+      font-weight: 400;
+      color: #5b6f82;
+      font-size: 0.8rem;
+    }
+
+    .qr-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: white;
+      padding: 0.4rem 1rem 0.4rem 0.8rem;
+      border-radius: 60px;
+      border: 1px solid #e0eaf2;
+      cursor: pointer;
+      transition: 0.1s;
+    }
+
+    .qr-wrapper:hover {
+      border-color: #b8ccdf;
+    }
+
+    .qr-wrapper img {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      object-fit: cover;
+      background: #f2f6fc;
+    }
+
+    .qr-wrapper span {
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: #0b1d2e;
+    }
+
+    .qr-wrapper i {
+      color: #7b93ab;
+      margin-left: 4px;
+    }
+
+    .footer {
+      margin-top: 1.8rem;
+      color: #7b93ab;
+      font-size: 0.8rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .footer a {
+      color: #3b6b9c;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 1.5rem;
+      }
+      h1 {
+        font-size: 1.8rem;
+      }
+      .status-area {
+        border-radius: 20px;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1rem 1.2rem;
+      }
+      .status-progress {
+        min-width: unset;
+      }
+      .drop-zone {
+        padding: 2rem 0.8rem;
+      }
+      .donate-section {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .qr-wrapper {
+        align-self: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>
+      <i class="fas fa-compress-arrows-alt"></i> Media Compressor
+    </h1>
+    <div class="subhead">
+      Kompres video atau gambar dengan cerdas tanpa mengurangi kualitas
+      <span class="badge"><i class="fas fa-circle" style="color:#22c55e; font-size:0.5rem;"></i> Server Siap</span>
+    </div>
+
+    <!-- Drop Zone -->
+    <div class="drop-zone" id="dropZone">
+      <i class="fas fa-cloud-upload-alt"></i>
+      <p>Drag & drop your file here</p>
+      <span>atau klik untuk memilih file</span>
+      <div class="formats">
+        <i class="fas fa-file-video"></i> MP4, WebM, MOV, AVI &nbsp;|&nbsp; <i class="fas fa-file-image"></i> JPG, PNG, WEBP
+      </div>
+      <input type="file" id="fileInput" accept=".mp4,.webm,.mov,.avi,.jpg,.jpeg,.png,.webp" />
+    </div>
+
+    <!-- Status Bar -->
+    <div class="status-area" id="statusArea">
+      <div class="status-text" id="statusText">
+        <i class="fas fa-circle" style="color:#22c55e; font-size:0.5rem;"></i>
+        <span>Menunggu file</span>
+      </div>
+      <div class="status-progress" id="progressWrapper" style="display:none;">
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <span class="progress-label" id="progressLabel">0%</span>
+      </div>
+      <button class="btn btn-outline" id="resetBtn" style="display:none;">
+        <i class="fas fa-undo-alt"></i> Reset
+      </button>
+    </div>
+
+    <!-- Result Area -->
+    <div class="result-area" id="resultArea">
+      <div class="row">
+        <div class="file-info">
+          <i class="fas fa-file-alt"></i>
+          <div>
+            <div class="name" id="resultName">file_compressed.mp4</div>
+            <div class="size" id="resultSize">~ 4.2 MB</div>
+          </div>
+        </div>
+        <a id="downloadLink" href="#" download class="btn btn-success">
+          <i class="fas fa-download"></i> Unduh
+        </a>
+      </div>
+    </div>
+
+    <!-- Donate -->
+    <div class="donate-section">
+      <div class="text">
+        <i class="fas fa-heart" style="color:#ef4444;"></i>
+        <div>
+          <p>Dukung Server Termai</p>
+          <small>Operasional &amp; Pengembangan Server</small>
+        </div>
+      </div>
+      <div class="qr-wrapper" id="qrWrapper">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Crect width='44' height='44' fill='%23f3f6fa' rx='8'/%3E%3Ctext x='22' y='26' font-size='10' font-family='system-ui, sans-serif' fill='%233b6b9c' text-anchor='middle'%3EQRIS%3C/text%3E%3C/svg%3E" alt="QRIS" id="qrImage" />
+        <span>Scan QRIS</span>
+        <i class="fas fa-chevron-right" style="font-size:0.7rem;"></i>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span><i class="far fa-copyright"></i> Termai API</span>
+      <a href="#"><i class="fab fa-whatsapp"></i> Channel</a>
+      <a href="#"><i class="fab fa-telegram-plane"></i> @kyumasihcowo</a>
+    </div>
+  </div>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "axios": "https://cdn.jsdelivr.net/npm/axios@1.6.2/dist/esm/axios.min.js",
+        "file-type": "https://cdn.jsdelivr.net/npm/file-type@18.7.0/index.js"
+      }
+    }
+  </script>
+  <script type="module">
+    import axios from 'axios';
+    import { fileTypeFromBuffer } from 'file-type';
+
+    // ─── Configuration ────────────────────────────────────────────
+    const BASE_URL = 'https://termai.cc';
+    const API_ENDPOINT = `${BASE_URL}/api/tools/compress-video`;
+
+    const DEFAULT_HEADERS = {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      'Referer': `${BASE_URL}/tools/compress`,
+      'Origin': BASE_URL
+    };
+
+    // ─── DOM refs ─────────────────────────────────────────────────
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const statusText = document.querySelector('#statusText span');
+    const statusIcon = document.querySelector('#statusText i');
+    const progressWrapper = document.getElementById('progressWrapper');
+    const progressFill = document.getElementById('progressFill');
+    const progressLabel = document.getElementById('progressLabel');
+    const resetBtn = document.getElementById('resetBtn');
+    const resultArea = document.getElementById('resultArea');
+    const resultName = document.getElementById('resultName');
+    const resultSize = document.getElementById('resultSize');
+    const downloadLink = document.getElementById('downloadLink');
+    const qrWrapper = document.getElementById('qrWrapper');
+
+    let currentFile = null;       // File object
+    let isProcessing = false;
+
+    // ─── Helpers ──────────────────────────────────────────────────
+    function setStatus(text, icon = 'fa-circle', color = '#22c55e') {
+      statusText.textContent = text;
+      statusIcon.className = `fas ${icon}`;
+      statusIcon.style.color = color;
+    }
+
+    function setProgress(pct) {
+      const v = Math.min(100, Math.max(0, pct));
+      progressFill.style.width = v + '%';
+      progressLabel.textContent = Math.round(v) + '%';
+    }
+
+    function resetUI() {
+      currentFile = null;
+      isProcessing = false;
+      fileInput.value = '';
+      setStatus('Menunggu file', 'fa-circle', '#22c55e');
+      progressWrapper.style.display = 'none';
+      resetBtn.style.display = 'none';
+      resultArea.classList.remove('show');
+      downloadLink.href = '#';
+      downloadLink.removeAttribute('download');
+      setProgress(0);
+    }
+
+    function formatSize(bytes) {
+      if (!bytes || bytes < 1024) return bytes + ' B';
+      if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / 1048576).toFixed(1) + ' MB';
+    }
+
+    // ─── Detect content type ─────────────────────────────────────
+    async function detectContentType(buffer, filename) {
+      try {
+        const ft = await fileTypeFromBuffer(buffer);
+        if (ft && ft.mime) return ft.mime;
+      } catch (_) { /* ignore */ }
+
+      if (filename) {
+        const ext = filename.split('.').pop()?.toLowerCase();
+        const map = {
+          'jpg': 'image/jpeg', 'jpeg': 'image/jpeg',
+          'png': 'image/png', 'webp': 'image/webp',
+          'mp4': 'video/mp4', 'webm': 'video/webm',
+          'avi': 'video/x-msvideo', 'mov': 'video/quicktime'
+        };
+        if (map[ext]) return map[ext];
+      }
+      return 'application/octet-stream';
+    }
+
+    // ─── Core compression (from scraper) ─────────────────────────
+    async function termaiCompress(file) {
+      const buffer = await file.arrayBuffer().then(buf => Buffer.from(buf));
+      
+      let contentType = file.type || await detectContentType(buffer, file.name);
+
+      // 1) Create ticket
+      const { data: postRes } = await axios.post(API_ENDPOINT, null, {
+        headers: DEFAULT_HEADERS,
+        timeout: 10000
+      });
+      if (!postRes?.status || !postRes?.ticketId) {
+        throw new Error(postRes?.message || 'Gagal membuat ticket kompresi');
+      }
+      const ticketId = postRes.ticketId;
+
+      // 2) Upload file
+      const { data: putRes } = await axios.put(`${API_ENDPOINT}?ticketId=${ticketId}`, buffer, {
+        headers: {
+          ...DEFAULT_HEADERS,
+          'Content-Type': contentType
+        },
+        timeout: 30000
+      });
+      if (!putRes?.status) {
+        throw new Error(putRes?.message || 'Gagal upload file');
+      }
+
+      // 3) Poll status
+      let attempts = 0;
+      const maxAttempts = 80; // 80 * 1.5s = 120s timeout
+      while (attempts < maxAttempts) {
+        await new Promise(r => setTimeout(r, 1500));
+        attempts++;
+        setProgress(Math.min(95, Math.round((attempts / maxAttempts) * 90) + 10));
+
+        const { data: statusRes } = await axios.get(`${API_ENDPOINT}?id=${ticketId}`, {
+          headers: DEFAULT_HEADERS,
+          timeout: 10000
+        });
+
+        if (statusRes.ticketStatus === 'completed') {
+          const downloadUrl = statusRes.video?.url || statusRes.url;
+          return {
+            status: true,
+            download: downloadUrl,
+            details: statusRes.details || null,
+            originalName: file.name,
+            originalSize: file.size,
+          };
+        } else if (statusRes.ticketStatus === 'failed' || statusRes.status === false) {
+          throw new Error(statusRes.message || 'Kompresi gagal');
+        }
+      }
+      throw new Error('Kompresi timeout setelah 120 detik');
+    }
+
+    // ─── Handle file ──────────────────────────────────────────────
+    async function handleFile(file) {
+      if (isProcessing) return;
+      if (!file) return;
+
+      const allowed = ['image/jpeg','image/png','image/webp','video/mp4','video/webm','video/x-msvideo','video/quicktime'];
+      if (!allowed.some(m => file.type.includes(m))) {
+        const ext = file.name.split('.').pop()?.toLowerCase();
+        if (!['mp4','webm','mov','avi','jpg','jpeg','png','webp'].includes(ext)) {
+          setStatus('Format tidak didukung', 'fa-exclamation-circle', '#ef4444');
+          setTimeout(resetUI, 3000);
+          return;
+        }
+      }
+
+      currentFile = file;
+      isProcessing = true;
+      progressWrapper.style.display = 'flex';
+      resetBtn.style.display = 'inline-flex';
+      setProgress(0);
+      setStatus('Mengupload & kompresi...', 'fa-spinner fa-spin', '#2563eb');
+      resultArea.classList.remove('show');
+
+      try {
+        const result = await termaiCompress(file);
+        
+        setProgress(100);
+        setStatus('Selesai!', 'fa-check-circle', '#22c55e');
+        
+        // show result
+        resultName.textContent = file.name.replace(/\.[^.]+$/, '') + '_compressed.mp4';
+        const sizeMB = result.details?.size || result.originalSize;
+        resultSize.textContent = formatSize(sizeMB);
+        downloadLink.href = result.download;
+        downloadLink.download = resultName.textContent;
+        resultArea.classList.add('show');
+        
+      } catch (err) {
+        setStatus('Gagal: ' + err.message, 'fa-times-circle', '#ef4444');
+        setTimeout(resetUI, 4000);
+      } finally {
+        isProcessing = false;
+        progressWrapper.style.display = 'none';
+        resetBtn.style.display = 'none';
+      }
+    }
+
+    // ─── Event listeners ─────────────────────────────────────────
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files.length) handleFile(e.target.files[0]);
+      fileInput.value = ''; // allow re-upload same file
+    });
+
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('drag-over');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('drag-over');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('drag-over');
+      if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+    });
+
+    resetBtn.addEventListener('click', resetUI);
+
+    qrWrapper.addEventListener('click', () => {
+      alert('QRIS untuk donasi (simulasi).\nScan dengan GoPay, OVO, Dana, LinkAja, atau Mobile Banking.');
+    });
+
+    // click on drop zone triggers file input
+    dropZone.addEventListener('click', (e) => {
+      if (e.target.tagName !== 'INPUT') fileInput.click();
+    });
+
+    // initial state
+    resetUI();
+  </script>
+</body>
+</html>
