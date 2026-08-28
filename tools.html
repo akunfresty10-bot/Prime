@@ -348,140 +348,68 @@
 <!-- JAVASCRIPT LOGIC                                           -->
 <!-- ============================================================ -->
 <script>
-    // --- 1. DATA TOOLS ---
     const toolsData = [
+        { id: 'vidcompress', name: 'Media Compressor', icon: 'fas fa-compress-arrows-alt', category: 'tools', popular: true },
         { id: 'fakedev', name: 'Fake Developer', icon: 'fas fa-id-card', category: 'maker', popular: true },
         { id: 'fakedana', name: 'Fake Dana', icon: 'fas fa-wallet', category: 'maker', popular: true },
-        { id: 'fakeml', name: 'Fake MLBB', icon: 'fas fa-gamepad', category: 'maker', popular: false },
-        { id: 'tiktok', name: 'TikTok Downloader', icon: 'fab fa-tiktok', category: 'downloader', popular: true },
-        { id: 'ig', name: 'IG Downloader', icon: 'fab fa-instagram', category: 'downloader', popular: false },
-        { id: 'img2link', name: 'Image to Link', icon: 'fas fa-link', category: 'tools', popular: false },
-        { id: 'obfuscator', name: 'JS Obfuscator', icon: 'fas fa-file-code', category: 'tools', popular: false }
+        { id: 'fakegopay', name: 'Fake Gopay', icon: 'fas fa-mobile-alt', category: 'maker', popular: false },
+        { id: 'fakeovo', name: 'Fake OVO', icon: 'fas fa-coins', category: 'maker', popular: false },
+        { id: 'fakeweb', name: 'Fake Web Panel', icon: 'fas fa-laptop-code', category: 'maker', popular: true },
+        { id: 'ssweb', name: 'SS Web HD', icon: 'fas fa-camera', category: 'downloader', popular: false },
+        { id: 'ttdown', name: 'TikTok Downloader', icon: 'fab fa-tiktok', category: 'downloader', popular: true },
+        { id: 'igdown', name: 'Instagram Downloader', icon: 'fab fa-instagram', category: 'downloader', popular: true },
+        { id: 'encjs', name: 'JS Encryptor', icon: 'fas fa-lock', category: 'tools', popular: false },
+        { id: 'subdomain', name: 'Subdomain Finder', icon: 'fas fa-network-wired', category: 'tools', popular: false }
     ];
 
-    // --- 2. LOADING SCREEN ---
-    window.addEventListener('load', () => {
-        let fill = document.getElementById('loadingBarFill');
-        let width = 0;
-        let interval = setInterval(() => {
-            width += 20;
-            fill.style.width = width + '%';
-            if(width >= 100) {
-                clearInterval(interval);
-                setTimeout(() => {
-                    document.getElementById('loadingScreen').style.opacity = '0';
-                    setTimeout(() => document.getElementById('loadingScreen').style.display = 'none', 500);
-                }, 300);
-            }
-        }, 150);
+    function renderTools(filterCategory = 'all', searchQuery = '') {
+        const grid = document.getElementById('toolsGrid');
+        grid.innerHTML = '';
 
-        // Deteksi OS sederhana
-        let os = "Unknown OS";
-        if (navigator.userAgent.indexOf("Win") != -1) os = "Windows";
-        if (navigator.userAgent.indexOf("Mac") != -1) os = "MacOS";
-        if (navigator.userAgent.indexOf("Android") != -1) os = "Android";
-        if (navigator.userAgent.indexOf("like Mac") != -1) os = "iOS";
-        document.getElementById('devOS').innerText = os;
-
-        renderToolsGrid();
-    });
-
-    // --- 3. THEME TOGGLE ---
-    function setTheme(theme) {
-        document.documentElement.setAttribute('data-theme', theme);
-        document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
-        document.querySelector(`.theme-btn[data-theme="${theme}"]`).classList.add('active');
-    }
-
-    // --- 4. NAVIGATION (TABS & SIDEBAR) ---
-    function showPage(pageId) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active');
-        
-        // Update Bottom Nav
-        document.querySelectorAll('.bottom-nav .nav-item').forEach(nav => {
-            if(nav.dataset.page) {
-                nav.classList.remove('active');
-                if(nav.dataset.page === pageId) nav.classList.add('active');
-            }
+        const filtered = toolsData.filter(t => {
+            const matchesCat = filterCategory === 'all' || 
+                               (filterCategory === 'popular' && t.popular) || 
+                               t.category === filterCategory;
+            const matchesSearch = t.name.toLowerCase().includes(searchQuery.toLowerCase());
+            return matchesCat && matchesSearch;
         });
 
-        // Update Sidebar
-        document.querySelectorAll('.sidebar .sb-item').forEach(nav => {
-            if(nav.dataset.page) {
-                nav.classList.remove('active');
-                if(nav.dataset.page === pageId) nav.classList.add('active');
-            }
-        });
+        if(filtered.length === 0) {
+            grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Tools tidak ditemukan.</div>`;
+            return;
+        }
 
-        closeSidebar();
-        window.scrollTo(0,0);
-    }
-
-    function toggleSidebar() {
-        document.getElementById('sidebar').classList.toggle('open');
-        document.getElementById('sbOverlay').classList.toggle('show');
-    }
-
-    function closeSidebar() {
-        document.getElementById('sidebar').classList.remove('open');
-        document.getElementById('sbOverlay').classList.remove('show');
-    }
-
-    document.getElementById('sbOverlay').onclick = closeSidebar;
-    
-    // Pasang event listener click untuk semua tombol navigasi
-    document.querySelectorAll('[data-page]').forEach(btn => {
-        btn.onclick = () => showPage(btn.dataset.page);
-    });
-
-    // --- 5. RENDER & FILTER TOOLS ---
-    function renderToolsGrid(category = 'all', searchQuery = '') {
-        const popGrid = document.getElementById('popularGrid');
-        const allGrid = document.getElementById('allToolsGrid');
-        
-        popGrid.innerHTML = '';
-        allGrid.innerHTML = '';
-
-        toolsData.forEach(tool => {
-            // HTML Card Tool
-            const cardHTML = `
-                <div class="tool-card" onclick="openTool('${tool.id}', '${tool.name}')">
-                    <div class="tool-icon"><i class="${tool.icon}"></i></div>
-                    <div class="tool-name">${tool.name}</div>
+        filtered.forEach(t => {
+            const card = document.createElement('div');
+            card.className = 'tool-card';
+            card.onclick = () => openTool(t.id, t.name);
+            card.innerHTML = `
+                <div class="tool-icon"><i class="${t.icon}"></i></div>
+                <div class="tool-info">
+                    <div class="tool-title">${t.name}</div>
+                    <div class="tool-desc">Klik untuk menggunakan tool ini</div>
                 </div>
+                <div class="tool-action"><i class="fas fa-chevron-right"></i></div>
             `;
-
-            // Render ke Grid Populer (hanya di Beranda)
-            if(tool.popular && category === 'all' && searchQuery === '') {
-                popGrid.innerHTML += cardHTML;
-            }
-
-            // Render ke Semua Tools dengan filter
-            let matchCategory = (category === 'all' || tool.category === category);
-            let matchSearch = tool.name.toLowerCase().includes(searchQuery.toLowerCase());
-            
-            if(matchCategory && matchSearch) {
-                allGrid.innerHTML += cardHTML;
-            }
+            grid.appendChild(card);
         });
     }
 
-    function filterCategory(cat, btnElement) {
-        document.querySelectorAll('.category-tab').forEach(b => b.classList.remove('active'));
-        btnElement.classList.add('active');
-        document.getElementById('searchInput').value = ''; // Reset pencarian saat ganti kategori
-        renderToolsGrid(cat, '');
-    }
+    document.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            const cat = e.target.getAttribute('data-cat');
+            const search = document.getElementById('searchInput').value;
+            renderTools(cat, search);
+        });
+    });
 
-    function filterTools() {
-        const query = document.getElementById('searchInput').value;
-        const activeCat = document.querySelector('.category-tab.active').innerText.toLowerCase().trim();
-        let catValue = activeCat === 'all' ? 'all' : (activeCat === 'utilities' ? 'tools' : activeCat);
-        renderToolsGrid(catValue, query);
-    }
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+        const activeCat = document.querySelector('.cat-btn.active').getAttribute('data-cat');
+        renderTools(activeCat, e.target.value);
+    });
 
-    // --- 6. TOOL VIEWER LOGIC (POPUP MODAL) ---
     function openTool(toolId, toolName) {
         const viewer = document.getElementById('toolViewer');
         const title = document.getElementById('toolViewerTitle');
@@ -489,73 +417,150 @@
         
         title.innerHTML = `<i class="fas fa-tools"></i> ${toolName}`;
         viewer.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Kunci scroll background
+        document.body.style.overflow = 'hidden';
 
-        // Panggil fungsi render spesifik berdasarkan ID
         if(toolId === 'fakedev') {
             renderFakedevTool(content);
+        } else if(toolId === 'vidcompress') {
+            renderVidCompressTool(content);
         } else {
             renderDefaultTool(content, toolName);
         }
     }
 
-    function closeTool() {
-        document.getElementById('toolViewer').classList.remove('active');
-        document.body.style.overflow = 'auto'; // Buka scroll background
+    function closeToolViewer() {
+        const viewer = document.getElementById('toolViewer');
+        viewer.classList.remove('active');
+        document.body.style.overflow = 'auto';
     }
 
-    // --- FAKEDEV TOOL RENDERER ---
-    function renderFakedevTool(container) {
+    function renderDefaultTool(container, name) {
         container.innerHTML = `
             <div class="limit-info">
-                <span>Sisa Limit Harian: <span class="count">5/5</span></span>
+                <span>Sisa Limit Harian: <span class="count">10/10</span></span>
             </div>
             <div class="form-group">
-                <label style="font-size:12px;color:var(--text-muted);">Nama Developer <span style="color:#ef4444;">*</span></label>
-                <input type="text" id="fakedevNama" class="v-input" placeholder="Masukkan nama...">
+                <label class="form-label">Input Data / URL</label>
+                <input type="text" class="v-input" placeholder="Masukkan inputan di sini...">
             </div>
-            <div class="form-group">
-                <label style="font-size:12px;color:var(--text-muted);">Posisi/Role</label>
-                <input type="text" id="fakedevRole" class="v-input" placeholder="Contoh: Senior Fullstack">
-            </div>
-            <button class="v-btn" id="fakedevBtn"><i class="fas fa-magic"></i> Generate Profile</button>
-            <div id="fakedevResult"></div>
+            <button class="v-btn" onclick="alert('Fitur ${name} sedang diproses!')"><i class="fas fa-paper-plane"></i> Proses Sekarang</button>
         `;
-        
-        document.getElementById('fakedevBtn').onclick = () => {
-            const nama = document.getElementById('fakedevNama').value;
-            const role = document.getElementById('fakedevRole').value || 'Developer';
-            
-            if(!nama) {
-                alert("Nama Developer tidak boleh kosong!");
-                return;
-            }
+    }
 
-            document.getElementById('fakedevResult').innerHTML = `
-                <div class="result-box">
-                    <p style="color:#25D366; margin-bottom:8px;"><i class="fas fa-check-circle"></i> Berhasil Generate!</p>
-                    <p><strong>Nama:</strong> ${nama}</p>
-                    <p><strong>Role:</strong> ${role}</p>
-                    <p style="margin-top:10px; font-size:11px; color:var(--text-muted);">(Ini adalah simulasi hasil front-end)</p>
+    function renderVidCompressTool(container) {
+        container.innerHTML = `
+            <div class="limit-info">
+                <span>Sisa Limit Harian: <span class="count">Unlimited</span></span>
+            </div>
+
+            <div id="vcUploadArea" style="text-align: center;">
+                <div id="vcDropZone" style="border: 2px dashed var(--border-color); border-radius: 12px; padding: 35px 20px; cursor: pointer; transition: 0.3s; background: var(--input-bg);">
+                    <div style="width: 50px; height: 50px; background: var(--theme-primary); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px;">
+                        <i class="fas fa-cloud-upload-alt" style="font-size: 24px; color: #fff;"></i>
+                    </div>
+                    <h4 style="margin-bottom: 5px; font-weight: 600;">Drag & drop your file here</h4>
+                    <p style="font-size: 11px; color: var(--text-muted);">Supports MP4, WebM, MOV, AVI, JPG, PNG up to 150MB</p>
+                    <input type="file" id="vcFileInput" accept="video/*,image/*" style="display: none;">
                 </div>
-            `;
+                
+                <div id="vcFileInfo" style="display: none; margin-top: 15px; background: var(--card-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color); text-align: left;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 15px;">
+                        <i class="fas fa-file-video" style="color: var(--theme-primary); font-size: 28px;"></i>
+                        <div style="overflow: hidden;">
+                            <div id="vcFileName" style="font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Nama File</div>
+                            <div id="vcFileSize" style="font-size: 11px; color: var(--text-muted);">0 MB</div>
+                        </div>
+                    </div>
+                    <button id="vcBtnCompress" class="v-btn"><i class="fas fa-magic"></i> Start Compression</button>
+                </div>
+            </div>
+
+            <div id="vcLoadingArea" style="display: none; text-align: center; padding: 30px 10px;">
+                <i class="fas fa-circle-notch fa-spin" style="font-size: 36px; color: var(--theme-primary); margin-bottom: 15px;"></i>
+                <h4 style="color: var(--theme-primary); margin-bottom: 5px;">Memproses file Anda...</h4>
+                <p style="font-size: 11px; color: var(--text-muted);">Mohon tunggu, proses kompresi sedang berjalan di server.</p>
+            </div>
+
+            <div id="vcResultArea" style="display: none; text-align: center;">
+                <div style="background: rgba(37, 211, 102, 0.1); border: 1px solid #25D366; color: #25D366; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <i class="fas fa-check-circle"></i> Kompresi Selesai!
+                </div>
+                <a id="vcDownloadLink" href="#" target="_blank" class="v-btn" style="background: #25D366; text-decoration: none; margin-bottom: 10px; color: #fff; display: block;"><i class="fas fa-download"></i> Download File</a>
+                <button id="vcBtnReset" class="v-btn" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-main);"><i class="fas fa-redo"></i> Kompres File Lain</button>
+            </div>
+        `;
+
+        const fileInput = document.getElementById('vcFileInput');
+        const dropZone = document.getElementById('vcDropZone');
+        const fileInfo = document.getElementById('vcFileInfo');
+        const fileName = document.getElementById('vcFileName');
+        const fileSize = document.getElementById('vcFileSize');
+        
+        const btnCompress = document.getElementById('vcBtnCompress');
+        const btnReset = document.getElementById('vcBtnReset');
+        
+        const uploadArea = document.getElementById('vcUploadArea');
+        const loadingArea = document.getElementById('vcLoadingArea');
+        const resultArea = document.getElementById('vcResultArea');
+        const downloadLink = document.getElementById('vcDownloadLink');
+
+        let selectedFile = null;
+
+        dropZone.onclick = () => fileInput.click();
+
+        fileInput.onchange = (e) => {
+            if (e.target.files.length > 0) {
+                selectedFile = e.target.files[0];
+                fileName.textContent = selectedFile.name;
+                fileSize.textContent = `Ukuran: ${(selectedFile.size / (1024 * 1024)).toFixed(2)} MB`;
+                dropZone.style.display = 'none';
+                fileInfo.style.display = 'block';
+            }
+        };
+
+        btnReset.onclick = () => {
+            selectedFile = null;
+            fileInput.value = '';
+            resultArea.style.display = 'none';
+            uploadArea.style.display = 'block';
+            fileInfo.style.display = 'none';
+            dropZone.style.display = 'block';
+        };
+
+        btnCompress.onclick = async () => {
+            if (!selectedFile) return alert('Pilih file terlebih dahulu!');
+
+            uploadArea.style.display = 'none';
+            loadingArea.style.display = 'block';
+
+            const formData = new FormData();
+            formData.append('mediaFile', selectedFile);
+
+            try {
+                const response = await fetch('/api/compress', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (!response.ok || !data.status) {
+                    throw new Error(data.error || 'Terjadi kesalahan saat memproses file.');
+                }
+
+                loadingArea.style.display = 'none';
+                resultArea.style.display = 'block';
+                downloadLink.href = data.download;
+
+            } catch (error) {
+                alert(`Gagal: ${error.message}`);
+                loadingArea.style.display = 'none';
+                uploadArea.style.display = 'block';
+            }
         };
     }
 
-    // --- DEFAULT TOOL RENDERER (UNTUK TOOL YANG BELUM DIBUAT) ---
-    function renderDefaultTool(container, toolName) {
-        container.innerHTML = `
-            <div class="device-card" style="text-align:center; padding: 40px 20px;">
-                <i class="fas fa-hammer" style="font-size:40px; color:var(--theme-primary); margin-bottom:15px;"></i>
-                <h3 style="margin-bottom:10px;">${toolName}</h3>
-                <p style="color:var(--text-muted); font-size:0.9rem;">Mohon maaf, tool ini sedang dalam tahap perbaikan / pengembangan (Maintenance).</p>
-            </div>
-            <button class="v-btn" style="background:transparent; border:1px solid var(--border-color); color:var(--text-muted); margin-top:20px;" onclick="closeTool()">
-                <i class="fas fa-arrow-left"></i> Kembali
-            </button>
-        `;
-    }
-
+    document.addEventListener('DOMContentLoaded', () => {
+        renderTools();
+    });
 </script>
-</body>
-</html>
