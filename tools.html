@@ -1,5 +1,303 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PCT TOOLS</title>
+
+    <!-- GOOGLE ADSENSE -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2899178587236701" crossorigin="anonymous"></script>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-color: #0a0508; 
+            --container-bg: #12080d; 
+            --card-bg: #1a0c14; 
+            --border-color: #3d1520;
+            --text-main: #fce4e8; 
+            --text-muted: #d48a9a; 
+            --accent-color: #ff2d55;
+            --theme-primary: #ff2d55; 
+            --theme-primary-light: #ff6b8a;
+            --theme-border-color: rgba(255, 45, 85, 0.2);
+            --btn-bg: #2a0d18; 
+            --input-bg: #120810;
+        }
+        
+        [data-theme="gold"] {
+            --bg-color: #0f0a03; 
+            --container-bg: #1a1205; 
+            --card-bg: #261a08; 
+            --border-color: #4a3610;
+            --text-main: #fef3c7; 
+            --text-muted: #d4a347; 
+            --accent-color: #fbbf24;
+            --theme-primary: #fbbf24; 
+            --theme-primary-light: #fcd34d;
+            --theme-border-color: rgba(251, 191, 36, 0.2);
+            --btn-bg: #33230a; 
+            --input-bg: #140d04;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        #loadingScreen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-color); z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+            transition: opacity 0.5s ease;
+        }
+        .loading-title { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 15px; text-align: center; }
+        .loading-title span { color: var(--theme-primary); }
+        .loading-bar-track { width: 200px; height: 6px; background: var(--container-bg); border-radius: 10px; overflow: hidden; border: 1px solid var(--border-color); }
+        .loading-bar-fill { height: 100%; background: var(--theme-primary); width: 0%; transition: width 0.2s ease; }
+
+        .app-wrap { display: flex; flex-direction: column; min-height: 100vh; }
+        
+        .header-top {
+            position: sticky; top: 0; z-index: 100;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 16px; background: rgba(18, 8, 13, 0.9);
+            backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color);
+        }
+        .menu-btn { display: flex; flex-direction: column; gap: 4px; cursor: pointer; }
+        .menu-btn span { width: 24px; height: 2px; background: var(--text-main); border-radius: 2px; }
+        
+        .logo-wrapper { display: flex; align-items: center; gap: 8px; }
+        .logo-icon { color: var(--theme-primary); font-size: 1.2rem; }
+        .brand-name { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1.1rem; }
+        .brand-name span { color: var(--theme-primary); }
+        .brand-tagline { display: block; font-size: 0.6rem; color: var(--text-muted); letter-spacing: 1px; }
+        
+        .header-right { display: flex; align-items: center; gap: 12px; }
+        .theme-toggle-group { display: flex; gap: 6px; background: var(--container-bg); padding: 4px; border-radius: 20px; border: 1px solid var(--border-color); }
+        .theme-btn { background: transparent; border: none; cursor: pointer; font-size: 1rem; opacity: 0.5; transition: 0.3s; }
+        .theme-btn.active { opacity: 1; transform: scale(1.1); }
+        
+        .header-nav { display: none; }
+        @media(min-width: 768px) {
+            .header-nav { display: flex; gap: 15px; }
+            .header-nav a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: 0.3s; }
+            .header-nav a.active, .header-nav a:hover { color: var(--theme-primary); }
+        }
+
+        .content-wrap { flex: 1; padding: 16px; padding-bottom: 80px; }
+        .page { display: none; animation: fadeIn 0.4s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .device-card { background: var(--card-bg); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .dev-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.85rem; border-bottom: 1px dashed var(--border-color); padding-bottom: 6px; }
+        .dev-row:last-child { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
+        .dev-row .label { color: var(--text-muted); }
+        .dev-row .value { font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+        .dev-row .role { color: var(--theme-primary); }
+
+        .video-landscape { width: 100%; border-radius: 12px; overflow: hidden; margin-bottom: 16px; border: 1px solid var(--border-color); }
+        .video-landscape video { width: 100%; display: block; }
+
+        .channel-buttons { display: flex; gap: 10px; margin-bottom: 20px; }
+        .channel-btn { flex: 1; padding: 10px; text-align: center; border-radius: 8px; text-decoration: none; font-size: 0.8rem; font-weight: 600; color: #fff; transition: 0.3s; }
+        .channel-btn.wa { background: #25D366; }
+        .channel-btn.tt { background: #000; border: 1px solid #333; }
+        .channel-btn:active { transform: scale(0.95); }
+
+        .section-title { font-size: 1rem; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        
+        .search-wrapper { position: relative; margin-bottom: 16px; }
+        .search-wrapper i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+        .search-wrapper input { width: 100%; padding: 12px 12px 12px 35px; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-main); outline: none; font-family: 'Poppins', sans-serif; }
+        .search-wrapper input:focus { border-color: var(--theme-primary); }
+
+        .category-tabs { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 10px; }
+        .category-tabs::-webkit-scrollbar { display: none; }
+        .category-tab { padding: 8px 16px; background: var(--btn-bg); border: 1px solid var(--border-color); border-radius: 20px; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; white-space: nowrap; cursor: pointer; transition: 0.3s; }
+        .category-tab.active { background: var(--theme-primary); color: #fff; border-color: var(--theme-primary); }
+
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; }
+        .tool-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px 10px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .tool-card:hover { border-color: var(--theme-primary); transform: translateY(-3px); }
+        .tool-icon { font-size: 24px; margin-bottom: 10px; color: var(--theme-primary); }
+        .tool-name { font-size: 0.75rem; font-weight: 600; }
+        
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(18, 8, 13, 0.95); backdrop-filter: blur(10px); border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; padding: 10px 0; z-index: 100; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
+        .nav-item { background: none; border: none; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 1.2rem; cursor: pointer; transition: 0.3s; }
+        .nav-item span { font-size: 0.65rem; font-family: 'Inter', sans-serif; font-weight: 500; }
+        .nav-item.active { color: var(--theme-primary); transform: translateY(-3px); }
+
+        .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 200; opacity: 0; visibility: hidden; transition: 0.3s; }
+        .sidebar-overlay.show { opacity: 1; visibility: visible; }
+        
+        .sidebar { position: fixed; top: 0; left: -280px; width: 260px; height: 100%; background: var(--container-bg); border-right: 1px solid var(--border-color); z-index: 201; transition: left 0.3s ease; padding: 20px 0; display: flex; flex-direction: column; }
+        .sidebar.open { left: 0; }
+        .sb-head { display: flex; align-items: center; gap: 15px; padding: 0 20px 20px; border-bottom: 1px solid var(--border-color); margin-bottom: 20px; }
+        .sb-head .avatar { width: 50px; height: 50px; background: var(--theme-primary); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: 700; color: #fff; }
+        .sb-name { font-weight: 700; font-size: 1.1rem; }
+        .sb-role { font-size: 0.75rem; color: var(--theme-primary); }
+        .sb-item { padding: 15px 25px; display: flex; align-items: center; gap: 15px; color: var(--text-main); text-decoration: none; font-size: 0.95rem; cursor: pointer; transition: 0.3s; }
+        .sb-item i { color: var(--text-muted); font-size: 1.2rem; width: 20px; text-align: center; }
+        .sb-item:hover, .sb-item.active { background: var(--card-bg); border-left: 4px solid var(--theme-primary); }
+        .sb-item:hover i, .sb-item.active i { color: var(--theme-primary); }
+
+        .tool-viewer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 300; display: none; flex-direction: column; animation: slideUp 0.3s ease; overflow-y: auto; }
+        .tool-viewer.active { display: flex; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        
+        .tool-viewer-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: var(--container-bg); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; }
+        .tool-viewer-title { font-size: 1.1rem; font-weight: 700; }
+        .tool-viewer-close { background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
+        
+        .tool-viewer-content { padding: 20px; flex: 1; }
+        .form-group { margin-bottom: 15px; }
+        .v-input { width: 100%; padding: 12px; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: #fff; font-family: 'Inter', sans-serif; margin-top: 5px; outline: none; }
+        .v-input:focus { border-color: var(--theme-primary); }
+        .v-btn { width: 100%; padding: 12px; background: var(--theme-primary); color: #fff; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px; font-family: 'Poppins', sans-serif; }
+        .v-btn:active { transform: scale(0.98); }
+        .limit-info { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px; display: flex; justify-content: space-between; }
+        .limit-info .count { font-weight: bold; color: var(--theme-primary); }
+    </style>
+</head>
+<body>
+
+<div id="loadingScreen">
+    <div style="text-align: center;">
+        <div class="loading-title">PCT <span>TOOLS</span></div>
+        <div class="loading-bar-track">
+            <div class="loading-bar-fill" id="loadingBarFill"></div>
+        </div>
+        <div style="margin-top:10px; font-size:0.8rem; color:var(--text-muted);">Memuat sistem...</div>
+    </div>
+</div>
+
+<div class="app-wrap">
+    
+    <header class="header-top">
+        <div class="menu-btn" onclick="toggleSidebar()">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="logo-wrapper">
+            <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+            <div class="logo-text">
+                <span class="brand-name"> PCT <span> TOOLS </span></span>
+                <span class="brand-tagline">PREMIUM TOOLS</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="theme-toggle-group">
+                <button class="theme-btn theme-btn-red active" data-theme="red" onclick="setTheme('red')" title="Tema Merah">🔴</button>
+                <button class="theme-btn theme-btn-gold" data-theme="gold" onclick="setTheme('gold')" title="Tema Kuning">🟡</button>
+            </div>
+            <nav class="header-nav">
+                <a href="index.html"><i class="fas fa-globe"></i> Web Utama</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="content-wrap">
+        
+        <div class="page active" id="homePage">
+            <div class="video-landscape">
+                <video autoplay loop muted playsinline id="homeVideo" style="background:#000;">
+                    <source src="https://c.termai.cc/v179/bgXPN.mp4" type="video/mp4">
+                </video>
+            </div>
+            
+            <div class="device-card">
+                <div class="dev-row"><span class="label"><i class="fas fa-user"></i> Username</span><span class="value">Guest</span></div>
+                <div class="dev-row"><span class="label"><i class="fas fa-laptop"></i> OS</span><span class="value" id="devOS">Mendeteksi...</span></div>
+                <div class="dev-row"><span class="label"><i class="fas fa-crown"></i> Role</span><span class="value role">✦ GUEST</span></div>
+            </div>
+            
+            <div class="channel-buttons">
+                <a href="https://whatsapp.com/channel/0029Vb7IUkRJpe8dIoPcAO31" target="_blank" class="channel-btn wa"><i class="fab fa-whatsapp"></i> SALURAN PCT STORE</a>
+                <a href="https://chat.whatsapp.com/Bznb7P7IaGNAIgumOjUPT5?s=cl&p=a&mlu=4" target="_blank" class="channel-btn tt"><i class="fab fa-tiktok"></i> GROUP PCT STORE</a>
+            </div>
+
+            <div class="section-title"><i class="fas fa-fire" style="color:var(--theme-primary);"></i> Tools Populer</div>
+            <div class="tools-grid" id="popularGrid"></div>
+        </div>
+
+        <div class="page" id="toolsPage">
+            <div class="search-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Cari nama tools...">
+            </div>
+            <div class="category-tabs">
+                <button class="category-tab active" data-cat="all"><i class="fas fa-th-large"></i> ALL</button>
+                <button class="category-tab" data-cat="maker"><i class="fas fa-wand-magic-sparkles"></i> MAKER</button>
+                <button class="category-tab" data-cat="downloader"><i class="fas fa-download"></i> DOWNLOADER</button>
+                <button class="category-tab" data-cat="tools"><i class="fas fa-screwdriver-wrench"></i> UTILITIES</button>
+            </div>
+            <div class="tools-grid" id="allToolsGrid"></div>
+        </div>
+
+        <div class="page" id="profilePage">
+            <div class="device-card" style="text-align: center; padding: 30px 15px;">
+                <div style="width: 80px; height: 80px; background: var(--theme-primary); border-radius: 50%; margin: 0 auto 15px; display: flex; justify-content: center; align-items: center; font-size: 30px; font-weight: bold; color: white;">G</div>
+                <h2 style="margin-bottom: 5px;">Guest User</h2>
+                <p style="color: var(--theme-primary); font-size: 0.9rem; margin-bottom: 20px;">✦ GUEST TIER</p>
+                <div class="dev-row"><span class="label">Status API</span><span class="value" style="color:#25D366;">Aktif</span></div>
+                <div class="dev-row"><span class="label">Sisa Limit</span><span class="value">Unlimited</span></div>
+            </div>
+        </div>
+
+        <div class="page" id="chatPage">
+            <div class="device-card" style="text-align: center; padding: 40px 15px;">
+                <i class="fas fa-comments" style="font-size: 40px; color: var(--theme-primary); margin-bottom: 15px;"></i>
+                <h3>Chat Admin</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin: 10px 0 20px;">Fitur Live Chat sedang dalam pengembangan. Silakan hubungi via WhatsApp untuk sementara waktu.</p>
+                <a href="https://wa.me/6281234567890" target="_blank" class="v-btn" style="text-decoration:none;"><i class="fab fa-whatsapp"></i> Hubungi WhatsApp</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="bottom-nav">
+        <button class="nav-item" onclick="window.location.href='index.html'"><i class="fas fa-globe"></i><span>Utama</span></button>
+        <button class="nav-item active" data-page="homePage"><i class="fas fa-home"></i><span>Beranda</span></button>
+        <button class="nav-item" data-page="toolsPage"><i class="fas fa-toolbox"></i><span>Tools</span></button>
+        <button class="nav-item" data-page="profilePage"><i class="fas fa-user"></i><span>Profil</span></button>
+        <button class="nav-item" data-page="chatPage"><i class="fas fa-comment"></i><span>Chat</span></button>
+    </div>
+</div>
+
+<div class="sidebar-overlay" id="sbOverlay" onclick="toggleSidebar()"></div>
+<div class="sidebar" id="sidebar">
+    <div class="sb-head">
+        <div class="avatar">G</div>
+        <div>
+            <div class="sb-name">Guest</div>
+            <div class="sb-role">✦ GUEST</div>
+        </div>
+    </div>
+    <div class="sb-item" onclick="window.location.href='index.html'"><i class="fas fa-globe"></i> Web Utama</div>
+    <div class="sb-item active" data-page="homePage"><i class="fas fa-home"></i> Beranda</div>
+    <div class="sb-item" data-page="toolsPage"><i class="fas fa-toolbox"></i> Semua Tools</div>
+    <div class="sb-item" data-page="profilePage"><i class="fas fa-user"></i> Profil User</div>
+    <div class="sb-item" data-page="chatPage"><i class="fas fa-comment"></i> Chat Admin</div>
+</div>
+
+<div class="tool-viewer" id="toolViewer">
+    <div class="tool-viewer-header">
+        <div class="tool-viewer-title" id="toolViewerTitle">Nama Tool</div>
+        <button class="tool-viewer-close" onclick="closeToolViewer()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="tool-viewer-content" id="toolViewerContent"></div>
+</div>
+
 <script>
-    // 1. DATA TOOLS
     const toolsData = [
         { id: 'vidcompress', name: 'Media Compressor', icon: 'fas fa-compress-arrows-alt', category: 'tools', popular: true },
         { id: 'fakedev', name: 'Fake Developer', icon: 'fas fa-id-card', category: 'maker', popular: true },
@@ -14,69 +312,88 @@
         { id: 'subdomain', name: 'Subdomain Finder', icon: 'fas fa-network-wired', category: 'tools', popular: false }
     ];
 
-    // 2. RENDER LIST CARDS
-    function renderTools(filterCategory = 'all', searchQuery = '') {
-        const grid = document.getElementById('toolsGrid');
-        grid.innerHTML = '';
-
-        const filtered = toolsData.filter(t => {
-            const matchesCat = filterCategory === 'all' || 
-                               (filterCategory === 'popular' && t.popular) || 
-                               t.category === filterCategory;
-            const matchesSearch = t.name.toLowerCase().includes(searchQuery.toLowerCase());
-            return matchesCat && matchesSearch;
-        });
-
-        if(filtered.length === 0) {
-            grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Tools tidak ditemukan.</div>`;
-            return;
+    function setTheme(theme) {
+        if(theme === 'gold') {
+            document.documentElement.setAttribute('data-theme', 'gold');
+        } else {
+            document.documentElement.removeAttribute('data-theme');
         }
-
-        filtered.forEach(t => {
-            const card = document.createElement('div');
-            card.className = 'tool-card';
-            card.onclick = () => openTool(t.id, t.name);
-            card.innerHTML = `
-                <div class="tool-icon"><i class="${t.icon}"></i></div>
-                <div class="tool-info">
-                    <div class="tool-title">${t.name}</div>
-                    <div class="tool-desc">Klik untuk menggunakan tool ini</div>
-                </div>
-                <div class="tool-action"><i class="fas fa-chevron-right"></i></div>
-            `;
-            grid.appendChild(card);
+        document.querySelectorAll('.theme-btn').forEach(function(btn) {
+            btn.classList.toggle('active', btn.getAttribute('data-theme') === theme);
         });
     }
 
-    // 3. EVENT LISTENERS CATEGORY & SEARCH
-    document.querySelectorAll('.cat-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-            e.target.classList.add('active');
-            const cat = e.target.getAttribute('data-cat');
-            const search = document.getElementById('searchInput').value;
-            renderTools(cat, search);
+    function toggleSidebar() {
+        const sb = document.getElementById('sidebar');
+        const overlay = document.getElementById('sbOverlay');
+        if(sb) sb.classList.toggle('open');
+        if(overlay) overlay.classList.toggle('show');
+    }
+
+    function switchPage(pageId) {
+        document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+        document.querySelectorAll('.nav-item, .sb-item').forEach(function(btn) {
+            btn.classList.toggle('active', btn.getAttribute('data-page') === pageId);
         });
-    });
 
-    document.getElementById('searchInput').addEventListener('input', (e) => {
-        const activeCat = document.querySelector('.cat-btn.active').getAttribute('data-cat');
-        renderTools(activeCat, e.target.value);
-    });
+        const target = document.getElementById(pageId);
+        if(target) target.classList.add('active');
 
-    // 4. OPEN & CLOSE MODAL VIEWER
+        const sidebar = document.getElementById('sidebar');
+        if(sidebar && sidebar.classList.contains('open')) toggleSidebar();
+    }
+
+    function renderTools(filterCategory, searchQuery) {
+        filterCategory = filterCategory || 'all';
+        searchQuery = searchQuery || '';
+        
+        const popularGrid = document.getElementById('popularGrid');
+        const allGrid = document.getElementById('allToolsGrid');
+        
+        if (popularGrid) {
+            popularGrid.innerHTML = '';
+            toolsData.filter(function(t) { return t.popular; }).forEach(function(t) {
+                popularGrid.appendChild(createToolCard(t));
+            });
+        }
+
+        if (allGrid) {
+            allGrid.innerHTML = '';
+            const filtered = toolsData.filter(function(t) {
+                const matchesCat = filterCategory === 'all' || t.category === filterCategory;
+                const matchesSearch = t.name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1;
+                return matchesCat && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                allGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Tools tidak ditemukan.</div>';
+                return;
+            }
+
+            filtered.forEach(function(t) {
+                allGrid.appendChild(createToolCard(t));
+            });
+        }
+    }
+
+    function createToolCard(t) {
+        const card = document.createElement('div');
+        card.className = 'tool-card';
+        card.onclick = function() { openTool(t.id, t.name); };
+        card.innerHTML = '<div class="tool-icon"><i class="' + t.icon + '"></i></div><div class="tool-name">' + t.name + '</div>';
+        return card;
+    }
+
     function openTool(toolId, toolName) {
         const viewer = document.getElementById('toolViewer');
         const title = document.getElementById('toolViewerTitle');
         const content = document.getElementById('toolViewerContent');
         
-        title.innerHTML = `<i class="fas fa-tools"></i> ${toolName}`;
-        viewer.classList.add('active');
+        if(title) title.innerHTML = '<i class="fas fa-tools"></i> ' + toolName;
+        if(viewer) viewer.classList.add('active');
         document.body.style.overflow = 'hidden';
 
-        if(toolId === 'fakedev') {
-            renderFakedevTool(content);
-        } else if(toolId === 'vidcompress') {
+        if(toolId === 'vidcompress') {
             renderVidCompressTool(content);
         } else {
             renderDefaultTool(content, toolName);
@@ -85,31 +402,30 @@
 
     function closeToolViewer() {
         const viewer = document.getElementById('toolViewer');
-        viewer.classList.remove('active');
+        if(viewer) viewer.classList.remove('active');
         document.body.style.overflow = 'auto';
     }
 
-    // 5. RENDER DEFAULT DUMMY TOOL
     function renderDefaultTool(container, name) {
+        if(!container) return;
         container.innerHTML = `
             <div class="limit-info">
-                <span>Sisa Limit Harian: <span class="count">10/10</span></span>
+                <span>Sisa Limit Harian: <span class="count">Unlimited</span></span>
             </div>
             <div class="form-group">
-                <label class="form-label">Input Data / URL</label>
+                <label class="form-label" style="font-size: 0.85rem; color: var(--text-muted);">Input Data / URL</label>
                 <input type="text" class="v-input" placeholder="Masukkan inputan di sini...">
             </div>
             <button class="v-btn" onclick="alert('Fitur ${name} sedang diproses!')"><i class="fas fa-paper-plane"></i> Proses Sekarang</button>
         `;
     }
 
-    // 6. RENDER MEDIA COMPRESSOR TOOL (UI VIDEO)
     function renderVidCompressTool(container) {
+        if(!container) return;
         container.innerHTML = `
             <div class="limit-info">
                 <span>Sisa Limit Harian: <span class="count">Unlimited</span></span>
             </div>
-
             <div id="vcUploadArea" style="text-align: center;">
                 <div id="vcDropZone" style="border: 2px dashed var(--border-color); border-radius: 12px; padding: 35px 20px; cursor: pointer; transition: 0.3s; background: var(--input-bg);">
                     <div style="width: 50px; height: 50px; background: var(--theme-primary); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px;">
@@ -131,13 +447,11 @@
                     <button id="vcBtnCompress" class="v-btn"><i class="fas fa-magic"></i> Start Compression</button>
                 </div>
             </div>
-
             <div id="vcLoadingArea" style="display: none; text-align: center; padding: 30px 10px;">
                 <i class="fas fa-circle-notch fa-spin" style="font-size: 36px; color: var(--theme-primary); margin-bottom: 15px;"></i>
                 <h4 style="color: var(--theme-primary); margin-bottom: 5px;">Memproses file Anda...</h4>
                 <p style="font-size: 11px; color: var(--text-muted);">Mohon tunggu, proses kompresi sedang berjalan di server.</p>
             </div>
-
             <div id="vcResultArea" style="display: none; text-align: center;">
                 <div style="background: rgba(37, 211, 102, 0.1); border: 1px solid #25D366; color: #25D366; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;">
                     <i class="fas fa-check-circle"></i> Kompresi Selesai!
@@ -152,10 +466,8 @@
         const fileInfo = document.getElementById('vcFileInfo');
         const fileName = document.getElementById('vcFileName');
         const fileSize = document.getElementById('vcFileSize');
-        
         const btnCompress = document.getElementById('vcBtnCompress');
         const btnReset = document.getElementById('vcBtnReset');
-        
         const uploadArea = document.getElementById('vcUploadArea');
         const loadingArea = document.getElementById('vcLoadingArea');
         const resultArea = document.getElementById('vcResultArea');
@@ -163,62 +475,122 @@
 
         let selectedFile = null;
 
-        dropZone.onclick = () => fileInput.click();
+        if(dropZone) dropZone.onclick = function() { fileInput.click(); };
 
-        fileInput.onchange = (e) => {
-            if (e.target.files.length > 0) {
-                selectedFile = e.target.files[0];
-                fileName.textContent = selectedFile.name;
-                fileSize.textContent = `Ukuran: ${(selectedFile.size / (1024 * 1024)).toFixed(2)} MB`;
-                dropZone.style.display = 'none';
-                fileInfo.style.display = 'block';
-            }
-        };
-
-        btnReset.onclick = () => {
-            selectedFile = null;
-            fileInput.value = '';
-            resultArea.style.display = 'none';
-            uploadArea.style.display = 'block';
-            fileInfo.style.display = 'none';
-            dropZone.style.display = 'block';
-        };
-
-        btnCompress.onclick = async () => {
-            if (!selectedFile) return alert('Pilih file terlebih dahulu!');
-
-            uploadArea.style.display = 'none';
-            loadingArea.style.display = 'block';
-
-            const formData = new FormData();
-            formData.append('mediaFile', selectedFile);
-
-            try {
-                const response = await fetch('/api/compress', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const data = await response.json();
-
-                if (!response.ok || !data.status) {
-                    throw new Error(data.error || 'Terjadi kesalahan saat memproses file.');
+        if(fileInput) {
+            fileInput.onchange = function(e) {
+                if (e.target.files.length > 0) {
+                    selectedFile = e.target.files[0];
+                    fileName.textContent = selectedFile.name;
+                    fileSize.textContent = 'Ukuran: ' + (selectedFile.size / (1024 * 1024)).toFixed(2) + ' MB';
+                    dropZone.style.display = 'none';
+                    fileInfo.style.display = 'block';
                 }
+            };
+        }
 
-                loadingArea.style.display = 'none';
-                resultArea.style.display = 'block';
-                downloadLink.href = data.download;
-
-            } catch (error) {
-                alert(`Gagal: ${error.message}`);
-                loadingArea.style.display = 'none';
+        if(btnReset) {
+            btnReset.onclick = function() {
+                selectedFile = null;
+                fileInput.value = '';
+                resultArea.style.display = 'none';
                 uploadArea.style.display = 'block';
-            }
-        };
+                fileInfo.style.display = 'none';
+                dropZone.style.display = 'block';
+            };
+        }
+
+        if(btnCompress) {
+            btnCompress.onclick = async function() {
+                if (!selectedFile) return alert('Pilih file terlebih dahulu!');
+                uploadArea.style.display = 'none';
+                loadingArea.style.display = 'block';
+
+                const formData = new FormData();
+                formData.append('mediaFile', selectedFile);
+
+                try {
+                    const response = await fetch('/api/compress', { method: 'POST', body: formData });
+                    const data = await response.json();
+                    if (!response.ok || !data.status) throw new Error(data.error || 'Gagal memproses file.');
+                    loadingArea.style.display = 'none';
+                    resultArea.style.display = 'block';
+                    downloadLink.href = data.download;
+                } catch (error) {
+                    alert('Gagal: ' + error.message);
+                    loadingArea.style.display = 'none';
+                    uploadArea.style.display = 'block';
+                }
+            };
+        }
     }
 
-    // 7. INIT FIRST RENDER
-    document.addEventListener('DOMContentLoaded', () => {
+    function initApp() {
+        document.querySelectorAll('[data-page]').forEach(function(el) {
+            el.addEventListener('click', function() { switchPage(el.getAttribute('data-page')); });
+        });
+
+        document.querySelectorAll('.category-tab').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                document.querySelectorAll('.category-tab').forEach(function(b) { b.classList.remove('active'); });
+                e.currentTarget.classList.add('active');
+                const cat = e.currentTarget.getAttribute('data-cat');
+                const searchInput = document.getElementById('searchInput');
+                const search = searchInput ? searchInput.value : '';
+                renderTools(cat, search);
+            });
+        });
+
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', function(e) {
+                const activeTab = document.querySelector('.category-tab.active');
+                const activeCat = activeTab ? activeTab.getAttribute('data-cat') : 'all';
+                renderTools(activeCat, e.target.value);
+            });
+        }
+
+        const devOS = document.getElementById('devOS');
+        if(devOS) {
+            const ua = navigator.userAgent;
+            if (ua.indexOf("Win") !== -1) devOS.textContent = "Windows";
+            else if (ua.indexOf("Mac") !== -1) devOS.textContent = "MacOS";
+            else if (ua.indexOf("Android") !== -1) devOS.textContent = "Android";
+            else if (ua.indexOf("iPhone") !== -1 || ua.indexOf("iPad") !== -1) devOS.textContent = "iOS";
+            else devOS.textContent = "Linux / Other";
+        }
+
         renderTools();
-    });
+
+        // Animasikan & hilangkan loading screen
+        const fill = document.getElementById('loadingBarFill');
+        let width = 0;
+        const interval = setInterval(function() {
+            width += 25;
+            if(fill) fill.style.width = width + '%';
+            if (width >= 100) {
+                clearInterval(interval);
+                hideLoadingScreen();
+            }
+        }, 60);
+
+        // Fallback paksa sembunyikan loading screen setelah 1.5 detik
+        setTimeout(hideLoadingScreen, 1500);
+    }
+
+    function hideLoadingScreen() {
+        const screen = document.getElementById('loadingScreen');
+        if(screen && screen.style.display !== 'none') {
+            screen.style.opacity = '0';
+            setTimeout(function() { screen.style.display = 'none'; }, 400);
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+        initApp();
+    }
 </script>
+</body>
+</html>
