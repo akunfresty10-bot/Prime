@@ -238,7 +238,7 @@ export default function HomePage() {
       {/* ===== BACKGROUND VIDEO ===== */}
       <div id="bg-video-container">
         <div id="bg-media-slot">
-          <video ref={videoRef} autoPlay muted loop playsInline>
+          <video ref={videoRef} autoPlay muted loop playsInline preload="auto" poster="/assets/bg-poster.jpg" disablePictureInPicture>
             <source src="/assets/bg.mp4" type="video/mp4" />
           </video>
         </div>

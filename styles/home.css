@@ -1,6 +1,6 @@
 .page-home {
   --bg-body: #090514;
-  --bg-card: rgba(20, 12, 36, 0.65);
+  --bg-card: rgba(20, 12, 36, 0.86);
   --border-glow: rgba(168, 85, 247, 0.25);
   --text-main: #f3f4f6;
   --text-sub: #a1a1aa;
@@ -14,7 +14,7 @@
   --accent-blue-light: #c084fc;
   --accent-cyan: #e879f9;
   --accent-indigo: #818cf8;
-  --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-smooth: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
 .page-home, .page-home * {
@@ -33,7 +33,6 @@
     radial-gradient(ellipse at 10% 20%, rgba(147, 51, 234, 0.15) 0%, transparent 50%),
     radial-gradient(ellipse at 90% 80%, rgba(232, 121, 249, 0.12) 0%, transparent 50%),
     radial-gradient(ellipse at 50% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
-  background-attachment: fixed;
   overflow-x: clip;
 }
 
@@ -45,6 +44,8 @@
   height: 100%;
   z-index: -1;
   overflow: hidden;
+  transform: translateZ(0);
+  contain: strict;
 }
 
 .page-home #bg-media-slot,
@@ -60,8 +61,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(9, 5, 20, 0.75);
-  backdrop-filter: blur(4px);
+  background: rgba(9, 5, 20, 0.78);
 }
 
 .page-home #bg-video-container::before {
@@ -71,7 +71,6 @@
   background: 
     radial-gradient(circle at 20% 30%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
     radial-gradient(circle at 80% 70%, rgba(232, 121, 249, 0.12) 0%, transparent 50%);
-  animation: orbPulse 8s ease-in-out infinite alternate;
   z-index: 0;
 }
 
@@ -104,13 +103,10 @@
 
 .page-home header {
   background: rgba(9, 5, 20, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border-glow);
   position: sticky;
   top: 0;
   z-index: 90;
-  animation: borderGlow 5s ease-in-out infinite;
 }
 
 .page-home .nav-container {
@@ -248,10 +244,8 @@
   text-decoration: none;
   text-align: center;
   color: #ffffff;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(40, 26, 64, 0.85);
   border: 1px solid rgba(168, 85, 247, 0.2);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   transition: var(--transition-smooth);
   cursor: pointer;
   display: block;
@@ -304,8 +298,6 @@
 
 .page-home .category-card {
   background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-glow);
   border-radius: 22px;
   padding: 20px 22px;
@@ -343,8 +335,6 @@
 .page-home .about-box,
 .page-home .stats-box {
   background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-glow);
   border-radius: 26px;
   padding: 28px 22px;
@@ -465,9 +455,7 @@
 .page-home .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(9, 5, 20, 0.92);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  background: rgba(9, 5, 20, 0.96);
   z-index: 999;
   display: flex;
   justify-content: center;
@@ -475,7 +463,7 @@
   padding: 20px;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.4s ease;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .page-home .modal-overlay.active {
@@ -495,7 +483,7 @@
   position: relative;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
   transform: scale(0.95);
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .page-home .modal-overlay.active .popup-wa-card,
@@ -699,7 +687,6 @@
 .page-home footer {
   border-top: 1px solid var(--border-glow);
   background: rgba(9, 5, 20, 0.95);
-  backdrop-filter: blur(16px);
   padding: 40px 20px 30px;
   font-size: 0.85rem;
   color: var(--text-sub);
@@ -830,3 +817,15 @@
 }
 
 .page-home { isolation: isolate; }
+
+.page-home .about-box,
+.page-home .stats-box,
+.page-home footer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 520px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-home *, .page-home *::before { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}
