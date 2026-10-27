@@ -1,13 +1,17 @@
 {
-  "name": "prime-ct-store",
+  "name": "gwnshop",
   "version": "1.0.0",
   "private": true,
-  "description": "PRIME CT STORE - AI & Digital Tools",
-  "main": "index.html",
+  "description": "GWNSHOP & DIGITAL STORE",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
   "dependencies": {
-    "axios": "^1.7.2",
-    "file-type": "^16.5.4",
-    "form-data": "^4.0.0",
-    "formidable": "^3.5.1"
+    "@supabase/supabase-js": "^2.45.0",
+    "next": "^15.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   }
 }

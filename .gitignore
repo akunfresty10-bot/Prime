@@ -1,0 +1,9 @@
+node_modules
+.next
+out
+.vercel
+.DS_Store
+
+# env lokal jangan di-commit
+.env
+.env*.local
