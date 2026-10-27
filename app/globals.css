@@ -6,13 +6,13 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: #0d0b14;
+  background: #090514;
 }
 
 /* Scrollbar ungu khusus halaman utama */
 html:has(.page-home)::-webkit-scrollbar { width: 6px; }
-html:has(.page-home)::-webkit-scrollbar-track { background: #0d0b14; }
+html:has(.page-home)::-webkit-scrollbar-track { background: #090514; }
 html:has(.page-home)::-webkit-scrollbar-thumb {
-  background: #7f56d9;
+  background: linear-gradient(135deg, #a855f7, #7e22ce, #e879f9);
   border-radius: 10px;
 }
